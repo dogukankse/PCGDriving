@@ -38,7 +38,7 @@ public class MapGenerator : MonoBehaviour
 
     private void DrawMap(MapTile[,] map)
     {
-        grid.cellSize = new Vector2(1000f / size, 1000f / size);
+        grid.cellSize = new Vector2(120f / size, 120f / size);
         grid.constraintCount = size;
 
         for (int y = 0; y < map.GetLength(0); y++)
