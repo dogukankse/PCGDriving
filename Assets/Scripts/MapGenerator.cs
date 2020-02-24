@@ -34,6 +34,7 @@ public class MapGenerator : MonoBehaviour
         _map.Generate(tiles);
         PrintMap(_map.map);
         DrawMap(_map.map);
+        DrawRoads(_map.map);
     }
 
     private void DrawMap(MapTile[,] map)
@@ -55,6 +56,41 @@ public class MapGenerator : MonoBehaviour
                 sr.drawMode = SpriteDrawMode.Sliced;
                 sr.size = grid.cellSize;
                 go.transform.SetParent(grid.transform);
+            }
+        }
+    }
+
+    private GameObject GetRoadPrefab(Tile tile)
+    {
+        var loadedObject = Resources.Load($"Prefabs/{tile.id}");
+        if (loadedObject == null)
+        {
+            return Resources.Load($"Prefabs/{0}") as GameObject;
+        }
+
+        return Instantiate(loadedObject as GameObject);
+    }
+
+    private void DrawRoads(MapTile[,] map)
+    {
+        float size = 0f;
+        for (int y = 0; y < map.GetLength(0); y++)
+        {
+            for (int x = 0; x < map.GetLength(1); x++)
+            {
+                Tile tile = map[x, y].tile;
+
+                GameObject road = GetRoadPrefab(tile);
+
+                if (size == 0d)
+                {
+                    GameObject ground = GameObject.Find("Ground");
+                    size = ground.GetComponent<Collider>().bounds.size.x;
+                }
+                
+                road.transform.position = new Vector3(y * size, 0, x * size);
+                road.transform.rotation = Quaternion.Euler(road.transform.rotation.eulerAngles+new Vector3(0,90,0)); 
+
             }
         }
     }
