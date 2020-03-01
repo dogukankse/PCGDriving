@@ -65,7 +65,7 @@ public class MapGenerator : MonoBehaviour
         var loadedObject = Resources.Load($"Prefabs/{tile.id}");
         if (loadedObject == null)
         {
-            return Resources.Load($"Prefabs/{0}") as GameObject;
+            return Resources.Load("Prefabs/0") as GameObject;
         }
 
         return Instantiate(loadedObject as GameObject);
