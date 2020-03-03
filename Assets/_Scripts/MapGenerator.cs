@@ -90,6 +90,7 @@ public class MapGenerator : MonoBehaviour
                 
                 road.transform.position = new Vector3(y * size, 0, x * size);
                 road.transform.rotation = Quaternion.Euler(road.transform.rotation.eulerAngles+new Vector3(0,90,0)); 
+                road.transform.SetParent(transform);
 
             }
         }
