@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 
 public class MapGenerator : MonoBehaviour
@@ -11,12 +12,13 @@ public class MapGenerator : MonoBehaviour
     public int size;
     public TextMeshProUGUI text;
     public Tile[] tiles;
-
+    public int seed = 0;
     public GridLayoutGroup grid;
     public Texture2D[] textures;
 
     private void Start()
     {
+        Random.seed = seed;
         _map = new Map(size);
         foreach (Tile tile in tiles)
         {
@@ -30,7 +32,7 @@ public class MapGenerator : MonoBehaviour
                 tile.left.Add(int.Parse(s));
             }
         }
-
+        
         _map.Generate(tiles);
         PrintMap(_map.map);
         DrawMap(_map.map);
@@ -73,6 +75,7 @@ public class MapGenerator : MonoBehaviour
 
     private void DrawRoads(MapTile[,] map)
     {
+        
         float size = 0f;
         for (int y = 0; y < map.GetLength(0); y++)
         {
