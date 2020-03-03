@@ -67,7 +67,7 @@ public class MapGenerator : MonoBehaviour
         var loadedObject = Resources.Load($"Prefabs/{tile.id}");
         if (loadedObject == null)
         {
-            return Resources.Load($"Prefabs/{0}") as GameObject;
+            return Resources.Load("Prefabs/0") as GameObject;
         }
 
         return Instantiate(loadedObject as GameObject);
@@ -93,6 +93,7 @@ public class MapGenerator : MonoBehaviour
                 
                 road.transform.position = new Vector3(y * size, 0, x * size);
                 road.transform.rotation = Quaternion.Euler(road.transform.rotation.eulerAngles+new Vector3(0,90,0)); 
+                road.transform.SetParent(transform);
 
             }
         }
