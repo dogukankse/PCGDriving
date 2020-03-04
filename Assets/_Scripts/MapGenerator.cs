@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Assertions.Comparers;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -15,7 +18,8 @@ public class MapGenerator : MonoBehaviour
     public int seed = 0;
     public GridLayoutGroup grid;
     public Texture2D[] textures;
-
+    public GameObject[,] roads;
+    public GameObject automobile;
     private void Start()
     {
         Random.seed = seed;
@@ -32,7 +36,7 @@ public class MapGenerator : MonoBehaviour
                 tile.left.Add(int.Parse(s));
             }
         }
-        
+
         _map.Generate(tiles);
         PrintMap(_map.map);
         DrawMap(_map.map);
@@ -73,9 +77,10 @@ public class MapGenerator : MonoBehaviour
         return Instantiate(loadedObject as GameObject);
     }
 
-    private void DrawRoads(MapTile[,] map)
+    private int DrawRoads(MapTile[,] map)
     {
-        
+        List<TrafficSystemNode> unconnectedNodes = new List<TrafficSystemNode>();
+        roads = new GameObject[map.GetLength(0), map.GetLength(1)];
         float size = 0f;
         for (int y = 0; y < map.GetLength(0); y++)
         {
@@ -90,13 +95,64 @@ public class MapGenerator : MonoBehaviour
                     GameObject ground = GameObject.Find("Ground");
                     size = ground.GetComponent<Collider>().bounds.size.x;
                 }
-                
-                road.transform.position = new Vector3(y * size, 0, x * size);
-                road.transform.rotation = Quaternion.Euler(road.transform.rotation.eulerAngles+new Vector3(0,90,0)); 
-                road.transform.SetParent(transform);
 
+                road.transform.position = new Vector3(y * size, 0, x * size);
+                road.transform.rotation = Quaternion.Euler(road.transform.rotation.eulerAngles + new Vector3(0, 90, 0));
+                road.transform.SetParent(transform);
+                roads[x, y] = road;
+                var nodes = road.GetComponentsInChildren<TrafficSystemNode>().Where(
+                    p => p.m_connectedNodes.Count == 0 &&
+                         p.m_roadType == TrafficSystem.RoadType.LANES_2).ToList();
+                unconnectedNodes.AddRange(nodes);
             }
         }
+
+        foreach (var node in unconnectedNodes)
+        {
+            if (node.m_connectedNodes.Count == 0)
+            {
+                var nearestNode = getNearestNode(node);
+                if (nearestNode == null)
+                {
+                    continue;
+                }
+                
+                node.AddConnectedNode(nearestNode);
+                nearestNode.m_driveSide = node.m_driveSide;
+                
+            }
+        }
+
+        automobile.GetComponent<TrafficSystemVehiclePlayerAuto>().m_nextNode = unconnectedNodes[9];
+        automobile.transform.position = unconnectedNodes[9].transform.position;
+        
+        return 0;
+    }
+
+    private TrafficSystemNode getNearestNode(TrafficSystemNode n)
+    {
+        var nodes = GetComponentsInChildren<TrafficSystemNode>().Where(p =>
+            p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
+            p.transform.position != n.transform.position &&
+            p.m_isPrimary &&
+            p.transform.parent.parent.parent.gameObject != n.transform.parent.parent.parent.gameObject &&
+            !p.m_connectedNodes.Contains(n) &&
+            !n.m_connectedNodes.Contains(p) &&
+            p.m_connectedNodes.Count == 1
+        ).ToList();
+        TrafficSystemNode bestNode = nodes[0];
+        float bestDistance = 99999;
+        foreach (var node in nodes)
+        {
+            var distance = Vector3.Distance(node.transform.position, n.transform.position);
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestNode = node;
+            }
+        }
+        
+        return bestNode;
     }
 
     private void PrintMap(MapTile[,] map)
