@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 [ExecuteInEditMode]
 [System.Serializable]
 public class TrafficSystemNode : MonoBehaviour 
 {
+	string  PrimaryNodeLeftSideMaterial         = "Assets/Traffic System/Materials/Traffic System Primary Node Left.mat";
+	string  PrimaryNodeRightSideMaterial        = "Assets/Traffic System/Materials/Traffic System Primary Node Right.mat";
+	string  SecondaryNodeLeftSideMaterial       = "Assets/Traffic System/Materials/Traffic System Secondary Node Left.mat";
+	string  SecondaryNodeRightSideMaterial      = "Assets/Traffic System/Materials/Traffic System Secondary Node Right.mat";
+
 	public enum NodeID
 	{
 		ID_0      = 0,
@@ -83,7 +89,7 @@ public class TrafficSystemNode : MonoBehaviour
 		EXIT_3                       = 3,
 		EXIT_4                       = 4,
 	}
-
+	
 	public  TrafficSystem.RoadType    m_roadType                        = TrafficSystem.RoadType.LANES_2;  // set to normal if you are not sure. The names should explain the others.
 	public  bool                      m_isPrimary                       = true;                            // primary nodes are the nodes that the anchor traffic system piece will look to make a connection / link to forming the global path
 	public  int                       m_lane                            = 0;                               // this is handy when there is more than 1 lane for an object to follow. This will make sure the object stays in the correct lane, unless random lane changing is greater than 0.0f
@@ -563,6 +569,36 @@ public class TrafficSystemNode : MonoBehaviour
 		}
 
 		return false;
+	}
+	
+	public void RefreshNodeMaterial()
+	{
+		if(m_driveSide == TrafficSystem.DriveSide.LEFT)
+		{
+			if(m_isPrimary)
+			{
+				Material material = AssetDatabase.LoadAssetAtPath(PrimaryNodeLeftSideMaterial, typeof(Material)) as Material;
+				GetComponent<Renderer>().material = material;
+			}
+			else
+			{
+				Material material = AssetDatabase.LoadAssetAtPath(SecondaryNodeLeftSideMaterial, typeof(Material)) as Material;
+				GetComponent<Renderer>().material = material;
+			}
+		}
+		else
+		{
+			if(m_isPrimary)
+			{
+				Material material = AssetDatabase.LoadAssetAtPath(PrimaryNodeRightSideMaterial, typeof(Material)) as Material;
+				GetComponent<Renderer>().material = material;
+			}
+			else
+			{
+				Material material = AssetDatabase.LoadAssetAtPath(SecondaryNodeRightSideMaterial, typeof(Material)) as Material;
+				GetComponent<Renderer>().material = material;
+			}			
+		}
 	}
 
 	void OnDrawGizmos()

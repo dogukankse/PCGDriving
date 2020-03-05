@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
@@ -20,6 +22,7 @@ public class MapGenerator : MonoBehaviour
     public Texture2D[] textures;
     public GameObject[,] roads;
     public GameObject automobile;
+
     private void Start()
     {
         Random.seed = seed;
@@ -41,8 +44,21 @@ public class MapGenerator : MonoBehaviour
         PrintMap(_map.map);
         DrawMap(_map.map);
         DrawRoads(_map.map);
+        //drawTest();
     }
 
+    public void drawTest()
+    {
+        
+        GameObject road = GetRoadPrefab(6);
+        GameObject road2 = GetRoadPrefab(6);
+       
+        road2.gameObject.name = "changed";
+        road2.transform.position += new Vector3(0,0,25f);
+        var a = road2.GetComponentsInChildren<TrafficSystemNode>().Where(p=>p.m_connectedNodes.Count == 0).ToList()[0];
+        ChangeDriverSide(a);
+    }
+    
     private void DrawMap(MapTile[,] map)
     {
         grid.cellSize = new Vector2(120f / size, 120f / size);
@@ -66,9 +82,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private GameObject GetRoadPrefab(Tile tile)
+    private GameObject GetRoadPrefab(int id)
     {
-        var loadedObject = Resources.Load($"Prefabs/{tile.id}");
+        var loadedObject = Resources.Load($"Prefabs/{id}");
         if (loadedObject == null)
         {
             return Resources.Load("Prefabs/0") as GameObject;
@@ -79,7 +95,8 @@ public class MapGenerator : MonoBehaviour
 
     private int DrawRoads(MapTile[,] map)
     {
-        List<TrafficSystemNode> unconnectedNodes = new List<TrafficSystemNode>();
+        List<TrafficSystemNode> intersectionNodes = new List<TrafficSystemNode>();
+        List<TrafficSystemNode> emptyNodes = new List<TrafficSystemNode>();
         roads = new GameObject[map.GetLength(0), map.GetLength(1)];
         float size = 0f;
         for (int y = 0; y < map.GetLength(0); y++)
@@ -88,7 +105,7 @@ public class MapGenerator : MonoBehaviour
             {
                 Tile tile = map[x, y].tile;
 
-                GameObject road = GetRoadPrefab(tile);
+                GameObject road = GetRoadPrefab(tile.id);
 
                 if (size == 0d)
                 {
@@ -100,46 +117,131 @@ public class MapGenerator : MonoBehaviour
                 road.transform.rotation = Quaternion.Euler(road.transform.rotation.eulerAngles + new Vector3(0, 90, 0));
                 road.transform.SetParent(transform);
                 roads[x, y] = road;
+
                 var nodes = road.GetComponentsInChildren<TrafficSystemNode>().Where(
-                    p => p.m_connectedNodes.Count == 0 &&
-                         p.m_roadType == TrafficSystem.RoadType.LANES_2).ToList();
-                unconnectedNodes.AddRange(nodes);
-            }
-        }
-
-        foreach (var node in unconnectedNodes)
-        {
-            if (node.m_connectedNodes.Count == 0)
-            {
-                var nearestNode = getNearestNode(node);
-                if (nearestNode == null)
+                    p => p.m_roadType == TrafficSystem.RoadType.LANES_2 && p.m_connectedNodes.Count == 0).ToList();
+                if (tile.id == 3 || tile.id == 8 || tile.id == 9 || tile.id == 10 || tile.id == 11)
                 {
-                    continue;
+                    intersectionNodes.AddRange(nodes);
                 }
-                
-                node.AddConnectedNode(nearestNode);
-                nearestNode.m_driveSide = node.m_driveSide;
-                
+
+                emptyNodes.AddRange(nodes);
             }
         }
 
-        automobile.GetComponent<TrafficSystemVehiclePlayerAuto>().m_nextNode = unconnectedNodes[9];
-        automobile.transform.position = unconnectedNodes[9].transform.position;
+        //connect intersections
+        foreach (var node in intersectionNodes)
+        {
+            var nearestNode = getNearestNode(node);
+            if (!nearestNode)
+            {
+                continue;
+            }
+
+            if (node.m_driveSide != nearestNode.m_driveSide)
+            {
+                ChangeDriverSide(nearestNode);
+            }
+
+            if (nearestNode.m_connectedNodes.Count == 0)
+            {
+                nearestNode.AddConnectedNode(node);
+            }
+            else
+            {
+                node.AddConnectedNode(nearestNode);
+            }
+        }
         
+
+
         return 0;
     }
 
-    private TrafficSystemNode getNearestNode(TrafficSystemNode n)
+    private void ChangeDriverSide(TrafficSystemNode node)
     {
-        var nodes = GetComponentsInChildren<TrafficSystemNode>().Where(p =>
+        GameObject parent = node.gameObject;
+        while (parent.name != "Road")
+        {
+            parent = parent.transform.parent.gameObject;
+        }
+
+        var nodes = parent.GetComponentsInChildren<TrafficSystemNode>();
+
+        foreach (var n in nodes)
+        {
+            if (!n.m_isPrimary)
+            {
+               Destroy(n.gameObject);
+            }
+        }
+        
+        var endNodes = nodes.Where(p => p.m_connectedNodes.Count == 0).ToList();
+        var searchingNodes = new List<TrafficSystemNode>(nodes);
+        searchingNodes.RemoveAll(p => endNodes.Contains(p));
+
+        List<List<TrafficSystemNode>> paths = new List<List<TrafficSystemNode>>();
+        foreach (var n in endNodes)
+        {
+            List<TrafficSystemNode> path = new List<TrafficSystemNode>();
+            TrafficSystemNode start = n;
+            path.Add(start);
+            var who = searchingNodes.Where(p => p.m_connectedNodes.Contains(start) || p.m_connectedLocalNode == start).ToList();
+            while (who.Any())
+            {
+                start = who[0];
+                path.Add(start);
+                who = searchingNodes.Where(p => p.m_connectedNodes.Contains(start) || p.m_connectedLocalNode == start).ToList();
+            }
+
+            paths.Add(path);
+        }
+
+        foreach (var path in paths)
+        {
+            for (int i = 0; i < path.Count; i++)
+            {
+                path[i].m_connectedLocalNode = null;
+                path[i].m_connectedNodes.Clear();
+                if (i + 1 < path.Count)
+                {
+                    var newConnect = path[i + 1];
+                    path[i].AddConnectedNode(newConnect);
+                }
+            }
+        }
+
+        foreach (var trafficSystemNode in nodes)
+        {
+            if (trafficSystemNode.m_driveSide == TrafficSystem.DriveSide.LEFT)
+            {
+                trafficSystemNode.m_driveSide = TrafficSystem.DriveSide.RIGHT;
+            }
+            else
+            {
+                trafficSystemNode.m_driveSide = TrafficSystem.DriveSide.LEFT;
+            }
+
+            trafficSystemNode.RefreshNodeMaterial();
+        }
+
+        Debug.Log("");
+    }
+
+    private TrafficSystemNode getNearestNode(TrafficSystemNode n,bool sameDirection = false)
+    {
+        List<TrafficSystemNode> nodes = GetComponentsInChildren<TrafficSystemNode>().Where(p =>
             p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
             p.transform.position != n.transform.position &&
             p.m_isPrimary &&
-            p.transform.parent.parent.parent.gameObject != n.transform.parent.parent.parent.gameObject &&
-            !p.m_connectedNodes.Contains(n) &&
-            !n.m_connectedNodes.Contains(p) &&
-            p.m_connectedNodes.Count == 1
+            p.transform.parent.parent.parent.gameObject != n.transform.parent.parent.parent.gameObject
         ).ToList();
+
+        if (sameDirection)
+        {
+            nodes = nodes.Where(p => p.m_driveSide == n.m_driveSide).ToList();
+        }
+
         TrafficSystemNode bestNode = nodes[0];
         float bestDistance = 99999;
         foreach (var node in nodes)
@@ -151,9 +253,11 @@ public class MapGenerator : MonoBehaviour
                 bestNode = node;
             }
         }
-        
+
+        if (bestDistance > 12) return null;
         return bestNode;
     }
+
 
     private void PrintMap(MapTile[,] map)
     {
