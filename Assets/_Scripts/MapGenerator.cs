@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,53 +7,42 @@ using UnityEngine.UI;
 
 namespace _Scripts
 {
-    public class MapGenerator : MonoBehaviour
+    public class MapGenerator
     {
         private Map _map;
-        public int size;
-        public TextMeshProUGUI text;
-        public Tile[] tiles;
-        public int seed = 0;
-        public GridLayoutGroup grid;
-        public Texture2D[] textures;
-        public GameObject[,] roads;
+        private int _size;
+        private TextMeshProUGUI text;
+        private Tile[] tiles;
+        private GridLayoutGroup grid;
+        private Texture2D[] textures;
+        private GameObject[,] roads;
         public GameObject automobile;
 
-        public Tile[] deneme;
+        private GameObject _trafficSystem;
+
 
         public UnityAction AdjustRoadLamps;
 
-        private void Start()
+        public MapGenerator(int seed,int size)
         {
+            _size = size;
             if (seed != 0)
                 Random.InitState(seed);
-            _map = new Map(size);
-            foreach (Tile tile in tiles)
-            {
-                foreach (string s in tile.downS.Split(' ').ToList())
-                {
-                    tile.down.Add(int.Parse(s));
-                }
+            _map = new Map(_size);
 
-                foreach (string s in tile.leftS.Split(' ').ToList())
-                {
-                    tile.left.Add(int.Parse(s));
-                }
-            }
+            _trafficSystem = Object.FindObjectOfType<TrafficSystem>().gameObject;
 
-            _map.Generate(tiles);
-            PrintMap(_map.map);
-            DrawMap(_map.map);
-            DrawRoads(_map.map);
-
-            //TilesToJSON();
             JSONToTiles();
+            Debug.Log(tiles.Length);
+            _map.Generate(tiles);
+            // PrintMap(_map.map);
+            // DrawMap(_map.map);
         }
 
         private void JSONToTiles()
         {
             string json = File.ReadAllText("./roads.json");
-            deneme = JsonHelper.FromJsonGetArray<Tile>(json);
+            tiles = JsonHelper.FromJsonGetArray<Tile>(json);
         }
 
         private void TilesToJSON()
@@ -67,6 +55,7 @@ namespace _Scripts
                     fileText += json + ",";
                 else fileText += json + "]";
             }
+
             File.WriteAllText("./roads.json", fileText);
         }
 
@@ -84,11 +73,11 @@ namespace _Scripts
 
         private void DrawMap(MapTile[,] map)
         {
-            grid.cellSize = new Vector2(grid.GetComponent<RectTransform>().sizeDelta.x / size,
-                grid.GetComponent<RectTransform>().sizeDelta.y / size);
+            grid.cellSize = new Vector2(grid.GetComponent<RectTransform>().sizeDelta.x / _size,
+                grid.GetComponent<RectTransform>().sizeDelta.y / _size);
             grid.GetComponent<RectTransform>().anchoredPosition = (grid.GetComponent<RectTransform>().sizeDelta / 2 +
                                                                    new Vector2(100, 100)) * -1;
-            grid.constraintCount = size;
+            grid.constraintCount = _size;
 
             for (int y = 0; y < map.GetLength(0); y++)
             {
@@ -107,30 +96,29 @@ namespace _Scripts
         private GameObject GetRoadPrefab(int id)
         {
             var loadedObject = Resources.Load($"Prefabs/{id}");
+            Debug.Log(loadedObject);
             if (loadedObject == null)
             {
                 return Resources.Load("Prefabs/0") as GameObject;
             }
 
-            return Instantiate(loadedObject as GameObject);
+            return Object.Instantiate(loadedObject as GameObject);
         }
 
-        private void DrawRoads(MapTile[,] map)
+        internal void DrawRoads()
         {
-            List<TrafficSystemNode> intersectionNodes = new List<TrafficSystemNode>();
-            List<TrafficSystemNode> emptyNodes = new List<TrafficSystemNode>();
-            roads = new GameObject[map.GetLength(0), map.GetLength(1)];
+            roads = new GameObject[_map.map.GetLength(0), _map.map.GetLength(1)];
             float tileSize = 24f;
-            for (int y = 0; y < map.GetLength(0); y++)
+            for (int y = 0; y < _map.map.GetLength(0); y++)
             {
-                for (int x = 0; x < map.GetLength(1); x++)
+                for (int x = 0; x < _map.map.GetLength(1); x++)
                 {
-                    Tile tile = map[x, y].tile;
+                    Tile tile = _map.map[x, y].tile;
 
                     GameObject road = GetRoadPrefab(tile.id);
 
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
-                    road.transform.SetParent(transform);
+                     road.transform.SetParent(_trafficSystem.transform);
                     roads[x, y] = road;
 
                     /*var nodes = road.GetComponentsInChildren<TrafficSystemNode>().Where(
@@ -168,7 +156,7 @@ namespace _Scripts
             }
         }*/
 
-            RoadConnector roadConnector = new RoadConnector(map, roads);
+            RoadConnector roadConnector = new RoadConnector(_map.map, roads);
             roadConnector.ConnectRoads();
             AdjustRoadLamps();
         }

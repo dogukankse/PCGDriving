@@ -7,16 +7,21 @@ namespace _Scripts
     {
         private MapGenerator _mapGenerator;
         private SunController _sunController;
+
+        [SerializeField] private int seed;
+        [SerializeField] private int size;
         
         private void Awake()
         {
-            _mapGenerator = FindObjectOfType<MapGenerator>();
+            _mapGenerator = new MapGenerator(seed,size);
             _sunController = FindObjectOfType<SunController>();
         }
 
         private void Start()
         {
             _mapGenerator.AdjustRoadLamps = _sunController.FindRoadLamps;
+            _mapGenerator.DrawRoads();
+
         }
     }
 }
