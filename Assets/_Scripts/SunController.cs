@@ -1,32 +1,35 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SunController : MonoBehaviour
 {
     [Header("Sun")] [SerializeField] private Light sun;
 
-    /// <summary>
-    /// simulate 24H in seconds
-    /// </summary>
-    [SerializeField] private float secondsInDay = 120f;
+    [Tooltip("Simulate 24H in seconds")] [SerializeField]
+    private float secondsInDay = 120f;
 
-    /// <summary>
-    /// midnight => 0
-    /// sunrise => 0.25
-    /// noon => 0.5
-    /// sunset => 0.75
-    /// </summary>
-    [Range(0f, 1f)] [SerializeField] private float currentTime = 0f;
+    [Tooltip("midnight => 0\nsunrise => 0.25\nnoon => 0.5\nsunset => 0.75")] [Range(0f, 1f)] [SerializeField]
+    private float currentTime;
 
     private float timeMultiplier = 1f;
 
     private float sunInitialIntensity;
-    [SerializeField] private bool realtime = false;
+    [SerializeField] private bool realtime;
 
+    private List<Light> _roadLamps ;
 
     private void Start()
     {
         sunInitialIntensity = sun.intensity;
+    }
+
+    public void FindRoadLamps()
+    {
+        GameObject[] lamps = GameObject.FindGameObjectsWithTag("RoadLamp");
+        _roadLamps = new List<Light>();
+
+        for (int i = 0; i < lamps.Length; i++)
+            _roadLamps.Add(lamps[i].GetComponentInChildren<Light>());
     }
 
     private void Update()
@@ -55,5 +58,17 @@ public class SunController : MonoBehaviour
 
 
         sun.intensity = sunInitialIntensity * intensityMultiplier;
+
+        UpdateRoadLamps(1 - intensityMultiplier);
+    }
+
+    private void UpdateRoadLamps(float intensityMultiplier)
+    {
+        intensityMultiplier = intensityMultiplier <= .5f ? 0f : 1f;
+
+        for (int i = 0; i < _roadLamps.Count; i++)
+        {
+            _roadLamps[i].intensity = 15 * intensityMultiplier;
+        }
     }
 }

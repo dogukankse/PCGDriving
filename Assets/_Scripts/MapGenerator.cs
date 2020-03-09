@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace _Scripts
@@ -17,6 +19,10 @@ namespace _Scripts
         public Texture2D[] textures;
         public GameObject[,] roads;
         public GameObject automobile;
+
+        public Tile[] deneme;
+
+        public UnityAction AdjustRoadLamps;
 
         private void Start()
         {
@@ -40,6 +46,28 @@ namespace _Scripts
             PrintMap(_map.map);
             DrawMap(_map.map);
             DrawRoads(_map.map);
+
+            //TilesToJSON();
+            JSONToTiles();
+        }
+
+        private void JSONToTiles()
+        {
+            string json = File.ReadAllText("./roads.json");
+            deneme = JsonHelper.FromJsonGetArray<Tile>(json);
+        }
+
+        private void TilesToJSON()
+        {
+            string fileText = "[";
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                string json = JsonUtility.ToJson(tiles[i]);
+                if (i != tiles.Length - 1)
+                    fileText += json + ",";
+                else fileText += json + "]";
+            }
+            File.WriteAllText("./roads.json", fileText);
         }
 
         /* public void drawTest()
@@ -142,6 +170,7 @@ namespace _Scripts
 
             RoadConnector roadConnector = new RoadConnector(map, roads);
             roadConnector.ConnectRoads();
+            AdjustRoadLamps();
         }
 
         /*  private void ChangeDriverSide(TrafficSystemNode node)
