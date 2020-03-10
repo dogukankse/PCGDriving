@@ -303,7 +303,7 @@ public class TrafficSystemVehiclePlayerAuto : TrafficSystemVehicle
             if (Debug.isDebugBuild)
                 Debug.LogWarning("Vehicle Destroyed - No path node");
 
-            //Kill();
+            Kill();
         }
     }
 

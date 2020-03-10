@@ -122,9 +122,9 @@ public class Map
             index++;
         }
 
-        if (index > 0) 
+        if (index > 0)
             return index - 1;
-        else 
+        else
             return 0;
     }
 
