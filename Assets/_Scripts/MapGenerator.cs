@@ -83,11 +83,11 @@ namespace _Scripts
 
         private GameObject GetRoadPrefab(int id)
         {
-            var loadedObject = Resources.Load($"Prefabs/{id}");
+            var loadedObject = Resources.Load($"Prefabs/Roads/{id}");
 //            Debug.Log(loadedObject);
             if (loadedObject == null)
             {
-                return Resources.Load("Prefabs/0") as GameObject;
+                return Resources.Load("Prefabs/Roads/0") as GameObject;
             }
 
             return Object.Instantiate(loadedObject as GameObject);
