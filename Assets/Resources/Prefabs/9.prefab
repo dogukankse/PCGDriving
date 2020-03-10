@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 7300893716403977733}
   - component: {fileID: 5723865514422423143}
   m_Layer: 0
-  m_Name: Node2a
+  m_Name: Node2a-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 1074753167007228811}
   - component: {fileID: 8421296695792184845}
   m_Layer: 0
-  m_Name: Node1a
+  m_Name: Node1a-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1181,7 +1181,7 @@ GameObject:
   - component: {fileID: 1640715156991114506}
   - component: {fileID: 1361440596055374989}
   m_Layer: 0
-  m_Name: Node1a
+  m_Name: Node1a-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,7 +1723,7 @@ GameObject:
   - component: {fileID: 2178575937568045061}
   - component: {fileID: 2037307690734998192}
   m_Layer: 0
-  m_Name: Node2a
+  m_Name: Node2a-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3123,7 +3123,7 @@ GameObject:
   - component: {fileID: 8856453438617446387}
   - component: {fileID: 7370694951095244654}
   m_Layer: 0
-  m_Name: Node1a
+  m_Name: Node1a-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3231,7 +3231,7 @@ GameObject:
   - component: {fileID: 5815780708027535308}
   - component: {fileID: 8164335722782990089}
   m_Layer: 0
-  m_Name: Node2a
+  m_Name: Node2a-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4966,15 +4966,21 @@ MonoBehaviour:
   m_ignoreChildren: 0
   m_roadPieceType: 1
   m_speedLimit: -1
-  m_primaryLeftLaneNodes: []
-  m_secondaryLeftLaneNodes: []
+  m_primaryLeftLaneNodes:
+  - {fileID: 7370694951095244654}
+  - {fileID: 8421296695792184845}
+  m_secondaryLeftLaneNodes:
+  - {fileID: 1361440596055374989}
   m_leftLaneChangeNodes:
   - {fileID: 9008626344363305215}
   - {fileID: 3001492012310194977}
   - {fileID: 7704177022821855458}
   - {fileID: 125325468509893177}
-  m_primaryRightLaneNodes: []
-  m_secondaryRightLaneNodes: []
+  m_primaryRightLaneNodes:
+  - {fileID: 5723865514422423143}
+  m_secondaryRightLaneNodes:
+  - {fileID: 8164335722782990089}
+  - {fileID: 2037307690734998192}
   m_rightLaneChangeNodes:
   - {fileID: 2603406129084276098}
   - {fileID: 4035116280702494831}
@@ -6013,7 +6019,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8989853089966291094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 0, z: 38.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5647707904014881923}
