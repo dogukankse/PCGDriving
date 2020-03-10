@@ -23,7 +23,7 @@ namespace _Scripts
 
         public UnityAction AdjustRoadLamps;
 
-        public MapGenerator(int seed,int size)
+        public MapGenerator(int seed, int size)
         {
             _size = size;
             if (seed != 0)
@@ -33,7 +33,6 @@ namespace _Scripts
             _trafficSystem = Object.FindObjectOfType<TrafficSystem>().gameObject;
 
             JSONToTiles();
-            Debug.Log(tiles.Length);
             _map.Generate(tiles);
             // PrintMap(_map.map);
             // DrawMap(_map.map);
@@ -96,7 +95,6 @@ namespace _Scripts
         private GameObject GetRoadPrefab(int id)
         {
             var loadedObject = Resources.Load($"Prefabs/{id}");
-            Debug.Log(loadedObject);
             if (loadedObject == null)
             {
                 return Resources.Load("Prefabs/0") as GameObject;
@@ -118,7 +116,7 @@ namespace _Scripts
                     GameObject road = GetRoadPrefab(tile.id);
 
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
-                     road.transform.SetParent(_trafficSystem.transform);
+                    road.transform.SetParent(_trafficSystem.transform);
                     roads[x, y] = road;
 
                     /*var nodes = road.GetComponentsInChildren<TrafficSystemNode>().Where(
