@@ -13,7 +13,7 @@ namespace _Scripts
         [SerializeField] private int seed;
         [SerializeField] private int size;
 
-        public GameObject trafficCar;
+        public GameObject[] trafficCars;
         public int trafficCount;
 
         private void Awake()
@@ -33,9 +33,10 @@ namespace _Scripts
         {
             for (int i = 0; i < trafficCount; i++)
             {
-                int random = Random.Range(0, nodes.Count-1);
+                int random = Random.Range(0, nodes.Count - 1);
+                GameObject randomCar = trafficCars[i%trafficCars.Length];
                 var node = nodes[random];
-                var car = Instantiate(trafficCar);
+                var car = Instantiate(randomCar);
                 car.transform.position = node.transform.position;
                 car.transform.rotation = node.transform.rotation;
                 car.GetComponent<TrafficSystemVehiclePlayerAuto>().m_nextNode = node;

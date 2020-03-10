@@ -83,11 +83,10 @@ namespace _Scripts
 
         private GameObject GetRoadPrefab(int id)
         {
-            var loadedObject = Resources.Load($"Prefabs/{id}");
-
+            var loadedObject = Resources.Load($"Prefabs/Roads/{id}");
             if (loadedObject == null)
             {
-                return Resources.Load("Prefabs/0") as GameObject;
+                return Resources.Load("Prefabs/Roads/0") as GameObject;
             }
 
             return Object.Instantiate(loadedObject as GameObject);
@@ -120,7 +119,67 @@ namespace _Scripts
             roadConnector.ConnectRoads();
             AdjustRoadLamps();
 
+           CombineMeshes();
+            
             return connectors;
+        }
+
+        private void CombineMeshes()
+        {
+            var pieces = _trafficSystem.GetComponentsInChildren<TrafficSystemPiece>();
+
+            var meshes = new List<MeshFilter>();
+            foreach (var piece in pieces)
+            {
+               var model= piece.transform.Find("Models");
+               var mesh = model.gameObject.GetComponentsInChildren<MeshFilter>();
+               meshes.AddRange(mesh);
+            }
+            
+           
+
+            var mergedRoad = _trafficSystem;
+            
+            var road_mesh = mergedRoad.AddComponent<MeshFilter>();
+            road_mesh.mesh = new Mesh();
+            road_mesh.mesh.CombineMeshes(Combine(meshes.ToArray()),true,true);
+            mergedRoad.GetComponent<Renderer>().enabled = false;
+            mergedRoad.gameObject.SetActive(true);
+            var meshCollider = mergedRoad.AddComponent<MeshCollider>();
+            meshCollider.sharedMesh = road_mesh.mesh;
+            
+
+        }
+
+
+        private CombineInstance[] Combine(MeshFilter[] filters)
+        {
+            List<CombineInstance> combine = new List<CombineInstance> ();
+ 
+            for (int i = 0; i < filters.Length; i++)
+            {
+                // skip the empty parent GO
+                if (filters[i].sharedMesh == null)
+                    continue;
+ 
+                // combine submeshes
+                for (int j = 0; j < filters[i].sharedMesh.subMeshCount; j++)
+                {
+                    CombineInstance ci = new CombineInstance ();
+ 
+                    ci.mesh = filters[i].sharedMesh;
+                    ci.subMeshIndex = j;
+                    ci.transform = filters[i].transform.localToWorldMatrix;
+ 
+                    combine.Add (ci);
+                }                
+ 
+                // disable child mesh GO-s
+                //filters[i].gameObject.SetActive (false);
+            }
+
+            return combine.ToArray();
+
         }
 
         private int getIdOfMap(int x, int y)
@@ -148,7 +207,6 @@ namespace _Scripts
                 if (x >= 0 && x < _size && tconnectTiles.Contains(getIdOfMap(x, 0))) id = 11;
                 
                 GameObject road = GetRoadPrefab(id);
-                road.name = "top " + x + "- " + id;
 
                 road.transform.position = new Vector3(tileSize * x, 0, tileSize);
                 road.transform.SetParent(_trafficSystem.transform);
