@@ -34,9 +34,9 @@ namespace _Scripts
             for (int i = 0; i < trafficCount; i++)
             {
                 int random = Random.Range(0, nodes.Count - 1);
-                int randomCar = Random.Range(0, trafficCars.Length - 1);
+                GameObject randomCar = trafficCars[i%trafficCars.Length];
                 var node = nodes[random];
-                var car = Instantiate(trafficCars[randomCar]);
+                var car = Instantiate(randomCar);
                 car.transform.position = node.transform.position;
                 car.transform.rotation = node.transform.rotation;
                 car.GetComponent<TrafficSystemVehiclePlayerAuto>().m_nextNode = node;
