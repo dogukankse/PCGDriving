@@ -84,7 +84,6 @@ namespace _Scripts
         private GameObject GetRoadPrefab(int id)
         {
             var loadedObject = Resources.Load($"Prefabs/Roads/{id}");
-//            Debug.Log(loadedObject);
             if (loadedObject == null)
             {
                 return Resources.Load("Prefabs/Roads/0") as GameObject;
@@ -109,7 +108,6 @@ namespace _Scripts
                     
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
                     road.transform.SetParent(_trafficSystem.transform);
-
                     connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>());
                 }
             }

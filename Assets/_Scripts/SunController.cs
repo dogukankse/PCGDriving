@@ -70,7 +70,7 @@ namespace _Scripts
 
             for (int i = 0; i < _roadLamps.Count; i++)
             {
-                _roadLamps[i].intensity = 15 * intensityMultiplier;
+                _roadLamps[i].intensity = 10 * intensityMultiplier;
             }
         }
     }
