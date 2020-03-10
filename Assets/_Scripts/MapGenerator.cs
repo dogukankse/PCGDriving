@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,14 +17,14 @@ namespace _Scripts
         private GridLayoutGroup grid;
         private Texture2D[] textures;
         private GameObject[,] roads;
-        public GameObject automobile;
 
         private GameObject _trafficSystem;
+        float tileSize = 24f;
 
 
         public UnityAction AdjustRoadLamps;
 
-        public MapGenerator(int seed,int size)
+        public MapGenerator(int seed, int size)
         {
             _size = size;
             if (seed != 0)
@@ -33,7 +34,6 @@ namespace _Scripts
             _trafficSystem = Object.FindObjectOfType<TrafficSystem>().gameObject;
 
             JSONToTiles();
-            Debug.Log(tiles.Length);
             _map.Generate(tiles);
             // PrintMap(_map.map);
             // DrawMap(_map.map);
@@ -58,18 +58,6 @@ namespace _Scripts
 
             File.WriteAllText("./roads.json", fileText);
         }
-
-        /* public void drawTest()
-         {
-             GameObject road = GetRoadPrefab(6);
-             GameObject road2 = GetRoadPrefab(6);
- 
-             road2.gameObject.name = "changed";
-             road2.transform.position += new Vector3(0, 0, 25f);
-             var a = road2.GetComponentsInChildren<TrafficSystemNode>().Where(p => p.m_connectedNodes.Count == 0)
-                 .ToList()[0];
-             ChangeDriverSide(a);
-         }*/
 
         private void DrawMap(MapTile[,] map)
         {
@@ -96,7 +84,7 @@ namespace _Scripts
         private GameObject GetRoadPrefab(int id)
         {
             var loadedObject = Resources.Load($"Prefabs/{id}");
-            Debug.Log(loadedObject);
+//            Debug.Log(loadedObject);
             if (loadedObject == null)
             {
                 return Resources.Load("Prefabs/0") as GameObject;
@@ -105,10 +93,10 @@ namespace _Scripts
             return Object.Instantiate(loadedObject as GameObject);
         }
 
-        internal void DrawRoads()
+        internal List<TrafficSystemNode> DrawRoads()
         {
-            roads = new GameObject[_map.map.GetLength(0), _map.map.GetLength(1)];
-            float tileSize = 24f;
+            List<TrafficSystemNode> connectors = new List<TrafficSystemNode>();
+
             for (int y = 0; y < _map.map.GetLength(0); y++)
             {
                 for (int x = 0; x < _map.map.GetLength(1); x++)
@@ -117,168 +105,137 @@ namespace _Scripts
 
                     GameObject road = GetRoadPrefab(tile.id);
 
+                    _map.map[x, y].road = road;
+                    
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
-                     road.transform.SetParent(_trafficSystem.transform);
-                    roads[x, y] = road;
+                    road.transform.SetParent(_trafficSystem.transform);
 
-                    /*var nodes = road.GetComponentsInChildren<TrafficSystemNode>().Where(
-                    p => p.m_roadType == TrafficSystem.RoadType.LANES_2 && p.m_connectedNodes.Count == 0).ToList();
-                if (tile.id == 3 || tile.id == 8 || tile.id == 9 || tile.id == 10 || tile.id == 11)
-                {
-                    intersectionNodes.AddRange(nodes);
-                }
-
-                emptyNodes.AddRange(nodes);*/
+                    connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>());
                 }
             }
 
-            //connect intersections
-            /*foreach (var node in intersectionNodes)
-        {
-            var nearestNode = getNearestNode(node);
-            if (!nearestNode)
-            {
-                continue;
-            }
+            _map = drawSquareRoad();
+            _size = _map.map.GetLength(0);
 
-            if (node.m_driveSide != nearestNode.m_driveSide)
-            {
-                ChangeDriverSide(nearestNode);
-            }
-
-            if (nearestNode.m_connectedNodes.Count == 0)
-            {
-                nearestNode.AddConnectedNode(node);
-            }
-            else
-            {
-                node.AddConnectedNode(nearestNode);
-            }
-        }*/
-
-            RoadConnector roadConnector = new RoadConnector(_map.map, roads);
+            RoadConnector roadConnector = new RoadConnector(_map.map);
             roadConnector.ConnectRoads();
             AdjustRoadLamps();
+
+            return connectors;
         }
 
-        /*  private void ChangeDriverSide(TrafficSystemNode node)
-          {
-              GameObject parent = node.gameObject;
-              while (parent.name != "Road")
-              {
-                  parent = parent.transform.parent.gameObject;
-              }
-  
-              var nodes = parent.GetComponentsInChildren<TrafficSystemNode>();
-  
-              foreach (var n in nodes)
-              {
-                  if (!n.m_isPrimary)
-                  {
-                      Destroy(n.gameObject);
-                  }
-              }
-  
-              var endNodes = nodes.Where(p => p.m_connectedNodes.Count == 0).ToList();
-              var searchingNodes = new List<TrafficSystemNode>(nodes);
-              searchingNodes.RemoveAll(p => endNodes.Contains(p));
-  
-              List<List<TrafficSystemNode>> paths = new List<List<TrafficSystemNode>>();
-              foreach (var n in endNodes)
-              {
-                  List<TrafficSystemNode> path = new List<TrafficSystemNode>();
-                  TrafficSystemNode start = n;
-                  path.Add(start);
-                  var who = searchingNodes
-                      .Where(p => p.m_connectedNodes.Contains(start) || p.m_connectedLocalNode == start)
-                      .ToList();
-                  while (who.Any())
-                  {
-                      start = who[0];
-                      path.Add(start);
-                      who = searchingNodes.Where(p =>
-                              p.m_connectedNodes.Contains(start) || p.m_connectedLocalNode == start)
-                          .ToList();
-                  }
-  
-                  paths.Add(path);
-              }
-  
-              foreach (var path in paths)
-              {
-                  for (int i = 0; i < path.Count; i++)
-                  {
-                      path[i].m_connectedLocalNode = null;
-                      path[i].m_connectedNodes.Clear();
-                      if (i + 1 < path.Count)
-                      {
-                          var newConnect = path[i + 1];
-                          path[i].AddConnectedNode(newConnect);
-                      }
-                  }
-              }
-  
-              foreach (var trafficSystemNode in nodes)
-              {
-                  if (trafficSystemNode.m_driveSide == TrafficSystem.DriveSide.LEFT)
-                  {
-                      trafficSystemNode.m_driveSide = TrafficSystem.DriveSide.RIGHT;
-                  }
-                  else
-                  {
-                      trafficSystemNode.m_driveSide = TrafficSystem.DriveSide.LEFT;
-                  }
-  
-                  trafficSystemNode.RefreshNodeMaterial();
-              }
-  
-              Debug.Log("");
-          }
-  
-          private TrafficSystemNode getNearestNode(TrafficSystemNode n, bool sameDirection = false)
-          {
-              List<TrafficSystemNode> nodes = GetComponentsInChildren<TrafficSystemNode>().Where(p =>
-                  p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
-                  p.transform.position != n.transform.position &&
-                  p.m_isPrimary &&
-                  p.transform.parent.parent.parent.gameObject != n.transform.parent.parent.parent.gameObject
-              ).ToList();
-  
-              if (sameDirection)
-              {
-                  nodes = nodes.Where(p => p.m_driveSide == n.m_driveSide).ToList();
-              }
-  
-              TrafficSystemNode bestNode = nodes[0];
-              float bestDistance = 99999;
-              foreach (var node in nodes)
-              {
-                  var distance = Vector3.Distance(node.transform.position, n.transform.position);
-                  if (distance < bestDistance)
-                  {
-                      bestDistance = distance;
-                      bestNode = node;
-                  }
-              }
-  
-              if (bestDistance > 12) return null;
-              return bestNode;
-          }
-  */
+        private int getIdOfMap(int x, int y)
+        {
+            return _map.map[x, y].tile.id;
+        }
+        
+        private MapTile getMapTile(int x, int y)
+        {
+            return _map.map[x, y];
+        }
+
+        private Map drawSquareRoad()
+        {
+            Map map = new Map(_size + 2);
+            map.map = new MapTile[_size + 2, _size + 2];
+            var mapTile = map.map;
+
+            int[] tconnectTiles = new[] {2, 3, 6, 7, 8, 9, 10};
+            for (int x = -1; x < _size + 1; x++)
+            {
+                int id = 1;
+                if (x == -1) id = 4;
+                if (x == _size) id = 5;
+                if (x >= 0 && x < _size && tconnectTiles.Contains(getIdOfMap(x, 0))) id = 11;
+                
+                GameObject road = GetRoadPrefab(id);
+                road.name = "top " + x + "- " + id;
+
+                road.transform.position = new Vector3(tileSize * x, 0, tileSize);
+                road.transform.SetParent(_trafficSystem.transform);
+                
+                mapTile[x + 1, 0] = new MapTile(tiles[id],road);
+            }
+
+            tconnectTiles = new[] {2, 3, 4, 5, 8, 10, 11};
+            for (int x = -1; x < _size + 1; x++)
+            {
+                int id = 1;
+                if (x == -1) id = 7;
+                if (x == _size) id = 6;
+                if (x >= 0 && x < _size && tconnectTiles.Contains(getIdOfMap(x, _size - 1))) id = 9;
+                
+            
+
+                GameObject road = GetRoadPrefab(id);
+
+                road.transform.position = new Vector3(tileSize * x, 0, -tileSize * _size);
+                road.transform.SetParent(_trafficSystem.transform);
+                
+                mapTile[x + 1, _size+1] = new MapTile(tiles[id],road);
+            }
+
+            tconnectTiles = new[] {1, 3, 5, 6, 8, 9, 11};
+            for (int x = 0; x < _size; x++)
+            {
+                int id = 2;
+                if (tconnectTiles.Contains(getIdOfMap(0, x))) id = 10;
+
+            
+                GameObject road = GetRoadPrefab(id);
+                road.transform.position = new Vector3(-tileSize, 0, -tileSize * x);
+                road.transform.SetParent(_trafficSystem.transform);
+                
+                mapTile[0, x+1] = new MapTile(tiles[id],road);
+                
+            }
+
+            tconnectTiles = new[] {1, 3, 4, 7, 9, 10, 11};
+            for (int x = 0; x < _size; x++)
+            {
+                int id = 2;
+                if (tconnectTiles.Contains(getIdOfMap(_size - 1, x))) id = 8;
+               
+
+                GameObject road = GetRoadPrefab(id);
+                road.transform.position = new Vector3(tileSize * _size, 0, -tileSize * x);
+                road.transform.SetParent(_trafficSystem.transform);
+                
+                mapTile[_size+1, x+1] = new MapTile(tiles[id],road);
+            }
+
+            for (int x = 1; x < mapTile.GetLength(0)-1; x++)
+            {
+                for (int y = 1; y < mapTile.GetLength(0)-1; y++)
+                {
+                    mapTile[x, y] = getMapTile(x-1,y-1);
+                }
+            }
+
+            return map;
+        }
 
         private void PrintMap(MapTile[,] map)
         {
-            for (int y = 0;
-                y < map.GetLength(0);
-                y++)
+            string rows = "";
+            for (int x = 0; x < map.GetLength(0); x++)
             {
-                for (int x = 0; x < map.GetLength(1); x++)
+                string row = "";
+                for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    text.text += map[x, y].tile.id + " ";
+                    string value = "0";
+                    if (map[x, y] != null)
+                    {
+                        value = map[x, y].ToString();
+                    }
+
+                    row = row + $"{value,3}";
                 }
 
-                text.text += "\n";
+                rows = rows + row + "\n";
             }
+
+            Debug.Log(rows);
         }
     }
 }

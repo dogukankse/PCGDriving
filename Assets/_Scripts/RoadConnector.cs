@@ -9,12 +9,10 @@ namespace _Scripts
     public class RoadConnector
     {
         private readonly MapTile[,] _map;
-        private readonly GameObject[,] _roads;
 
-        public RoadConnector(MapTile[,] map, GameObject[,] roads)
+        public RoadConnector(MapTile[,] map)
         {
             _map = map;
-            _roads = roads;
         }
 
         internal void ConnectRoads()
@@ -26,7 +24,7 @@ namespace _Scripts
             {
                 for (int x = 0; x < width; x++)
                 {
-                    GameObject currentRoad = _roads[x, y];
+                    GameObject currentRoad = _map[x, y].road;
                     int roadType = GetRoadType(currentRoad);
                     EmptyNodes emptyNodes = currentRoad.GetComponent<EmptyNodes>();
 
@@ -37,7 +35,7 @@ namespace _Scripts
                     EmptyNodes bNeighborEmptyNodes;
                     if (roadType == 1 && x != width - 1)
                     {
-                        rNeighborRoad = _roads[x + 1, y];
+                        rNeighborRoad = _map[x + 1, y].road;
                         rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
 
                         if (IsSpecial(rNeighborRoad, new[] {4, 6, 7, 9, 8}))
@@ -49,7 +47,7 @@ namespace _Scripts
                     }
                     else if (roadType == 2 && y != height - 1)
                     {
-                        bNeighborRoad = _roads[x, y + 1];
+                        bNeighborRoad = _map[x, y + 1].road;
                         bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
 
                         if (IsSpecial(bNeighborRoad, new[] {7, 10}))
@@ -63,7 +61,7 @@ namespace _Scripts
                     {
                         if (x != width - 1)
                         {
-                            rNeighborRoad = _roads[x + 1, y];
+                            rNeighborRoad = _map[x + 1, y].road;
                             rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
 
                             if (IsSpecial(rNeighborRoad, new[] {4, 6, 7, 9, 8}))
@@ -76,7 +74,7 @@ namespace _Scripts
 
                         if (y != height - 1)
                         {
-                            bNeighborRoad = _roads[x, y + 1];
+                            bNeighborRoad = _map[x, y + 1].road;
                             bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
 
                             if (IsSpecial(bNeighborRoad, new[] {7}))
@@ -91,7 +89,7 @@ namespace _Scripts
                     {
                         if (x != width - 1)
                         {
-                            rNeighborRoad = _roads[x + 1, y];
+                            rNeighborRoad = _map[x + 1, y].road;
                             rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
 
                             if (IsSpecial(rNeighborRoad, new[] {8, 6, 9}))
@@ -104,7 +102,7 @@ namespace _Scripts
 
                         if (y != height - 1)
                         {
-                            bNeighborRoad = _roads[x, y + 1];
+                            bNeighborRoad = _map[x, y + 1].road;
                             bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
 
                             if (IsSpecial(bNeighborRoad, new[] {3, 6, 2, 8, 9}))
@@ -121,7 +119,7 @@ namespace _Scripts
                     }
                     else if (roadType == 5 && y != height - 1)
                     {
-                        bNeighborRoad = _roads[x, y + 1];
+                        bNeighborRoad = _map[x, y + 1].road;
                         bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
 
                         if (IsSpecial(bNeighborRoad, new[] {7}))
@@ -134,7 +132,7 @@ namespace _Scripts
                     }
                     else if (roadType == 7 && x != width - 1)
                     {
-                        rNeighborRoad = _roads[x + 1, y];
+                        rNeighborRoad = _map[x + 1, y].road;
                         rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
                         if (IsSpecial(rNeighborRoad, new[] {1, 5, 3}))
                             ConnectNodes(rNeighborEmptyNodes.startRight, emptyNodes.endLeft,
@@ -145,7 +143,7 @@ namespace _Scripts
                     }
                     else if (roadType == 8 && y != height - 1)
                     {
-                        bNeighborRoad = _roads[x, y + 1];
+                        bNeighborRoad = _map[x, y + 1].road;
                         bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
 
                         if (IsSpecial(bNeighborRoad, new[] {7}))
@@ -157,7 +155,7 @@ namespace _Scripts
                     }
                     else if (roadType == 9 && x != width - 1)
                     {
-                        rNeighborRoad = _roads[x + 1, y];
+                        rNeighborRoad = _map[x + 1, y].road;
                         rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
 
                         if (IsSpecial(rNeighborRoad, new[] {1, 3, 5}))
@@ -171,7 +169,7 @@ namespace _Scripts
                     {
                         if (x != width - 1)
                         {
-                            rNeighborRoad = _roads[x + 1, y];
+                            rNeighborRoad = _map[x + 1, y].road;
                             rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
                             if (IsSpecial(rNeighborRoad, new[] {9, 6}))
                                 ConnectNodes(emptyNodes.endLeft, rNeighborEmptyNodes.startRight,
@@ -183,7 +181,7 @@ namespace _Scripts
 
                         if (y != height - 1)
                         {
-                            bNeighborRoad = _roads[x, y + 1];
+                            bNeighborRoad = _map[x, y + 1].road;
                             bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
 
                             if (IsSpecial(bNeighborRoad, new[] {2, 3}))
@@ -198,7 +196,7 @@ namespace _Scripts
                     {
                         if (x != width - 1)
                         {
-                            rNeighborRoad = _roads[x + 1, y];
+                            rNeighborRoad = _map[x + 1, y].road;
                             rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
                             ConnectNodes(emptyNodes.endLeft, rNeighborEmptyNodes.startLeft,
                                 rNeighborEmptyNodes.startRight, emptyNodes.endRight);
@@ -206,7 +204,7 @@ namespace _Scripts
 
                         if (y != height - 1)
                         {
-                            bNeighborRoad = _roads[x, y + 1];
+                            bNeighborRoad = _map[x, y + 1].road;
                             bNeighborEmptyNodes = bNeighborRoad.GetComponent<EmptyNodes>();
                             if (IsSpecial(bNeighborRoad, new[] {7}))
 
@@ -230,7 +228,7 @@ namespace _Scripts
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Object.Destroy(_roads[x, y].GetComponent<EmptyNodes>());
+                    Object.Destroy(_map[x, y].road.GetComponent<EmptyNodes>());
                 }
             }
         }
