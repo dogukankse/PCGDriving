@@ -121,7 +121,7 @@ MonoBehaviour:
   m_wheelRotMultiplier: 5
   m_vehicleCheckDist: 1.73
   m_vehicleCheckRadius: 0.98
-  m_vehicleCheckDistRay: 5.8
+  m_vehicleCheckDistRay: 13.3
   m_vehicleCheckDistLeftRayOffset: 0.4
   m_vehicleCheckDistRightRayOffset: 0.5
   m_vehicleCheckDistRayMimicSpeedThreshold: 0.05

@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9deb46eaff1645158cae035face067e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 0
+  seed: 37
   size: 5
   trafficCars:
   - {fileID: 1000989852007098829, guid: 70600f787d1c243f989585e055e4c529, type: 3}

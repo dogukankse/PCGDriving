@@ -50,6 +50,16 @@ namespace _Scripts
                 }
 
                 positions.Add(node);
+                if (node.m_connectedNodes.Count > 0)
+                {
+                    positions.Add(node.m_connectedNodes.First());
+                }
+
+                if (node.m_connectedLocalNode)
+                {
+                    positions.Add(node.m_connectedLocalNode);
+                }
+
                 node.Parent.SpawnRandomVehicle(randomCar.GetComponent<TrafficSystemVehicle>(), node);
             }
         }

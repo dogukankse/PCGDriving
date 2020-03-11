@@ -108,7 +108,7 @@ namespace _Scripts
                     
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
                     road.transform.SetParent(_trafficSystem.transform);
-                    connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>());
+                    connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>().Where(p=>p.m_roadType == TrafficSystem.RoadType.LANES_2));
                 }
             }
 
@@ -151,6 +151,11 @@ namespace _Scripts
 
         }
 
+
+        public Rect[] findEmptySpaces()
+        {
+            var collider = _trafficSystem.GetComponent<MeshCollider>();
+        }
 
         private CombineInstance[] Combine(MeshFilter[] filters)
         {

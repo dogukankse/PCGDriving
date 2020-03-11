@@ -757,14 +757,22 @@ public class TrafficSystemPiece : MonoBehaviour
 		{
 			Vector3 pos = node.transform.position;
 			pos -= a_vehiclePrefab.m_offsetPosVal;
-			
-			TrafficSystemVehicle vehicle = Instantiate( a_vehiclePrefab, node.transform.position, node.transform.rotation ) as TrafficSystemVehicle;
+
+			Quaternion rotation = node.transform.rotation;
+			if (node.m_driveSide == TrafficSystem.DriveSide.LEFT)
+			{
+				rotation.eulerAngles = new Vector3(rotation.eulerAngles.x,180-rotation.eulerAngles.y,rotation.eulerAngles.z);
+			}
+
+			TrafficSystemVehicle vehicle = Instantiate( a_vehiclePrefab, node.transform.position, rotation ) as TrafficSystemVehicle;
 			vehicle.m_nextNode           = node;
 			vehicle.m_velocityMax        = Random.Range(TrafficSystem.Instance.m_randVehicleVelocityMin, TrafficSystem.Instance.m_randVehicleVelocityMax);
 
 			TrafficSystemNode nextNode = node.GetNextNode( vehicle, false );
-			if(nextNode)
-				vehicle.transform.forward = nextNode.transform.position - vehicle.transform.position;
+			//if(nextNode)
+			//	vehicle.transform.forward = nextNode.transform.position - vehicle.transform.position;
+			
+			
 
 			TrafficSystem.Instance.RegisterVehicle( vehicle );
 		}
