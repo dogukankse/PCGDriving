@@ -41,6 +41,8 @@ public class TrafficSystemVehicle : MonoBehaviour
 	protected float                     m_velocityMaxOriginal  = 0.0f;                   // this is our current velocity from the start
 	public  float                       m_velocity             = 0.0f;                   // this is our current velocity 
 	public  float                       m_accelerationRate     = 10.0f;                  // this is the velocity we add each second while accelerating
+	public  float                       m_decelerationRate     = 10.0f;                  // this is the velocity we add each second while accelerating
+
 	[Range(0.0f, 1.0f)]
 	public  float                       m_decelerationPercentage = 0.4f;                 // percentage of the total m_accelerationRate to use as deceleration
 //	[Range(0.0f, 0.15f)]
@@ -113,7 +115,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 	protected float                     m_returnToOriginalVelocityTimer    = 0.0f;
 	protected float                     m_returnToOriginalVelocityTimerMax = 10.0f;
 
-	public  TrafficSystemTrafficLight   TrafficLight           { get; set; }
+	public TrafficSystemTrafficLight TrafficLight;
 	protected float                     m_trafficLightCoolDown    = 0.0f;
 	public  float                       m_trafficLightCoolDownMax = 3.0f;                   // once we go through a set of traffic lights this determines a cool down peroid before we stop at another set of traffic lights ... it is used for allowing bigger vehicles a cool down peroid to move forward without stopping at adjacent traffic lights of the same intersection
 	private float                       m_trafficLightYellowEnterDuration      = 0.0f;
@@ -782,17 +784,17 @@ public class TrafficSystemVehicle : MonoBehaviour
 		{
 			if(TrafficLight.m_status == TrafficSystemTrafficLight.Status.RED)
 			{
-				//print ("TrafficLight = RED");
+				Debug.Log("TrafficLight = RED");
 				StopMoving = true;
 			}
 			else if(CanSeeVehicleViaSphere() && !TrafficLight.IgnoreCanFitAcrossIntersectionCheck())
 			{
-				//print ("CanSeeVehicleViaSphere: = TRUE");
+				Debug.Log("CanSeeVehicleViaSphere: = TRUE");
 				StopMoving = true;
 			}
 			else if(!CanFitAcrossIntersection() && !TrafficLight.IgnoreCanFitAcrossIntersectionCheck())
 			{
-				//print ("CanFitAcrossIntersection: = FALSE");
+				Debug.Log("CanFitAcrossIntersection: = FALSE");
 				StopMoving = true;
 			}
 			else if(TrafficLight.m_status == TrafficSystemTrafficLight.Status.YELLOW)
@@ -803,7 +805,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 					DriveThroughLights();
 				}
 				else
-					//print ("TrafficLight = RED OR YELLOW");
+					Debug.Log("TrafficLight = RED OR YELLOW");
 					StopMoving = true;
 			}
 			else if(TrafficLight.m_status == TrafficSystemTrafficLight.Status.GREEN)
@@ -811,7 +813,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 				DriveThroughLights();
 			}
 
-//			print ("TrafficLight: " + TrafficLight);
+			Debug.Log( "TrafficLight: " + TrafficLight);
 		}
 
 		if(!StopMoving && m_nextNode && !CrashDetected)// && !m_pathingStarted)
@@ -841,8 +843,8 @@ public class TrafficSystemVehicle : MonoBehaviour
 
 			if(Accelerate)                                                              // are we accelerating?
 				m_velocity = m_velocity + ((m_accelerationRate * ratio) * Time.deltaTime);        // add to the current velocity according while accelerating
-//			else
-//				m_velocity = m_velocity - (m_decelerationRate * Time.deltaTime);        // subtract from the current velocity while decelerating
+			else
+				m_velocity = m_velocity - ((m_decelerationRate * ratio) * Time.deltaTime);        // subtract from the current velocity while decelerating
 
 			float velTmp = m_velocityMax * ratio;
 
@@ -951,7 +953,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 		{
 			if(TrafficLight.m_intersection.m_intersectionSystem == TrafficSystemIntersection.IntersectionSystem.SINGLE)
 			{
-				//						print ("GO!");
+				Debug.Log( "GO!");
 				TrafficLight = null;
 				StopMoving         = false;
 				m_trafficLightYellowEnterDurationTimer = 0.0f;
@@ -960,12 +962,12 @@ public class TrafficSystemVehicle : MonoBehaviour
 			{
 				if(IsTurningIntoIncomingTraffic())
 				{
-					//print ("IsTurningIntoIncomingTraffic: = TRUE");
+					Debug.Log("IsTurningIntoIncomingTraffic: = TRUE");
 					StopMoving         = true;
 				}
 				else
 				{
-					//							print ("GO!");
+					Debug.Log( "GO!");
 					TrafficLight = null;
 					StopMoving         = false;
 					m_trafficLightYellowEnterDurationTimer = 0.0f;
@@ -999,9 +1001,13 @@ public class TrafficSystemVehicle : MonoBehaviour
 
 	public void AssignTrafficLight( TrafficSystemTrafficLight a_trafficLight )
 	{
-		if(m_trafficLightCoolDown > m_trafficLightCoolDownMax)
+		if (m_trafficLightCoolDown > m_trafficLightCoolDownMax)
+		{
 			TrafficLight = a_trafficLight;
-
+			Debug.Log("Traffic light setted");
+		}
+		
+			
 		m_trafficLightCoolDown = 0.0f;
 	}
 
