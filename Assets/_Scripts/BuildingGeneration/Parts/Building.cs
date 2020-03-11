@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace _Scripts.BuildingGeneration.Parts
@@ -16,7 +15,12 @@ namespace _Scripts.BuildingGeneration.Parts
 
         public override string ToString()
         {
-            return $"Building:({Size.ToString()}; {Wings.Length})";
+            string building = "Building:(" + Size + "; " + Wings.Length + ")\n";
+            for (int i = 0; i < Wings.Length; i++)
+            {
+                building += "\t" + Wings[i] + "\n";
+            }
+            return building;
         }
     }
 }

@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 7300893716403977733}
   - component: {fileID: 5723865514422423143}
   m_Layer: 0
-  m_Name: Node2a
+  m_Name: Node2a-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -488,7 +488,7 @@ Transform:
   m_Children:
   - {fileID: 1493606161514994917}
   m_Father: {fileID: 8747723620805106040}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1805211709770495711
 MeshFilter:
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_driveSide: 0
   m_connectedNodes:
   - {fileID: 8164335722782990089}
-  m_connectedLocalNode: {fileID: 8164335722782990089}
+  m_connectedLocalNode: {fileID: 0}
   m_connectedChangeLaneNodes:
   - {fileID: 7704177022821855458}
   m_isInbound: 0
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 1074753167007228811}
   - component: {fileID: 8421296695792184845}
   m_Layer: 0
-  m_Name: Node1a
+  m_Name: Node1a-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -623,7 +623,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6bc093d37eff14b4abb937a640ba841a, type: 2}
+  - {fileID: 2100000, guid: 21a5c8c2872b4df4288991d012426ca0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -660,11 +660,11 @@ MonoBehaviour:
   m_isPrimary: 1
   m_lane: 0
   m_onlyConnectWithSameLane: 0
-  m_driveSide: 1
-  m_connectedNodes:
-  - {fileID: 8421296695792184845}
-  m_connectedLocalNode: {fileID: 6119884855247608013}
-  m_connectedChangeLaneNodes: []
+  m_driveSide: 0
+  m_connectedNodes: []
+  m_connectedLocalNode: {fileID: 0}
+  m_connectedChangeLaneNodes:
+  - {fileID: 6119884855247608013}
   m_isInbound: 0
   m_isOutbound: 0
   m_changeLaneID: 0
@@ -923,7 +923,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &730967441040013902
 Transform:
   m_ObjectHideFlags: 0
@@ -1082,8 +1082,9 @@ MonoBehaviour:
   m_onlyConnectWithSameLane: 0
   m_driveSide: 1
   m_connectedNodes: []
-  m_connectedLocalNode: {fileID: 3001492012310194977}
-  m_connectedChangeLaneNodes: []
+  m_connectedLocalNode: {fileID: 0}
+  m_connectedChangeLaneNodes:
+  - {fileID: 3001492012310194977}
   m_isInbound: 1
   m_isOutbound: 0
   m_changeLaneID: 0
@@ -1181,7 +1182,7 @@ GameObject:
   - component: {fileID: 1640715156991114506}
   - component: {fileID: 1361440596055374989}
   m_Layer: 0
-  m_Name: Node1a
+  m_Name: Node1a-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1200,7 +1201,7 @@ Transform:
   m_Children:
   - {fileID: 2457021054338407995}
   m_Father: {fileID: 8747723620805106040}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1549588531041010863
 MeshFilter:
@@ -1622,10 +1623,10 @@ Transform:
   - {fileID: 758921491313488698}
   - {fileID: 1269604944315639311}
   - {fileID: 3355410163356229974}
-  - {fileID: 3933503962804399039}
   - {fileID: 1118998839862183084}
   - {fileID: 7126727733412236625}
   - {fileID: 7139547127498918238}
+  - {fileID: 3933503962804399039}
   - {fileID: 222465037619005712}
   - {fileID: 1592477272072440620}
   m_Father: {fileID: 5651527381950446405}
@@ -1723,7 +1724,7 @@ GameObject:
   - component: {fileID: 2178575937568045061}
   - component: {fileID: 2037307690734998192}
   m_Layer: 0
-  m_Name: Node2a
+  m_Name: Node2a-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1769,7 +1770,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 956cf5bfd2a7e06459f77f6fd3452f65, type: 2}
+  - {fileID: 2100000, guid: accd2f71b5988674f97b673a41dea475, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1806,7 +1807,7 @@ MonoBehaviour:
   m_isPrimary: 0
   m_lane: 0
   m_onlyConnectWithSameLane: 0
-  m_driveSide: 0
+  m_driveSide: 1
   m_connectedNodes: []
   m_connectedLocalNode: {fileID: 0}
   m_connectedChangeLaneNodes: []
@@ -2071,8 +2072,9 @@ MonoBehaviour:
   m_onlyConnectWithSameLane: 0
   m_driveSide: 0
   m_connectedNodes: []
-  m_connectedLocalNode: {fileID: 2603406129084276098}
-  m_connectedChangeLaneNodes: []
+  m_connectedLocalNode: {fileID: 1361440596055374989}
+  m_connectedChangeLaneNodes:
+  - {fileID: 2603406129084276098}
   m_isInbound: 1
   m_isOutbound: 0
   m_changeLaneID: 1
@@ -2175,10 +2177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_automatic: 1
   m_intersectionSystem: 1
-  m_lights:
-  - {fileID: 1066854761778396211}
-  - {fileID: 802774283551233821}
-  - {fileID: 6820183764676501157}
+  m_lights: []
   m_lightsA:
   - {fileID: 1066854761778396211}
   - {fileID: 6820183764676501157}
@@ -2873,7 +2872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4419643647309429794}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.759, y: -0.019, z: 1.016}
+  m_LocalPosition: {x: 1.68, y: -0.019, z: 0.974}
   m_LocalScale: {x: 0.21222666, y: 0.21222664, z: 0.21222666}
   m_Children:
   - {fileID: 1658396370577395602}
@@ -3123,7 +3122,7 @@ GameObject:
   - component: {fileID: 8856453438617446387}
   - component: {fileID: 7370694951095244654}
   m_Layer: 0
-  m_Name: Node1a
+  m_Name: Node1a-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3142,7 +3141,7 @@ Transform:
   m_Children:
   - {fileID: 730967441040013902}
   m_Father: {fileID: 8747723620805106040}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1625031515146328981
 MeshFilter:
@@ -3207,9 +3206,8 @@ MonoBehaviour:
   m_lane: 0
   m_onlyConnectWithSameLane: 0
   m_driveSide: 1
-  m_connectedNodes:
-  - {fileID: 7370694951095244654}
-  m_connectedLocalNode: {fileID: 1361440596055374989}
+  m_connectedNodes: []
+  m_connectedLocalNode: {fileID: 0}
   m_connectedChangeLaneNodes:
   - {fileID: 4035116280702494831}
   m_isInbound: 0
@@ -3231,7 +3229,7 @@ GameObject:
   - component: {fileID: 5815780708027535308}
   - component: {fileID: 8164335722782990089}
   m_Layer: 0
-  m_Name: Node2a
+  m_Name: Node2a-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3250,7 +3248,7 @@ Transform:
   m_Children:
   - {fileID: 4978557673288193839}
   m_Father: {fileID: 8747723620805106040}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2120835680535209424
 MeshFilter:
@@ -3324,89 +3322,6 @@ MonoBehaviour:
   m_directionListing: 0
   m_roundaboutExit: 0
   m_debug: 0
---- !u!1 &4951091000536931277
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3127598361567716834}
-  - component: {fileID: 8642747226229384335}
-  - component: {fileID: 1018815302419649101}
-  m_Layer: 0
-  m_Name: road-2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
---- !u!4 &3127598361567716834
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4951091000536931277}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.07, z: 2.61}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7257486099131298108}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8642747226229384335
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4951091000536931277}
-  m_Mesh: {fileID: 4300000, guid: 6f1121359548bf54da72930a01fb200c, type: 3}
---- !u!23 &1018815302419649101
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4951091000536931277}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 0f5cdae2ff652ab46a47ad4009518ffe, type: 2}
-  - {fileID: 2100000, guid: 03bd449fccf116d439db5be71eb72502, type: 2}
-  - {fileID: 2100000, guid: d09daa622cbe97b41b947720f3fd580a, type: 2}
-  - {fileID: 2100000, guid: 2df893d11531b3a48a573d459522a4bc, type: 2}
-  - {fileID: 2100000, guid: 58d5d90c133873243825c9b209ba2b90, type: 2}
-  - {fileID: 2100000, guid: f0144e2d22907aa4cb0181d079508d8b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!1 &5023460346981696773
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,8 +3420,9 @@ MonoBehaviour:
   m_onlyConnectWithSameLane: 0
   m_driveSide: 1
   m_connectedNodes: []
-  m_connectedLocalNode: {fileID: 2603406129084276098}
-  m_connectedChangeLaneNodes: []
+  m_connectedLocalNode: {fileID: 0}
+  m_connectedChangeLaneNodes:
+  - {fileID: 2603406129084276098}
   m_isInbound: 0
   m_isOutbound: 1
   m_changeLaneID: 3
@@ -3539,7 +3455,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5165115837709062581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.974, y: -0.019, z: 1.926}
+  m_LocalPosition: {x: -0.974, y: -0.019, z: 1.88}
   m_LocalScale: {x: 0.21222664, y: 0.21222664, z: 0.21222664}
   m_Children:
   - {fileID: 2036542085408230003}
@@ -3572,7 +3488,7 @@ MonoBehaviour:
   m_lightYellowArrow: {fileID: 0}
   m_lightGreenArrow: {fileID: 0}
   m_intersection: {fileID: 0}
-  m_turnLeftAnytime: 1
+  m_turnLeftAnytime: 0
 --- !u!65 &7615926581217482919
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3682,7 +3598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7117282483172101542
 Transform:
   m_ObjectHideFlags: 0
@@ -3997,8 +3913,9 @@ MonoBehaviour:
   m_onlyConnectWithSameLane: 0
   m_driveSide: 1
   m_connectedNodes: []
-  m_connectedLocalNode: {fileID: 125325468509893177}
-  m_connectedChangeLaneNodes: []
+  m_connectedLocalNode: {fileID: 0}
+  m_connectedChangeLaneNodes:
+  - {fileID: 125325468509893177}
   m_isInbound: 1
   m_isOutbound: 0
   m_changeLaneID: 3
@@ -4215,7 +4132,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6464100933646863647}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.881, y: -0.019, z: -0.753}
+  m_LocalPosition: {x: -1.88, y: -0.019, z: -0.71}
   m_LocalScale: {x: 0.21222664, y: 0.21222664, z: 0.21222664}
   m_Children:
   - {fileID: 957494087216986886}
@@ -4691,7 +4608,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7257486099131298108}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5584746022170867545
 MeshFilter:
@@ -4962,29 +4879,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d60033c01818ec47b987e3a0f934dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ignoreTrafficSystemEditor: 1
-  m_ignoreChildren: 0
+  m_ignoreTrafficSystemEditor: 0
+  m_ignoreChildren: 1
   m_roadPieceType: 1
   m_speedLimit: -1
   m_primaryLeftLaneNodes: []
   m_secondaryLeftLaneNodes: []
-  m_leftLaneChangeNodes:
-  - {fileID: 9008626344363305215}
-  - {fileID: 3001492012310194977}
-  - {fileID: 7704177022821855458}
-  - {fileID: 125325468509893177}
+  m_leftLaneChangeNodes: []
   m_primaryRightLaneNodes: []
   m_secondaryRightLaneNodes: []
-  m_rightLaneChangeNodes:
-  - {fileID: 2603406129084276098}
-  - {fileID: 4035116280702494831}
-  - {fileID: 3148632106990987028}
-  - {fileID: 6119884855247608013}
+  m_rightLaneChangeNodes: []
   m_renderer: {fileID: 1646501757212003738}
   m_posOffset: {x: 0, y: 0, z: 0}
   m_roadModelsOriginal: []
   m_roadModelsVersion2:
-  - {fileID: 4951091000536931277}
+  - {fileID: 0}
   m_roadModelsVersion2Mobile:
   - {fileID: 6799764462123031512}
   m_footpaths: []
@@ -5749,7 +5658,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3127598361567716834}
   - {fileID: 8926753061276234071}
   m_Father: {fileID: 5651527381950446405}
   m_RootOrder: 0
@@ -6013,7 +5921,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8989853089966291094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 0, z: 38.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5647707904014881923}
