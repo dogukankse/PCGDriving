@@ -139,7 +139,7 @@ public class TrafficSystem : MonoBehaviour
 				if(rand <= m_randomVehicleSpawnChancePerNode && CanSpawn())
 				{
 					int randVehicleIndex = Random.Range(0, m_vehiclePrefabs.Count);
-					roadPieces[rIndex].SpawnRandomVehicle( m_vehiclePrefabs[randVehicleIndex] );
+//					roadPieces[rIndex].SpawnRandomVehicle( m_vehiclePrefabs[randVehicleIndex] );
 				}
 			}
 		}

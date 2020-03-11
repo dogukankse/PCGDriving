@@ -52,13 +52,14 @@ MonoBehaviour:
   m_nextNode: {fileID: 0}
   m_nextNodeThreshold: 1
   m_rotationSpeed: 3.5
-  m_offsetPosVal: {x: 0, y: -0.62, z: 0}
+  m_offsetPosVal: {x: 0, y: -0.68, z: 0}
   m_useRoadSpeedLimits: 1
   m_velocityMin: 0
   m_velocityMax: 5
   m_changeMaxVelocityOnSpeedLimitInc: 1
   m_velocity: 0
   m_accelerationRate: 10
+  m_decelerationRate: 10
   m_decelerationPercentage: 0.4
   m_randomLaneChange: 0
   m_randomChanceToOvertake: 0.625
@@ -109,6 +110,7 @@ MonoBehaviour:
   m_waitTimeMax: 0
   m_strictCrashCheck: 0
   m_timetoWaitAfterCrash: 4
+  TrafficLight: {fileID: 0}
   m_trafficLightCoolDownMax: 0
   m_enableWaitingDestroyTimer: 1
   m_waitingDestroyTimerMax: 50
@@ -131,8 +133,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.65, y: 0.85, z: 3.48}
-  m_Center: {x: 0, y: 0, z: -0.2}
+  m_Size: {x: 1.65, y: 1.0034736, z: 3.48}
+  m_Center: {x: 0, y: -0.07673681, z: -0.20000005}
 --- !u!54 &941754149031624498
 Rigidbody:
   m_ObjectHideFlags: 0

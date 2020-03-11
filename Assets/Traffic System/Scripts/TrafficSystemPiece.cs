@@ -747,217 +747,18 @@ public class TrafficSystemPiece : MonoBehaviour
 		return bounds;
 	}
 
-	public void SpawnRandomVehicle( TrafficSystemVehicle a_vehiclePrefab )
+	public void SpawnRandomVehicle( TrafficSystemVehicle a_vehiclePrefab,TrafficSystemNode node )
 	{
 		if(!TrafficSystem.Instance)
 			return;
-
-		TrafficSystemNode node = null;
-
-		int randomLane = Random.Range(0, 4);
-
-		switch(randomLane)
-		{
-		case 0:
-		{
-			for(int nIndex = 0; nIndex < m_primaryLeftLaneNodes.Count; nIndex++)
-			{
-				if(m_primaryLeftLaneNodes[nIndex])
-				{
-					node = m_primaryLeftLaneNodes[nIndex];
-					break;
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_primaryRightLaneNodes.Count; nIndex++)
-				{
-					if(m_primaryRightLaneNodes[nIndex])
-					{
-						node = m_primaryRightLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryLeftLaneNodes[nIndex])
-					{
-						node = m_secondaryLeftLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryRightLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryRightLaneNodes[nIndex])
-					{
-						node = m_secondaryRightLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-		}
-			break;
-		case 1:
-		{
-			for(int nIndex = 0; nIndex < m_primaryRightLaneNodes.Count; nIndex++)
-			{
-				if(m_primaryRightLaneNodes[nIndex])
-				{
-					node = m_primaryRightLaneNodes[nIndex];
-					break;
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_primaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_primaryLeftLaneNodes[nIndex])
-					{
-						node = m_primaryLeftLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryLeftLaneNodes[nIndex])
-					{
-						node = m_secondaryLeftLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryRightLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryRightLaneNodes[nIndex])
-					{
-						node = m_secondaryRightLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-		}
-			break;
-		case 2:
-		{
-			for(int nIndex = 0; nIndex < m_primaryLeftLaneNodes.Count; nIndex++)
-			{
-				if(m_primaryLeftLaneNodes[nIndex])
-				{
-					node = m_primaryLeftLaneNodes[nIndex];
-					break;
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_primaryRightLaneNodes[nIndex])
-					{
-						node = m_primaryRightLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryRightLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryRightLaneNodes[nIndex])
-					{
-						node = m_secondaryRightLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryLeftLaneNodes[nIndex])
-					{
-						node = m_secondaryLeftLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-		}
-			break;
-		case 3:
-		{
-			for(int nIndex = 0; nIndex < m_primaryRightLaneNodes.Count; nIndex++)
-			{
-				if(m_primaryRightLaneNodes[nIndex])
-				{
-					node = m_primaryRightLaneNodes[nIndex];
-					break;
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_primaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_primaryLeftLaneNodes[nIndex])
-					{
-						node = m_primaryLeftLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryRightLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryRightLaneNodes[nIndex])
-					{
-						node = m_secondaryRightLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-			
-			if(!node)
-			{
-				for(int nIndex = 0; nIndex < m_secondaryLeftLaneNodes.Count; nIndex++)
-				{
-					if(m_secondaryLeftLaneNodes[nIndex])
-					{
-						node = m_secondaryLeftLaneNodes[nIndex];
-						break;
-					}
-				}
-			}
-		}
-			break;
-		}
+		
 
 		if(node)
 		{
 			Vector3 pos = node.transform.position;
 			pos -= a_vehiclePrefab.m_offsetPosVal;
-
-			TrafficSystemVehicle vehicle = Instantiate( a_vehiclePrefab, pos, node.transform.rotation ) as TrafficSystemVehicle;
+			
+			TrafficSystemVehicle vehicle = Instantiate( a_vehiclePrefab, node.transform.position, node.transform.rotation ) as TrafficSystemVehicle;
 			vehicle.m_nextNode           = node;
 			vehicle.m_velocityMax        = Random.Range(TrafficSystem.Instance.m_randVehicleVelocityMin, TrafficSystem.Instance.m_randVehicleVelocityMax);
 
@@ -965,7 +766,7 @@ public class TrafficSystemPiece : MonoBehaviour
 			if(nextNode)
 				vehicle.transform.forward = nextNode.transform.position - vehicle.transform.position;
 
-//			TrafficSystem.Instance.RegisterVehicle( vehicle );
+			TrafficSystem.Instance.RegisterVehicle( vehicle );
 		}
 	}
 
