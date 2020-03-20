@@ -150,13 +150,7 @@ namespace _Scripts
             
 
         }
-
-
-        public Rect[] findEmptySpaces()
-        {
-            var collider = _trafficSystem.GetComponent<MeshCollider>();
-        }
-
+        
         private CombineInstance[] Combine(MeshFilter[] filters)
         {
             List<CombineInstance> combine = new List<CombineInstance> ();
