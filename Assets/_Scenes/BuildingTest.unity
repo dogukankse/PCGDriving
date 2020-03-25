@@ -151,8 +151,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _walls:
   - {fileID: 3376228714772403148, guid: 5f5f7af1fc7add1489577fb2e9f0d253, type: 3}
+  - {fileID: 3376228714772403148, guid: 196ec18348ab2524b90f0c595c6c3c90, type: 3}
+  - {fileID: 3376228714772403148, guid: 6fbfd5c693259a74d85c8ea550db85ef, type: 3}
   _roofs:
   - {fileID: 1996960641100595581, guid: e709dfbbd97213649866483be017a8ca, type: 3}
+  _width: 5
+  _depth: 5
+  _height: 5
+  _indoors: 1
 --- !u!4 &187183107
 Transform:
   m_ObjectHideFlags: 0

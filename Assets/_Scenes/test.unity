@@ -416,7 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sun: {fileID: 436033195}
   secondsInDay: 120
-  currentTime: 0.5
+  currentTime: 0
   realtime: 0
 --- !u!1001 &621523374
 PrefabInstance:
@@ -1692,13 +1692,89 @@ GameObject:
   - component: {fileID: 4738305651211817}
   - component: {fileID: 54242777627775585}
   - component: {fileID: 114597767996405933}
+  - component: {fileID: 1511026491975712}
   m_Layer: 0
   m_Name: Vehicle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!114 &1511026491975712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511026491975711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff9c75fdde32ec42bf374827c893448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_useNodeToPathToOnStart: 0
+  m_nodeToPathTo: {fileID: 0}
+  m_nextNode: {fileID: 0}
+  m_nextNodeThreshold: 1
+  m_rotationSpeed: 3.5
+  m_offsetPosVal: {x: 0, y: 0, z: 0}
+  m_useRoadSpeedLimits: 0
+  m_velocityMin: 0
+  m_velocityMax: 5
+  m_changeMaxVelocityOnSpeedLimitInc: 1
+  m_velocity: 0
+  m_accelerationRate: 10
+  m_decelerationRate: 10
+  m_decelerationPercentage: 0.4
+  m_randomLaneChange: 0.2
+  m_randomChanceToOvertake: 0.5
+  m_chanceOfUsingOfframp: 0.2
+  m_chanceOfDirChange: 0.2
+  m_rigidbody: {fileID: 0}
+  m_collider: {fileID: 64541053237768469}
+  m_colliderOnCrash: {fileID: 64541053237768469}
+  m_lightsFront: []
+  m_lightsRear: []
+  m_lightsBlinkerRight: []
+  m_lightsBlinkerLeft: []
+  m_blinkerSpeed: 0.2
+  m_frontLightsEnabled: 0
+  m_wheelsFront: []
+  m_wheelsRear: []
+  m_wheelAxis: 0
+  m_wheelRotMultiplier: 1
+  m_vehicleCheckDist: 1.6
+  m_vehicleCheckRadius: 0.72
+  m_vehicleCheckDistRay: 14
+  m_vehicleCheckDistLeftRayOffset: 1
+  m_vehicleCheckDistRightRayOffset: 1
+  m_vehicleCheckDistRayMimicSpeedThreshold: 0.4
+  m_vehicleCheckOvertakeOnHighway: 1
+  m_vehicleCheckDistOvertakeHighwayOnly: 3.2
+  m_vehicleCheckRadiusOvertakeHighwayOnly: 0.72
+  m_enableVehicleCheckMid: 0
+  m_vehicleCheckDistMid: 1.2
+  m_vehicleCheckRadiusMid: 1.58
+  m_intersectionCheckDistRay: 14
+  m_vehicleCheckRadiusAtLightsCapsule: 1.15
+  m_vehicleCheckDistAtLightsCapsule: 6
+  m_vehicleCheckOffset: {x: 0, y: 0, z: 0}
+  m_waitTimeMin: 0.05
+  m_waitTimeMax: 0.25
+  m_strictCrashCheck: 0
+  m_timetoWaitAfterCrash: 4
+  TrafficLight: {fileID: 0}
+  m_trafficLightCoolDownMax: 3
+  m_enableWaitingDestroyTimer: 1
+  m_waitingDestroyTimerMax: 50
+  m_stuckDestroyTimerMax: 5
+  m_killOnEmptyPath: 0
+  m_trafficLightDetection: 3
+  m_audioSource: {fileID: 0}
+  m_audioClipEngine: {fileID: 0}
+  m_audioClipHorn: {fileID: 0}
+  m_playHornOnCrash: 1
+  m_flashFrontLightsOnCrash: 1
 --- !u!1 &1544389230208611
 GameObject:
   m_ObjectHideFlags: 0
