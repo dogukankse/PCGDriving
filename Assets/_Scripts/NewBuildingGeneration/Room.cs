@@ -14,28 +14,34 @@ namespace _Scripts.NewBuildingGeneration
             _roofs = roofs;
         }
 
-        public Boo.Lang.List<GameObject> CreateWalls(Vector3 pos, bool front, bool right, bool back, bool left)
+        public List<GameObject> CreateWalls(Vector3 pos, bool front, bool right, bool back, bool left)
         {
-            Boo.Lang.List<GameObject> walls = new Boo.Lang.List<GameObject>();
+            GameObject wallType;
+            if (pos.y == 0 && Random.value >= 0.65)
+                wallType = _walls[2];
+            else
+                wallType = _walls[1];
+
+            List<GameObject> walls = new List<GameObject>();
             //left
             if (left)
-                walls.Add(Object.Instantiate(_walls.GetRandomFrom(),
+                walls.Add(Object.Instantiate(wallType,
                     new Vector3(-.5f, 0, -.5f) + pos,
                     Quaternion.Euler(0, 0, 0)));
             //front
             if (front)
-                walls.Add(Object.Instantiate(_walls.GetRandomFrom(),
+                walls.Add(Object.Instantiate(wallType,
                     Vector3.zero + pos,
                     Quaternion.Euler(0, 270, 0)));
             //right
             if (right)
                 walls.Add(
-                    Object.Instantiate(_walls.GetRandomFrom(),
+                    Object.Instantiate(wallType,
                         new Vector3(-.5f, 0, .5f) + pos,
                         Quaternion.Euler(0, 180, 0)));
             //back
             if (back)
-                walls.Add(Object.Instantiate(_walls.GetRandomFrom(),
+                walls.Add(Object.Instantiate(wallType,
                     new Vector3(-1f, 0, 0) + pos,
                     Quaternion.Euler(0, 90, 0)));
 
