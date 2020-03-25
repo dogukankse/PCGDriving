@@ -31,6 +31,7 @@ namespace _Scripts
             InitTraffic(connectors.Where(p =>
                 p.m_isPrimary &&
                 !p.Parent.name.Contains("Intersection") &&
+                p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
         }
@@ -60,8 +61,15 @@ namespace _Scripts
                     positions.Add(node.m_connectedLocalNode);
                 }
 
-                node.Parent.SpawnRandomVehicle(randomCar.GetComponent<TrafficSystemVehicle>(), node);
+                var vehicle = randomCar.GetComponent<TrafficSystemVehicle>();
+                node.Parent.SpawnRandomVehicle(vehicle, node);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_mapGenerator != null)
+                _mapGenerator.DrawDebug();
         }
     }
 }

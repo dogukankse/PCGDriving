@@ -105,23 +105,39 @@ namespace _Scripts
                     GameObject road = GetRoadPrefab(tile.id);
 
                     _map.map[x, y].road = road;
-                    
+
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
                     road.transform.SetParent(_trafficSystem.transform);
-                    connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>().Where(p=>p.m_roadType == TrafficSystem.RoadType.LANES_2));
+                    connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>()
+                        .Where(p => p.m_roadType == TrafficSystem.RoadType.LANES_2));
                 }
             }
 
+
             _map = drawSquareRoad();
             _size = _map.map.GetLength(0);
+            
+            DisableNodes();
 
             RoadConnector roadConnector = new RoadConnector(_map.map);
             roadConnector.ConnectRoads();
             AdjustRoadLamps();
 
-           CombineMeshes();
+            CombineMeshes();
             
             return connectors;
+        }
+        
+
+        private void DisableNodes()
+        {
+            foreach (var node in _trafficSystem.GetComponentsInChildren<TrafficSystemNode>())
+            {
+                foreach (var r in node.GetComponentsInChildren<Renderer>())
+                {
+                    r.enabled = false;
+                }
+            }
         }
 
         private void CombineMeshes()
@@ -131,67 +147,57 @@ namespace _Scripts
             var meshes = new List<MeshFilter>();
             foreach (var piece in pieces)
             {
-               var model= piece.transform.Find("Models");
-               var mesh = model.gameObject.GetComponentsInChildren<MeshFilter>();
-               meshes.AddRange(mesh);
+                var model = piece.transform.Find("Models");
+                var mesh = model.gameObject.GetComponentsInChildren<MeshFilter>();
+                meshes.AddRange(mesh);
             }
-            
-           
+
 
             var mergedRoad = _trafficSystem;
-            
+
             var road_mesh = mergedRoad.AddComponent<MeshFilter>();
             road_mesh.mesh = new Mesh();
-            road_mesh.mesh.CombineMeshes(Combine(meshes.ToArray()),true,true);
+            road_mesh.mesh.CombineMeshes(Combine(meshes.ToArray()), true, true);
             mergedRoad.GetComponent<Renderer>().enabled = false;
             mergedRoad.gameObject.SetActive(true);
             var meshCollider = mergedRoad.AddComponent<MeshCollider>();
             meshCollider.sharedMesh = road_mesh.mesh;
-            
-
         }
-
-
-        public Rect[] findEmptySpaces()
-        {
-            var collider = _trafficSystem.GetComponent<MeshCollider>();
-        }
-
+        
         private CombineInstance[] Combine(MeshFilter[] filters)
         {
-            List<CombineInstance> combine = new List<CombineInstance> ();
- 
+            List<CombineInstance> combine = new List<CombineInstance>();
+
             for (int i = 0; i < filters.Length; i++)
             {
                 // skip the empty parent GO
                 if (filters[i].sharedMesh == null)
                     continue;
- 
+
                 // combine submeshes
                 for (int j = 0; j < filters[i].sharedMesh.subMeshCount; j++)
                 {
-                    CombineInstance ci = new CombineInstance ();
- 
+                    CombineInstance ci = new CombineInstance();
+
                     ci.mesh = filters[i].sharedMesh;
                     ci.subMeshIndex = j;
                     ci.transform = filters[i].transform.localToWorldMatrix;
- 
-                    combine.Add (ci);
-                }                
- 
+
+                    combine.Add(ci);
+                }
+
                 // disable child mesh GO-s
                 //filters[i].gameObject.SetActive (false);
             }
 
             return combine.ToArray();
-
         }
 
         private int getIdOfMap(int x, int y)
         {
             return _map.map[x, y].tile.id;
         }
-        
+
         private MapTile getMapTile(int x, int y)
         {
             return _map.map[x, y];
@@ -210,13 +216,13 @@ namespace _Scripts
                 if (x == -1) id = 4;
                 if (x == _size) id = 5;
                 if (x >= 0 && x < _size && tconnectTiles.Contains(getIdOfMap(x, 0))) id = 11;
-                
+
                 GameObject road = GetRoadPrefab(id);
 
                 road.transform.position = new Vector3(tileSize * x, 0, tileSize);
                 road.transform.SetParent(_trafficSystem.transform);
-                
-                mapTile[x + 1, 0] = new MapTile(tiles[id],road);
+
+                mapTile[x + 1, 0] = new MapTile(tiles[id], road);
             }
 
             tconnectTiles = new[] {2, 3, 4, 5, 8, 10, 11};
@@ -226,15 +232,14 @@ namespace _Scripts
                 if (x == -1) id = 7;
                 if (x == _size) id = 6;
                 if (x >= 0 && x < _size && tconnectTiles.Contains(getIdOfMap(x, _size - 1))) id = 9;
-                
-            
+
 
                 GameObject road = GetRoadPrefab(id);
 
                 road.transform.position = new Vector3(tileSize * x, 0, -tileSize * _size);
                 road.transform.SetParent(_trafficSystem.transform);
-                
-                mapTile[x + 1, _size+1] = new MapTile(tiles[id],road);
+
+                mapTile[x + 1, _size + 1] = new MapTile(tiles[id], road);
             }
 
             tconnectTiles = new[] {1, 3, 5, 6, 8, 9, 11};
@@ -243,13 +248,12 @@ namespace _Scripts
                 int id = 2;
                 if (tconnectTiles.Contains(getIdOfMap(0, x))) id = 10;
 
-            
+
                 GameObject road = GetRoadPrefab(id);
                 road.transform.position = new Vector3(-tileSize, 0, -tileSize * x);
                 road.transform.SetParent(_trafficSystem.transform);
-                
-                mapTile[0, x+1] = new MapTile(tiles[id],road);
-                
+
+                mapTile[0, x + 1] = new MapTile(tiles[id], road);
             }
 
             tconnectTiles = new[] {1, 3, 4, 7, 9, 10, 11};
@@ -257,25 +261,26 @@ namespace _Scripts
             {
                 int id = 2;
                 if (tconnectTiles.Contains(getIdOfMap(_size - 1, x))) id = 8;
-               
+
 
                 GameObject road = GetRoadPrefab(id);
                 road.transform.position = new Vector3(tileSize * _size, 0, -tileSize * x);
                 road.transform.SetParent(_trafficSystem.transform);
-                
-                mapTile[_size+1, x+1] = new MapTile(tiles[id],road);
+
+                mapTile[_size + 1, x + 1] = new MapTile(tiles[id], road);
             }
 
-            for (int x = 1; x < mapTile.GetLength(0)-1; x++)
+            for (int x = 1; x < mapTile.GetLength(0) - 1; x++)
             {
-                for (int y = 1; y < mapTile.GetLength(0)-1; y++)
+                for (int y = 1; y < mapTile.GetLength(0) - 1; y++)
                 {
-                    mapTile[x, y] = getMapTile(x-1,y-1);
+                    mapTile[x, y] = getMapTile(x - 1, y - 1);
                 }
             }
 
             return map;
         }
+
 
         private void PrintMap(MapTile[,] map)
         {
@@ -298,6 +303,11 @@ namespace _Scripts
             }
 
             Debug.Log(rows);
+        }
+
+        public void DrawDebug()
+        {
+
         }
     }
 }
