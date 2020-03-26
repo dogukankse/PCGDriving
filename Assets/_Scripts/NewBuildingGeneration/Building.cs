@@ -8,13 +8,14 @@ namespace _Scripts.NewBuildingGeneration
         private readonly GameObject[] _roofs;
         private readonly bool _indoors;
         private Room room;
+        private bool _hasDoor = false;
 
         public Building(GameObject[] walls, GameObject[] roofs, bool indoors)
         {
             _walls = walls;
             _roofs = roofs;
             _indoors = indoors;
-            room = new Room(_walls, _roofs);
+            room = new Room(_walls, _roofs,_hasDoor);
         }
 
 
@@ -23,9 +24,9 @@ namespace _Scripts.NewBuildingGeneration
             GameObject building = new GameObject("Building");
             for (int y = 0; y < height; y++)
             {
-                for (int z = -depth/2; z < depth/2; z++)
+                for (int z = -depth / 2; z < depth / 2; z++)
                 {
-                    for (int x = -width/2; x < width/2; x++)
+                    for (int x = -width / 2; x < width / 2; x++)
                     {
                         Vector3 pos = new Vector3(x, y, z);
                         GameObject go = new GameObject($"Room {pos}");

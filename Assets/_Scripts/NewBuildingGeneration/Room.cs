@@ -7,20 +7,25 @@ namespace _Scripts.NewBuildingGeneration
     {
         private readonly GameObject[] _walls;
         private readonly GameObject[] _roofs;
+        private bool _hasDoor;
 
-        public Room(GameObject[] walls, GameObject[] roofs)
+        public Room(GameObject[] walls, GameObject[] roofs, bool hasDoor)
         {
             _walls = walls;
             _roofs = roofs;
+            _hasDoor = hasDoor;
         }
 
         public List<GameObject> CreateWalls(Vector3 pos, bool front, bool right, bool back, bool left)
         {
             GameObject wallType;
-            if (pos.y == 0 && Random.value >= 0.65)
+            if (pos.y == 0 && Random.value >= 0.65 && !_hasDoor)
+            {
                 wallType = _walls[2];
+                _hasDoor = true;
+            }
             else
-                wallType = _walls[1];
+                wallType = _walls.GetRandomFrom(new[] {2});
 
             List<GameObject> walls = new List<GameObject>();
             //left
