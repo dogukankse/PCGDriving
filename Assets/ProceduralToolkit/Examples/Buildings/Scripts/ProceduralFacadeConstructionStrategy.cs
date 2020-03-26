@@ -64,6 +64,7 @@ namespace ProceduralToolkit.Examples.Buildings
                 }
             }
             meshRenderer.materials = materials.ToArray();
+            rendererGo.AddComponent<BoxCollider>();
         }
 
         public static void ConstructLayout(CompoundMeshDraft draft, Vector2 parentLayoutOrigin, ILayout layout)

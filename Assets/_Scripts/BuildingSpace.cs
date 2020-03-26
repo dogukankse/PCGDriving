@@ -37,7 +37,7 @@ namespace _Scripts
             component.config.floors = Random.Range(2, 7);
             component.config.palette.wallColor = Random.ColorHSV();
             var building = component.generate().gameObject;
-            building.AddComponent<BoxCollider>();
+           
 
 
         }
