@@ -156,8 +156,8 @@ MonoBehaviour:
   _roofs:
   - {fileID: 1996960641100595581, guid: e709dfbbd97213649866483be017a8ca, type: 3}
   _width: 5
-  _depth: 5
-  _height: 5
+  _depth: 8
+  _height: 2
   _indoors: 1
 --- !u!4 &187183107
 Transform:

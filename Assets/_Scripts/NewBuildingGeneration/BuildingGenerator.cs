@@ -17,9 +17,10 @@ namespace _Scripts.NewBuildingGeneration
             Building building = new Building(_walls,_roofs,_indoors);
             building.CreateBuilding(_width,_height,_depth);
             
+            
         }
+        
 
 
-      
     }
 }

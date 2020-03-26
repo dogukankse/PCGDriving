@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7614024486889556079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7614024486889556083}
+  - component: {fileID: 7614024486889556076}
+  m_Layer: 0
+  m_Name: BuildingGeneratorComponent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7614024486889556083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614024486889556079}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7614024486889556076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614024486889556079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f595d76393ef4794c9cb608a7e1b6720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facadePlanningStrategy: {fileID: 11400000, guid: 0d499f1d69be22d43b78571bb5c6708c,
+    type: 2}
+  facadeConstructionStrategy: {fileID: 11400000, guid: 721d020d3fea92147a87e71ee42a460e,
+    type: 2}
+  roofPlanningStrategy: {fileID: 11400000, guid: b810929d94a721f418eca36d454efce4,
+    type: 2}
+  roofConstructionStrategy: {fileID: 11400000, guid: 60b9ca7f2d3d0f044b509d70c12548a9,
+    type: 2}
+  foundationPolygon: {fileID: 11400000, guid: 5024e1547db67bc43b8328b76143af2f, type: 2}
+  config:
+    floors: 5
+    entranceInterval: 12
+    hasAttic: 1
+    roofConfig:
+      type: 1
+      thickness: 0.2
+      overhang: 0.2
+    palette:
+      socleColor: {r: 0.7529412, g: 0.7529412, b: 0.7529412, a: 1}
+      socleWindowColor: {r: 1, g: 1, b: 1, a: 1}
+      doorColor: {r: 0.6792453, g: 0.3653847, b: 0, a: 1}
+      wallColor: {r: 1, g: 1, b: 1, a: 1}
+      frameColor: {r: 0.7529412, g: 0.7529412, b: 0.7529412, a: 1}
+      glassColor: {r: 0.7216981, g: 1, b: 0.9489231, a: 1}
+      roofColor: {r: 0.6037736, g: 0, b: 0, a: 1}
