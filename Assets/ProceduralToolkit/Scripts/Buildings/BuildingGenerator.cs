@@ -56,6 +56,7 @@ namespace ProceduralToolkit.Buildings
                 roof.localRotation = Quaternion.identity;
                 roofConstructionStrategy.Construct(roofLayout, roof);
             }
+            
             return parent;
         }
 
