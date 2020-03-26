@@ -1,26 +1,33 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Scripts.BuildingGeneration.Parts
 {
-    public class Building
+    public static class Building
     {
-        private Vector2Int Size { get; }
-        private Wing[] Wings { get; }
+        private static GameObject building;
 
-        public Building(int sizeX, int sizeY, Wing[] wings)
+        public static void Generate(Vector3 bounds, Vector3 center)
         {
-            Size = new Vector2Int();
-            Wings = wings;
+            building = new GameObject("Building");
+
+            Render(building, bounds);
+            building = null;
         }
 
-        public override string ToString()
+        private static void Render(GameObject parent, Vector3 bounds)
         {
-            string building = "Building:(" + Size + "; " + Wings.Length + ")\n";
-            for (int i = 0; i < Wings.Length; i++)
+            for (int i = 0; i < bounds.y; i++)
             {
-                building += "\t" + Wings[i] + "\n";
+                for (int j = 0; j < bounds.z; j++)
+                {
+                    for (int k = 0; k < bounds.x; k++)
+                    {
+                        if (j == 0 || j == bounds.z - 1 || k == 0 || k == bounds.x - 1)
+                            Room.Render(parent, new Vector3(k, i, j));
+                    }
+                }
             }
-            return building;
         }
     }
 }

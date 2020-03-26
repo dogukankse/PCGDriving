@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -34,6 +35,7 @@ namespace _Scripts
                 p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
+       
         }
 
         public void InitTraffic(List<TrafficSystemNode> nodes)
