@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
 namespace _Scripts
@@ -12,11 +12,18 @@ namespace _Scripts
         private MapGenerator _mapGenerator;
         private SunController _sunController;
 
+        [SerializeField] private PedestrianSystem _pedestrianSystem;
+
+
         [SerializeField] private int seed;
         [SerializeField] private int size;
 
         public GameObject[] trafficCars;
         public int trafficCount;
+
+
+        public GameObject[] pedestrians;
+        public int pedestrianCount;
 
         private void Awake()
         {
@@ -28,50 +35,49 @@ namespace _Scripts
         private void Start()
         {
             _mapGenerator.AdjustRoadLamps = _sunController.FindRoadLamps;
-            var connectors = _mapGenerator.DrawRoads();
-            InitTraffic(connectors.Where(p =>
+            //node 1: road
+            // node 2: pedestrian
+            (List<TrafficSystemNode>, List<PedestrianNode>) nodes = _mapGenerator.DrawRoads();
+            InitTraffic(nodes.Item1.Where(p =>
                 p.m_isPrimary &&
                 !p.Parent.name.Contains("Intersection") &&
                 p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
-       
+            InitPedestrian(nodes.Item2);
         }
 
-        public void InitTraffic(List<TrafficSystemNode> nodes)
+        void InitPedestrian(List<PedestrianNode> nodes)
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (Random.Range(0f, 1f) <= .2f)
+                {
+                    //GameObject go = nodes[i].gameObject;
+                    // PedestrianObjectSpawner spawner = go.AddComponent<PedestrianObjectSpawner>();
+                    //spawner.m_objectPrefabs.AddRange(_pedestrianSystem.m_objectPrefabs);
+                }
+            }
+        }
+
+        private void InitTraffic(List<TrafficSystemNode> nodes)
         {
             List<TrafficSystemNode> positions = new List<TrafficSystemNode>();
 
             for (int i = 0; i < trafficCount; i++)
             {
-                int random = Random.Range(0, nodes.Count - 1);
-                GameObject randomCar = trafficCars[i % trafficCars.Length];
+                int random = Random.Range(0, nodes.Count);
+                GameObject randomCar = trafficCars.GetRandomFrom();
                 var node = nodes[random];
-                if (positions.Contains(node))
-                {
-                    continue;
-                }
-
+                if (positions.Contains(node)) continue;
                 positions.Add(node);
                 if (node.m_connectedNodes.Count > 0)
-                {
                     positions.Add(node.m_connectedNodes.First());
-                }
-
                 if (node.m_connectedLocalNode)
-                {
                     positions.Add(node.m_connectedLocalNode);
-                }
-
                 var vehicle = randomCar.GetComponent<TrafficSystemVehicle>();
                 node.Parent.SpawnRandomVehicle(vehicle, node);
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_mapGenerator != null)
-                _mapGenerator.DrawDebug();
         }
     }
 }

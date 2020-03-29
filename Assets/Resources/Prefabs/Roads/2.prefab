@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2613391848138471742
 Transform:
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 14455106670918940}
   - component: {fileID: 8828704228811263699}
   - component: {fileID: 2573753102979166264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Linked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 1474726239903272687}
   - component: {fileID: 8502239953629098354}
   - component: {fileID: 5284614589699850635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Linked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +388,7 @@ GameObject:
   m_TagString: EmptyArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5639614445678258818
 Transform:
@@ -443,7 +443,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2864748317129410576
 Transform:
@@ -471,12 +471,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4688499277789226651}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PedestrianNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4688499277789226651
 Transform:
@@ -511,7 +511,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7161815637996771409
 Transform:
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 4777527551766575524}
   - component: {fileID: 1017774054828317829}
   - component: {fileID: 7836115261667151994}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Node2a-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 2942119005379256797}
   - component: {fileID: 3132977943056461743}
   - component: {fileID: 420768272860829549}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Node1a-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,12 +785,12 @@ GameObject:
   - component: {fileID: 5901438706479118344}
   - component: {fileID: 4435808925606865862}
   - component: {fileID: -6417235268570940344}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 2
   m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5901438706479118344
 Transform:
@@ -875,7 +875,7 @@ GameObject:
   m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5901438707692920848
 Transform:
@@ -960,12 +960,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3251234499123169679}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nodes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3251234499123169679
 Transform:
@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 2072841866854957645}
   - component: {fileID: 6957342063992866226}
   - component: {fileID: 6656688049945632680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Linked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1077,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7927418069416014301
 Transform:
@@ -1108,7 +1108,7 @@ GameObject:
   - component: {fileID: 4157178853550638253}
   - component: {fileID: 3031481068075068649}
   - component: {fileID: 9136766892671263180}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Node2a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1214,7 +1214,7 @@ GameObject:
   - component: {fileID: 787184844756043413}
   - component: {fileID: 318153730733371693}
   - component: {fileID: 536798486387526900}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Linked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1297,7 +1297,7 @@ GameObject:
   m_TagString: EmptyArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7138124104104749184
 Transform:
@@ -1350,7 +1350,7 @@ GameObject:
   - component: {fileID: 373671342354697895}
   - component: {fileID: 8859534992222954527}
   - component: {fileID: 5702024979926001783}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Node1a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1550,6 +1550,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoadLamp
       objectReference: {fileID: 0}
+    - target: {fileID: 806035517538451077, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 5548479518511608032, guid: e8eb4fbd31dc2094186c56d6323aab27,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1615,6 +1620,31 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8059817397518793808, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775257157169467230, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333460586523309417, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8742640446673971822, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 881095295747821820, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8eb4fbd31dc2094186c56d6323aab27, type: 3}
 --- !u!4 &5265291576042989105 stripped
@@ -1633,6 +1663,10 @@ PrefabInstance:
     - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_Name
       value: PedestrianNode_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 11444436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_nodes.Array.data[0]
@@ -1722,6 +1756,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoadLamp (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 806035517538451077, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 5548479518511608032, guid: e8eb4fbd31dc2094186c56d6323aab27,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1787,6 +1826,31 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8059817397518793808, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775257157169467230, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333460586523309417, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8742640446673971822, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 881095295747821820, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8eb4fbd31dc2094186c56d6323aab27, type: 3}
 --- !u!4 &7038177529045563597 stripped
@@ -1806,6 +1870,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RoadLamp (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 806035517538451077, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 5548479518511608032, guid: e8eb4fbd31dc2094186c56d6323aab27,
         type: 3}
@@ -1872,6 +1941,31 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8059817397518793808, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775257157169467230, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333460586523309417, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8742640446673971822, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 881095295747821820, guid: e8eb4fbd31dc2094186c56d6323aab27,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8eb4fbd31dc2094186c56d6323aab27, type: 3}
 --- !u!4 &6956161878786349451 stripped
@@ -1890,6 +1984,10 @@ PrefabInstance:
     - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_Name
       value: PedestrianNode_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 11444436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_nodes.Array.data[0]
@@ -1977,6 +2075,10 @@ PrefabInstance:
     - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_Name
       value: PedestrianNode_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 11444436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_nodes.Array.size
@@ -2068,6 +2170,10 @@ PrefabInstance:
     - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_Name
       value: PedestrianNode_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 11444436, guid: b5d1e76460194cc4f990cb26e3d0ec10, type: 3}
       propertyPath: m_nodes.Array.size

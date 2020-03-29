@@ -67,7 +67,7 @@ public class PedestrianSystemEditor : Editor
 			
 			string sAssetPath = sFilePath.Substring(sFilePath.Length - 6, 6);
 			
-			if(sAssetPath == "prefab")
+			/*if(sAssetPath == "prefab")
 			{
 				string file = sFilePath.Substring(sDataPath.Length);
 				m_prefabLocation[count] = sDataPath + file;
@@ -88,7 +88,7 @@ public class PedestrianSystemEditor : Editor
 				}
 				
 				count++;
-			}
+			}*/
 		}
 	}
 	

@@ -438,7 +438,8 @@ public class IOClod : IOCcomp {
 			{
 				for(i=0;i<rs.Length;i++)
 				{
-					rs[i].enabled = true;
+					if(rs[i] != null)
+						rs[i].enabled = true;
 				}
 			}
 			break;
@@ -490,7 +491,8 @@ public class IOClod : IOCcomp {
 			{
 				for(i=0;i<rs.Length;i++)
 				{
-					rs[i].enabled = false;
+					if(rs[i] != null)
+						rs[i].enabled = false;
 				}
 			}
 			break;
