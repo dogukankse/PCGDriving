@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,11 @@ namespace _Scripts
 
 
         public UnityAction AdjustRoadLamps;
+        public UnityAction CreatePlayer;
+
+
+        List<TrafficSystemNode> connectors;
+        List<PedestrianNode> pedestrianNodes;
 
         public MapGenerator(int seed, int size)
         {
@@ -30,6 +36,9 @@ namespace _Scripts
             if (seed != 0)
                 Random.InitState(seed);
             _map = new Map(_size);
+
+            connectors = new List<TrafficSystemNode>();
+            pedestrianNodes = new List<PedestrianNode>();
 
             _trafficSystem = Object.FindObjectOfType<TrafficSystem>().gameObject;
 
@@ -92,22 +101,19 @@ namespace _Scripts
             return Object.Instantiate(loadedObject as GameObject);
         }
 
-        internal (List<TrafficSystemNode> connectors, List<PedestrianNode> pedestrianNodes) DrawRoads()
+        internal IEnumerator CreateRoads()
         {
-            List<TrafficSystemNode> connectors = new List<TrafficSystemNode>();
-            List<PedestrianNode> pedestrianNodes = new List<PedestrianNode>();
-
             for (int y = 0; y < _map.map.GetLength(0); y++)
             {
                 for (int x = 0; x < _map.map.GetLength(1); x++)
                 {
                     Tile tile = _map.map[x, y].tile;
-
+                    yield return new WaitForSeconds(.1f);
                     GameObject road = GetRoadPrefab(tile.id);
-                    foreach (var renderer in road.GetComponentsInChildren<Renderer>())
-                    {
-                        renderer.enabled = false;
-                    }
+                    /* foreach (var renderer in road.GetComponentsInChildren<Renderer>())
+                     {
+                         renderer.enabled = false;
+                     }*/
 
                     _map.map[x, y].road = road;
 
@@ -130,8 +136,12 @@ namespace _Scripts
             AdjustRoadLamps();
 
             CombineMeshes();
+            CreatePlayer();
+        }
 
-            return (connectors,pedestrianNodes);
+        internal (List<TrafficSystemNode> connectors, List<PedestrianNode> pedestrianNodes) GetRoads()
+        {
+            return (connectors, pedestrianNodes);
         }
 
 
@@ -145,7 +155,7 @@ namespace _Scripts
                     Object.Destroy(r);
                 }
             }
-            
+
             foreach (var node in _trafficSystem.GetComponentsInChildren<PedestrianNode>())
             {
                 foreach (Renderer r in node.GetComponentsInChildren<Renderer>())

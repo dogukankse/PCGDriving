@@ -68,10 +68,10 @@ namespace _Scripts
         {
             intensityMultiplier = intensityMultiplier <= .5f ? 0f : 1f;
 
-            for (int i = 0; i < _roadLamps.Count; i++)
+           /* for (int i = 0; i < _roadLamps.Count; i++)
             {
                 _roadLamps[i].intensity = 10 * intensityMultiplier;
-            }
+            }*/
         }
     }
 }

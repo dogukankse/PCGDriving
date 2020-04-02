@@ -1,20 +1,24 @@
-
+using System.Collections;
 using ProceduralToolkit.Examples.Buildings;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace _Scripts
+namespace _Scripts.BuildingGeneration
 {
     public class BuildingSpace : MonoBehaviour
     {
-        Bounds bound = new Bounds();
         private GameObject proceduralBuilding;
 
         private void Start()
         {
-            var collider = GetComponent<BoxCollider>();
-            var bounds = collider.bounds;
+            StartCoroutine(CreateBuilding());
+        }
+
+        private IEnumerator CreateBuilding()
+        {
+            var boxCollider = GetComponent<BoxCollider>();
+            var bounds = boxCollider.bounds;
             var rect = new Rect(new Vector2(-bounds.extents.z, -bounds.extents.x),
                 new Vector2(bounds.extents.z * 2, bounds.extents.x * 2));
 
@@ -34,13 +38,13 @@ namespace _Scripts
             component.config.palette.wallColor = Random.ColorHSV();
             var building = component.generate().gameObject;
             building.AddComponent<IOClod>().Static = true;
+            yield return new WaitForSeconds(0.1f);
         }
-
 
         private GameObject GetProceduralBuilding()
         {
             var loadedObject = Resources.Load($"Prefabs/Building/BuildingGeneratorComponent");
-            return Object.Instantiate(loadedObject as GameObject, transform);
+            return Instantiate(loadedObject as GameObject, transform);
         }
     }
 }

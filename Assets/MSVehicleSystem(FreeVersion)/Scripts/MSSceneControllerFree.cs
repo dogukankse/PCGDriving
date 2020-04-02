@@ -128,8 +128,10 @@ public class MSSceneControllerFree : MonoBehaviour {
 	bool playerIsNull;
 
 	Vector2 vectorDirJoystick;
+	
+	bool _controllerStarted = false;
 
-	void Awake () {
+	public void StartController () {
 		error = false;
 		CheckEqualKeyCodes ();
 		MSSceneControllerFree[] sceneControllers = FindObjectsOfType(typeof(MSSceneControllerFree)) as MSSceneControllerFree[];
@@ -244,6 +246,8 @@ public class MSSceneControllerFree : MonoBehaviour {
 				}
 			}
 		}
+
+		_controllerStarted = true;
 	}
 
 	void CheckEqualKeyCodes(){
@@ -264,6 +268,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 	}
 
 	void Update () {
+		if(!_controllerStarted) return;
 		if (!error) {
 			#region customizeInputsValues
 			switch (selectControls) {
