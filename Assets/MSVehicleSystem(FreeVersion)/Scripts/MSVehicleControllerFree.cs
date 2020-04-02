@@ -493,7 +493,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 		controls = GameObject.FindObjectOfType (typeof(MSSceneControllerFree))as MSSceneControllerFree;
 		if (!controls) {
 			Debug.LogError ("There must be an object with the 'MSSceneController' component so that vehicles can be managed.");
-			this.transform.gameObject.SetActive (false);
+			//this.transform.gameObject.SetActive (false);
 			return;
 		}
 		//
@@ -507,18 +507,18 @@ public class MSVehicleControllerFree : MonoBehaviour {
 		}
 		if (!isOnTheList) {
 			Debug.LogError ("This vehicle can not be controlled because it is not associated with the vehicle list of the scene controller (object that has the 'MSSceneController' component).");
-			this.transform.gameObject.SetActive (false);
+			//this.transform.gameObject.SetActive (false);
 			return;
 		}
 		//
 		if(!_wheels.rightFrontWheel.wheelCollider || !_wheels.leftFrontWheel.wheelCollider || !_wheels.rightRearWheel.wheelCollider || !_wheels.leftRearWheel.wheelCollider){
 			Debug.LogError ("The vehicle must have at least the four main wheels associated with its variables, within class '_wheels'.");
-			this.transform.gameObject.SetActive (false);
+			//this.transform.gameObject.SetActive (false);
 			return;
 		}
 		if(!_wheels.rightFrontWheel.wheelMesh || !_wheels.leftFrontWheel.wheelMesh || !_wheels.rightRearWheel.wheelMesh || !_wheels.leftRearWheel.wheelMesh){
 			Debug.LogError ("The meshes of the four main wheels must be associated with their respective variables within the class '_wheels'.");
-			this.transform.gameObject.SetActive (false);
+			//this.transform.gameObject.SetActive (false);
 			return;
 		}
 	}

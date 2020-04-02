@@ -6,8 +6,9 @@ TagManager:
   tags:
   - RoadLamp
   - EmptyArea
-  - LaneSwitch
   - Road
+  - LaneSwitch
+  - CarCam
   layers:
   - Default
   - TransparentFX

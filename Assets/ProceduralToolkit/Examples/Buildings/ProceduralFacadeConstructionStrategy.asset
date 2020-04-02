@@ -20,6 +20,6 @@ MonoBehaviour:
     shadowCastingMode: 1
     receiveShadows: 1
     motionVectorGenerationMode: 2
-  glassMaterial: {fileID: 2100000, guid: 36d0d0620e58d5a449b982250bd7f6ac, type: 2}
+  glassMaterial: {fileID: 2100000, guid: 285aa237c836f4b4682ba7e12230c3c4, type: 2}
   roofMaterial: {fileID: 2100000, guid: 6ce7f224d5b65714682ae04ffbeade75, type: 2}
   wallMaterial: {fileID: 2100000, guid: 996522b382717a54c945df7c35053044, type: 2}

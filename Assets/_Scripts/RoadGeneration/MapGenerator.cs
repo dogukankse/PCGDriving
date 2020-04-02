@@ -25,6 +25,7 @@ namespace _Scripts
 
         public UnityAction AdjustRoadLamps;
         public UnityAction CreatePlayer;
+        public UnityAction AfterCreation;
 
 
         List<TrafficSystemNode> connectors;
@@ -103,6 +104,8 @@ namespace _Scripts
 
         internal IEnumerator CreateRoads()
         {
+            //CreatePlayer();
+
             for (int y = 0; y < _map.map.GetLength(0); y++)
             {
                 for (int x = 0; x < _map.map.GetLength(1); x++)
@@ -110,11 +113,6 @@ namespace _Scripts
                     Tile tile = _map.map[x, y].tile;
                     yield return new WaitForSeconds(.1f);
                     GameObject road = GetRoadPrefab(tile.id);
-                    /* foreach (var renderer in road.GetComponentsInChildren<Renderer>())
-                     {
-                         renderer.enabled = false;
-                     }*/
-
                     _map.map[x, y].road = road;
 
                     road.transform.position = new Vector3(x * tileSize, 0, y * -tileSize);
@@ -136,7 +134,8 @@ namespace _Scripts
             AdjustRoadLamps();
 
             CombineMeshes();
-            CreatePlayer();
+            
+            AfterCreation();
         }
 
         internal (List<TrafficSystemNode> connectors, List<PedestrianNode> pedestrianNodes) GetRoads()

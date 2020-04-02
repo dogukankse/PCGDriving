@@ -131,7 +131,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 	
 	bool _controllerStarted = false;
 
-	public void StartController () {
+	void Awake () {
 		error = false;
 		CheckEqualKeyCodes ();
 		MSSceneControllerFree[] sceneControllers = FindObjectsOfType(typeof(MSSceneControllerFree)) as MSSceneControllerFree[];
