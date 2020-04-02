@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace _Scripts
@@ -13,6 +13,8 @@ namespace _Scripts
         private SunController _sunController;
 
         [SerializeField] private PedestrianSystem _pedestrianSystem;
+        [SerializeField] private MSSceneControllerFree _carController;
+        [SerializeField] private GameObject _player;
 
 
         [SerializeField] private int seed;
@@ -27,6 +29,7 @@ namespace _Scripts
 
         private void Awake()
         {
+            _carController.enabled = false;
             Random.seed = seed;
             _mapGenerator = new MapGenerator(seed, size);
             _sunController = FindObjectOfType<SunController>();
@@ -35,9 +38,11 @@ namespace _Scripts
         private void Start()
         {
             _mapGenerator.AdjustRoadLamps = _sunController.FindRoadLamps;
+            _mapGenerator.CreatePlayer = InitPlayer;
             //node 1: road
             // node 2: pedestrian
-            (List<TrafficSystemNode>, List<PedestrianNode>) nodes = _mapGenerator.DrawRoads();
+            StartCoroutine(_mapGenerator.CreateRoads());
+            (List<TrafficSystemNode>, List<PedestrianNode>) nodes = _mapGenerator.GetRoads();
             InitTraffic(nodes.Item1.Where(p =>
                 p.m_isPrimary &&
                 !p.Parent.name.Contains("Intersection") &&
@@ -45,6 +50,18 @@ namespace _Scripts
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
             InitPedestrian(nodes.Item2);
+        }
+
+        private void InitPlayer()
+        {
+            GameObject car = Instantiate(_player, new Vector3(0, 5, 0), Quaternion.Euler(0, -180, 0));
+            car.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            _carController.vehicles = new[] {car};
+            _carController.player = _carController.vehicles[0];
+            _carController.enabled = true;
+            _carController.StartController();
+            car.SetActive(true);
+
         }
 
         void InitPedestrian(List<PedestrianNode> nodes)
