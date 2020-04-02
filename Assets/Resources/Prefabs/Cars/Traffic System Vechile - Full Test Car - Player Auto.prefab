@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 8549402528831868643}
   - component: {fileID: 7231867183347545933}
   - component: {fileID: 4963476119537315794}
-  - component: {fileID: 3386277482402915744}
   - component: {fileID: 2005562795359147371}
   - component: {fileID: 6194455085858235823}
   - component: {fileID: 816192724894436025}
+  - component: {fileID: 8598451522735633627}
   m_Layer: 0
   m_Name: Traffic System Vechile - Full Test Car - Player Auto
   m_TagString: Untagged
@@ -73,44 +73,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.66, y: 0.94, z: 4.8}
   m_Center: {x: 0, y: -0.08, z: 0}
---- !u!23 &3386277482402915744
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 267161391389780560}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 590e95f8730cc384aa0660f2ea0d8bfc, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!114 &2005562795359147371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +97,7 @@ MonoBehaviour:
   m_changeMaxVelocityOnSpeedLimitInc: 1
   m_velocity: 0
   m_accelerationRate: 10
+  m_decelerationRate: 10
   m_decelerationPercentage: 0.4
   m_randomLaneChange: 0
   m_randomChanceToOvertake: 0.625
@@ -185,6 +148,7 @@ MonoBehaviour:
   m_waitTimeMax: 0
   m_strictCrashCheck: 0
   m_timetoWaitAfterCrash: 4
+  TrafficLight: {fileID: 0}
   m_trafficLightCoolDownMax: 0
   m_enableWaitingDestroyTimer: 1
   m_waitingDestroyTimerMax: 50
@@ -308,6 +272,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8598451522735633627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267161391389780560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4a718f140294633884839cce272667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Static: 0
+  Occludee: 0
+  Lod1: 0
+  Lod2: 0
+  LodMargin: 0
+  LodOnly: 0
 --- !u!1 &1696786546019066204
 GameObject:
   m_ObjectHideFlags: 0

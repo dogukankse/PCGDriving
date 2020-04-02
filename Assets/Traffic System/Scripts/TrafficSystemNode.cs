@@ -7,10 +7,10 @@ using UnityEditor;
 [System.Serializable]
 public class TrafficSystemNode : MonoBehaviour 
 {
-	string  PrimaryNodeLeftSideMaterial         = "Assets/Traffic System/Materials/Traffic System Primary Node Left.mat";
-	string  PrimaryNodeRightSideMaterial        = "Assets/Traffic System/Materials/Traffic System Primary Node Right.mat";
-	string  SecondaryNodeLeftSideMaterial       = "Assets/Traffic System/Materials/Traffic System Secondary Node Left.mat";
-	string  SecondaryNodeRightSideMaterial      = "Assets/Traffic System/Materials/Traffic System Secondary Node Right.mat";
+	string  PrimaryNodeLeftSideMaterial         = "TrafficSystem/Materials/Traffic System Primary Node Left.mat";
+	string  PrimaryNodeRightSideMaterial        = "TrafficSystem/Materials/Traffic System Primary Node Right.mat";
+	string  SecondaryNodeLeftSideMaterial       = "TrafficSystem/Materials/Traffic System Secondary Node Left.mat";
+	string  SecondaryNodeRightSideMaterial      = "TrafficSystem/Materials/Traffic System Secondary Node Right.mat";
 
 	public enum NodeID
 	{
@@ -577,12 +577,12 @@ public class TrafficSystemNode : MonoBehaviour
 		{
 			if(m_isPrimary)
 			{
-				Material material = AssetDatabase.LoadAssetAtPath(PrimaryNodeLeftSideMaterial, typeof(Material)) as Material;
+				Material material = Resources.Load(PrimaryNodeLeftSideMaterial, typeof(Material)) as Material;
 				GetComponent<Renderer>().material = material;
 			}
 			else
 			{
-				Material material = AssetDatabase.LoadAssetAtPath(SecondaryNodeLeftSideMaterial, typeof(Material)) as Material;
+				Material material = Resources.Load(SecondaryNodeLeftSideMaterial, typeof(Material)) as Material;
 				GetComponent<Renderer>().material = material;
 			}
 		}
@@ -590,12 +590,12 @@ public class TrafficSystemNode : MonoBehaviour
 		{
 			if(m_isPrimary)
 			{
-				Material material = AssetDatabase.LoadAssetAtPath(PrimaryNodeRightSideMaterial, typeof(Material)) as Material;
+				Material material = Resources.Load(PrimaryNodeRightSideMaterial, typeof(Material)) as Material;
 				GetComponent<Renderer>().material = material;
 			}
 			else
 			{
-				Material material = AssetDatabase.LoadAssetAtPath(SecondaryNodeRightSideMaterial, typeof(Material)) as Material;
+				Material material = Resources.Load(SecondaryNodeRightSideMaterial, typeof(Material)) as Material;
 				GetComponent<Renderer>().material = material;
 			}			
 		}

@@ -11,9 +11,13 @@ namespace _Scripts
             return (T) values.GetValue(Random.Range(0, values.Length));
         }
 
-        public static T GetRandomFrom<T>(this T[] arr)
+        public static T GetRandomFrom<T>(this T[] arr, int[] ints = null)
         {
-            return arr[Random.Range(0, arr.Length)];
+            int r = Random.Range(0, arr.Length);
+            if (ints != null)
+                while (Array.Exists(ints, element => element == r))
+                    r = Random.Range(0, arr.Length);
+            return arr[r];
         }
     }
 }

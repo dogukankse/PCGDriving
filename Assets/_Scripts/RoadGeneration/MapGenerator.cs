@@ -92,9 +92,10 @@ namespace _Scripts
             return Object.Instantiate(loadedObject as GameObject);
         }
 
-        internal List<TrafficSystemNode> DrawRoads()
+        internal (List<TrafficSystemNode> connectors, List<PedestrianNode> pedestrianNodes) DrawRoads()
         {
             List<TrafficSystemNode> connectors = new List<TrafficSystemNode>();
+            List<PedestrianNode> pedestrianNodes = new List<PedestrianNode>();
 
             for (int y = 0; y < _map.map.GetLength(0); y++)
             {
@@ -103,6 +104,10 @@ namespace _Scripts
                     Tile tile = _map.map[x, y].tile;
 
                     GameObject road = GetRoadPrefab(tile.id);
+                    foreach (var renderer in road.GetComponentsInChildren<Renderer>())
+                    {
+                        renderer.enabled = false;
+                    }
 
                     _map.map[x, y].road = road;
 
@@ -110,13 +115,14 @@ namespace _Scripts
                     road.transform.SetParent(_trafficSystem.transform);
                     connectors.AddRange(road.GetComponentsInChildren<TrafficSystemNode>()
                         .Where(p => p.m_roadType == TrafficSystem.RoadType.LANES_2));
+                    pedestrianNodes.AddRange(road.GetComponentsInChildren<PedestrianNode>());
                 }
             }
 
 
             _map = drawSquareRoad();
             _size = _map.map.GetLength(0);
-            
+
             DisableNodes();
 
             RoadConnector roadConnector = new RoadConnector(_map.map);
@@ -124,18 +130,28 @@ namespace _Scripts
             AdjustRoadLamps();
 
             CombineMeshes();
-            
-            return connectors;
+
+            return (connectors,pedestrianNodes);
         }
-        
+
 
         private void DisableNodes()
         {
             foreach (var node in _trafficSystem.GetComponentsInChildren<TrafficSystemNode>())
             {
-                foreach (var r in node.GetComponentsInChildren<Renderer>())
+                foreach (Renderer r in node.GetComponentsInChildren<Renderer>())
                 {
-                    r.enabled = false;
+                    //r.enabled = false;
+                    Object.Destroy(r);
+                }
+            }
+            
+            foreach (var node in _trafficSystem.GetComponentsInChildren<PedestrianNode>())
+            {
+                foreach (Renderer r in node.GetComponentsInChildren<Renderer>())
+                {
+                    //r.enabled = false;
+                    Object.Destroy(r);
                 }
             }
         }
@@ -158,12 +174,11 @@ namespace _Scripts
             var road_mesh = mergedRoad.AddComponent<MeshFilter>();
             road_mesh.mesh = new Mesh();
             road_mesh.mesh.CombineMeshes(Combine(meshes.ToArray()), true, true);
-            mergedRoad.GetComponent<Renderer>().enabled = false;
             mergedRoad.gameObject.SetActive(true);
             var meshCollider = mergedRoad.AddComponent<MeshCollider>();
             meshCollider.sharedMesh = road_mesh.mesh;
         }
-        
+
         private CombineInstance[] Combine(MeshFilter[] filters)
         {
             List<CombineInstance> combine = new List<CombineInstance>();
@@ -282,7 +297,6 @@ namespace _Scripts
             return map;
         }
 
-
         private void PrintMap(MapTile[,] map)
         {
             string rows = "";
@@ -304,11 +318,6 @@ namespace _Scripts
             }
 
             Debug.Log(rows);
-        }
-
-        public void DrawDebug()
-        {
-
         }
     }
 }
