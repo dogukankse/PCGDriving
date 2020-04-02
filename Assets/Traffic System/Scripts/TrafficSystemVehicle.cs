@@ -784,17 +784,17 @@ public class TrafficSystemVehicle : MonoBehaviour
 		{
 			if(TrafficLight.m_status == TrafficSystemTrafficLight.Status.RED)
 			{
-				Debug.Log("TrafficLight = RED");
+//				Debug.Log("TrafficLight = RED");
 				StopMoving = true;
 			}
 			else if(CanSeeVehicleViaSphere() && !TrafficLight.IgnoreCanFitAcrossIntersectionCheck())
 			{
-				Debug.Log("CanSeeVehicleViaSphere: = TRUE");
+//				Debug.Log("CanSeeVehicleViaSphere: = TRUE");
 				StopMoving = true;
 			}
 			else if(!CanFitAcrossIntersection() && !TrafficLight.IgnoreCanFitAcrossIntersectionCheck())
 			{
-				Debug.Log("CanFitAcrossIntersection: = FALSE");
+//				Debug.Log("CanFitAcrossIntersection: = FALSE");
 				StopMoving = true;
 			}
 			else if(TrafficLight.m_status == TrafficSystemTrafficLight.Status.YELLOW)
@@ -805,7 +805,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 					DriveThroughLights();
 				}
 				else
-					Debug.Log("TrafficLight = RED OR YELLOW");
+//					Debug.Log("TrafficLight = RED OR YELLOW");
 					StopMoving = true;
 			}
 			else if(TrafficLight.m_status == TrafficSystemTrafficLight.Status.GREEN)
@@ -813,7 +813,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 				DriveThroughLights();
 			}
 
-			Debug.Log( "TrafficLight: " + TrafficLight);
+//			Debug.Log( "TrafficLight: " + TrafficLight);
 		}
 
 		if(!StopMoving && m_nextNode && !CrashDetected)// && !m_pathingStarted)
@@ -962,12 +962,12 @@ public class TrafficSystemVehicle : MonoBehaviour
 			{
 				if(IsTurningIntoIncomingTraffic())
 				{
-					Debug.Log("IsTurningIntoIncomingTraffic: = TRUE");
+//					Debug.Log("IsTurningIntoIncomingTraffic: = TRUE");
 					StopMoving         = true;
 				}
 				else
 				{
-					Debug.Log( "GO!");
+//					Debug.Log( "GO!");
 					TrafficLight = null;
 					StopMoving         = false;
 					m_trafficLightYellowEnterDurationTimer = 0.0f;
@@ -1004,7 +1004,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 		if (m_trafficLightCoolDown > m_trafficLightCoolDownMax)
 		{
 			TrafficLight = a_trafficLight;
-			Debug.Log("Traffic light setted");
+//			Debug.Log("Traffic light setted");
 		}
 		
 			

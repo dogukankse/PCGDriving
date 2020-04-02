@@ -25,6 +25,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     private float nextWheelCheckTime = 0.0f;
     public float wheelCheckPeriod = 0.1f;
 
+    private TrafficSystem.DriveSide currentDriverSide; 
     public override void Awake()
     {
         base.Awake();
@@ -69,8 +70,9 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 
     public override void Update()
     {
-        checkSideWalkPenalty();
-       
+        CheckSideWalkPenalty();
+        CheckLaneColliders();
+
     }
 
     void OnCollisionEnter(Collision collision)
@@ -90,8 +92,46 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         }
 
     }
+
+    private void CheckLaneColliders()
+    {
+
+
+        Vector3 centerOfFront = Vector3.MoveTowards(m_wheelsFront[0].position, m_wheelsFront[1].position,
+            Vector3.Distance(m_wheelsFront[0].position, m_wheelsFront[1].position) / 2);
+        
+        RaycastHit[] hits_left = Physics.RaycastAll(new Ray(centerOfFront, Vector3.left),12f);
+        RaycastHit[] hits_right = Physics.RaycastAll(new Ray(centerOfFront, Vector3.right),12f);
+        
+        foreach (var hit in hits_left)
+        {
+            if (hit.collider.CompareTag("LaneSwitch"))
+            {
+                ChangeLane(TrafficSystem.DriveSide.LEFT);
+            }
+        }
+        
+        foreach (var hit in hits_right)
+        {
+            if (hit.collider.CompareTag("LaneSwitch"))
+            {
+                ChangeLane(TrafficSystem.DriveSide.RIGHT);
+            }
+        }
+        
+    }
+
+    private void ChangeLane(TrafficSystem.DriveSide side)
+    {
+        if (side != currentDriverSide)
+        {
+            Debug.Log("Penalty lane change");
+        }
+
+        currentDriverSide = side;
+    }
     
-    private void checkSideWalkPenalty()
+    private void CheckSideWalkPenalty()
     {
         if (Time.time > nextWheelCheckTime)
         {
