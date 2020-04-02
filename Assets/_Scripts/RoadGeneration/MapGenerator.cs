@@ -173,7 +173,7 @@ namespace _Scripts
                 // skip the empty parent GO
                 if (filters[i].sharedMesh == null)
                     continue;
-
+                
                 // combine submeshes
                 for (int j = 0; j < filters[i].sharedMesh.subMeshCount; j++)
                 {
@@ -182,6 +182,7 @@ namespace _Scripts
                     ci.mesh = filters[i].sharedMesh;
                     ci.subMeshIndex = j;
                     ci.transform = filters[i].transform.localToWorldMatrix;
+                    
 
                     combine.Add(ci);
                 }

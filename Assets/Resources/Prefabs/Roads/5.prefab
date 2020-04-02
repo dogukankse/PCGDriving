@@ -1,5 +1,93 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &803837563558937178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 386086300315817437}
+  - component: {fileID: 8870575887440714222}
+  m_Layer: 0
+  m_Name: LaneSwitch (3)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &386086300315817437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803837563558937178}
+  m_LocalRotation: {x: 0, y: -0.224696, z: 0, w: 0.974429}
+  m_LocalPosition: {x: -6.29, y: 0, z: -1.22}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -25.97, z: 0}
+--- !u!65 &8870575887440714222
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803837563558937178}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.005825, y: 1, z: 0.30056542}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2806214099285235211
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1690414503681619410}
+  - component: {fileID: 4909068278485689238}
+  m_Layer: 0
+  m_Name: LaneSwitch (6)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1690414503681619410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806214099285235211}
+  m_LocalRotation: {x: 0, y: -0.4407226, z: 0, w: 0.8976434}
+  m_LocalPosition: {x: -9.91, y: 0, z: -4.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: -52.3, z: 0}
+--- !u!65 &4909068278485689238
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806214099285235211}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7067633, y: 1, z: 0.30056542}
+  m_Center: {x: -0.14953128, y: 0, z: -0.000000027142718}
 --- !u!1 &2881918424692886974
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +121,94 @@ Transform:
   m_Father: {fileID: 3956830326428669487}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3130494984136730346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179099676182057211}
+  - component: {fileID: 5145478255963942087}
+  m_Layer: 0
+  m_Name: LaneSwitch
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &179099676182057211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3130494984136730346}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8353796, y: 0, z: 0.012175558}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5145478255963942087
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3130494984136730346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.020845, y: 1, z: 0.30056542}
+  m_Center: {x: 0.036775827, y: 0, z: 0}
+--- !u!1 &3185408542000314007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 952286654098573323}
+  - component: {fileID: 1701163112037788284}
+  m_Layer: 0
+  m_Name: LaneSwitch (4)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &952286654098573323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185408542000314007}
+  m_LocalRotation: {x: 0, y: -0.3090171, z: 0, w: 0.95105654}
+  m_LocalPosition: {x: -7.72, y: 0, z: -2.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -36, z: 0}
+--- !u!65 &1701163112037788284
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185408542000314007}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.005825, y: 1, z: 0.30056542}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3250211956169710789
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +299,7 @@ Transform:
   - {fileID: 3978410512310836428}
   - {fileID: 4213686340848588409}
   - {fileID: 2021773975665804367}
+  - {fileID: 4140199336390102654}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
@@ -146,6 +323,181 @@ MonoBehaviour:
   startRight: {fileID: 6417309694449941606}
   endLeft: {fileID: 0}
   endRight: {fileID: 0}
+--- !u!1 &4535654762293469456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8229115513911142070}
+  - component: {fileID: 9195128521701445998}
+  m_Layer: 0
+  m_Name: LaneSwitch (7)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8229115513911142070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4535654762293469456}
+  m_LocalRotation: {x: 0, y: -0.5343523, z: 0, w: 0.8452619}
+  m_LocalPosition: {x: -10.66, y: 0, z: -5.32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: -64.6, z: 0}
+--- !u!65 &9195128521701445998
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4535654762293469456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7067633, y: 1, z: 0.30056542}
+  m_Center: {x: -0.14953128, y: 0, z: -0.000000027142718}
+--- !u!1 &4924370006362526007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4140199336390102654}
+  m_Layer: 0
+  m_Name: LaneSwitch
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4140199336390102654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924370006362526007}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -12.05, y: -0.04729557, z: 0.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 179099676182057211}
+  - {fileID: 8705290204861964443}
+  - {fileID: 4059206854237506516}
+  - {fileID: 386086300315817437}
+  - {fileID: 952286654098573323}
+  - {fileID: 1523036176732188871}
+  - {fileID: 1690414503681619410}
+  - {fileID: 8229115513911142070}
+  - {fileID: 1168920656110087404}
+  - {fileID: 4570990215368830335}
+  - {fileID: 3607169701663884848}
+  - {fileID: 3383088587360879337}
+  - {fileID: 2485861664404035619}
+  m_Father: {fileID: 3956830326428669487}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &5455688699335912311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3383088587360879337}
+  - component: {fileID: 3270535215771225275}
+  m_Layer: 0
+  m_Name: LaneSwitch (11)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3383088587360879337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455688699335912311}
+  m_LocalRotation: {x: -0, y: -0.6691307, z: -0, w: 0.7431448}
+  m_LocalPosition: {x: -11.95, y: 0, z: -9.67}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: -84, z: 0}
+--- !u!65 &3270535215771225275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455688699335912311}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7067633, y: 1, z: 0.30056542}
+  m_Center: {x: -0.14953128, y: 0, z: -0.000000027142718}
+--- !u!1 &6241663342832259597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2485861664404035619}
+  - component: {fileID: 8868519861812110022}
+  m_Layer: 0
+  m_Name: LaneSwitch (12)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2485861664404035619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6241663342832259597}
+  m_LocalRotation: {x: 0, y: -0.7064895, z: 0, w: 0.7077236}
+  m_LocalPosition: {x: -12.05, y: 0, z: -11.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: -89.9, z: 0}
+--- !u!65 &8868519861812110022
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6241663342832259597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8971682, y: 1, z: 0.30056542}
+  m_Center: {x: -0.24473383, y: 0, z: -0.000000029814935}
 --- !u!1 &6379918002272840246
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,6 +555,270 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb56b753d09a4e2e9bd02875df58fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6753643775122688239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4059206854237506516}
+  - component: {fileID: 836512713914589773}
+  m_Layer: 0
+  m_Name: LaneSwitch (2)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4059206854237506516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753643775122688239}
+  m_LocalRotation: {x: 0, y: -0.15884742, z: 0, w: 0.9873032}
+  m_LocalPosition: {x: -4.52, y: 0, z: -0.53}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -18.28, z: 0}
+--- !u!65 &836512713914589773
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753643775122688239}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.005825, y: 1, z: 0.30056542}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6843198601274490931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8705290204861964443}
+  - component: {fileID: 8542413383202230860}
+  m_Layer: 0
+  m_Name: LaneSwitch (1)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8705290204861964443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6843198601274490931}
+  m_LocalRotation: {x: 0, y: -0.07262893, z: 0, w: 0.99735904}
+  m_LocalPosition: {x: -2.66, y: 0, z: -0.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -8.33, z: 0}
+--- !u!65 &8542413383202230860
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6843198601274490931}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.005825, y: 1, z: 0.30056542}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6901902223778039576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1168920656110087404}
+  - component: {fileID: 2451819531810534272}
+  m_Layer: 0
+  m_Name: LaneSwitch (8)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1168920656110087404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901902223778039576}
+  m_LocalRotation: {x: 0, y: -0.5785696, z: 0, w: 0.81563306}
+  m_LocalPosition: {x: -11.26, y: 0, z: -6.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: -70.7, z: 0}
+--- !u!65 &2451819531810534272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901902223778039576}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7067633, y: 1, z: 0.30056542}
+  m_Center: {x: -0.14953128, y: 0, z: -0.000000027142718}
+--- !u!1 &6969623401775889145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4570990215368830335}
+  - component: {fileID: 5932706122912612936}
+  m_Layer: 0
+  m_Name: LaneSwitch (9)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4570990215368830335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969623401775889145}
+  m_LocalRotation: {x: 0, y: -0.63675135, z: 0, w: 0.7710692}
+  m_LocalPosition: {x: -11.61, y: 0, z: -7.78}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: -79.1, z: 0}
+--- !u!65 &5932706122912612936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969623401775889145}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7067633, y: 1, z: 0.30056542}
+  m_Center: {x: -0.14953128, y: 0, z: -0.000000027142718}
+--- !u!1 &7105670267065962877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1523036176732188871}
+  - component: {fileID: 6297981391671624029}
+  m_Layer: 0
+  m_Name: LaneSwitch (5)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1523036176732188871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7105670267065962877}
+  m_LocalRotation: {x: 0, y: -0.37622422, z: 0, w: 0.92652863}
+  m_LocalPosition: {x: -8.94, y: 0, z: -3.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: -44.2, z: 0}
+--- !u!65 &6297981391671624029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7105670267065962877}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7067633, y: 1, z: 0.30056542}
+  m_Center: {x: -0.14953128, y: 0, z: -0.000000027142718}
+--- !u!1 &8110301048226691886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3607169701663884848}
+  - component: {fileID: 8373708865834809530}
+  m_Layer: 0
+  m_Name: LaneSwitch (10)
+  m_TagString: LaneSwitch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3607169701663884848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8110301048226691886}
+  m_LocalRotation: {x: 0, y: -0.6691307, z: 0, w: 0.7431448}
+  m_LocalPosition: {x: -11.86, y: 0, z: -8.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4140199336390102654}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: -84, z: 0}
+--- !u!65 &8373708865834809530
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8110301048226691886}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0569742, y: 1, z: 0.30056542}
+  m_Center: {x: -0.47442585, y: 0, z: -0.00000003158213}
 --- !u!1 &9154933828878040348
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,27 +1221,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b12d87dbe527ebe41b75f12fa1306338, type: 3}
---- !u!4 &6417309694754349769 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2777586929396292808, guid: b12d87dbe527ebe41b75f12fa1306338,
-    type: 3}
-  m_PrefabInstance: {fileID: 9188792062545231361}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6417309694068471724 stripped
+--- !u!114 &6417309694449941606 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2777586930319149485, guid: b12d87dbe527ebe41b75f12fa1306338,
-    type: 3}
-  m_PrefabInstance: {fileID: 9188792062545231361}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bdcb234a5e8a2d42be8300c1a035d6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6417309695206495747 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2777586929315342338, guid: b12d87dbe527ebe41b75f12fa1306338,
+  m_CorrespondingSourceObject: {fileID: 2777586931179192935, guid: b12d87dbe527ebe41b75f12fa1306338,
     type: 3}
   m_PrefabInstance: {fileID: 9188792062545231361}
   m_PrefabAsset: {fileID: 0}
@@ -647,9 +1245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdcb234a5e8a2d42be8300c1a035d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6417309694449941606 stripped
+--- !u!114 &6417309695206495747 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2777586931179192935, guid: b12d87dbe527ebe41b75f12fa1306338,
+  m_CorrespondingSourceObject: {fileID: 2777586929315342338, guid: b12d87dbe527ebe41b75f12fa1306338,
     type: 3}
   m_PrefabInstance: {fileID: 9188792062545231361}
   m_PrefabAsset: {fileID: 0}
@@ -659,3 +1257,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdcb234a5e8a2d42be8300c1a035d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6417309694068471724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2777586930319149485, guid: b12d87dbe527ebe41b75f12fa1306338,
+    type: 3}
+  m_PrefabInstance: {fileID: 9188792062545231361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdcb234a5e8a2d42be8300c1a035d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &6417309694754349769 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2777586929396292808, guid: b12d87dbe527ebe41b75f12fa1306338,
+    type: 3}
+  m_PrefabInstance: {fileID: 9188792062545231361}
+  m_PrefabAsset: {fileID: 0}

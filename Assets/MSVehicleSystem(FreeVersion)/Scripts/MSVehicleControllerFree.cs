@@ -745,9 +745,9 @@ public class MSVehicleControllerFree : MonoBehaviour {
 	}
 
 	void AjustLayers(){
-		transform.gameObject.layer = 2;
+		transform.gameObject.layer = 0;
 		foreach (Transform trans in this.gameObject.GetComponentsInChildren<Transform>(true)) {
-			trans.gameObject.layer = 2;
+			trans.gameObject.layer = 0;
 		}
 	}
 

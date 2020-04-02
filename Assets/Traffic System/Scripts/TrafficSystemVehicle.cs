@@ -1444,7 +1444,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 	{
 //		if(!Application.isPlaying) // in editor
 //			FindNodeDistanceCheckPosY();
-		/*
+		
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawCube((transform.position + m_offsetPosVal), Vector3.one * 0.25f);
 
@@ -1469,7 +1469,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(((transform.position + m_vehicleCheckOffset) + (-transform.right * m_vehicleCheckDistLeftRayOffset)), ((transform.position + m_vehicleCheckOffset) + (-transform.right * m_vehicleCheckDistLeftRayOffset)) + ( transform.forward * m_vehicleCheckDistRay ));
 		Gizmos.DrawLine(((transform.position + m_vehicleCheckOffset) + (transform.right * m_vehicleCheckDistRightRayOffset)), ((transform.position + m_vehicleCheckOffset) + (transform.right * m_vehicleCheckDistRightRayOffset)) + ( transform.forward * m_vehicleCheckDistRay ));
-		*/
+	
 	}
 
 	void OnTriggerStay( Collider a_obj )

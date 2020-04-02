@@ -292,7 +292,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &675505492370038046
 PrefabInstance:
@@ -306,6 +306,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car-Bus
       objectReference: {fileID: 0}
+    - target: {fileID: 8531168019159540719, guid: 8152e0bd9432f4ebda91ece5e357cc06,
+        type: 3}
+      propertyPath: m_vehicleCheckDistMid
+      value: 1.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531168019159540719, guid: 8152e0bd9432f4ebda91ece5e357cc06,
+        type: 3}
+      propertyPath: m_vehicleCheckDistRay
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 675505492133446388, guid: 8152e0bd9432f4ebda91ece5e357cc06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -314,7 +324,7 @@ PrefabInstance:
     - target: {fileID: 675505492133446388, guid: 8152e0bd9432f4ebda91ece5e357cc06,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.89
+      value: -0.66
       objectReference: {fileID: 0}
     - target: {fileID: 675505492133446388, guid: 8152e0bd9432f4ebda91ece5e357cc06,
         type: 3}
@@ -344,7 +354,7 @@ PrefabInstance:
     - target: {fileID: 675505492133446388, guid: 8152e0bd9432f4ebda91ece5e357cc06,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 675505492133446388, guid: 8152e0bd9432f4ebda91ece5e357cc06,
         type: 3}
@@ -361,18 +371,167 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8531168019159540719, guid: 8152e0bd9432f4ebda91ece5e357cc06,
-        type: 3}
-      propertyPath: m_vehicleCheckDistMid
-      value: 1.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531168019159540719, guid: 8152e0bd9432f4ebda91ece5e357cc06,
-        type: 3}
-      propertyPath: m_vehicleCheckDistRay
-      value: 14
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8152e0bd9432f4ebda91ece5e357cc06, type: 3}
+--- !u!1001 &975749924302997644
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1918955847810982621, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_Name
+      value: Vehicle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -30.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924175167291864299, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDistMid
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckRadiusMid
+      value: 1.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_intersectionCheckDistRay
+      value: 13.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckRadiusAtLightsCapsule
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDistRay
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDistLeftRayOffset
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDistRayMimicSpeedThreshold
+      value: 0.275
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_decelerationPercentage
+      value: 0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_randomLaneChange
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_chanceOfDirChange
+      value: 0.178
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_chanceOfUsingOfframp
+      value: 0.184
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDistRightRayOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckOffset.x
+      value: -0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckOffset.y
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDistOvertakeHighwayOnly
+      value: 4.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckRadiusOvertakeHighwayOnly
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckDist
+      value: 1.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005354891940314951, guid: aa38ce6ba53144cec9cb196398a5c9a9,
+        type: 3}
+      propertyPath: m_vehicleCheckRadius
+      value: 1.36
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aa38ce6ba53144cec9cb196398a5c9a9, type: 3}
 --- !u!1001 &1000989853981039773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -385,6 +544,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car-Sport
       objectReference: {fileID: 0}
+    - target: {fileID: 2697596785813806075, guid: 70600f787d1c243f989585e055e4c529,
+        type: 3}
+      propertyPath: m_lightsBlinkerRight.Array.data[1]
+      value: 
+      objectReference: {fileID: 5581609985899633796}
     - target: {fileID: 1000989852007098828, guid: 70600f787d1c243f989585e055e4c529,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -393,7 +557,7 @@ PrefabInstance:
     - target: {fileID: 1000989852007098828, guid: 70600f787d1c243f989585e055e4c529,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1000989852007098828, guid: 70600f787d1c243f989585e055e4c529,
         type: 3}
@@ -423,7 +587,7 @@ PrefabInstance:
     - target: {fileID: 1000989852007098828, guid: 70600f787d1c243f989585e055e4c529,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1000989852007098828, guid: 70600f787d1c243f989585e055e4c529,
         type: 3}
@@ -440,11 +604,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2697596785813806075, guid: 70600f787d1c243f989585e055e4c529,
-        type: 3}
-      propertyPath: m_lightsBlinkerRight.Array.data[1]
-      value: 
-      objectReference: {fileID: 5581609985899633796}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70600f787d1c243f989585e055e4c529, type: 3}
 --- !u!1001 &5581609985899633795
@@ -472,7 +631,7 @@ PrefabInstance:
     - target: {fileID: 700661056893403588, guid: 7b315cf7f3631479689c52a5f3aeef50,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 700661056893403588, guid: 7b315cf7f3631479689c52a5f3aeef50,
         type: 3}
@@ -502,7 +661,7 @@ PrefabInstance:
     - target: {fileID: 700661056893403588, guid: 7b315cf7f3631479689c52a5f3aeef50,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 700661056893403588, guid: 7b315cf7f3631479689c52a5f3aeef50,
         type: 3}
@@ -525,6 +684,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4963476119537315794, guid: 7b315cf7f3631479689c52a5f3aeef50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 816192724894436025, guid: 7b315cf7f3631479689c52a5f3aeef50,
         type: 3}
       propertyPath: m_Enabled
       value: 1
