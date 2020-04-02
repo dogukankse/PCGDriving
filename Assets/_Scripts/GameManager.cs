@@ -45,6 +45,12 @@ namespace _Scripts
             //node 1: road
             // node 2: pedestrian
             StartCoroutine(_mapGenerator.CreateRoads());
+        }
+
+     
+
+        void AfterCreation()
+        {
             (List<TrafficSystemNode>, List<PedestrianNode>) nodes = _mapGenerator.GetRoads();
             InitTraffic(nodes.Item1.Where(p =>
                 p.m_isPrimary &&
@@ -53,12 +59,6 @@ namespace _Scripts
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
             InitPedestrian(nodes.Item2);
-        }
-
-     
-
-        void AfterCreation()
-        {
             _player.GetComponentInChildren<IOCcam>().layerMsk = ~0;
             Destroy(_videoCam.gameObject);
         }

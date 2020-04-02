@@ -238,7 +238,7 @@ namespace _Scripts
             for (int x = -1; x < _size + 1; x++)
             {
                 int id = 1;
-                if (x == -1) id = 4;
+                if (x == -1) id = 10;
                 if (x == _size) id = 5;
                 if (x >= 0 && x < _size && tconnectTiles.Contains(getIdOfMap(x, 0))) id = 11;
 
