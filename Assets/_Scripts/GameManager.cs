@@ -13,9 +13,8 @@ namespace _Scripts
         private SunController _sunController;
 
         [SerializeField] private PedestrianSystem _pedestrianSystem;
-        [SerializeField] private MSSceneControllerFree _carController;
-        [SerializeField] private GameObject _player;
 
+        [SerializeField] private Camera _videoCam;
 
         [SerializeField] private int seed;
         [SerializeField] private int size;
@@ -27,10 +26,13 @@ namespace _Scripts
         public GameObject[] pedestrians;
         public int pedestrianCount;
 
+        private GameObject _car;
+        [SerializeField] private GameObject _player;
+
         private void Awake()
         {
-            _carController.enabled = false;
-            Random.seed = seed;
+           
+            Random.InitState(seed);
             _mapGenerator = new MapGenerator(seed, size);
             _sunController = FindObjectOfType<SunController>();
         }
@@ -38,7 +40,8 @@ namespace _Scripts
         private void Start()
         {
             _mapGenerator.AdjustRoadLamps = _sunController.FindRoadLamps;
-            _mapGenerator.CreatePlayer = InitPlayer;
+            //_mapGenerator.CreatePlayer = InitPlayer;
+            _mapGenerator.AfterCreation = AfterCreation;
             //node 1: road
             // node 2: pedestrian
             StartCoroutine(_mapGenerator.CreateRoads());
@@ -52,16 +55,12 @@ namespace _Scripts
             InitPedestrian(nodes.Item2);
         }
 
-        private void InitPlayer()
-        {
-            GameObject car = Instantiate(_player, new Vector3(0, 5, 0), Quaternion.Euler(0, -180, 0));
-            car.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-            _carController.vehicles = new[] {car};
-            _carController.player = _carController.vehicles[0];
-            _carController.enabled = true;
-            _carController.StartController();
-            car.SetActive(true);
+     
 
+        void AfterCreation()
+        {
+            _player.GetComponentInChildren<IOCcam>().layerMsk = ~0;
+            Destroy(_videoCam.gameObject);
         }
 
         void InitPedestrian(List<PedestrianNode> nodes)
