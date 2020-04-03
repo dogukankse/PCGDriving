@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3344436}
   - component: {fileID: 2344436}
   - component: {fileID: 11444436}
+  - component: {fileID: 6892866989537246138}
   m_Layer: 8
   m_Name: PedestrianNode
   m_TagString: Untagged
@@ -94,3 +95,25 @@ MonoBehaviour:
   m_nodes: []
   m_waitAtNode: 0
   m_pathID: 1
+--- !u!114 &6892866989537246138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5153421c1dba54aa777722415fbc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectPrefabs:
+  - {fileID: 11450928, guid: 1ca74154cf6c10e4f8262108edf810b3, type: 3}
+  m_nodeObjectSpawnChance: 0.1
+  m_onStartDelay: 2
+  m_totalToSpawn: 1
+  m_spawnCheckDist: 0
+  m_spawnCheckRadius: 1
+  m_spawnDelayBetweenTries: 5
+  m_startNode: {fileID: 11444436}
+  m_respawnobjectOnObjectDestroy: 1

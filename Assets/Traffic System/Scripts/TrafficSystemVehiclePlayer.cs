@@ -25,12 +25,13 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     Dictionary<Transform, float> whellCheck = new Dictionary<Transform, float>();
     private float nextWheelCheckTime = 0.0f;
     public float wheelCheckPeriod = 0.1f;
-    
-    Dictionary<String,float> PenaltyTimes = new Dictionary<string, float>();
+
+    Dictionary<String, float> PenaltyTimes = new Dictionary<string, float>();
     public int currentPoint = 100;
-    public UnityAction<int,int,string> pointUpdate;
-    
-    private TrafficSystem.DriveSide currentDriverSide; 
+    public UnityAction<int, int, string> pointUpdate;
+
+    private TrafficSystem.DriveSide currentDriverSide;
+
     public override void Awake()
     {
         base.Awake();
@@ -54,19 +55,19 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public override void Start()
     {
         hasEnteredTrafficLightTrigger += ProcessHasEnteredTrafficLightTrigger;
-        
+
         // no need to do anyting, we just need to override TrafficSystemVehicle since this is the player
     }
 
-    public override void Update()
+    public void FixedUpdate()
     {
         CheckSideWalkPenalty();
         CheckLaneColliders();
-
     }
 
     private static string CRASH = "crash";
     private static string CAR_CRASH = "car_crash";
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider)
@@ -74,30 +75,26 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             if (collision.collider.GetComponent<TrafficSystemVehicle>())
             {
                 Debug.Log("Car crash penalty");
-                DecreasePoint(CAR_CRASH,1);
+                DecreasePoint(CAR_CRASH, 1);
             }
             else
             {
                 Debug.Log("Crash non car");
-                DecreasePoint(CRASH,1);
+                DecreasePoint(CRASH, 1);
             }
-
-          
         }
-
     }
 
     private static string LANE_SWITCH = "lane_switch";
+
     private void CheckLaneColliders()
     {
-
-
         Vector3 centerOfFront = Vector3.MoveTowards(m_wheelsFront[0].position, m_wheelsFront[1].position,
             Vector3.Distance(m_wheelsFront[0].position, m_wheelsFront[1].position) / 2);
-        
-        RaycastHit[] hits_left = Physics.RaycastAll(new Ray(centerOfFront, Vector3.left),12f);
-        RaycastHit[] hits_right = Physics.RaycastAll(new Ray(centerOfFront, Vector3.right),12f);
-        
+
+        RaycastHit[] hits_left = Physics.RaycastAll(new Ray(centerOfFront, Vector3.left), 12f);
+        RaycastHit[] hits_right = Physics.RaycastAll(new Ray(centerOfFront, Vector3.right), 12f);
+
         foreach (var hit in hits_left)
         {
             if (hit.collider.CompareTag("LaneSwitch"))
@@ -105,29 +102,28 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 ChangeLane(TrafficSystem.DriveSide.LEFT);
             }
         }
-        
+
         foreach (var hit in hits_right)
         {
             if (hit.collider.CompareTag("LaneSwitch"))
             {
                 ChangeLane(TrafficSystem.DriveSide.RIGHT);
-              
             }
         }
-        
     }
-    
+
     private void DecreasePoint(String type, int point)
     {
-        if ( !PenaltyTimes.ContainsKey(type) || (PenaltyTimes.ContainsKey(type) && Mathf.Abs(Time.deltaTime - PenaltyTimes[type]) > 0 ))
+        if (!PenaltyTimes.ContainsKey(type) ||
+            (PenaltyTimes.ContainsKey(type) && Mathf.Abs(Time.deltaTime - PenaltyTimes[type]) > 0))
         {
             currentPoint -= point;
-            pointUpdate(currentPoint,point,type);
+            pointUpdate(currentPoint, point, type);
         }
+
         PenaltyTimes[type] = Time.deltaTime;
-     
     }
-    
+
     private void ChangeLane(TrafficSystem.DriveSide side)
     {
         if (side != currentDriverSide)
@@ -138,8 +134,9 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 
         currentDriverSide = side;
     }
-    
+
     private static string SIDEWALK = "side_walk";
+
     private void CheckSideWalkPenalty()
     {
         if (Time.time > nextWheelCheckTime)
@@ -193,6 +190,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     }
 
     private static string RED_LIGHT = "red_light";
+
     private void OnTriggerExit(Collider other)
     {
         var light = other.GetComponent<TrafficSystemTrafficLight>();
