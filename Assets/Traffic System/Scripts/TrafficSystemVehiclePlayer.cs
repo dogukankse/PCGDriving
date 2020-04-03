@@ -14,6 +14,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 {
@@ -24,7 +25,11 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     Dictionary<Transform, float> whellCheck = new Dictionary<Transform, float>();
     private float nextWheelCheckTime = 0.0f;
     public float wheelCheckPeriod = 0.1f;
-
+    
+    Dictionary<String,float> PenaltyTimes = new Dictionary<string, float>();
+    public int currentPoint = 100;
+    public UnityAction<int,int,string> pointUpdate;
+    
     private TrafficSystem.DriveSide currentDriverSide; 
     public override void Awake()
     {
@@ -45,22 +50,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         }
     }
 
-    /// <summary>
-    /// To use the HasEnteredTrafficLightTrigger all you need to do is add this to your script or put code in the function below
-    /// 
-    /// in void Start -
-    ///     [TrafficSystemVehiclePlayer].hasEnteredTrafficLightTrigger += ProcessHasEnteredTrafficLightTrigger;
-    /// 
-    /// in void Destroy -
-    ///     [TrafficSystemVehiclePlayer].hasEnteredTrafficLightTrigger -= ProcessHasEnteredTrafficLightTrigger;
-    ///
-    /// Then define your own function
-    ///    void ProcessHasEnteredTrafficLightTrigger( TrafficSystemTrafficLight a_trafficLight )
-    ///    {
-    ///   	  do something in here...
-    ///    }
-    /// 
-    /// </summary>
+
     public override void Start()
     {
         hasEnteredTrafficLightTrigger += ProcessHasEnteredTrafficLightTrigger;
@@ -75,6 +65,8 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 
     }
 
+    private static string CRASH = "crash";
+    private static string CAR_CRASH = "car_crash";
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider)
@@ -82,10 +74,12 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             if (collision.collider.GetComponent<TrafficSystemVehicle>())
             {
                 Debug.Log("Car crash penalty");
+                DecreasePoint(CAR_CRASH,1);
             }
             else
             {
                 Debug.Log("Crash non car");
+                DecreasePoint(CRASH,1);
             }
 
           
@@ -93,6 +87,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 
     }
 
+    private static string LANE_SWITCH = "lane_switch";
     private void CheckLaneColliders()
     {
 
@@ -116,21 +111,35 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             if (hit.collider.CompareTag("LaneSwitch"))
             {
                 ChangeLane(TrafficSystem.DriveSide.RIGHT);
+              
             }
         }
         
     }
-
+    
+    private void DecreasePoint(String type, int point)
+    {
+        if ( !PenaltyTimes.ContainsKey(type) || (PenaltyTimes.ContainsKey(type) && Mathf.Abs(Time.deltaTime - PenaltyTimes[type]) > 0 ))
+        {
+            currentPoint -= point;
+            pointUpdate(currentPoint,point,type);
+        }
+        PenaltyTimes[type] = Time.deltaTime;
+     
+    }
+    
     private void ChangeLane(TrafficSystem.DriveSide side)
     {
         if (side != currentDriverSide)
         {
             Debug.Log("Penalty lane change");
+            DecreasePoint(LANE_SWITCH, 1);
         }
 
         currentDriverSide = side;
     }
     
+    private static string SIDEWALK = "side_walk";
     private void CheckSideWalkPenalty()
     {
         if (Time.time > nextWheelCheckTime)
@@ -141,6 +150,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 if (wheelIsOnSideWalk(wheel))
                 {
                     Debug.Log("Sidewalk penalty front");
+                    DecreasePoint(SIDEWALK, 1);
                 }
             }
 
@@ -149,6 +159,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 if (wheelIsOnSideWalk(wheel))
                 {
                     Debug.Log("Sidewalk penalty rear");
+                    DecreasePoint(SIDEWALK, 1);
                 }
             }
         }
@@ -181,6 +192,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     {
     }
 
+    private static string RED_LIGHT = "red_light";
     private void OnTriggerExit(Collider other)
     {
         var light = other.GetComponent<TrafficSystemTrafficLight>();
@@ -188,6 +200,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         {
             //RED LIGHT PENALY
             Debug.Log("Red light penalty");
+            DecreasePoint(RED_LIGHT, 1);
         }
     }
 }

@@ -87,6 +87,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 	//
 	Button nextVehicle;
 	Button previousVehicle;
+	public Text pointText;
 	Text gearText;
 	Text kmhText;
 	Text mphText;
@@ -117,6 +118,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 	bool enterAndExitBool;
 	string sceneName;
 
+	TrafficSystemVehiclePlayer playerCode;
 	MSVehicleControllerFree vehicleCode;
 	MSVehicleControllerFree controllerTemp;
 	float currentDistanceTemp;
@@ -187,6 +189,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 			nextVehicle = transform.Find ("Canvas/nextVehicle").GetComponent<Button> ();
 			previousVehicle = transform.Find ("Canvas/previousVehicle").GetComponent<Button> ();
 			gearText = transform.Find ("Canvas/Strings/gearText").GetComponent<Text> ();
+			pointText = transform.Find ("Canvas/Point/pointText").GetComponent<Text> ();
 			kmhText = transform.Find ("Canvas/Strings/kmhText").GetComponent<Text> ();
 			mphText = transform.Find ("Canvas/Strings/mphText").GetComponent<Text> ();
 			handBrakeText = transform.Find ("Canvas/Strings/handBrakeText").GetComponent<Text> ();
@@ -212,6 +215,8 @@ public class MSSceneControllerFree : MonoBehaviour {
 				enterAndExitButton.onClick.AddListener (() => Mobile_EnterAndExitVehicle ());
 			}
 
+			playerCode = vehicles[currentVehicle].GetComponent<TrafficSystemVehiclePlayer> ();
+			playerCode.pointUpdate = OnPointUpdate;
 			vehicleCode = vehicles [currentVehicle].GetComponent<MSVehicleControllerFree> ();
 			EnableOrDisableButtons (vehicleCode.isInsideTheCar);
 
@@ -248,6 +253,12 @@ public class MSSceneControllerFree : MonoBehaviour {
 		}
 
 		_controllerStarted = true;
+	}
+
+	public void OnPointUpdate(int currentPoint,int decreasePoint,string reason)
+	{
+		this.pointText.text = currentPoint+"";
+		//TODO implement reason toast
 	}
 
 	void CheckEqualKeyCodes(){
