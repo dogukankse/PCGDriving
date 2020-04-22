@@ -37,6 +37,7 @@ namespace _Scripts.BuildingGeneration
             component.config.floors = Random.Range(2, 7);
             component.config.palette.wallColor = Random.ColorHSV();
             var building = component.generate().gameObject;
+            building.isStatic = true;
             building.AddComponent<IOClod>().Static = true;
             yield return new WaitForSeconds(0.1f);
         }

@@ -644,7 +644,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 			if(m_stuckDestroyTimer >= m_stuckDestroyTimerMax)
 			{
 				if (Debug.isDebugBuild)
-					Debug.LogWarning("Vehicle Destroyed - m_stuckDestroyTimerMax - Vehicle had unusual behaviour");
+					Debug.LogWarning("Vehicle Destroyed - m_stuckDestroyTimerMax - Vehicle had unusual behaviour "+ transform.position);
 
 				Kill();
 			}
@@ -953,7 +953,7 @@ public class TrafficSystemVehicle : MonoBehaviour
 		{
 			if(TrafficLight.m_intersection.m_intersectionSystem == TrafficSystemIntersection.IntersectionSystem.SINGLE)
 			{
-				Debug.Log( "GO!");
+//				Debug.Log( "GO!");
 				TrafficLight = null;
 				StopMoving         = false;
 				m_trafficLightYellowEnterDurationTimer = 0.0f;
@@ -1026,7 +1026,11 @@ public class TrafficSystemVehicle : MonoBehaviour
 
 		if(!m_nextNode)
 		{
-			Debug.LogWarning("Vehicle node invalid, check all nodes on this road piece have correct links as this is probably the issue!: \"" + previousNode.Parent.name + "\" -> Previous Node was: \"" + previousNode.name + "\"\nTIP: In \"Editor Mode\" try clicking on the road piece then clicking off it as this should remove any null links.");
+			Debug.LogWarning("Vehicle node invalid, check all nodes on this road piece have correct links as this is probably the issue!: \"" 
+			                 + previousNode.Parent.name + 
+			                 "\" -> Previous Node was: \"" 
+			                 + previousNode.name + 
+			                 "\"\nTIP: In \"Editor Mode\" try clicking on the road piece then clicking off it as this should remove any null links.");
 
 			if(m_killOnEmptyPath)
 				Debug.Log("Vehicle set to kill on empty path so we will destroy vehicle " + gameObject.name);

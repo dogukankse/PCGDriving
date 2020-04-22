@@ -84,9 +84,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 	MSButtonFree buttonRight;
 	MSButtonFree buttonUp;
 	MSButtonFree buttonDown;
-	//
-	Button nextVehicle;
-	Button previousVehicle;
+	
 	public Text pointText;
 	Text gearText;
 	Text kmhText;
@@ -131,7 +129,6 @@ public class MSSceneControllerFree : MonoBehaviour {
 
 	Vector2 vectorDirJoystick;
 	
-	bool _controllerStarted = false;
 
 	void Awake () {
 		error = false;
@@ -186,8 +183,6 @@ public class MSSceneControllerFree : MonoBehaviour {
 			buttonDown = transform.Find ("Canvas/MSButtonDown").GetComponent<MSButtonFree> ();
 			joystickCamera = transform.Find ("Canvas/MSJoystickCamera").GetComponent<JoystickFree> ();
 
-			nextVehicle = transform.Find ("Canvas/nextVehicle").GetComponent<Button> ();
-			previousVehicle = transform.Find ("Canvas/previousVehicle").GetComponent<Button> ();
 			gearText = transform.Find ("Canvas/Strings/gearText").GetComponent<Text> ();
 			pointText = transform.Find ("Canvas/Point/pointText").GetComponent<Text> ();
 			kmhText = transform.Find ("Canvas/Strings/kmhText").GetComponent<Text> ();
@@ -197,14 +192,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 			backGround = transform.Find ("Canvas/Strings").GetComponent<Image> ();
 			//end transform.find
 
-			if (nextVehicle) {
-				nextVehicle.onClick = new Button.ButtonClickedEvent ();
-				nextVehicle.onClick.AddListener (() => NextVehicle ());
-			}
-			if (previousVehicle) {
-				previousVehicle.onClick = new Button.ButtonClickedEvent ();
-				previousVehicle.onClick.AddListener (() => PreviousVehicle ());
-			}
+			
 
 			if (cameraMobileButton) {
 				cameraMobileButton.onClick = new Button.ButtonClickedEvent ();
@@ -252,7 +240,6 @@ public class MSSceneControllerFree : MonoBehaviour {
 			}
 		}
 
-		_controllerStarted = true;
 	}
 
 	public void OnPointUpdate(int currentPoint,int decreasePoint,string reason)
@@ -279,7 +266,6 @@ public class MSSceneControllerFree : MonoBehaviour {
 	}
 
 	void Update () {
-		if(!_controllerStarted) return;
 		if (!error) {
 			#region customizeInputsValues
 			switch (selectControls) {
@@ -308,6 +294,8 @@ public class MSSceneControllerFree : MonoBehaviour {
 			}
 			#endregion
 
+			playerCode = vehicles[currentVehicle].GetComponent<TrafficSystemVehiclePlayer> ();
+			playerCode.pointUpdate = OnPointUpdate;
 			vehicleCode = vehicles [currentVehicle].GetComponent<MSVehicleControllerFree> ();
 			EnableOrDisableButtons (vehicleCode.isInsideTheCar);
 
@@ -442,9 +430,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 	}
 
 	void EnableUI(bool enable){
-		if (nextVehicle.gameObject.activeSelf != enable) {
-			nextVehicle.gameObject.SetActive(enable);
-			previousVehicle.gameObject.SetActive (enable);
+		if (enable) {
 			gearText.gameObject.SetActive (enable);
 			kmhText.gameObject.SetActive (enable);
 			mphText.gameObject.SetActive (enable);
@@ -454,34 +440,7 @@ public class MSSceneControllerFree : MonoBehaviour {
 		}
 	}
 
-	public void PreviousVehicle(){
-		if (playerIsNull) {
-			if (vehicles.Length > 1) {
-				currentVehicle--;
-				EnableVehicle (currentVehicle + 1);
-			}
-		} else {
-			if (vehicles.Length > 1 && !player.gameObject.activeInHierarchy) {
-				currentVehicle--;
-				EnableVehicle (currentVehicle + 1);
-			}
-		}
-	}
-
-	public void NextVehicle(){
-		if (playerIsNull) {
-			if (vehicles.Length > 1) {
-				currentVehicle++;
-				EnableVehicle (currentVehicle - 1);
-			}
-		} else {
-			if (vehicles.Length > 1 && !player.gameObject.activeInHierarchy) {
-				currentVehicle++;
-				EnableVehicle (currentVehicle - 1);
-			}
-		}
-	}
-
+	
 	IEnumerator WaitToInteract(){
 		yield return new WaitForSeconds (0.7f);
 		blockedInteraction = false;

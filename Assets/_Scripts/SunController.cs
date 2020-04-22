@@ -18,7 +18,7 @@ namespace _Scripts
         private float sunInitialIntensity;
         [SerializeField] private bool realtime;
 
-        private List<Light> _roadLamps ;
+        private List<Light> _roadLamps;
 
         private void Start()
         {
@@ -30,8 +30,8 @@ namespace _Scripts
             GameObject[] lamps = GameObject.FindGameObjectsWithTag("RoadLamp");
             _roadLamps = new List<Light>();
 
-            for (int i = 0; i < lamps.Length; i++)
-                _roadLamps.Add(lamps[i].GetComponentInChildren<Light>());
+            foreach (var lamp in lamps)
+                _roadLamps.Add(lamp.GetComponentInChildren<Light>());
         }
 
         private void Update()
@@ -48,9 +48,9 @@ namespace _Scripts
         /// </summary>
         private void UpdateSun()
         {
-            sun.transform.localRotation = Quaternion.Euler((currentTime * 360f) - 90f, 170f, 0f);
+            sun.transform.localRotation = Quaternion.Euler((currentTime * 360f) - 90f, 140f, 0f);
 
-            float intensityMultiplier = 1f;
+            float intensityMultiplier = 1.5f;
             if (currentTime <= 0.23f || currentTime >= 0.75f)
                 intensityMultiplier = 0;
             else if (currentTime <= 0.25f)
@@ -61,17 +61,15 @@ namespace _Scripts
 
             sun.intensity = sunInitialIntensity * intensityMultiplier;
 
-           UpdateRoadLamps(1 - intensityMultiplier);
+            UpdateRoadLamps(1 - intensityMultiplier);
         }
 
         private void UpdateRoadLamps(float intensityMultiplier)
         {
             intensityMultiplier = intensityMultiplier <= .5f ? 0f : 1f;
 
-           /* for (int i = 0; i < _roadLamps.Count; i++)
-            {
-                _roadLamps[i].intensity = 10 * intensityMultiplier;
-            }*/
+            foreach (var lamp in _roadLamps)
+                lamp.intensity = 10 * intensityMultiplier;
         }
     }
 }

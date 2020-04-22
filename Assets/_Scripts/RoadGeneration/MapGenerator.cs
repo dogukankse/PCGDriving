@@ -51,8 +51,10 @@ namespace _Scripts
 
         private void JSONToTiles()
         {
-            string json = File.ReadAllText("./roads.json");
-            tiles = JsonHelper.FromJsonGetArray<Tile>(json);
+            string filePath = "roads.json".Replace(".json", "");
+            TextAsset json = Resources.Load<TextAsset>(filePath);
+            //string json = File.ReadAllText("./roads.json");
+            tiles = JsonHelper.FromJsonGetArray<Tile>(json.text);
         }
 
         private void TilesToJSON()
@@ -102,10 +104,10 @@ namespace _Scripts
             return Object.Instantiate(loadedObject as GameObject);
         }
 
-        internal IEnumerator CreateRoads()
+        internal IEnumerator CreateRoads(Text videoText)
         {
             //CreatePlayer();
-
+            videoText.text = "Yollar ve Binalar Oluşuyor";
             for (int y = 0; y < _map.map.GetLength(0); y++)
             {
                 for (int x = 0; x < _map.map.GetLength(1); x++)
@@ -123,18 +125,28 @@ namespace _Scripts
                 }
             }
 
-
-            _map = drawSquareRoad();
+            videoText.text = "Dış Yollar Oluşuyor.";
+            yield return new WaitForSeconds(.2f);
+            drawSquareRoad();
             _size = _map.map.GetLength(0);
 
+            videoText.text = "Node Renderer kapanıyor.";
+            yield return new WaitForSeconds(.2f);
             DisableNodes();
 
+            videoText.text = "Yollar Birleştiriliyor.";
+            yield return new WaitForSeconds(.2f);
             RoadConnector roadConnector = new RoadConnector(_map.map);
             roadConnector.ConnectRoads();
+            
+            videoText.text = "Yol Lambaları Ayarlanıyor.";
+            yield return new WaitForSeconds(.2f);
             AdjustRoadLamps();
 
             CombineMeshes();
-            
+
+            videoText.text = "Üretim Sonlanıyor.";
+            yield return new WaitForSeconds(.2f);
             AfterCreation();
         }
 
@@ -197,7 +209,7 @@ namespace _Scripts
                 // skip the empty parent GO
                 if (filters[i].sharedMesh == null)
                     continue;
-                
+
                 // combine submeshes
                 for (int j = 0; j < filters[i].sharedMesh.subMeshCount; j++)
                 {
@@ -206,7 +218,7 @@ namespace _Scripts
                     ci.mesh = filters[i].sharedMesh;
                     ci.subMeshIndex = j;
                     ci.transform = filters[i].transform.localToWorldMatrix;
-                    
+
 
                     combine.Add(ci);
                 }
@@ -228,7 +240,7 @@ namespace _Scripts
             return _map.map[x, y];
         }
 
-        private Map drawSquareRoad()
+        private void drawSquareRoad()
         {
             Map map = new Map(_size + 2);
             map.map = new MapTile[_size + 2, _size + 2];
@@ -253,6 +265,7 @@ namespace _Scripts
             tconnectTiles = new[] {2, 3, 4, 5, 8, 10, 11};
             for (int x = -1; x < _size + 1; x++)
             {
+                //yield return new WaitForSeconds(.1f);
                 int id = 1;
                 if (x == -1) id = 7;
                 if (x == _size) id = 6;
@@ -270,6 +283,8 @@ namespace _Scripts
             tconnectTiles = new[] {1, 3, 5, 6, 8, 9, 11};
             for (int x = 0; x < _size; x++)
             {
+                // yield return new WaitForSeconds(.1f);
+
                 int id = 2;
                 if (tconnectTiles.Contains(getIdOfMap(0, x))) id = 10;
 
@@ -284,6 +299,8 @@ namespace _Scripts
             tconnectTiles = new[] {1, 3, 4, 7, 9, 10, 11};
             for (int x = 0; x < _size; x++)
             {
+                // yield return new WaitForSeconds(.1f);
+
                 int id = 2;
                 if (tconnectTiles.Contains(getIdOfMap(_size - 1, x))) id = 8;
 
@@ -303,7 +320,7 @@ namespace _Scripts
                 }
             }
 
-            return map;
+            _map = map;
         }
 
         private void PrintMap(MapTile[,] map)

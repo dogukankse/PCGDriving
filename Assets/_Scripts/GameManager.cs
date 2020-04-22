@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace _Scripts
@@ -14,7 +14,8 @@ namespace _Scripts
 
         [SerializeField] private PedestrianSystem _pedestrianSystem;
 
-        [SerializeField] private Camera _videoCam;
+        [Header("Video")] [SerializeField] private Camera _videoCam;
+        [SerializeField] private Text _videoText;
 
         [SerializeField] private int seed;
         [SerializeField] private int size;
@@ -31,7 +32,6 @@ namespace _Scripts
 
         private void Awake()
         {
-           
             Random.InitState(seed);
             _mapGenerator = new MapGenerator(seed, size);
             _sunController = FindObjectOfType<SunController>();
@@ -39,40 +39,41 @@ namespace _Scripts
 
         private void Start()
         {
+            _player.GetComponentInChildren<Camera>().targetDisplay = 1;
+            _player.GetComponentInChildren<AudioListener>().enabled = false;
+
+            _videoCam.targetDisplay = 0;
+            _sunController.enabled = false;
             _mapGenerator.AdjustRoadLamps = _sunController.FindRoadLamps;
-            //_mapGenerator.CreatePlayer = InitPlayer;
             _mapGenerator.AfterCreation = AfterCreation;
-            //node 1: road
-            // node 2: pedestrian
-            StartCoroutine(_mapGenerator.CreateRoads());
+
+            StartCoroutine(_mapGenerator.CreateRoads(_videoText));
         }
 
-     
 
-        void AfterCreation()
+        private void AfterCreation()
         {
-            (List<TrafficSystemNode>, List<PedestrianNode>) nodes = _mapGenerator.GetRoads();
-            InitTraffic(nodes.Item1.Where(p =>
+            var (trafficSystemNodes, pedestrianNodes) = _mapGenerator.GetRoads();
+            InitTraffic(trafficSystemNodes.Where(p =>
                 p.m_isPrimary &&
                 !p.Parent.name.Contains("Intersection") &&
                 p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
-            InitPedestrian(nodes.Item2);
+            InitPedestrian(pedestrianNodes);
+            
             _player.GetComponentInChildren<IOCcam>().layerMsk = ~0;
+            _player.GetComponentInChildren<Camera>().targetDisplay = 0;
+            _player.GetComponentInChildren<AudioListener>().enabled = true;
+
+            _sunController.enabled = true;
+            
             Destroy(_videoCam.gameObject);
+            Destroy(_videoText.gameObject);
         }
 
         void InitPedestrian(List<PedestrianNode> nodes)
         {
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                /*GameObject go = nodes[i].gameObject;
-                PedestrianObjectSpawner spawner = go.AddComponent<PedestrianObjectSpawner>();
-                spawner.m_objectPrefabs.AddRange(_pedestrianSystem.m_objectPrefabs);
-                spawner.m_nodeObjectSpawnChance = _pedestrianSystem.m_randomObjectSpawnChancePerNode;
-                spawner.m_startNode = nodes[i];*/
-            }
         }
 
         private void InitTraffic(List<TrafficSystemNode> nodes)

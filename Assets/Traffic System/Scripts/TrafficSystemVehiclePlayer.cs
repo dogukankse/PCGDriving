@@ -59,14 +59,16 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         // no need to do anyting, we just need to override TrafficSystemVehicle since this is the player
     }
 
-    public void FixedUpdate()
+    public override void Update()
     {
         CheckSideWalkPenalty();
         CheckLaneColliders();
     }
 
+
     private static string CRASH = "crash";
     private static string CAR_CRASH = "car_crash";
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -114,12 +116,8 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 
     private void DecreasePoint(String type, int point)
     {
-        if (!PenaltyTimes.ContainsKey(type) ||
-            (PenaltyTimes.ContainsKey(type) && Mathf.Abs(Time.deltaTime - PenaltyTimes[type]) > 0))
-        {
-            currentPoint -= point;
-            pointUpdate(currentPoint, point, type);
-        }
+        currentPoint -= point;
+        pointUpdate(currentPoint, point, type);
 
         PenaltyTimes[type] = Time.deltaTime;
     }
