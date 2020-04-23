@@ -13,10 +13,10 @@ public class SignalController : MonoBehaviour
     private Transform left;
     private Transform right;
 
-    private MSSceneControllerFree.SignalType currentType;
+    private TrafficSystemVehiclePlayer.SignalType currentType;
 
 
-    public void updateType(MSSceneControllerFree.SignalType type)
+    public void updateType(TrafficSystemVehiclePlayer.SignalType type)
     {
         if (type == currentType)
         {
@@ -35,13 +35,13 @@ public class SignalController : MonoBehaviour
     private void blink()
     {
     
-        if (currentType == MSSceneControllerFree.SignalType.Left)
+        if (currentType == TrafficSystemVehiclePlayer.SignalType.Left)
         {
             blink_object = left;
             unblink_object = right;
             signalSound.Play();
         }
-        else if (currentType == MSSceneControllerFree.SignalType.Right)
+        else if (currentType == TrafficSystemVehiclePlayer.SignalType.Right)
         {
             blink_object = right;
             unblink_object = left;

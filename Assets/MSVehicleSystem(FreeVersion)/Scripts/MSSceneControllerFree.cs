@@ -68,12 +68,7 @@ public class MSSceneControllerFree : MonoBehaviour
 
     #endregion
 
-    public enum SignalType
-    {
-        None,
-        Left,
-        Right
-    }
+ 
 
     public enum ControlTypeFree
     {
@@ -135,7 +130,7 @@ public class MSSceneControllerFree : MonoBehaviour
     Text penaltyAlertText;
     Speedometer speedometer;
 
-    private SignalType signalType = SignalType.None;
+
 
     #region customizeInputs
 
@@ -329,6 +324,12 @@ public class MSSceneControllerFree : MonoBehaviour
 
     public void OnPointUpdate(int currentPoint, int decreasePoint, string reason)
     {
+        if (currentPoint < 50)
+        {
+            
+            return;
+        }
+
         pointText.text = currentPoint + "";
         penaltyAlertText.text = Strings.get(reason) + " Puan: " + decreasePoint + " Zaman:" + Time.time;
         penaltyAlert.GetComponent<Image>().enabled = true;
@@ -338,6 +339,7 @@ public class MSSceneControllerFree : MonoBehaviour
             penaltyAlert.GetComponent<Image>().enabled = false;
             penaltyAlertText.text = "";
         }, 1).getEnumerator());
+        
     }
     
     void CheckEqualKeyCodes()
@@ -601,42 +603,7 @@ public class MSSceneControllerFree : MonoBehaviour
             }
         }
 
-        UpdateSignal();
-    }
-    
-    private void UpdateSignal()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (signalType == SignalType.Left)
-            {
-                signalType = SignalType.None;
-                speedometer.UpdateSignal(signalType);
-                Debug.Log("left none");
-            }
-            else
-            {
-                signalType = SignalType.Left;
-                speedometer.UpdateSignal(signalType);
-                Debug.Log("left z");
-            }
-        }
-        else if(Input.GetKeyDown(KeyCode.C))
-        {
-            if (signalType == SignalType.Right)
-            {
-                signalType = SignalType.None;
-                speedometer.UpdateSignal(signalType);
-                Debug.Log("right none");
-            }
-            else
-            {
-                signalType = SignalType.Right;
-                speedometer.UpdateSignal(signalType);
-                Debug.Log("right c");
-            }
-        }
-   
+     
     }
 
     void EnableUI(bool enable)

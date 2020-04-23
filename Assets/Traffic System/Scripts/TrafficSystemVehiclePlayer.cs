@@ -21,6 +21,13 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 {
     
     
+    public enum SignalType
+    {
+        None,
+        Left,
+        Right
+    }
+    
     public static string SIDEWALK_PENALTY = "side_walk_penalty";
     public static string CRASH_PENALTY = "crash_penalty";
     public  static string CAR_CRASH_PENALTY = "car_crash_penalty";
@@ -35,16 +42,21 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     private float nextWheelCheckTime = 0.0f;
     public float wheelCheckPeriod = 0.1f;
 
+    private SignalType signalType = SignalType.None;
+    
     Dictionary<String, float> PenaltyTimes = new Dictionary<string, float>();
     public int currentPoint = 100;
     public UnityAction<int, int, string> pointUpdate;
+    public GameObject Speedometer;
 
+    private Speedometer _speedometer;
     private TrafficSystem.DriveSide currentDriverSide;
 
     public override void Awake()
     {
         base.Awake();
         initWhellMap();
+        _speedometer = Speedometer.GetComponent<Speedometer>();
     }
 
     private void initWhellMap()
@@ -72,6 +84,42 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     {
         CheckSideWalkPenalty();
         CheckLaneColliders();
+        UpdateSignal();
+    }
+    
+    private void UpdateSignal()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (signalType == SignalType.Left)
+            {
+                signalType = SignalType.None;
+                _speedometer.UpdateSignal(signalType);
+                Debug.Log("left none");
+            }
+            else
+            {
+                signalType = SignalType.Left;
+                _speedometer.UpdateSignal(signalType);
+                Debug.Log("left z");
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.C))
+        {
+            if (signalType == SignalType.Right)
+            {
+                signalType = SignalType.None;
+                _speedometer.UpdateSignal(signalType);
+                Debug.Log("right none");
+            }
+            else
+            {
+                signalType = SignalType.Right;
+                _speedometer.UpdateSignal(signalType);
+                Debug.Log("right c");
+            }
+        }
+   
     }
     
     

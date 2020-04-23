@@ -38,7 +38,7 @@ public class Speedometer : MonoBehaviour {
         CreateSpeedLabels();
     }
 
-    public void UpdateSignal(MSSceneControllerFree.SignalType type)
+    public void UpdateSignal(TrafficSystemVehiclePlayer.SignalType type)
     {
         signals.GetComponent<SignalController>().updateType(type);
     }
@@ -79,6 +79,6 @@ public class Speedometer : MonoBehaviour {
 
         float speedNormalized = speed / speedMax;
 
-        return ZERO_SPEED_ANGLE - speedNormalized * totalAngleSize;
+        return Mathf.Abs(ZERO_SPEED_ANGLE - speedNormalized * totalAngleSize);
     }
 }
