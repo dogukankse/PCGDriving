@@ -126,27 +126,27 @@ namespace _Scripts
             }
 
             videoText.text = "Dış Yollar Oluşuyor.";
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.01f);
             drawSquareRoad();
             _size = _map.map.GetLength(0);
 
             videoText.text = "Node Renderer kapanıyor.";
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.01f);
             DisableNodes();
 
             videoText.text = "Yollar Birleştiriliyor.";
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.01f);
             RoadConnector roadConnector = new RoadConnector(_map.map);
             roadConnector.ConnectRoads();
             
             videoText.text = "Yol Lambaları Ayarlanıyor.";
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.01f);
             AdjustRoadLamps();
 
             CombineMeshes();
 
             videoText.text = "Üretim Sonlanıyor.";
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.01f);
             AfterCreation();
         }
 

@@ -14,10 +14,19 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts;
 using UnityEngine.Events;
 
 public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 {
+    
+    
+    public static string SIDEWALK_PENALTY = "side_walk_penalty";
+    public static string CRASH_PENALTY = "crash_penalty";
+    public  static string CAR_CRASH_PENALTY = "car_crash_penalty";
+    public static string RED_LIGHT_PENALTY = "red_light_penalty";
+    public static string LANE_SWITCH_PENALTY = "lane_switch_penalty";
+    
     public delegate void HasEnteredTrafficLightTrigger(TrafficSystemTrafficLight a_trafficLight);
 
     public HasEnteredTrafficLightTrigger hasEnteredTrafficLightTrigger;
@@ -64,12 +73,8 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         CheckSideWalkPenalty();
         CheckLaneColliders();
     }
-
-
-    private static string CRASH = "crash";
-    private static string CAR_CRASH = "car_crash";
-
-
+    
+    
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider)
@@ -77,17 +82,17 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             if (collision.collider.GetComponent<TrafficSystemVehicle>())
             {
                 Debug.Log("Car crash penalty");
-                DecreasePoint(CAR_CRASH, 1);
+                DecreasePoint(CAR_CRASH_PENALTY);
             }
             else
             {
                 Debug.Log("Crash non car");
-                DecreasePoint(CRASH, 1);
+                DecreasePoint(CRASH_PENALTY);
             }
         }
     }
 
-    private static string LANE_SWITCH = "lane_switch";
+
 
     private void CheckLaneColliders()
     {
@@ -114,12 +119,22 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         }
     }
 
-    private void DecreasePoint(String type, int point)
+    private void DecreasePoint(String type)
     {
-        currentPoint -= point;
-        pointUpdate(currentPoint, point, type);
-
-        PenaltyTimes[type] = Time.deltaTime;
+        if (PenaltyTimes.ContainsKey(type))
+        {
+            //check last time
+            if(Math.Abs(PenaltyTimes[type] - Time.time) > 1){
+                //if the time of last penalty is greater
+                currentPoint -= PenaltyPoints.get(type);
+                pointUpdate(currentPoint, PenaltyPoints.get(type), type);
+            }
+        }else{
+            currentPoint -= PenaltyPoints.get(type);
+            pointUpdate(currentPoint, PenaltyPoints.get(type), type);
+        }
+        
+        PenaltyTimes[type] = Time.time;
     }
 
     private void ChangeLane(TrafficSystem.DriveSide side)
@@ -127,13 +142,11 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         if (side != currentDriverSide)
         {
             Debug.Log("Penalty lane change");
-            DecreasePoint(LANE_SWITCH, 1);
+            DecreasePoint(LANE_SWITCH_PENALTY);
         }
 
         currentDriverSide = side;
     }
-
-    private static string SIDEWALK = "side_walk";
 
     private void CheckSideWalkPenalty()
     {
@@ -145,7 +158,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 if (wheelIsOnSideWalk(wheel))
                 {
                     Debug.Log("Sidewalk penalty front");
-                    DecreasePoint(SIDEWALK, 1);
+                    DecreasePoint(SIDEWALK_PENALTY);
                 }
             }
 
@@ -154,7 +167,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 if (wheelIsOnSideWalk(wheel))
                 {
                     Debug.Log("Sidewalk penalty rear");
-                    DecreasePoint(SIDEWALK, 1);
+                    DecreasePoint(SIDEWALK_PENALTY);
                 }
             }
         }
@@ -187,7 +200,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     {
     }
 
-    private static string RED_LIGHT = "red_light";
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -196,7 +209,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         {
             //RED LIGHT PENALY
             Debug.Log("Red light penalty");
-            DecreasePoint(RED_LIGHT, 1);
+            DecreasePoint(RED_LIGHT_PENALTY);
         }
     }
 }
