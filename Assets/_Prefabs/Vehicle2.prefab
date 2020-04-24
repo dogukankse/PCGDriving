@@ -2089,7 +2089,7 @@ MonoBehaviour:
   currentPoint: 100
   Speedometer: {fileID: 0}
   lightType: 0
-  lightController: {fileID: 0}
+  lightController: {fileID: 2074364715439685513}
   speedGauge: {fileID: 4840904734091318537}
   rpmGauge: {fileID: 5160002070736032542}
 --- !u!114 &2074364715439685513

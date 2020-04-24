@@ -1896,6 +1896,11 @@ PrefabInstance:
       propertyPath: Speedometer
       value: 
       objectReference: {fileID: 662832401}
+    - target: {fileID: 914004161792454771, guid: 5dcbd850d5101b64397a4628f5b12591,
+        type: 3}
+      propertyPath: lightController
+      value: 
+      objectReference: {fileID: 1433350151}
     - target: {fileID: 3780001256050197116, guid: 5dcbd850d5101b64397a4628f5b12591,
         type: 3}
       propertyPath: m_IsActive
@@ -2621,6 +2626,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 886697625}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1433350151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2074364715439685513, guid: 5dcbd850d5101b64397a4628f5b12591,
+    type: 3}
+  m_PrefabInstance: {fileID: 886697625}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433350150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214a60d9ccc9fcc4db255f176a95968c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1494380095
 GameObject:
   m_ObjectHideFlags: 0
