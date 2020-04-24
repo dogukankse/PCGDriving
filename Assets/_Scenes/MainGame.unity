@@ -700,7 +700,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -46.6, y: 0}
+  m_AnchoredPosition: {x: 1, y: -256}
   m_SizeDelta: {x: 480, y: 132.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &354564462
@@ -1460,9 +1460,10 @@ MonoBehaviour:
   seed: 201
   size: 8
   trafficCars:
-  - {fileID: 1000989852007098829, guid: 70600f787d1c243f989585e055e4c529, type: 3}
+  - {fileID: 267161391389780560, guid: e8df68e5a3d796f42ae0e3365831bd6d, type: 3}
   - {fileID: 267161391389780560, guid: 7b315cf7f3631479689c52a5f3aeef50, type: 3}
-  - {fileID: 675505492133446391, guid: 8152e0bd9432f4ebda91ece5e357cc06, type: 3}
+  - {fileID: 267161391389780560, guid: 1726150515132d3419fa5e5837a1bd92, type: 3}
+  - {fileID: 267161391389780560, guid: e7ffe158b42f11f46b27ceed1d3f46ec, type: 3}
   trafficCount: 50
   pedestrians:
   - {fileID: 6923771204880622005, guid: 7a406a10a8db7914bb2d25f045d0a5af, type: 3}
