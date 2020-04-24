@@ -12,6 +12,7 @@ namespace _Scripts
             {TrafficSystemVehiclePlayer.CAR_CRASH_PENALTY,"Araca çarpma cezası"},
             {TrafficSystemVehiclePlayer.RED_LIGHT_PENALTY,"Kırmızı ışık cezası"},
             {TrafficSystemVehiclePlayer.LANE_SWITCH_PENALTY,"Şerit ihlali cezası"},
+            {TrafficSystemVehiclePlayer.SPEED_PENALTY,"Hız sınırı ihlali cezası"},
         };
 
         public static String get(String id)

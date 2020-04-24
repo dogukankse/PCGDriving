@@ -12,6 +12,7 @@ namespace _Scripts
             {TrafficSystemVehiclePlayer.CAR_CRASH_PENALTY,100},
             {TrafficSystemVehiclePlayer.RED_LIGHT_PENALTY,20},
             {TrafficSystemVehiclePlayer.LANE_SWITCH_PENALTY,15},
+            {TrafficSystemVehiclePlayer.SPEED_PENALTY,10},
         };
 
         public static int get(String type)

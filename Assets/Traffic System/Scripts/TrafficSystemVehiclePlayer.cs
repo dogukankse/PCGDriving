@@ -40,6 +40,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public  static string CAR_CRASH_PENALTY = "car_crash_penalty";
     public static string RED_LIGHT_PENALTY = "red_light_penalty";
     public static string LANE_SWITCH_PENALTY = "lane_switch_penalty";
+    public static string SPEED_PENALTY = "speed_penalty";
     
     public delegate void HasEnteredTrafficLightTrigger(TrafficSystemTrafficLight a_trafficLight);
 
@@ -111,8 +112,14 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         {
             clampGear = 1;
         }
+
+        float speed = vehicle.KMh * clampGear;
         _speedGauge.Value = vehicle.KMh * clampGear;
         _rpmGauge.Value = vehicle.sumRPM;
+        if (speed > 50)
+        {
+            DecreasePoint(SPEED_PENALTY);
+        }
         
     }
 
