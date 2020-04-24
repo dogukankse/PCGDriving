@@ -18,7 +18,9 @@
       <Path>.idea</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>MonoBleedingEdge</Path>
       <Path>Temp</Path>
+      <Path>deneme_Data</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>
