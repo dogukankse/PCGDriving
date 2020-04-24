@@ -338,17 +338,7 @@ public class MSSceneControllerFree : MonoBehaviour
     }
     public void OnPointUpdate(int currentPoint, int decreasePoint, string reason)
     {
-        if (currentPoint < 20)
-        {
-            finishGame.GetComponent<Image>().enabled = true;
-            restartGame.GetComponent<Image>().enabled = true;
-            restartGame.GetComponent<Button>().enabled = true;
-            restartGame.GetComponentInChildren<Text>().enabled = true;
-            textRestart.GetComponent<Text>().enabled = true;
-            
-            restartGame.onClick.AddListener(restart);
-            return;
-        }
+      
         pointText.text = currentPoint + "";
         penaltyAlertText.text = Strings.get(reason) + " Puan: " + decreasePoint + " Zaman:" + Time.time;
         penaltyAlert.GetComponent<Image>().enabled = true;
@@ -359,6 +349,21 @@ public class MSSceneControllerFree : MonoBehaviour
             penaltyAlertText.text = "";
         }, 1).getEnumerator());
         
+        if (currentPoint < 20)
+        {
+            StartCoroutine(new DelayExecutor((() =>
+            {
+                
+                finishGame.GetComponent<Image>().enabled = true;
+                restartGame.GetComponent<Image>().enabled = true;
+                restartGame.GetComponent<Button>().enabled = true;
+                restartGame.GetComponentInChildren<Text>().enabled = true;
+                textRestart.GetComponent<Text>().enabled = true;
+            
+                restartGame.onClick.AddListener(restart);
+                
+            }),2).getEnumerator()); ;
+        }
     }
     
     void CheckEqualKeyCodes()
