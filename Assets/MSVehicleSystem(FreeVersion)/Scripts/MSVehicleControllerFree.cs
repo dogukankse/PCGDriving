@@ -286,7 +286,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 	bool enableSkidMarksOnStart;
 
 	int groundedWheels;
-	float sumRPM;
+	public float sumRPM;
 	float mediumRPM;
 	float angle1Ref;
 	float angle2Volant;
@@ -1452,7 +1452,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 		}
 		//
 		if (forwardTempSKid || (maxSlipTemp > (1 / _skidMarks.sensibility))) {
-			skiddingIsTrue = true;
+			skiddingIsTrue = false;
 		} else {
 			skiddingIsTrue = false;
 		}

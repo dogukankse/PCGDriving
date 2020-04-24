@@ -15,11 +15,18 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts;
+using NWH.VehiclePhysics;
 using UnityEngine.Events;
 
 public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 {
     
+    public enum LightType
+    {
+        None,
+        Low,
+        Long
+    }
     
     public enum SignalType
     {
@@ -48,15 +55,28 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public int currentPoint = 100;
     public UnityAction<int, int, string> pointUpdate;
     public GameObject Speedometer;
-
+    
+    public LightType lightType = LightType.None;
+    public LightController lightController;
+    
     private Speedometer _speedometer;
     private TrafficSystem.DriveSide currentDriverSide;
+    public GameObject speedGauge;
+    public GameObject rpmGauge;
+    private AnalogGauge _speedGauge;
+    private AnalogGauge _rpmGauge;
+    private MSVehicleControllerFree vehicle;
+    private float clampGear;
 
     public override void Awake()
     {
         base.Awake();
         initWhellMap();
         _speedometer = Speedometer.GetComponent<Speedometer>();
+        lightController = GetComponent<LightController>();
+        _speedGauge = speedGauge.GetComponent<AnalogGauge>();
+        _rpmGauge = rpmGauge.GetComponent<AnalogGauge>();
+        vehicle = GetComponent<MSVehicleControllerFree>();
     }
 
     private void initWhellMap()
@@ -85,6 +105,38 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         CheckSideWalkPenalty();
         CheckLaneColliders();
         UpdateSignal();
+        UpdateLight();
+        clampGear = Mathf.Clamp(vehicle.currentGear, -1, 1);
+        if (clampGear == 0)
+        {
+            clampGear = 1;
+        }
+        _speedGauge.Value = vehicle.KMh * clampGear;
+        _rpmGauge.Value = vehicle.sumRPM;
+        
+    }
+
+    private void UpdateLight()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (lightType == LightType.None)
+            {
+                lightType = LightType.Low;
+            }else
+            
+            if (lightType == LightType.Low)
+            {
+                lightType = LightType.Long;
+            }else
+            
+            if (lightType == LightType.Long)
+            {
+                lightType = LightType.None;
+            }
+            lightController.SetType(lightType);
+            _speedometer.setLightType(lightType);
+        }
     }
     
     private void UpdateSignal()

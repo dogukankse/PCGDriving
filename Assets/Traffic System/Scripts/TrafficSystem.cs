@@ -298,10 +298,10 @@ public class TrafficSystem : MonoBehaviour
 
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.L))
-			SetAllVehicleFrontLights( true );
-		else if(Input.GetKeyDown(KeyCode.K))
-			SetAllVehicleFrontLights( false );
+		//if(Input.GetKeyDown(KeyCode.L))
+		//	SetAllVehicleFrontLights( true );
+		//else if(Input.GetKeyDown(KeyCode.K))
+		//	SetAllVehicleFrontLights( false );
 	}
 
 	void OnDrawGizmos()

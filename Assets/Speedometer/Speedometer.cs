@@ -12,6 +12,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using NWH.VehiclePhysics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,11 +26,15 @@ public class Speedometer : MonoBehaviour {
     private Transform signals;
     private float speedMax;
     private float speed;
+    private Transform longLight;
+    private Transform lowLight;
     
     private void Awake() {
         needleTranform = transform.Find("needle");
         speedLabelTemplateTransform = transform.Find("speedLabelTemplate");
         signals = transform.Find("Signal");
+        longLight = transform.Find("High Beam");
+        lowLight = transform.Find("Low Beam");
         speedLabelTemplateTransform.gameObject.SetActive(false);
         
         speed = 0f;
@@ -50,6 +55,23 @@ public class Speedometer : MonoBehaviour {
         needleTranform.eulerAngles = new Vector3(0, 0, GetSpeedRotation());
     }
 
+    public void setLightType(TrafficSystemVehiclePlayer.LightType lightType)
+    {
+        if (lightType == TrafficSystemVehiclePlayer.LightType.None)
+        {
+            longLight.GetComponent<DashLight>().Active = false;
+            lowLight.GetComponent<DashLight>().Active = false;
+        }else if (lightType == TrafficSystemVehiclePlayer.LightType.Low)
+        {
+            longLight.GetComponent<DashLight>().Active = false;
+            lowLight.GetComponent<DashLight>().Active = true;
+        }
+        else if (lightType == TrafficSystemVehiclePlayer.LightType.Long)
+        {
+            longLight.GetComponent<DashLight>().Active = true;
+            lowLight.GetComponent<DashLight>().Active = false;
+        }
+    }
     public void SetSpeed(float speed)
     {
         this.speed = speed;
