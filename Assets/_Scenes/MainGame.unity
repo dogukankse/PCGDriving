@@ -1891,6 +1891,11 @@ PrefabInstance:
       propertyPath: hideDelay
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 954004063293841662, guid: 5dcbd850d5101b64397a4628f5b12591,
+        type: 3}
+      propertyPath: _sounds.engineSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 26fb7228b0cb3b1428a016e1157efe13, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dcbd850d5101b64397a4628f5b12591, type: 3}
 --- !u!1001 &889030207
