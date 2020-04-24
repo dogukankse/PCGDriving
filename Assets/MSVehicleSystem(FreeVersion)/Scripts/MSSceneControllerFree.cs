@@ -125,10 +125,15 @@ public class MSSceneControllerFree : MonoBehaviour
     Text mphText;
     Text handBrakeText;
     Text pauseText;
+
+    private Text textRestart;
+    Button restartGame;
+    Image finishGame;
     Image backGround;
     Image penaltyAlert;
     Text penaltyAlertText;
     Speedometer speedometer;
+    
 
 
 
@@ -168,6 +173,11 @@ public class MSSceneControllerFree : MonoBehaviour
 
     void Awake()
     {
+        
+        playerCode = vehicles[currentVehicle].GetComponent<TrafficSystemVehiclePlayer>();
+        playerCode.pointUpdate = OnPointUpdate;
+        vehicleCode = vehicles[currentVehicle].GetComponent<MSVehicleControllerFree>();
+        
         error = false;
         CheckEqualKeyCodes();
         MSSceneControllerFree[] sceneControllers =
@@ -249,6 +259,9 @@ public class MSSceneControllerFree : MonoBehaviour
             mphText = transform.Find("Canvas/Strings/mphText").GetComponent<Text>();
             handBrakeText = transform.Find("Canvas/Strings/handBrakeText").GetComponent<Text>();
             pauseText = transform.Find("Canvas/Strings/pauseText").GetComponent<Text>();
+            finishGame = transform.Find("Canvas/FinishGame").GetComponent<Image>();
+            restartGame = transform.Find("Canvas/FinishGame/Restart").GetComponent<Button>();
+            textRestart = transform.Find("Canvas/FinishGame/textRestart").GetComponent<Text>();
             backGround = transform.Find("Canvas/Strings").GetComponent<Image>();
             penaltyAlert = transform.Find("Canvas/Warnings").GetComponent<Image>();
             this.penaltyAlert.GetComponent<Image>().enabled = false;
@@ -268,10 +281,7 @@ public class MSSceneControllerFree : MonoBehaviour
                 enterAndExitButton.onClick = new Button.ButtonClickedEvent();
                 enterAndExitButton.onClick.AddListener(() => Mobile_EnterAndExitVehicle());
             }
-
-            playerCode = vehicles[currentVehicle].GetComponent<TrafficSystemVehiclePlayer>();
-            playerCode.pointUpdate = OnPointUpdate;
-            vehicleCode = vehicles[currentVehicle].GetComponent<MSVehicleControllerFree>();
+            
             EnableOrDisableButtons(vehicleCode.isInsideTheCar);
 
             Time.timeScale = 1;
@@ -322,8 +332,23 @@ public class MSSceneControllerFree : MonoBehaviour
         }
     }
 
+    public void restart()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void OnPointUpdate(int currentPoint, int decreasePoint, string reason)
     {
+        if (currentPoint < 20)
+        {
+            finishGame.GetComponent<Image>().enabled = true;
+            restartGame.GetComponent<Image>().enabled = true;
+            restartGame.GetComponent<Button>().enabled = true;
+            restartGame.GetComponentInChildren<Text>().enabled = true;
+            textRestart.GetComponent<Text>().enabled = true;
+            
+            restartGame.onClick.AddListener(restart);
+            return;
+        }
         pointText.text = currentPoint + "";
         penaltyAlertText.text = Strings.get(reason) + " Puan: " + decreasePoint + " Zaman:" + Time.time;
         penaltyAlert.GetComponent<Image>().enabled = true;
@@ -394,10 +419,7 @@ public class MSSceneControllerFree : MonoBehaviour
             }
 
             #endregion
-
-            playerCode = vehicles[currentVehicle].GetComponent<TrafficSystemVehiclePlayer>();
-            playerCode.pointUpdate = OnPointUpdate;
-            vehicleCode = vehicles[currentVehicle].GetComponent<MSVehicleControllerFree>();
+            
             EnableOrDisableButtons(vehicleCode.isInsideTheCar);
 
             if (Input.GetKeyDown(controls.reloadScene) && controls.enable_reloadScene_Input)
