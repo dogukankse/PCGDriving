@@ -12,7 +12,7 @@ namespace _Scripts
         private MapGenerator _mapGenerator;
         private SunController _sunController;
 
-        [SerializeField] private PedestrianSystem _pedestrianSystem;
+        [SerializeField] private AIManager _aiManager;
 
         [Header("Video")] [SerializeField] private Camera _videoCam;
         [SerializeField] private Text _videoText;
@@ -22,10 +22,6 @@ namespace _Scripts
 
         public GameObject[] trafficCars;
         public int trafficCount;
-
-
-        public GameObject[] pedestrians;
-        public int pedestrianCount;
 
         private GameObject _car;
         [SerializeField] private GameObject _player;
@@ -60,20 +56,23 @@ namespace _Scripts
                 p.m_roadType == TrafficSystem.RoadType.LANES_2 &&
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
-            InitPedestrian(pedestrianNodes);
-            
+
             _player.GetComponentInChildren<IOCcam>().layerMsk = ~0;
             _player.GetComponentInChildren<Camera>().targetDisplay = 0;
             _player.GetComponentInChildren<AudioListener>().enabled = true;
 
             _sunController.enabled = true;
-            
+            InitPedestrian();
+
+
             Destroy(_videoCam.gameObject);
             Destroy(_videoText.gameObject);
         }
 
-        void InitPedestrian(List<PedestrianNode> nodes)
+        private void InitPedestrian()
         {
+            _aiManager.FindAIPoints();
+            _aiManager.isCreationFinish = true;
         }
 
         private void InitTraffic(List<TrafficSystemNode> nodes)
