@@ -563,8 +563,8 @@ MonoBehaviour:
   bottomRightP: {fileID: 0}
   startLeftP: {fileID: 0}
   startRightP: {fileID: 0}
-  endLeftP: {fileID: 7906683601642378989}
-  endRightP: {fileID: 3185747127195510425}
+  endLeftP: {fileID: 3185747127195510425}
+  endRightP: {fileID: 7906683601642378989}
 --- !u!114 &2986269396871759500
 MonoBehaviour:
   m_ObjectHideFlags: 0

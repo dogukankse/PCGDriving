@@ -1570,7 +1570,7 @@ MonoBehaviour:
   _videoCam: {fileID: 1883969}
   _videoText: {fileID: 354564462}
   seed: 201
-  size: 8
+  size: 5
   trafficCars:
   - {fileID: 267161391389780560, guid: e8df68e5a3d796f42ae0e3365831bd6d, type: 3}
   - {fileID: 267161391389780560, guid: 7b315cf7f3631479689c52a5f3aeef50, type: 3}
@@ -2410,6 +2410,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 537534393018305249, guid: 0955dbdd1c871694aa3600d9af2cd27e,
+        type: 3}
+      propertyPath: objCount
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 537534393018305250, guid: 0955dbdd1c871694aa3600d9af2cd27e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2464,11 +2469,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 537534393018305249, guid: 0955dbdd1c871694aa3600d9af2cd27e,
-        type: 3}
-      propertyPath: objCount
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0955dbdd1c871694aa3600d9af2cd27e, type: 3}

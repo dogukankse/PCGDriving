@@ -2882,6 +2882,8 @@ GameObject:
   - component: {fileID: 1904487482174522656}
   - component: {fileID: 6820183764676501157}
   - component: {fileID: 3324583722118976102}
+  - component: {fileID: 8772071454911670618}
+  - component: {fileID: 1279376932345477120}
   m_Layer: 0
   m_Name: TrafficSystemTrafficLight1-1c ( V2 )
   m_TagString: Untagged
@@ -2944,6 +2946,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.57, y: 1, z: 1}
   m_Center: {x: 1.66, y: 0.61, z: 0}
+--- !u!65 &8772071454911670618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419643647309429794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 2, z: 3}
+  m_Center: {x: 0.05, y: 1, z: -2.5}
+--- !u!65 &1279376932345477120
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419643647309429794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 2, z: 3}
+  m_Center: {x: 8.29, y: 1, z: -2.5}
 --- !u!1 &4551978369883463875
 GameObject:
   m_ObjectHideFlags: 0
@@ -3465,6 +3493,8 @@ GameObject:
   - component: {fileID: 6490462799596552695}
   - component: {fileID: 802774283551233821}
   - component: {fileID: 7615926581217482919}
+  - component: {fileID: 8703395793355454016}
+  - component: {fileID: 2679990346929096438}
   m_Layer: 0
   m_Name: TrafficSystemTrafficLight1-1b ( V2 )
   m_TagString: Untagged
@@ -3527,6 +3557,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.57, y: 1, z: 1}
   m_Center: {x: 1.66, y: 0.61, z: 0}
+--- !u!65 &8703395793355454016
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5165115837709062581}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 2, z: 3}
+  m_Center: {x: 0.05, y: 1, z: -2.5}
+--- !u!65 &2679990346929096438
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5165115837709062581}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 2, z: 3}
+  m_Center: {x: 8.29, y: 1, z: -2.5}
 --- !u!1 &5176034971490747577
 GameObject:
   m_ObjectHideFlags: 0
@@ -4301,6 +4357,8 @@ GameObject:
   - component: {fileID: 781339308023229892}
   - component: {fileID: 1066854761778396211}
   - component: {fileID: 7647244549513203947}
+  - component: {fileID: 7417709823616226963}
+  - component: {fileID: 8224229656806416199}
   m_Layer: 0
   m_Name: TrafficSystemTrafficLight1-1a ( V2 )
   m_TagString: Untagged
@@ -4367,6 +4425,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.57, y: 1, z: 1}
   m_Center: {x: 1.66, y: 0.61, z: 0}
+--- !u!65 &7417709823616226963
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464100933646863647}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 2, z: 3}
+  m_Center: {x: 0.05, y: 1, z: -2.5}
+--- !u!65 &8224229656806416199
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464100933646863647}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 2, z: 3}
+  m_Center: {x: 8.29, y: 1, z: -2.5}
 --- !u!1 &6602812075196748922
 GameObject:
   m_ObjectHideFlags: 0
@@ -6965,12 +7049,6 @@ PrefabInstance:
       objectReference: {fileID: 5106659964977066864}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0, type: 3}
---- !u!4 &8897444593469376803 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6598558970165057304, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2371383641676815931}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8897444593469376800 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6598558970165057307, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
@@ -6983,6 +7061,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0669fab4eb98f4c9380505a0911fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8897444593469376803 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6598558970165057304, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2371383641676815931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3442843051274486331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7142,12 +7226,6 @@ PrefabInstance:
       objectReference: {fileID: 3162055165300351453}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0, type: 3}
---- !u!4 &7026201241064497993 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6598558970165057304, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
-    type: 3}
-  m_PrefabInstance: {fileID: 4184088838243169361}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7026201241064497994 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6598558970165057307, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
@@ -7160,6 +7238,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0669fab4eb98f4c9380505a0911fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7026201241064497993 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6598558970165057304, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4184088838243169361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4206991614919319879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7742,12 +7826,6 @@ PrefabInstance:
       objectReference: {fileID: 6362415829771881168}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0, type: 3}
---- !u!4 &293770835499488718 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6598558970165057304, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
-    type: 3}
-  m_PrefabInstance: {fileID: 6881893205121876694}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &293770835499488717 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6598558970165057307, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
@@ -7760,6 +7838,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0669fab4eb98f4c9380505a0911fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &293770835499488718 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6598558970165057304, guid: ca0e634b9b2a0ab4f9bad2ac8b0a3cd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6881893205121876694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7542006608868769554
 PrefabInstance:
   m_ObjectHideFlags: 0

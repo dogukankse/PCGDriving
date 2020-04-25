@@ -73,7 +73,7 @@ namespace _Scripts
                                 bNeighborEmptyNodes.topRight, emptyNodes.bottomRight);
 
                         //pedestrian connect
-                        if (IsSpecial(bNeighborRoad, new[] {6, 8, 3, 2, 10}))
+                        if (IsSpecial(bNeighborRoad, new[] {6, 8, 3, 2, 10, 7, 9}))
                             ConnectPedestrianNodes(emptyNodes.bottomLeftP, bNeighborEmptyNodes.topLeftP,
                                 bNeighborEmptyNodes.topRightP, emptyNodes.bottomRightP);
                         else
@@ -88,7 +88,7 @@ namespace _Scripts
                             rNeighborEmptyNodes = rNeighborRoad.GetComponent<EmptyNodes>();
 
                             //road connect
-                            if (IsSpecial(rNeighborRoad, new[] {4, 6, 7, 9, 8}))
+                            if (IsSpecial(rNeighborRoad, new[] {4, 6, 7, 9}))
                                 ConnectNodes(emptyNodes.endLeft, rNeighborEmptyNodes.startRight,
                                     rNeighborEmptyNodes.startLeft, emptyNodes.endRight);
                             else
@@ -213,7 +213,7 @@ namespace _Scripts
                                 rNeighborEmptyNodes.startLeft, emptyNodes.endLeft);
 
                         //pedestrian connect
-                        if (IsSpecial(rNeighborRoad, new[] {1, 5, 3, 8}))
+                        if (IsSpecial(rNeighborRoad, new[] {1, 5, 3, 8, 9}))
                             ConnectPedestrianNodes(rNeighborEmptyNodes.startRightP, emptyNodes.endLeftP,
                                 emptyNodes.endRightP, rNeighborEmptyNodes.startLeftP);
                         else
@@ -279,7 +279,7 @@ namespace _Scripts
                                     rNeighborEmptyNodes.startRight, emptyNodes.endRight);
 
                             //pedestrian connect
-                            if (IsSpecial(rNeighborRoad, new[] {9, 6, 1}))
+                            if (IsSpecial(rNeighborRoad, new[] {9, 6, 1, 11, 5}))
                                 ConnectPedestrianNodes(emptyNodes.endLeftP, rNeighborEmptyNodes.startLeftP,
                                     rNeighborEmptyNodes.startRightP, emptyNodes.endRightP);
                             else
