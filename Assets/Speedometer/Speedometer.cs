@@ -16,8 +16,8 @@ using NWH.VehiclePhysics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Speedometer : MonoBehaviour {
-
+public class Speedometer : MonoBehaviour
+{
     private const float MAX_SPEED_ANGLE = -20;
     private const float ZERO_SPEED_ANGLE = 230;
 
@@ -28,15 +28,16 @@ public class Speedometer : MonoBehaviour {
     private float speed;
     private Transform longLight;
     private Transform lowLight;
-    
-    private void Awake() {
+
+    private void Awake()
+    {
         needleTranform = transform.Find("needle");
         speedLabelTemplateTransform = transform.Find("speedLabelTemplate");
         signals = transform.Find("Signal");
         longLight = transform.Find("High Beam");
         lowLight = transform.Find("Low Beam");
         speedLabelTemplateTransform.gameObject.SetActive(false);
-        
+
         speed = 0f;
         speedMax = 200f;
 
@@ -48,7 +49,8 @@ public class Speedometer : MonoBehaviour {
         signals.GetComponent<SignalController>().updateType(type);
     }
 
-    private void Update() {
+    private void Update()
+    {
         //speed += 30f * Time.deltaTime;
         //if (speed > speedMax) speed = speedMax;
 
@@ -61,7 +63,8 @@ public class Speedometer : MonoBehaviour {
         {
             longLight.GetComponent<DashLight>().Active = false;
             lowLight.GetComponent<DashLight>().Active = false;
-        }else if (lightType == TrafficSystemVehiclePlayer.LightType.Low)
+        }
+        else if (lightType == TrafficSystemVehiclePlayer.LightType.Low)
         {
             longLight.GetComponent<DashLight>().Active = false;
             lowLight.GetComponent<DashLight>().Active = true;
@@ -72,31 +75,35 @@ public class Speedometer : MonoBehaviour {
             lowLight.GetComponent<DashLight>().Active = false;
         }
     }
+
     public void SetSpeed(float speed)
     {
         this.speed = speed;
     }
 
-    private void CreateSpeedLabels() {
+    private void CreateSpeedLabels()
+    {
         int labelAmount = 10;
         float totalAngleSize = ZERO_SPEED_ANGLE - MAX_SPEED_ANGLE;
 
-        for (int i = 0; i <= labelAmount; i++) {
+        for (int i = 0; i <= labelAmount; i++)
+        {
             Transform speedLabelTransform = Instantiate(speedLabelTemplateTransform, transform);
-            float labelSpeedNormalized = (float)i / labelAmount;
+            float labelSpeedNormalized = (float) i / labelAmount;
             float speedLabelAngle = ZERO_SPEED_ANGLE - labelSpeedNormalized * totalAngleSize;
             speedLabelTransform.eulerAngles = new Vector3(0, 0, speedLabelAngle);
-            speedLabelTransform.Find("speedText").GetComponent<Text>().text = Mathf.RoundToInt(labelSpeedNormalized * speedMax).ToString();
+            speedLabelTransform.Find("speedText").GetComponent<Text>().text =
+                Mathf.RoundToInt(labelSpeedNormalized * speedMax).ToString();
             speedLabelTransform.Find("speedText").eulerAngles = Vector3.zero;
             speedLabelTransform.gameObject.SetActive(true);
         }
-        
+
         signals.SetAsLastSibling();
         needleTranform.SetAsLastSibling();
-    
     }
 
-    private float GetSpeedRotation() {
+    private float GetSpeedRotation()
+    {
         float totalAngleSize = ZERO_SPEED_ANGLE - MAX_SPEED_ANGLE;
 
         float speedNormalized = speed / speedMax;

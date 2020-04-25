@@ -12,7 +12,10 @@ namespace ProceduralToolkit
         public Vector2 center;
         public float radius;
 
-        public static Circle2 unit { get { return new Circle2(Vector2.zero, 1); } }
+        public static Circle2 unit
+        {
+            get { return new Circle2(Vector2.zero, 1); }
+        }
 
         public Circle2(float radius) : this(Vector2.zero, radius)
         {
@@ -43,7 +46,7 @@ namespace ProceduralToolkit
         public static Circle2 Lerp(Circle2 a, Circle2 b, float t)
         {
             t = Mathf.Clamp01(t);
-            return new Circle2(a.center + (b.center - a.center)*t, a.radius + (b.radius - a.radius)*t);
+            return new Circle2(a.center + (b.center - a.center) * t, a.radius + (b.radius - a.radius) * t);
         }
 
         /// <summary>
@@ -51,7 +54,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Circle2 LerpUnclamped(Circle2 a, Circle2 b, float t)
         {
-            return new Circle2(a.center + (b.center - a.center)*t, a.radius + (b.radius - a.radius)*t);
+            return new Circle2(a.center + (b.center - a.center) * t, a.radius + (b.radius - a.radius) * t);
         }
 
         public static explicit operator Sphere(Circle2 circle)

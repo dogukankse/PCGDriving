@@ -1,4 +1,5 @@
 using System;
+using _Scripts.RoadGeneration;
 using UnityEngine;
 using static _Scripts.Utils;
 using Object = UnityEngine.Object;
@@ -299,7 +300,7 @@ namespace _Scripts
                                 ConnectNodes(emptyNodes.bottomRight, bNeighborEmptyNodes.topRight,
                                     bNeighborEmptyNodes.topLeft, emptyNodes.bottomLeft);
                             //pedestrian connect
-                            if (IsSpecial(bNeighborRoad, new[] {2, 3, 10,7}))
+                            if (IsSpecial(bNeighborRoad, new[] {2, 3, 10, 7}))
                                 ConnectPedestrianNodes(emptyNodes.bottomRightP, bNeighborEmptyNodes.topRightP,
                                     bNeighborEmptyNodes.topLeftP, emptyNodes.bottomLeftP);
                             else
@@ -379,7 +380,7 @@ namespace _Scripts
         /// <summary>
         /// Connects a <=> b and c <=> d
         /// </summary>
-        private void ConnectPedestrianNodes(PedestrianNode a, PedestrianNode b, PedestrianNode c, PedestrianNode d)
+        private void ConnectPedestrianNodes(AIPoint a, AIPoint b, AIPoint c, AIPoint d)
         {
             a.AddNode(b);
             b.AddNode(a);

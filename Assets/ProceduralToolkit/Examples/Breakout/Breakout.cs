@@ -87,22 +87,23 @@ namespace ProceduralToolkit.Examples
 
         public void Update()
         {
-            float delta = Input.GetAxis("Horizontal")*Time.deltaTime*paddleSpeed;
+            float delta = Input.GetAxis("Horizontal") * Time.deltaTime * paddleSpeed;
             paddleTransform.position += new Vector3(delta, 0);
 
             // Prevent the paddle from penetrating walls
-            float halfWall = (config.wallWidth - 1)/2f;
+            float halfWall = (config.wallWidth - 1) / 2f;
             if (paddleTransform.position.x > halfWall)
             {
                 paddleTransform.position = new Vector3(halfWall, 0);
             }
+
             if (paddleTransform.position.x < -halfWall)
             {
                 paddleTransform.position = new Vector3(-halfWall, 0);
             }
 
             // The ball should move with a constant velocity
-            ballRigidbody.velocity = ballRigidbody.velocity.normalized*config.ballVelocityMagnitude;
+            ballRigidbody.velocity = ballRigidbody.velocity.normalized * config.ballVelocityMagnitude;
 
             if (ballTransform.position.y < -0.1f || activeBricks.Count == 0)
             {
@@ -131,21 +132,22 @@ namespace ProceduralToolkit.Examples
             {
                 Object.Destroy(borders);
             }
+
             borders = new GameObject("Border");
-            float bordersHeight = config.wallHeightOffset + config.wallHeight/2 + 1 + config.ballSize;
+            float bordersHeight = config.wallHeightOffset + config.wallHeight / 2 + 1 + config.ballSize;
             float bordersWidth = config.wallWidth + 1;
 
             // Bottom
-            CreateBoxCollider(offset: new Vector2(0, -1 - config.ballSize/2),
+            CreateBoxCollider(offset: new Vector2(0, -1 - config.ballSize / 2),
                 size: new Vector2(bordersWidth, 1));
             // Left
-            CreateBoxCollider(offset: new Vector2(-bordersWidth/2f, bordersHeight/2f - 0.5f - config.ballSize/2),
+            CreateBoxCollider(offset: new Vector2(-bordersWidth / 2f, bordersHeight / 2f - 0.5f - config.ballSize / 2),
                 size: new Vector2(1, bordersHeight + 1));
             // Right
-            CreateBoxCollider(offset: new Vector2(bordersWidth/2f, bordersHeight/2f - 0.5f - config.ballSize/2),
+            CreateBoxCollider(offset: new Vector2(bordersWidth / 2f, bordersHeight / 2f - 0.5f - config.ballSize / 2),
                 size: new Vector2(1, bordersHeight + 1));
             // Top
-            CreateBoxCollider(offset: new Vector2(0, bordersHeight - config.ballSize/2),
+            CreateBoxCollider(offset: new Vector2(0, bordersHeight - config.ballSize / 2),
                 size: new Vector2(bordersWidth, 1));
         }
 
@@ -164,22 +166,23 @@ namespace ProceduralToolkit.Examples
             {
                 ReturnBrickToPool(brick);
             }
+
             activeBricks.Clear();
 
             for (int y = 0; y < config.wallHeight; y++)
             {
                 // Select a color for the current line
-                var currentColor = new ColorHSV(config.gradient.Evaluate(y/(config.wallHeight - 1f)));
+                var currentColor = new ColorHSV(config.gradient.Evaluate(y / (config.wallHeight - 1f)));
 
                 // Generate brick sizes for the current line
                 List<BrickSize> brickSizes = FillWallWithBricks(config.wallWidth);
 
-                Vector3 leftEdge = Vector3.left*config.wallWidth/2 +
-                                   Vector3.up*(config.wallHeightOffset + y*brickHeight);
+                Vector3 leftEdge = Vector3.left * config.wallWidth / 2 +
+                                   Vector3.up * (config.wallHeightOffset + y * brickHeight);
                 for (int i = 0; i < brickSizes.Count; i++)
                 {
                     var brickSize = brickSizes[i];
-                    var position = leftEdge + Vector3.right*sizeValues[brickSize]/2;
+                    var position = leftEdge + Vector3.right * sizeValues[brickSize] / 2;
 
                     // Randomize the tint of the current brick
                     float colorValue = Random.Range(brickColorMinValue, brickColorMaxValue);
@@ -221,6 +224,7 @@ namespace ProceduralToolkit.Examples
                     brickSizes.Add(pair.Key);
                 }
             }
+
             brickSizes.Shuffle();
             return brickSizes;
         }
@@ -230,8 +234,9 @@ namespace ProceduralToolkit.Examples
             var knapsack = new Dictionary<BrickSize, int>();
             foreach (var key in sizeValues.Keys)
             {
-                knapsack[key] = (int) Random.Range(0, width/3);
+                knapsack[key] = (int) Random.Range(0, width / 3);
             }
+
             return knapsack;
         }
 
@@ -240,8 +245,9 @@ namespace ProceduralToolkit.Examples
             float knapsackWidth = 0f;
             foreach (var key in knapsack.Keys)
             {
-                knapsackWidth += knapsack[key]*sizeValues[key];
+                knapsackWidth += knapsack[key] * sizeValues[key];
             }
+
             return knapsackWidth;
         }
 
@@ -262,6 +268,7 @@ namespace ProceduralToolkit.Examples
                     ReturnBrickToPool(brick);
                 };
             }
+
             return brick;
         }
 
@@ -334,8 +341,8 @@ namespace ProceduralToolkit.Examples
 
         private void KickBallInRandomDirection()
         {
-            Vector2 direction = Random.Range(-0.5f, 0.5f)*Vector2.right + Vector2.up;
-            ballRigidbody.AddForce(direction*ballForce);
+            Vector2 direction = Random.Range(-0.5f, 0.5f) * Vector2.right + Vector2.up;
+            ballRigidbody.AddForce(direction * ballForce);
         }
     }
 }

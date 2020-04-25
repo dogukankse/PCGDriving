@@ -81,6 +81,7 @@ namespace ProceduralToolkit.Skeleton
                     Debug.LogError("Too many iterations");
                     break;
                 }
+
                 for (int i = 3; i < polygon.Count; i++)
                 {
                     Vector2 current = polygon[i];
@@ -111,6 +112,7 @@ namespace ProceduralToolkit.Skeleton
                         }
                     }
                 }
+
                 count++;
             } while (swapped);
         }

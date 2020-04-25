@@ -6,74 +6,82 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 [CustomEditor(typeof(TrafficSystemNode))]
 [CanEditMultipleObjects]
-public class TrafficSystemNodeEditor : Editor 
+public class TrafficSystemNodeEditor : Editor
 {
-	TrafficSystemNode               TrafficSystemNode;
-	private TrafficSystem.DriveSide m_previousDriveSide       = TrafficSystem.DriveSide.LEFT;
-	private bool                    m_previousIsPrimary       = true;
-	TrafficSystem                   TrafficSystem;
+    TrafficSystemNode TrafficSystemNode;
+    private TrafficSystem.DriveSide m_previousDriveSide = TrafficSystem.DriveSide.LEFT;
+    private bool m_previousIsPrimary = true;
+    TrafficSystem TrafficSystem;
 
-	void Awake()
-	{
-		TrafficSystemNode = (TrafficSystemNode)target;
-		m_previousDriveSide = TrafficSystemNode.m_driveSide;
-	}
+    void Awake()
+    {
+        TrafficSystemNode = (TrafficSystemNode) target;
+        m_previousDriveSide = TrafficSystemNode.m_driveSide;
+    }
 
-	public override void OnInspectorGUI ()
-	{
-		DrawDefaultInspector();
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
 
 //		serializedObject.Update();
 
-		if(m_previousDriveSide != TrafficSystemNode.m_driveSide ||
-		   m_previousIsPrimary != TrafficSystemNode.m_isPrimary)
-		{
-			if(TrafficSystemNode.m_driveSide == TrafficSystem.DriveSide.LEFT)
-			{
-				if(TrafficSystemNode.m_isPrimary)
-				{
-					Material material = AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.PrimaryNodeLeftSideMaterial, typeof(Material)) as Material;
-					TrafficSystemNode.GetComponent<Renderer>().material = material;
-				}
-				else
-				{
-					Material material = AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.SecondaryNodeLeftSideMaterial, typeof(Material)) as Material;
-					TrafficSystemNode.GetComponent<Renderer>().material = material;
-				}
-			}
-			else
-			{
-				if(TrafficSystemNode.m_isPrimary)
-				{
-					Material material = AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.PrimaryNodeRightSideMaterial, typeof(Material)) as Material;
-					TrafficSystemNode.GetComponent<Renderer>().material = material;
-				}
-				else
-				{
-					Material material = AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.SecondaryNodeRightSideMaterial, typeof(Material)) as Material;
-					TrafficSystemNode.GetComponent<Renderer>().material = material;
-				}			
-			}
+        if (m_previousDriveSide != TrafficSystemNode.m_driveSide ||
+            m_previousIsPrimary != TrafficSystemNode.m_isPrimary)
+        {
+            if (TrafficSystemNode.m_driveSide == TrafficSystem.DriveSide.LEFT)
+            {
+                if (TrafficSystemNode.m_isPrimary)
+                {
+                    Material material =
+                        AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.PrimaryNodeLeftSideMaterial,
+                            typeof(Material)) as Material;
+                    TrafficSystemNode.GetComponent<Renderer>().material = material;
+                }
+                else
+                {
+                    Material material =
+                        AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.SecondaryNodeLeftSideMaterial,
+                            typeof(Material)) as Material;
+                    TrafficSystemNode.GetComponent<Renderer>().material = material;
+                }
+            }
+            else
+            {
+                if (TrafficSystemNode.m_isPrimary)
+                {
+                    Material material =
+                        AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.PrimaryNodeRightSideMaterial,
+                            typeof(Material)) as Material;
+                    TrafficSystemNode.GetComponent<Renderer>().material = material;
+                }
+                else
+                {
+                    Material material =
+                        AssetDatabase.LoadAssetAtPath(TrafficSystemEditor.SecondaryNodeRightSideMaterial,
+                            typeof(Material)) as Material;
+                    TrafficSystemNode.GetComponent<Renderer>().material = material;
+                }
+            }
 
-			m_previousDriveSide = TrafficSystemNode.m_driveSide;
-			m_previousIsPrimary = TrafficSystemNode.m_isPrimary;
-		}
-	}
+            m_previousDriveSide = TrafficSystemNode.m_driveSide;
+            m_previousIsPrimary = TrafficSystemNode.m_isPrimary;
+        }
+    }
 
-	void OnSceneGUI()
-	{
-		if(!TrafficSystem)
-		{
-			GameObject obj = GameObject.Find ("Traffic System");
-			if(obj && obj.GetComponent<TrafficSystem>())
-				TrafficSystem = obj.GetComponent<TrafficSystem>();
-		}
-		
-		if(TrafficSystem && TrafficSystem.Instance)
-		{
-			if(TrafficSystem.Instance.TooltipAnchor)
-				TrafficSystem.Instance.TooltipAnchor.transform.Rotate(Vector3.up, 1.0f); 
-		}
+    void OnSceneGUI()
+    {
+        if (!TrafficSystem)
+        {
+            GameObject obj = GameObject.Find("Traffic System");
+            if (obj && obj.GetComponent<TrafficSystem>())
+                TrafficSystem = obj.GetComponent<TrafficSystem>();
+        }
+
+        if (TrafficSystem && TrafficSystem.Instance)
+        {
+            if (TrafficSystem.Instance.TooltipAnchor)
+                TrafficSystem.Instance.TooltipAnchor.transform.Rotate(Vector3.up, 1.0f);
+        }
 
 //		if(!TrafficSystemNode.m_connectedLocalNode)
 //		{
@@ -90,5 +98,5 @@ public class TrafficSystemNodeEditor : Editor
 //				}
 //			}
 //		}
-	}
+    }
 }

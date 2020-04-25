@@ -12,17 +12,13 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Steering angle at low speeds.
         /// </summary>
-        [Tooltip(" Steering angle at low speeds.")]
-        [Range(0f, 60f)]
-        [ShowInSettings(20f, 50f, 1f)]
+        [Tooltip(" Steering angle at low speeds.")] [Range(0f, 60f)] [ShowInSettings(20f, 50f, 1f)]
         public float lowSpeedAngle = 30f;
 
         /// <summary>
         /// Steering angle at high speeds.
         /// </summary>
-        [Tooltip(" Steering angle at high speeds.")]
-        [Range(0f, 60f)]
-        [ShowInSettings(5f, 20f, 1f)]
+        [Tooltip(" Steering angle at high speeds.")] [Range(0f, 60f)] [ShowInSettings(5f, 20f, 1f)]
         public float highSpeedAngle = 14f;
 
         /// <summary>
@@ -36,7 +32,8 @@ namespace NWH.VehiclePhysics
         /// limit per second. E.g. 60 degrees per second will mean that the wheels that have 30 degree steer angle will
         /// take 1 second to steer from full left to full right.
         /// </summary>
-        [Tooltip("Only used if limitSteeringRate is true.Will limit wheels so that they can only steer up to the set degree" +
+        [Tooltip(
+            "Only used if limitSteeringRate is true.Will limit wheels so that they can only steer up to the set degree" +
             "limit per second. E.g. 60 degrees per second will mean that the wheels that have 30 degree steer angle will" +
             "take 1 second to steer from full left to full right.")]
         [Range(0f, 360f)]
@@ -60,8 +57,7 @@ namespace NWH.VehiclePhysics
         /// Set to 1 for 100% braking torque when using steer. Higer value will make the tracked vehicle
         /// turn tighter but will slow it down more.
         /// </summary>
-        [Range(0f, 1f)]
-        public float trackedSteerIntensity = 1f;
+        [Range(0f, 1f)] public float trackedSteerIntensity = 1f;
 
         private float angle;
         private Vector3 initialSteeringWheelRotation;
@@ -73,16 +69,13 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float Angle
         {
-            get
-            {
-                return angle;
-            }
+            get { return angle; }
         }
 
         public void Initialize(VehicleController vc)
         {
             this.vc = vc;
-            if(steeringWheel != null)
+            if (steeringWheel != null)
             {
                 initialSteeringWheelRotation = steeringWheel.transform.localRotation.eulerAngles;
             }
@@ -116,14 +109,16 @@ namespace NWH.VehiclePhysics
                 }
 
                 // Detoriate handling when damaged
-                if(vc.damage.enabled && vc.damage.performanceDegradation)
+                if (vc.damage.enabled && vc.damage.performanceDegradation)
                 {
-                    axle.leftWheel.SteerAngle += (axle.leftWheel.Damage / vc.damage.allowedDamage) * maxAngle * axle.leftWheel.DamageSteerDirection;
-                    axle.rightWheel.SteerAngle += (axle.rightWheel.Damage / vc.damage.allowedDamage) * maxAngle * axle.rightWheel.DamageSteerDirection;
+                    axle.leftWheel.SteerAngle += (axle.leftWheel.Damage / vc.damage.allowedDamage) * maxAngle *
+                                                 axle.leftWheel.DamageSteerDirection;
+                    axle.rightWheel.SteerAngle += (axle.rightWheel.Damage / vc.damage.allowedDamage) * maxAngle *
+                                                  axle.rightWheel.DamageSteerDirection;
                 }
 
                 // Tracked steering
-                if(vc.tracks.trackedVehicle)
+                if (vc.tracks.trackedVehicle)
                 {
                     float brakePercent = Mathf.Abs(angle) / maxAngle;
                     brakePercent *= (0.5f + (1f - vc.input.Vertical) * 0.5f) * vc.steering.trackedSteerIntensity;
@@ -144,7 +139,7 @@ namespace NWH.VehiclePhysics
             }
 
             // Adjust steering wheel object if it exists
-            if(steeringWheel != null)
+            if (steeringWheel != null)
             {
                 float wheelAngle = angle * steeringWheelTurnRatio;
                 steeringWheel.transform.localRotation = Quaternion.Euler(initialSteeringWheelRotation);
@@ -154,7 +149,7 @@ namespace NWH.VehiclePhysics
 
         public void AdjustGeometry()
         {
-            foreach(Axle axle in vc.axles)
+            foreach (Axle axle in vc.axles)
             {
                 axle.leftWheel.ControllerTransform.localEulerAngles = new Vector3(
                     -axle.geometry.casterAngle,
@@ -168,4 +163,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

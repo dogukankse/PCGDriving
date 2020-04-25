@@ -26,14 +26,14 @@ namespace NWH.VehiclePhysics
 
         public override void Update()
         {
-            if(Source != null && Clip != null)
+            if (Source != null && Clip != null)
             {
                 if (vc.input.horn && !Source.isPlaying)
                 {
                     Source.pitch = pitch;
                     Source.Play();
                 }
-                else if(!vc.input.horn && Source.isPlaying)
+                else if (!vc.input.horn && Source.isPlaying)
                 {
                     Source.Stop();
                 }

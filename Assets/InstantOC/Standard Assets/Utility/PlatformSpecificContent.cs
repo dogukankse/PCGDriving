@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityStandardAssets.Utility
@@ -89,6 +90,7 @@ namespace UnityStandardAssets.Utility
                     }
                 }
             }
+
             if (m_ChildrenOfThisObject)
             {
                 foreach (Transform t in transform)
@@ -96,6 +98,7 @@ namespace UnityStandardAssets.Utility
                     t.gameObject.SetActive(enabled);
                 }
             }
+
             if (m_MonoBehaviours.Length > 0)
             {
                 foreach (var monoBehaviour in m_MonoBehaviours)

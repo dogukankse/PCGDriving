@@ -33,6 +33,7 @@ namespace ProceduralToolkit
                 PTUtils.Swap(ref x0, ref y0);
                 PTUtils.Swap(ref x1, ref y1);
             }
+
             if (x0 > x1)
             {
                 PTUtils.Swap(ref x0, ref x1);
@@ -41,7 +42,7 @@ namespace ProceduralToolkit
 
             int dx = x1 - x0;
             int dy = Math.Abs(y1 - y0);
-            int error = dx/2;
+            int error = dx / 2;
             int ystep = (y0 < y1) ? 1 : -1;
             int y = y0;
             for (int x = x0; x <= x1; x++)
@@ -81,6 +82,7 @@ namespace ProceduralToolkit
                 PTUtils.Swap(ref x0, ref y0);
                 PTUtils.Swap(ref x1, ref y1);
             }
+
             if (x0 > x1)
             {
                 PTUtils.Swap(ref x0, ref x1);
@@ -97,9 +99,10 @@ namespace ProceduralToolkit
                 draw(x0, y0, 1);
                 draw(x1, y1, 1);
             }
+
             float dx = x1 - x0;
             float dy = y1 - y0;
-            float gradient = dy/dx;
+            float gradient = dy / dx;
             float y = y0 + gradient;
             for (var x = x0 + 1; x <= x1 - 1; x++)
             {
@@ -113,6 +116,7 @@ namespace ProceduralToolkit
                     draw(x, (int) y, 1 - (y - (int) y));
                     draw(x, (int) y + 1, y - (int) y);
                 }
+
                 y += gradient;
             }
         }
@@ -146,7 +150,7 @@ namespace ProceduralToolkit
 
             int x = -radius;
             int y = 0;
-            int error = 2 - 2*radius; // 2 quadrant ◴
+            int error = 2 - 2 * radius; // 2 quadrant ◴
             while (x < 0)
             {
                 draw(x0 - x, y0 + y); // 1 quadrant ◷
@@ -158,7 +162,7 @@ namespace ProceduralToolkit
                 if (y >= error)
                 {
                     y++;
-                    error += 2*y + 1;
+                    error += 2 * y + 1;
                 }
 
                 // Second check is needed to avoid weird pixels at diagonals at some radiuses
@@ -166,7 +170,7 @@ namespace ProceduralToolkit
                 if (x < lastError || y < error)
                 {
                     x++;
-                    error += 2*x + 1;
+                    error += 2 * x + 1;
                 }
             }
         }
@@ -189,6 +193,7 @@ namespace ProceduralToolkit
                 draw(x0, y0);
                 return;
             }
+
             if (radius == 1)
             {
                 draw(x0, y0 + 1);
@@ -201,7 +206,7 @@ namespace ProceduralToolkit
 
             int x = -radius;
             int y = 0;
-            int error = 2 - 2*radius; // 2 quadrant ◴
+            int error = 2 - 2 * radius; // 2 quadrant ◴
             // lastY must have a different value than y
             int lastY = int.MaxValue;
             while (x < 0)
@@ -216,13 +221,14 @@ namespace ProceduralToolkit
                         DrawHorizontalLine(x0 + x, x0 - x, y0 - y, draw); // ◡
                     }
                 }
+
                 lastY = y;
 
                 int lastError = error;
                 if (y >= error)
                 {
                     y++;
-                    error += 2*y + 1;
+                    error += 2 * y + 1;
                 }
 
                 // Second check is needed to avoid weird pixels at diagonals at some radiuses
@@ -230,7 +236,7 @@ namespace ProceduralToolkit
                 if (x < lastError || y < error)
                 {
                     x++;
-                    error += 2*x + 1;
+                    error += 2 * x + 1;
                 }
             }
         }

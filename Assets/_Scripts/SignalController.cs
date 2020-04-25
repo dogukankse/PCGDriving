@@ -22,19 +22,19 @@ public class SignalController : MonoBehaviour
         {
             return;
         }
+
         currentType = type;
 
         blink();
     }
 
-    
+
     Transform blink_object;
     private Transform unblink_object;
     private RepeatExecutor blinkExecutor;
 
     private void blink()
     {
-    
         if (currentType == TrafficSystemVehiclePlayer.SignalType.Left)
         {
             blink_object = left;

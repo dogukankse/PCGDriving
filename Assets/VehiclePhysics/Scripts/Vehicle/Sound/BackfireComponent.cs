@@ -28,7 +28,6 @@ namespace NWH.VehiclePhysics
         {
             if (Source != null && Clip != null)
             {
-
             }
         }
     }

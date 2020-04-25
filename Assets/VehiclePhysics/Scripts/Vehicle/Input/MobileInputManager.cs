@@ -16,7 +16,11 @@ namespace NWH.VehiclePhysics
         /// Screen - uses left side of the screen along with touch input to get steering position.
         /// Steering Wheel - uses SteeringWheel script and steering wheel on-screen graphic that can be rotated by dragging.
         /// </summary>
-        public enum InputType { Accelerometer, SteeringWheel }
+        public enum InputType
+        {
+            Accelerometer,
+            SteeringWheel
+        }
 
         /// <summary>
         /// Active steer devices.
@@ -33,14 +37,16 @@ namespace NWH.VehiclePhysics
         /// Set to null (none) if you want to use your own vehicle controller. If this is set to other than null current active vehicle according 
         /// to the assigned vehicle changer will be used instead of the assigned vehicle controller.
         /// </summary>
-        [Tooltip("Set to null (none) if you want to use your own vehicle controller. If this is set to other than null current active vehicle according " +
+        [Tooltip(
+            "Set to null (none) if you want to use your own vehicle controller. If this is set to other than null current active vehicle according " +
             "to the assigned vehicle changer will be used instead of the assigned vehicle controller.")]
         public VehicleChanger vehicleChanger;
 
         /// <summary>
         /// If you want to use this script with a single vehicle or want to set your own vehicle controller from script set vehicle changer field to null / none.
         /// </summary>
-        [Tooltip("If you want to use this script with a single vehicle or want to set your own vehicle controller from script set vehicle changer field to null / none.")]
+        [Tooltip(
+            "If you want to use this script with a single vehicle or want to set your own vehicle controller from script set vehicle changer field to null / none.")]
         public VehicleController vehicleController;
 
         /// <summary>
@@ -98,11 +104,13 @@ namespace NWH.VehiclePhysics
             // Hide steering wheel if not needed, useful if there is an option to switch input in-game
             if (steeringWheel != null && steeringWheel.steeringWheelGraphic != null)
             {
-                if (inputType != InputType.SteeringWheel && steeringWheel.steeringWheelGraphic.gameObject.activeInHierarchy)
+                if (inputType != InputType.SteeringWheel &&
+                    steeringWheel.steeringWheelGraphic.gameObject.activeInHierarchy)
                 {
                     steeringWheel.steeringWheelGraphic.gameObject.SetActive(false);
                 }
-                else if (inputType == InputType.SteeringWheel && !steeringWheel.steeringWheelGraphic.gameObject.activeInHierarchy)
+                else if (inputType == InputType.SteeringWheel &&
+                         !steeringWheel.steeringWheelGraphic.gameObject.activeInHierarchy)
                 {
                     steeringWheel.steeringWheelGraphic.gameObject.SetActive(true);
                 }
@@ -149,7 +157,7 @@ namespace NWH.VehiclePhysics
 
         public void ChangeVehicle()
         {
-            if(vehicleChanger != null)
+            if (vehicleChanger != null)
             {
                 vehicleChanger.NextVehicle();
             }
@@ -162,7 +170,7 @@ namespace NWH.VehiclePhysics
         public void ChangeCamera()
         {
             CameraChanger cc = vehicleController.GetComponentInChildren<CameraChanger>();
-            if(cc != null)
+            if (cc != null)
                 cc.NextCamera();
         }
 
@@ -172,4 +180,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

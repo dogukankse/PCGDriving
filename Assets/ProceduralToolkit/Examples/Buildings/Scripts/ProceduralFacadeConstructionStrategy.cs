@@ -7,16 +7,13 @@ namespace ProceduralToolkit.Examples.Buildings
     [CreateAssetMenu(menuName = "ProceduralToolkit/Buildings/Procedural Facade Construction Strategy", order = 3)]
     public class ProceduralFacadeConstructionStrategy : FacadeConstructionStrategy
     {
-        [SerializeField]
-        private RendererProperties rendererProperties;
-        [SerializeField]
-        private Material glassMaterial;
-        [SerializeField]
-        private Material roofMaterial;
-        [SerializeField]
-        private Material wallMaterial;
+        [SerializeField] private RendererProperties rendererProperties;
+        [SerializeField] private Material glassMaterial;
+        [SerializeField] private Material roofMaterial;
+        [SerializeField] private Material wallMaterial;
 
-        public override void Construct(List<Vector2> foundationPolygon, List<ILayout> layouts, Transform parentTransform)
+        public override void Construct(List<Vector2> foundationPolygon, List<ILayout> layouts,
+            Transform parentTransform)
         {
             var facadesDraft = new CompoundMeshDraft();
 
@@ -63,6 +60,7 @@ namespace ProceduralToolkit.Examples.Buildings
                     materials.Add(wallMaterial);
                 }
             }
+
             meshRenderer.materials = materials.ToArray();
             rendererGo.AddComponent<BoxCollider>();
         }
@@ -83,6 +81,7 @@ namespace ProceduralToolkit.Examples.Buildings
                 ConstructLayout(draft, parentLayoutOrigin, layout);
                 return;
             }
+
             var constructible = element as IConstructible<CompoundMeshDraft>;
             if (constructible != null)
             {

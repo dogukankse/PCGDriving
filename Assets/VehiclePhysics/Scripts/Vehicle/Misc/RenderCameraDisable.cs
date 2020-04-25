@@ -19,13 +19,13 @@ namespace NWH.VehiclePhysics
 
         void Update()
         {
-            if(vc != null && cameraToDisable != null)
+            if (vc != null && cameraToDisable != null)
             {
-                if(vc.Active && !cameraToDisable.enabled)
+                if (vc.Active && !cameraToDisable.enabled)
                 {
                     cameraToDisable.enabled = true;
                 }
-                else if(!vc.Active && cameraToDisable.enabled)
+                else if (!vc.Active && cameraToDisable.enabled)
                 {
                     cameraToDisable.enabled = false;
                 }
@@ -33,4 +33,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

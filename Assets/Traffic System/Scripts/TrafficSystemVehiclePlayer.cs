@@ -20,28 +20,27 @@ using UnityEngine.Events;
 
 public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
 {
-    
     public enum LightType
     {
         None,
         Low,
         Long
     }
-    
+
     public enum SignalType
     {
         None,
         Left,
         Right
     }
-    
+
     public static string SIDEWALK_PENALTY = "side_walk_penalty";
     public static string CRASH_PENALTY = "crash_penalty";
-    public  static string CAR_CRASH_PENALTY = "car_crash_penalty";
+    public static string CAR_CRASH_PENALTY = "car_crash_penalty";
     public static string RED_LIGHT_PENALTY = "red_light_penalty";
     public static string LANE_SWITCH_PENALTY = "lane_switch_penalty";
     public static string SPEED_PENALTY = "speed_penalty";
-    
+
     public delegate void HasEnteredTrafficLightTrigger(TrafficSystemTrafficLight a_trafficLight);
 
     public HasEnteredTrafficLightTrigger hasEnteredTrafficLightTrigger;
@@ -51,15 +50,15 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public float wheelCheckPeriod = 0.1f;
 
     private SignalType signalType = SignalType.None;
-    
+
     Dictionary<String, float> PenaltyTimes = new Dictionary<string, float>();
     public int currentPoint = 100;
     public UnityAction<int, int, string> pointUpdate;
     public GameObject Speedometer;
-    
+
     public LightType lightType = LightType.None;
     public LightController lightController;
-    
+
     private Speedometer _speedometer;
     private TrafficSystem.DriveSide currentDriverSide;
     public GameObject speedGauge;
@@ -120,7 +119,6 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         {
             DecreasePoint(SPEED_PENALTY);
         }
-        
     }
 
     private void UpdateLight()
@@ -130,22 +128,21 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             if (lightType == LightType.None)
             {
                 lightType = LightType.Low;
-            }else
-            
-            if (lightType == LightType.Low)
+            }
+            else if (lightType == LightType.Low)
             {
                 lightType = LightType.Long;
-            }else
-            
-            if (lightType == LightType.Long)
+            }
+            else if (lightType == LightType.Long)
             {
                 lightType = LightType.None;
             }
+
             lightController.SetType(lightType);
             _speedometer.setLightType(lightType);
         }
     }
-    
+
     private void UpdateSignal()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -163,7 +160,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 Debug.Log("left z");
             }
         }
-        else if(Input.GetKeyDown(KeyCode.C))
+        else if (Input.GetKeyDown(KeyCode.C))
         {
             if (signalType == SignalType.Right)
             {
@@ -178,10 +175,9 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
                 Debug.Log("right c");
             }
         }
-   
     }
-    
-    
+
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider)
@@ -198,7 +194,6 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             }
         }
     }
-
 
 
     private void CheckLaneColliders()
@@ -231,16 +226,19 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         if (PenaltyTimes.ContainsKey(type))
         {
             //check last time
-            if(Math.Abs(PenaltyTimes[type] - Time.time) > 1){
+            if (Math.Abs(PenaltyTimes[type] - Time.time) > 1)
+            {
                 //if the time of last penalty is greater
                 currentPoint -= PenaltyPoints.get(type);
                 pointUpdate(currentPoint, PenaltyPoints.get(type), type);
             }
-        }else{
+        }
+        else
+        {
             currentPoint -= PenaltyPoints.get(type);
             pointUpdate(currentPoint, PenaltyPoints.get(type), type);
         }
-        
+
         PenaltyTimes[type] = Time.time;
     }
 
@@ -306,7 +304,6 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public void ProcessHasEnteredTrafficLightTrigger(TrafficSystemTrafficLight a_trafficLight)
     {
     }
-
 
 
     private void OnTriggerExit(Collider other)

@@ -10,8 +10,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Should rigging be used?
         /// </summary>
-        [Tooltip("Should rigging be used?")]
-        public bool enabled = false;
+        [Tooltip("Should rigging be used?")] public bool enabled = false;
 
         /// <summary>
         /// If enabled wheel camber will be set as if the wheels were on a solid axle.
@@ -22,8 +21,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// List of handles controlling the axle bones. Each item is a single axle handle.
         /// </summary>
-        [Tooltip("List of handles controlling the axle bones. Each item is a single axle.")]
-        [SerializeField]
+        [Tooltip("List of handles controlling the axle bones. Each item is a single axle.")] [SerializeField]
         public List<Transform> axleBones = new List<Transform>();
 
         /// <summary>
@@ -38,22 +36,24 @@ namespace NWH.VehiclePhysics
             if (!enabled)
                 return;
 
-            if(solidAxle)
+            if (solidAxle)
             {
-                if(axleBones.Count == vc.axles.Count && axleBones != null)
+                if (axleBones.Count == vc.axles.Count && axleBones != null)
                 {
                     for (int i = 0; i < axleBones.Count; i++)
                     {
                         // Adjust axle position
                         Axle axle = vc.axles[i];
 
-                        Vector3 position = (axle.leftWheel.WheelController.springTravelPoint + axle.rightWheel.WheelController.springTravelPoint) / 2f;
+                        Vector3 position = (axle.leftWheel.WheelController.springTravelPoint +
+                                            axle.rightWheel.WheelController.springTravelPoint) / 2f;
                         axleBones[i].position = position;
                         axleBones[i].LookAt(axle.leftWheel.WheelController.springTravelPoint, vc.transform.up);
                         axleBones[i].Rotate(0, 90, 0);
 
                         // Adjust camber
-                        float camberAngle = VehicleController.AngleSigned(vc.transform.right, axleBones[i].right, vc.transform.forward);
+                        float camberAngle = VehicleController.AngleSigned(vc.transform.right, axleBones[i].right,
+                            vc.transform.forward);
                         axle.leftWheel.WheelController.SetCamber(camberAngle);
                         axle.rightWheel.WheelController.SetCamber(-camberAngle);
                     }
@@ -65,7 +65,7 @@ namespace NWH.VehiclePhysics
             }
             else
             {
-                if(wheelBones.Count == vc.Wheels.Count && wheelBones != null)
+                if (wheelBones.Count == vc.Wheels.Count && wheelBones != null)
                 {
                     for (int i = 0; i < wheelBones.Count; i++)
                     {
@@ -80,4 +80,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

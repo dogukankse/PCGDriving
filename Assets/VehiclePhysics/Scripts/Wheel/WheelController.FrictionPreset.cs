@@ -24,14 +24,11 @@ namespace NWH.WheelController3D
 
             public string name;
             public Vector4 BCDE;
-            [SerializeField]
-            private AnimationCurve curve;
+            [SerializeField] private AnimationCurve curve;
+
             public AnimationCurve Curve
             {
-                get
-                {
-                    return curve;
-                }
+                get { return curve; }
             }
 
 
@@ -39,8 +36,12 @@ namespace NWH.WheelController3D
              * Add new presets here. Do not forget to add them to the FrictionPresetEnum below too or else they will not show in the editor dropdown.
              * Presets must be listed in the same order below as in the enum.
             */
-            public static FrictionPreset TarmacDry = new FrictionPreset("TarmacDry", new Vector4(12.5f, 2.05f, 0.92f, 0.97f));
-            public static FrictionPreset TarmacWet = new FrictionPreset("TarmacWet", new Vector4(13.2f, 2.35f, 0.82f, 1.0f));
+            public static FrictionPreset TarmacDry =
+                new FrictionPreset("TarmacDry", new Vector4(12.5f, 2.05f, 0.92f, 0.97f));
+
+            public static FrictionPreset TarmacWet =
+                new FrictionPreset("TarmacWet", new Vector4(13.2f, 2.35f, 0.82f, 1.0f));
+
             public static FrictionPreset Gravel = new FrictionPreset("Gravel", new Vector4(9.0f, 1.1f, 0.8f, 1f));
             public static FrictionPreset Grass = new FrictionPreset("Grass", new Vector4(8.4f, 1.3f, 0.5f, 0.4f));
             public static FrictionPreset Sand = new FrictionPreset("Sand", new Vector4(8.0f, 1.2f, 0.6f, 0.5f));
@@ -50,10 +51,21 @@ namespace NWH.WheelController3D
             public static FrictionPreset Tracks = new FrictionPreset("Tracks", new Vector4(0.1f, 2f, 15f, 1f));
             public static FrictionPreset Arcade = new FrictionPreset("Arcade", new Vector4(4f, 1f, 2f, 0.5f));
 
-            public enum FrictionPresetEnum { TarmacDry, TarmacWet, Gravel, Grass, Sand, Snow, Ice, Generic, Tracks, Arcade };
+            public enum FrictionPresetEnum
+            {
+                TarmacDry,
+                TarmacWet,
+                Gravel,
+                Grass,
+                Sand,
+                Snow,
+                Ice,
+                Generic,
+                Tracks,
+                Arcade
+            };
 
-            [SerializeField]
-            public static List<FrictionPreset> FrictionPresetList;
+            [SerializeField] public static List<FrictionPreset> FrictionPresetList;
 
             /// <summary>
             /// Generate Curve from B,C,D and E parameters of Pacejka's simplified magic formula
@@ -68,6 +80,7 @@ namespace NWH.WheelController3D
                     float v = GetFrictionValue(t, p);
                     ac.AddKey(t, v);
                 }
+
                 return ac;
             }
 

@@ -10,12 +10,10 @@ namespace Performance
     /// </summary>
     public class FpsToText : MonoBehaviour
     {
-        [Header("// Sample Groups of Data ")]
-        public bool GroupSampling = true;
+        [Header("// Sample Groups of Data ")] public bool GroupSampling = true;
         public int SampleSize = 20;
 
-        [Header("// Config ")]
-        public Text TargetText;
+        [Header("// Config ")] public Text TargetText;
         public int UpdateTextEvery = 1;
         public int MaxTextLength = 5;
         public bool Smoothed = true;
@@ -24,15 +22,17 @@ namespace Performance
         [Header("// System FPS (updates once/sec)")]
         public bool UseSystemTick = false;
 
-        [Header("// Color Config ")]
-        public bool UseColors = true;
+        [Header("// Color Config ")] public bool UseColors = true;
         public Color Good = Color.green;
         public Color Okay = Color.yellow;
         public Color Bad = Color.red;
         public int OkayBelow = 60;
         public int BadBelow = 30;
 
-        public float Framerate { get { return _fps; } }
+        public float Framerate
+        {
+            get { return _fps; }
+        }
 
         protected float[] FpsSamples;
         protected int SampleIndex;
@@ -83,6 +83,7 @@ namespace Performance
                 TargetText.color = Bad;
                 return;
             }
+
             TargetText.color = _fps < OkayBelow ? Okay : Good;
         }
 
@@ -90,15 +91,19 @@ namespace Performance
         {
             _fps = UseSystemTick
                 ? GetSystemFramerate()
-                : Smoothed ? 1 / Time.smoothDeltaTime : 1 / Time.deltaTime;
-            if (ForceIntResult) _fps = (int)_fps;
+                : Smoothed
+                    ? 1 / Time.smoothDeltaTime
+                    : 1 / Time.deltaTime;
+            if (ForceIntResult) _fps = (int) _fps;
         }
 
         protected virtual void Group()
         {
             FpsSamples[SampleIndex] = UseSystemTick
                 ? GetSystemFramerate()
-                : Smoothed ? 1 / Time.smoothDeltaTime : 1 / Time.deltaTime;
+                : Smoothed
+                    ? 1 / Time.smoothDeltaTime
+                    : 1 / Time.deltaTime;
 
             _fps = 0;
             bool loop = true;
@@ -109,8 +114,9 @@ namespace Performance
                 _fps += FpsSamples[i];
                 i++;
             }
+
             _fps /= FpsSamples.Length;
-            if (ForceIntResult) _fps = (int)_fps;
+            if (ForceIntResult) _fps = (int) _fps;
         }
 
         protected virtual int GetSystemFramerate()
@@ -121,6 +127,7 @@ namespace Performance
                 _sysFrameRate = 0;
                 _sysLastSysTick = System.Environment.TickCount;
             }
+
             _sysFrameRate++;
             return _sysLastFrameRate;
         }

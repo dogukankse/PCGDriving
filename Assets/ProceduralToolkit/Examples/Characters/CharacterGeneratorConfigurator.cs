@@ -26,6 +26,7 @@ namespace ProceduralToolkit.Examples
             {
                 Random.InitState(0);
             }
+
             generator.Generate();
         }
     }

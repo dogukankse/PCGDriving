@@ -41,7 +41,9 @@ namespace NWH.VehiclePhysics
                     WheelController wc = vc.Wheels[i].WheelController;
                     if (!Sources[i].isPlaying)
                     {
-                        if ((wc.isGrounded && prevHasHits[i] == false) || (wc.forwardFriction.speed > 0.8f && Mathf.Abs(wc.wheelHit.angleForward * Mathf.Rad2Deg) > 20f))
+                        if ((wc.isGrounded && prevHasHits[i] == false) ||
+                            (wc.forwardFriction.speed > 0.8f &&
+                             Mathf.Abs(wc.wheelHit.angleForward * Mathf.Rad2Deg) > 20f))
                         {
                             Sources[i].pitch = Random.Range(pitch - 0.15f, pitch + 0.15f);
                             Sources[i].clip = RandomClip;

@@ -2,31 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NWH.VehiclePhysics 
+namespace NWH.VehiclePhysics
 {
     /// <summary>
     /// Represents a single axle of a vehicle.
     /// </summary>
     [System.Serializable]
-	public class Axle
-	{
+    public class Axle
+    {
         /// <summary>
         /// Axle's left wheel.
         /// </summary>
-        [Tooltip("Axle's left wheel.")]
-		public Wheel leftWheel = new Wheel();
+        [Tooltip("Axle's left wheel.")] public Wheel leftWheel = new Wheel();
 
         /// <summary>
         /// Axle's right wheel.
         /// </summary>
-        [Tooltip("Axle's right wheel.")]
-        public Wheel rightWheel = new Wheel();
+        [Tooltip("Axle's right wheel.")] public Wheel rightWheel = new Wheel();
 
         /// <summary>
         /// Amount of torque that the axle will receive where 1 equals all the available torque for that axle.
         /// </summary>
-        [ShowInTelemetry]
-        private float bias;
+        [ShowInTelemetry] private float bias;
 
         /// <summary>
         /// Class holding all geometry related data for axle and it's wheels.
@@ -34,29 +31,34 @@ namespace NWH.VehiclePhysics
         [System.Serializable]
         public class Geometry
         {
-            [Tooltip("Determines what percentage of the steer angle will be applied to the wheel. If set to negative value" +
+            [Tooltip(
+                "Determines what percentage of the steer angle will be applied to the wheel. If set to negative value" +
                 " wheels will turn in direction opposite of input.")]
             [Range(-1f, 1f)]
             [ShowInTelemetry, ShowInSettings(-1f, 1f, 0.1f)]
             public float steerCoefficient;
 
-            [Tooltip("Set to positive for Pro-Ackerman steering (inner wheel steers more) or to negative for Anti-Ackerman steering.")]
+            [Tooltip(
+                "Set to positive for Pro-Ackerman steering (inner wheel steers more) or to negative for Anti-Ackerman steering.")]
             [Range(-1f, 1f)]
             [ShowInTelemetry, ShowInSettings(-0.4f, 0.4f, 0.05f)]
             public float ackermannPercent = 0.15f;
 
-            [Tooltip("Positive toe angle means that the wheels will face inwards (front of the wheel angled toward longitudinal center of the vehicle).")]
+            [Tooltip(
+                "Positive toe angle means that the wheels will face inwards (front of the wheel angled toward longitudinal center of the vehicle).")]
             [Range(-8f, 8f)]
             [ShowInTelemetry, ShowInSettings(-8f, 8f, 0.5f)]
             public float toeAngle = 0;
 
-            [Tooltip("Positive caster means that whe wheel will be angled towards the front of the vehicle while negative " +
+            [Tooltip(
+                "Positive caster means that whe wheel will be angled towards the front of the vehicle while negative " +
                 " caster will angle the wheel in opposite direction (shopping cart wheel).")]
             [Range(-8f, 8f)]
             [ShowInTelemetry, ShowInSettings(-8f, 8f, 0.5f)]
             public float casterAngle = 0;
 
-            [Tooltip("Camber at the top of the spring travel (wheel is at the highest point). Set to other than 0 to override WC3D's settings," +
+            [Tooltip(
+                "Camber at the top of the spring travel (wheel is at the highest point). Set to other than 0 to override WC3D's settings," +
                 "and set to 0 if you want to use camber settings and curve from WC3D inpector.")]
             [Range(-10f, 10f)]
             [ShowInSettings(-10f, 10f, 1f)]
@@ -67,17 +69,18 @@ namespace NWH.VehiclePhysics
             [ShowInSettings(-10f, 10f, 1f)]
             public float camberAtBottom = 0;
 
-            [Tooltip("Setting to true will override camber settings and camber will be calculated from position of the (imaginary) axle object instead.")]
+            [Tooltip(
+                "Setting to true will override camber settings and camber will be calculated from position of the (imaginary) axle object instead.")]
             public bool isSolid = false;
 
-            [Tooltip("Used to reduce roll in the vehicle. Should not exceed max spring force setting. Another way to reduce roll is to" +
+            [Tooltip(
+                "Used to reduce roll in the vehicle. Should not exceed max spring force setting. Another way to reduce roll is to" +
                 " adjust center of mass to be lower.")]
             [ShowInTelemetry, ShowInSettings(0f, 20000f, 1000f)]
             public float antiRollBarForce;
         }
 
-        [Tooltip("Geometry related parameters.")]
-        [SerializeField]
+        [Tooltip("Geometry related parameters.")] [SerializeField]
         public Geometry geometry = new Geometry();
 
         /// <summary>
@@ -85,9 +88,10 @@ namespace NWH.VehiclePhysics
         /// of total power (1:1), if first axle has p.c. of 1 and rear has p.c. of 0.5, this means that first axle will receive
         /// (1 / (1 + 0.5)) = 0.66 (66%) of total power and rear will receive (0.5 / (1 + 0.5)) = 0.33 (33%) of total power.
         /// </summary>
-        [Tooltip("Amount of power that the axle will receive shown as a ratio. If two axles have both power coefficient of 1 each will receive half" +
+        [Tooltip(
+            "Amount of power that the axle will receive shown as a ratio. If two axles have both power coefficient of 1 each will receive half" +
             " of total power (1:1), if first axle has p.c. of 1 and rear has p.c. of 0.5, this means that first axle will receive" +
-            " (1 / (1 + 0.5)) = 0.66 (66%) of total power and rear will receive (0.5 / (1 + 0.5)) = 0.33 (33%) of total power.")]           
+            " (1 / (1 + 0.5)) = 0.66 (66%) of total power and rear will receive (0.5 / (1 + 0.5)) = 0.33 (33%) of total power.")]
         [Range(0f, 1f)]
         [ShowInTelemetry, ShowInSettings(0f, 1f, 0.1f)]
         public float powerCoefficient = 1f;
@@ -96,7 +100,8 @@ namespace NWH.VehiclePhysics
         /// If set to 1 axle will receive full brake torque as set by Max Torque parameter under Brake section while 0 
         /// means no breaking at all.
         /// </summary>
-        [Tooltip("If set to 1 axle will receive full brake torque as set by Max Torque parameter under Brake section while " +
+        [Tooltip(
+            "If set to 1 axle will receive full brake torque as set by Max Torque parameter under Brake section while " +
             "0 means no breaking at all.")]
         [Range(0f, 1f)]
         [ShowInTelemetry, ShowInSettings(0f, 1f, 0.1f)]
@@ -108,8 +113,8 @@ namespace NWH.VehiclePhysics
         [Tooltip("If set to 1 axle will receive full brake torque when handbrake is used.")]
         [Range(0f, 1f)]
         [ShowInTelemetry, ShowInSettings(0f, 1f, 0.1f)]
-        public float handbrakeCoefficient;     
-        
+        public float handbrakeCoefficient;
+
         /// <summary>
         /// Axle differential. 
         /// Equal - torque will be split equally between wheels at all times.
@@ -117,7 +122,13 @@ namespace NWH.VehiclePhysics
         /// Limited Slip - both wheels will always get some torque, depends on RPM of each wheel.
         /// Locking - slower spinning wheel will receive most torque.
         /// </summary>
-        public enum DifferentialType { Equal, Open, LimitedSlip, Locking }
+        public enum DifferentialType
+        {
+            Equal,
+            Open,
+            LimitedSlip,
+            Locking
+        }
 
         /// <summary>
         /// Strength of the axle differential. Affects LimitedSlip and Locking differentials.
@@ -134,18 +145,12 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public DifferentialType differentialType = DifferentialType.LimitedSlip;
 
-		private VehicleController vc;
+        private VehicleController vc;
 
         public float Bias
         {
-            get
-            {
-                return bias;
-            }
-            set
-            {
-                bias = Mathf.Clamp01(value);
-            }
+            get { return bias; }
+            set { bias = Mathf.Clamp01(value); }
         }
 
         /// <summary>
@@ -154,10 +159,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public bool IsPowered
         {
-            get
-            {
-                return powerCoefficient > 0 ? true : false;
-            }
+            get { return powerCoefficient > 0 ? true : false; }
         }
 
         /// <summary>
@@ -166,10 +168,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float RPM
         {
-            get 
-            {
-                return (leftWheel.RPM + rightWheel.RPM) / 2f;
-            }
+            get { return (leftWheel.RPM + rightWheel.RPM) / 2f; }
         }
 
         /// <summary>
@@ -177,10 +176,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float SmoothRPM
         {
-            get
-            {
-                return (leftWheel.SmoothRPM + rightWheel.SmoothRPM) / 2f;
-            }
+            get { return (leftWheel.SmoothRPM + rightWheel.SmoothRPM) / 2f; }
         }
 
         /// <summary>
@@ -188,10 +184,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float NoSlipRPM
         {
-            get
-            {
-                return (leftWheel.NoSlipRPM + rightWheel.NoSlipRPM) / 2f;
-            }
+            get { return (leftWheel.NoSlipRPM + rightWheel.NoSlipRPM) / 2f; }
         }
 
         /// <summary>
@@ -200,10 +193,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public bool WheelSpin
         {
-            get
-            {
-                return (leftWheel.HasForwardSlip || rightWheel.HasForwardSlip) && IsPowered;
-            }
+            get { return (leftWheel.HasForwardSlip || rightWheel.HasForwardSlip) && IsPowered; }
         }
 
         public void Initialize(VehicleController vc)
@@ -236,16 +226,19 @@ namespace NWH.VehiclePhysics
 
                 if (leftWheel.IsGrounded && rightWheel.IsGrounded)
                 {
-                    vc.vehicleRigidbody.AddForceAtPosition(leftWheel.ControllerTransform.up * -arf, leftWheel.ControllerTransform.position);
-                    vc.vehicleRigidbody.AddForceAtPosition(rightWheel.ControllerTransform.up * arf, rightWheel.ControllerTransform.position);
+                    vc.vehicleRigidbody.AddForceAtPosition(leftWheel.ControllerTransform.up * -arf,
+                        leftWheel.ControllerTransform.position);
+                    vc.vehicleRigidbody.AddForceAtPosition(rightWheel.ControllerTransform.up * arf,
+                        rightWheel.ControllerTransform.position);
                 }
             }
 
             // Calculate camber for solid axle
-            if(geometry.isSolid)
+            if (geometry.isSolid)
             {
                 // Center point of imaginary axle
-                Vector3 position = (leftWheel.WheelController.springTravelPoint + rightWheel.WheelController.springTravelPoint) / 2f;
+                Vector3 position = (leftWheel.WheelController.springTravelPoint +
+                                    rightWheel.WheelController.springTravelPoint) / 2f;
                 Vector3 direction = position - leftWheel.WheelController.springTravelPoint;
 
                 // Calculate camber from the mid point
@@ -267,7 +260,7 @@ namespace NWH.VehiclePhysics
         /// <param name="topRPM">Maximim RPM that axle is currently allowed to have.</param>
         public void TorqueSplit(float torque, float topRPM)
         {
-            if(!vc.tracks.trackedVehicle)
+            if (!vc.tracks.trackedVehicle)
             {
                 float leftRPM = Mathf.Abs(leftWheel.SmoothRPM);
                 float rightRPM = Mathf.Abs(rightWheel.SmoothRPM);
@@ -288,7 +281,8 @@ namespace NWH.VehiclePhysics
                         rightWheel.Bias = (rightRPM / rpmSum);
                     }
                     // Limited slip and locking differentail - wheel with lower RPM gets more torque.
-                    else if (differentialType == DifferentialType.LimitedSlip || differentialType == DifferentialType.Locking)
+                    else if (differentialType == DifferentialType.LimitedSlip ||
+                             differentialType == DifferentialType.Locking)
                     {
                         // Calculate torque split for limited slip differential.
                         leftWheel.Bias = Mathf.Pow(1f - (leftRPM / rpmSum), 2f);
@@ -313,7 +307,8 @@ namespace NWH.VehiclePhysics
                         }
                         else
                         {
-                            rightWheel.Bias = Mathf.Lerp(rightWheel.Bias, 1f - rightWheel.Bias, 1f - differentialStrength);
+                            rightWheel.Bias = Mathf.Lerp(rightWheel.Bias, 1f - rightWheel.Bias,
+                                1f - differentialStrength);
                             leftWheel.Bias = 1f - rightWheel.Bias;
                         }
                     }
@@ -334,6 +329,5 @@ namespace NWH.VehiclePhysics
                 rightWheel.MotorTorque = torque * rightWheel.Bias;
             }
         }
-	}
+    }
 }
-

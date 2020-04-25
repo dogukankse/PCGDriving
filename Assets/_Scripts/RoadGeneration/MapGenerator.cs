@@ -138,7 +138,7 @@ namespace _Scripts
             yield return new WaitForSeconds(.01f);
             RoadConnector roadConnector = new RoadConnector(_map.map);
             roadConnector.ConnectRoads();
-            
+
             videoText.text = "Yol Lambaları Ayarlanıyor.";
             yield return new WaitForSeconds(.01f);
             AdjustRoadLamps();

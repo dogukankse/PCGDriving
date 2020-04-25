@@ -97,7 +97,7 @@ namespace NWH.VehiclePhysics
 
             entry = new EventTrigger.Entry();
             callback = new EventTrigger.TriggerEvent();
-            functionCall = new UnityAction<BaseEventData>(ReleaseEvent);//
+            functionCall = new UnityAction<BaseEventData>(ReleaseEvent); //
             callback.AddListener(functionCall);
             entry.eventID = EventTriggerType.PointerUp;
             entry.callback = callback;
@@ -128,7 +128,7 @@ namespace NWH.VehiclePhysics
         public void PressEvent(BaseEventData eventData)
         {
             // Executed when mouse/finger starts touching the steering wheel
-            Vector2 pointerPos = ((PointerEventData)eventData).position;
+            Vector2 pointerPos = ((PointerEventData) eventData).position;
 
             wheelBeingHeld = true;
             wheelPrevAngle = Vector2.Angle(Vector2.up, pointerPos - centerPoint);
@@ -137,7 +137,7 @@ namespace NWH.VehiclePhysics
         public void DragEvent(BaseEventData eventData)
         {
             // Executed when mouse/finger is dragged over the steering wheel
-            Vector2 pointerPos = ((PointerEventData)eventData).position;
+            Vector2 pointerPos = ((PointerEventData) eventData).position;
 
             float wheelNewAngle = Vector2.Angle(Vector2.up, pointerPos - centerPoint);
             // Do nothing if the pointer is too close to the center of the wheel
@@ -148,6 +148,7 @@ namespace NWH.VehiclePhysics
                 else
                     wheelAngle -= wheelNewAngle - wheelPrevAngle;
             }
+
             // Make sure wheel angle never exceeds maximumSteeringAngle
             wheelAngle = Mathf.Clamp(wheelAngle, -maximumSteeringAngle, maximumSteeringAngle);
             wheelPrevAngle = wheelNewAngle;
@@ -163,4 +164,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

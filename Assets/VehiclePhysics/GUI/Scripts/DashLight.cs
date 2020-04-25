@@ -20,15 +20,12 @@ namespace NWH.VehiclePhysics
 
         public bool Active
         {
-            get
-            {
-                return active;
-            }
+            get { return active; }
             set
             {
                 active = value;
 
-                if(active)
+                if (active)
                 {
                     icon.color = activeColor;
                 }
@@ -40,4 +37,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

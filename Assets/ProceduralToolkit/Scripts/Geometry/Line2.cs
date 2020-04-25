@@ -12,8 +12,15 @@ namespace ProceduralToolkit
         public Vector2 origin;
         public Vector2 direction;
 
-        public static Line2 xAxis { get { return new Line2(Vector2.zero, Vector2.right); } }
-        public static Line2 yAxis { get { return new Line2(Vector2.zero, Vector2.up); } }
+        public static Line2 xAxis
+        {
+            get { return new Line2(Vector2.zero, Vector2.right); }
+        }
+
+        public static Line2 yAxis
+        {
+            get { return new Line2(Vector2.zero, Vector2.up); }
+        }
 
         public Line2(Ray2D ray)
         {
@@ -32,7 +39,7 @@ namespace ProceduralToolkit
         /// </summary>
         public Vector2 GetPoint(float distance)
         {
-            return origin + direction*distance;
+            return origin + direction * distance;
         }
 
         /// <summary>
@@ -41,7 +48,7 @@ namespace ProceduralToolkit
         public static Line2 Lerp(Line2 a, Line2 b, float t)
         {
             t = Mathf.Clamp01(t);
-            return new Line2(a.origin + (b.origin - a.origin)*t, a.direction + (b.direction - a.direction)*t);
+            return new Line2(a.origin + (b.origin - a.origin) * t, a.direction + (b.direction - a.direction) * t);
         }
 
         /// <summary>
@@ -49,7 +56,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Line2 LerpUnclamped(Line2 a, Line2 b, float t)
         {
-            return new Line2(a.origin + (b.origin - a.origin)*t, a.direction + (b.direction - a.direction)*t);
+            return new Line2(a.origin + (b.origin - a.origin) * t, a.direction + (b.direction - a.direction) * t);
         }
 
         #region Casting operators
@@ -118,7 +125,8 @@ namespace ProceduralToolkit
 
         public string ToString(string format)
         {
-            return string.Format("Line2(origin: {0}, direction: {1})", origin.ToString(format), direction.ToString(format));
+            return string.Format("Line2(origin: {0}, direction: {1})", origin.ToString(format),
+                direction.ToString(format));
         }
 
         public string ToString(string format, IFormatProvider formatProvider)

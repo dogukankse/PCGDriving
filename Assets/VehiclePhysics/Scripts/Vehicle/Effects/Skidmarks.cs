@@ -15,22 +15,21 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Higher value will give darker skidmarks for the same skid value.
         /// </summary>
-        [Tooltip("Higher value will give darker skidmarks for the same skid value.")]
-        [Range(0, 1)]
+        [Tooltip("Higher value will give darker skidmarks for the same skid value.")] [Range(0, 1)]
         public float skidmarkStrength = 0.5f;
 
         /// <summary>
         /// Max skidmark texture alpha.
         /// </summary>
-        [Tooltip("Max skidmark texture alpha.")]
-        [Range(0, 1)]
+        [Tooltip("Max skidmark texture alpha.")] [Range(0, 1)]
         public float maxSkidmarkAlpha = 0.6f;
 
         /// <summary>
         /// If enabled skidmarks will stay on the ground until distance from the vehicle becomes greater than persistentSkidmarkDistance.
         /// If disabled skidmarks will stay on the ground until maxMarksPerSection is reached and then will start getting deleted from the end.
         /// </summary>
-        [Tooltip("If enabled skidmarks will stay on the ground until distance from the vehicle becomes greater than persistentSkidmarkDistance. " +
+        [Tooltip(
+            "If enabled skidmarks will stay on the ground until distance from the vehicle becomes greater than persistentSkidmarkDistance. " +
             "If disabled skidmarks will stay on the ground until maxMarksPerSection is reached and then will start getting deleted from the oldest skidmark.")]
         public bool persistentSkidmarks = false;
 
@@ -43,7 +42,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Number of skidmarks that will be drawn per one section, before mesh is saved and new one is generated.
         /// </summary>
-        [Tooltip("Number of skidmarks that will be drawn per one section, before mesh is saved and new one is generated.")]
+        [Tooltip(
+            "Number of skidmarks that will be drawn per one section, before mesh is saved and new one is generated.")]
         public int maxMarksPerSection = 120;
 
         /// <summary>
@@ -55,19 +55,22 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Optional. Thread albedo texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.
         /// </summary>
-        [Tooltip("Optional. Thread albedo texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.")]
+        [Tooltip(
+            "Optional. Thread albedo texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.")]
         public Texture2D threadAlbedo = null;
 
         /// <summary>
         /// Optional. Thread bump texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.
         /// </summary>
-        [Tooltip("Optional. Thread bump texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.")]
+        [Tooltip(
+            "Optional. Thread bump texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.")]
         public Texture2D threadBump = null;
 
         /// <summary>
         /// Optional. Thread normal texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.
         /// </summary>
-        [Tooltip("Optional. Thread bump texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.")]
+        [Tooltip(
+            "Optional. Thread bump texture that will be used on skidmark. If left empty default texture from skidmark material will be left unchanged.")]
         public Texture2D threadNormal = null;
 
         private List<SkidmarkGenerator> skidmarkList = new List<SkidmarkGenerator>();
@@ -90,7 +93,7 @@ namespace NWH.VehiclePhysics
             }
 
             float minPersistentDistance = maxMarksPerSection * minDistance * 1.5f;
-            if(persistentSkidmarkDistance < minPersistentDistance)
+            if (persistentSkidmarkDistance < minPersistentDistance)
             {
                 persistentSkidmarkDistance = minPersistentDistance;
             }
@@ -108,4 +111,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

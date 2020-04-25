@@ -22,10 +22,12 @@ namespace NWH.VehiclePhysics
             /// Some of the meshes might be queued for checking even if not deformed.
             /// </summary>
             public Queue<MeshFilter> deformationQueue = new Queue<MeshFilter>();
+
             /// <summary>
             /// Collision data for the collision event.
             /// </summary>
             public Collision collision;
+
             /// <summary>
             /// Magnitude of the decekeration vector at the moment of impact.
             /// </summary>
@@ -47,35 +49,34 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Maximum allowed damage before the vehicle breaks down. Performance will decline as damage is nearing allowed damage.
         /// </summary>
-        [Tooltip("Maximum allowed damage before the vehicle breaks down. Performance will decline as damage is nearing allowed damage.")]
+        [Tooltip(
+            "Maximum allowed damage before the vehicle breaks down. Performance will decline as damage is nearing allowed damage.")]
         public float allowedDamage = 50000;
 
         /// <summary>
         /// Number of vertices that will be checked and eventually deformed per frame.
         /// </summary>
-        [Tooltip("Number of vertices that will be checked and eventually deformed per frame. Setting it to lower values will reduce or remove frame drops but will" +
+        [Tooltip(
+            "Number of vertices that will be checked and eventually deformed per frame. Setting it to lower values will reduce or remove frame drops but will" +
             " induce lag into mesh deformation as vehicle will be deformed over longer time span.")]
         public int deformationVerticesPerFrame = 8000;
 
         /// <summary>
         /// Radius is which vertices will be deformed.
         /// </summary>
-        [Tooltip("Radius is which vertices will be deformed.")]
-        [Range(0, 2)]
+        [Tooltip("Radius is which vertices will be deformed.")] [Range(0, 2)]
         public float deformationRadius = 0.6f;
 
         /// <summary>
         /// Determines how much vertices will be deformed for given collision strength.
         /// </summary>
-        [Tooltip("Determines how much vertices will be deformed for given collision strength.")]
-        [Range(0.1f, 5f)]
+        [Tooltip("Determines how much vertices will be deformed for given collision strength.")] [Range(0.1f, 5f)]
         public float deformationStrength = 1.6f;
 
         /// <summary>
         /// Adds noise to the mesh deformation. 0 will result in smooth mesh.
         /// </summary>
-        [Tooltip("Adds noise to the mesh deformation. 0 will result in smooth mesh.")]
-        [Range(0.001f, 0.5f)]
+        [Tooltip("Adds noise to the mesh deformation. 0 will result in smooth mesh.")] [Range(0.001f, 0.5f)]
         public float deformationRandomness = 0.1f;
 
         /// <summary>
@@ -94,8 +95,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Hash of the previous queued collision. Prevents reacting to the same collision twice since collision is called during OnCollisionStay() so more data can be collected.
         /// </summary>        
-        [HideInInspector]
-        public int previousCollisionHash;
+        [HideInInspector] public int previousCollisionHash;
 
         private float damage;
 
@@ -116,10 +116,7 @@ namespace NWH.VehiclePhysics
                 else
                     return 0;
             }
-            set
-            {
-                damage = Mathf.Abs(value);
-            }
+            set { damage = Mathf.Abs(value); }
         }
 
         /// <summary>
@@ -139,10 +136,10 @@ namespace NWH.VehiclePhysics
         public void Initialize(VehicleController vc)
         {
             this.vc = vc;
-            
+
             // Find all mesh filters of the vehicle
             MeshFilter[] mfs = vc.transform.GetComponentsInChildren<MeshFilter>();
-            foreach(MeshFilter mf in mfs)
+            foreach (MeshFilter mf in mfs)
             {
                 if (!deformableMeshFilters.Contains(mf))
                 {
@@ -154,7 +151,7 @@ namespace NWH.VehiclePhysics
 
         public void Update()
         {
-            if(collisionEvents.Count != 0)
+            if (collisionEvents.Count != 0)
             {
                 CollisionEvent ce = collisionEvents.Peek();
 
@@ -168,14 +165,14 @@ namespace NWH.VehiclePhysics
                 }
 
                 int vertexCount = 0;
-                while(vertexCount < deformationVerticesPerFrame && ce.deformationQueue.Count > 0)
+                while (vertexCount < deformationVerticesPerFrame && ce.deformationQueue.Count > 0)
                 {
                     MeshFilter mf = ce.deformationQueue.Dequeue();
                     vertexCount += mf.mesh.vertexCount;
                     MeshDeform(ce, mf);
                 }
 
-                if(DamagePercent >= 1)
+                if (DamagePercent >= 1)
                 {
                     vc.engine.Stop();
                 }
@@ -187,11 +184,12 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void Repair()
         {
-            for(int i = 0; i < deformableMeshFilters.Count; i++)
+            for (int i = 0; i < deformableMeshFilters.Count; i++)
             {
-                if(originalMeshes[i] != null) 
+                if (originalMeshes[i] != null)
                     deformableMeshFilters[i].mesh = originalMeshes[i];
             }
+
             damage = 0;
         }
 
@@ -200,9 +198,9 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void Enqueue(Collision collision, float accelerationMagnitude)
         {
-            foreach(string tag in ignoreTags)
+            foreach (string tag in ignoreTags)
             {
-                if(collision.collider.gameObject.CompareTag(tag))
+                if (collision.collider.gameObject.CompareTag(tag))
                 {
                     return;
                 }
@@ -217,7 +215,7 @@ namespace NWH.VehiclePhysics
             Vector3 collisionPoint = AverageCollisionPoint(collision.contacts);
             //Vector3 direction = Vector3.Normalize(vc.transform.position - collisionPoint);
 
-            foreach(MeshFilter deformableMeshFilter in deformableMeshFilters)
+            foreach (MeshFilter deformableMeshFilter in deformableMeshFilters)
             {
                 //Ray crashRay = new Ray(deformableMeshFilter.transform.InverseTransformPoint(collisionPoint), deformableMeshFilter.transform.InverseTransformDirection(direction));
 
@@ -227,25 +225,27 @@ namespace NWH.VehiclePhysics
                 //if (deformableMeshFilter.mesh.bounds.Contains(deformableMeshFilter.transform.InverseTransformPoint(collisionPoint))
                 //    || deformableMeshFilter.mesh.bounds.IntersectRay(crashRay, out rayDistance))
                 //{
-                    // Deform mesh only if not wheel
-                    if (deformableMeshFilter.gameObject.tag != "Wheel")
+                // Deform mesh only if not wheel
+                if (deformableMeshFilter.gameObject.tag != "Wheel")
+                {
+                    //Debug.Log("Enqueue " + deformableMeshFilter.name);
+                    collisionEvent.deformationQueue.Enqueue(deformableMeshFilter);
+                }
+                // If crash happened around wheel do not deform it but rather detoriate it's handling
+                else
+                {
+                    foreach (Wheel wheel in vc.Wheels)
                     {
-                        //Debug.Log("Enqueue " + deformableMeshFilter.name);
-                        collisionEvent.deformationQueue.Enqueue(deformableMeshFilter);
-                    }
-                    // If crash happened around wheel do not deform it but rather detoriate it's handling
-                    else
-                    {
-                        foreach (Wheel wheel in vc.Wheels)
+                        if (Vector3.Distance(collisionPoint, wheel.VisualTransform.position) < wheel.Radius * 1.2f)
                         {
-                            if (Vector3.Distance(collisionPoint, wheel.VisualTransform.position) < wheel.Radius * 1.2f)
-                            {
-                                wheel.Damage += accelerationMagnitude;
-                            }
+                            wheel.Damage += accelerationMagnitude;
                         }
                     }
+                }
+
                 //}
             }
+
             collisionEvents.Enqueue(collisionEvent);
         }
 
@@ -263,7 +263,9 @@ namespace NWH.VehiclePhysics
             float yDot = Mathf.Abs(Vector3.Dot(direction, Vector3.up));
             float zDot = Mathf.Abs(Vector3.Dot(direction, Vector3.forward));
 
-            float vertexDistanceThreshold = Mathf.Clamp((collisionEvent.decelerationMagnitude * deformationStrength) / (1000f), 0f, deformationRadius);
+            float vertexDistanceThreshold =
+                Mathf.Clamp((collisionEvent.decelerationMagnitude * deformationStrength) / (1000f), 0f,
+                    deformationRadius);
 
             Vector3[] vertices = deformableMeshFilter.mesh.vertices;
 
@@ -275,7 +277,7 @@ namespace NWH.VehiclePhysics
                 float distance = Mathf.Sqrt(
                     (collisionPoint.x - globalVertex.x) * (collisionPoint.x - globalVertex.x) * xDot
                     + (collisionPoint.z - globalVertex.z) * (collisionPoint.z - globalVertex.z) * zDot
-                    + (collisionPoint.y - globalVertex.y) * (collisionPoint.y - globalVertex.y) * yDot);               
+                    + (collisionPoint.y - globalVertex.y) * (collisionPoint.y - globalVertex.y) * yDot);
 
                 distance *= Random.Range(1f - deformationRandomness, 1f + deformationRandomness);
 
@@ -301,6 +303,7 @@ namespace NWH.VehiclePhysics
             {
                 points[i] = contacts[i].point;
             }
+
             return AveragePoint(points);
         }
 
@@ -314,6 +317,7 @@ namespace NWH.VehiclePhysics
             {
                 points[i] = contacts[i].normal;
             }
+
             return AveragePoint(points);
         }
 
@@ -327,8 +331,8 @@ namespace NWH.VehiclePhysics
             {
                 sum += points[i];
             }
+
             return sum / points.Length;
         }
     }
 }
-

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NWH.VehiclePhysics 
+namespace NWH.VehiclePhysics
 {
     /// <summary>
     /// Handles gear changing and also torque and RPM transmission in both directions.
@@ -11,7 +11,12 @@ namespace NWH.VehiclePhysics
     [System.Serializable]
     public class Transmission
     {
-        public enum TransmissionType { Manual, Automatic, AutomaticSequential }
+        public enum TransmissionType
+        {
+            Manual,
+            Automatic,
+            AutomaticSequential
+        }
 
         /// <summary>
         /// Determines in which way gears can be changed.
@@ -26,37 +31,46 @@ namespace NWH.VehiclePhysics
         public TransmissionType transmissionType = TransmissionType.AutomaticSequential;
 
 
-        public enum ReverseType { Auto, DoubleTap }
+        public enum ReverseType
+        {
+            Auto,
+            DoubleTap
+        }
 
         [Tooltip("Behavior when switching from neutral or forward gears to reverse gear. " +
-            "Auto - if the vehicle speed is low enough and vertical input negative, transmission will shift to reverse. " + 
-            "DoubleTap - once all the requirements exist for shifting into reverse, user has to release the button and press it again to shift," +
-            " otherwise the vehicle will stand still in neutral with brakes applied.")]
+                 "Auto - if the vehicle speed is low enough and vertical input negative, transmission will shift to reverse. " +
+                 "DoubleTap - once all the requirements exist for shifting into reverse, user has to release the button and press it again to shift," +
+                 " otherwise the vehicle will stand still in neutral with brakes applied.")]
         public ReverseType reverseType = ReverseType.Auto;
 
-        public enum DifferentialType { Equal, Open, LimitedSlip, Locking }
+        public enum DifferentialType
+        {
+            Equal,
+            Open,
+            LimitedSlip,
+            Locking
+        }
 
         /// <summary>
         /// Differential(s) that determine how the torque will be split between axles. Each axle then has its own differential (check axle settings).
         /// </summary>
-        [Tooltip("Differential(s) that determine how the torque will be split between axles. Each axle then has its own differential (check axle settings).")]
+        [Tooltip(
+            "Differential(s) that determine how the torque will be split between axles. Each axle then has its own differential (check axle settings).")]
         public DifferentialType differentialType = DifferentialType.Equal;
 
         [Header("Gears")]
-
         /// <summary>
         /// List of forward gear ratios starting from 1st forward gear.
         /// </summary>
         [Tooltip("List of forward gear ratios starting from 1st forward gear.")]
         [SerializeField]
-        private List<float> forwardGears = new List<float>() { 8f, 5.5f, 4f, 3f, 2.2f, 1.7f, 1.3f };
+        private List<float> forwardGears = new List<float>() {8f, 5.5f, 4f, 3f, 2.2f, 1.7f, 1.3f};
 
         /// <summary>
         /// List of reverse gear ratios starting from 1st reverse gear.
         /// </summary>
-        [Tooltip("List of reverse gear ratios starting from 1st reverse gear.")]
-        [SerializeField]
-        private List<float> reverseGears = new List<float>() { -5f };
+        [Tooltip("List of reverse gear ratios starting from 1st reverse gear.")] [SerializeField]
+        private List<float> reverseGears = new List<float>() {-5f};
 
         /// <summary>
         /// Final gear multiplier. Each gear gets multiplied by this value.
@@ -66,19 +80,20 @@ namespace NWH.VehiclePhysics
         public float gearMultiplier = 1;
 
         [Header("Shifting")]
-
         /// <summary>
         /// RPM at which automatic transmission will shift up. If dynamic shift point is enabled this value will change depending on load.
         /// </summary>
         [ShowInTelemetry]
-        [Tooltip("RPM at which automatic transmission will shift up. If dynamic shift point is enabled this value will change depending on load.")]
+        [Tooltip(
+            "RPM at which automatic transmission will shift up. If dynamic shift point is enabled this value will change depending on load.")]
         [ShowInSettings(2000, 10000, 250)]
         public float targetShiftUpRPM = 3600;
 
         /// <summary>
         /// RPM at which automatic transmission will shift down. If dynamic shift point is enabled this value will change depending on load.
         /// </summary>
-        [Tooltip("RPM at which automatic transmission will shift down. If dynamic shift point is enabled this value will change depending on load.")]
+        [Tooltip(
+            "RPM at which automatic transmission will shift down. If dynamic shift point is enabled this value will change depending on load.")]
         [ShowInTelemetry]
         [ShowInSettings(500, 3000, 250)]
         public float targetShiftDownRPM = 1400;
@@ -93,22 +108,19 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Shift point will randobly vary by the following percent of it's value.
         /// </summary>
-        [Tooltip("Shift point will randobly vary by the following percent of it's value.")]
-        [Range(0f, 0.2f)]
+        [Tooltip("Shift point will randobly vary by the following percent of it's value.")] [Range(0f, 0.2f)]
         public float shiftPointRandomness = 0.05f;
 
         /// <summary>
         /// Time it takes transmission to shift between gears.
         /// </summary>
-        [Tooltip("Time it takes transmission to shift between gears.")]
-        [ShowInTelemetry]
+        [Tooltip("Time it takes transmission to shift between gears.")] [ShowInTelemetry]
         public float shiftDuration = 0.2f;
 
         /// <summary>
         /// Maximum percentage of shift duration that will be added or substracted to it. Default is 20% (0.2f).
         /// </summary>
-        [Tooltip("Shift duration will randomly vary by the following percentage of it's value.")]
-        [Range(0f, 0.5f)]
+        [Tooltip("Shift duration will randomly vary by the following percentage of it's value.")] [Range(0f, 0.5f)]
         public float shiftDurationRandomness = 0.2f;
 
         /// <summary>
@@ -118,7 +130,6 @@ namespace NWH.VehiclePhysics
         public float postShiftBan = 0.5f;
 
         [Header("Clutch")]
-
         /// <summary>
         /// Will clutch be automatically operated or will user input be used to operate it?
         /// </summary>
@@ -129,9 +140,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// 0 for fully released and 1 for fully depressed predal.
         /// </summary>
-        [Tooltip("0 for fully released and 1 for fully depressed predal.")]
-        [Range(0, 1)]
-        [ShowInTelemetry]
+        [Tooltip("0 for fully released and 1 for fully depressed predal.")] [Range(0, 1)] [ShowInTelemetry]
         public float clutchPedalPressedPercent;
 
         /// <summary>
@@ -140,17 +149,18 @@ namespace NWH.VehiclePhysics
         /// 0 on the X axis represents fully released clutch pedal while 1 represents fully pressed pedal. Normally every clutch would have two points,
         /// [0,1] and [1,0], and the in-between will vary from vehicle to vehicle.
         /// </summary>
-        [Tooltip("Describes how much clutch will 'grab' as the pedal is released. When the Y of the curve is at 1 this means that the clutch is fully engaged, i.e. there " +
+        [Tooltip(
+            "Describes how much clutch will 'grab' as the pedal is released. When the Y of the curve is at 1 this means that the clutch is fully engaged, i.e. there " +
             "is no slip between transmission and engine. When the Y of the curve is at 0 there is no connection between engine and transmission / wheels." +
             "0 on the X axis represents fully released clutch pedal while 1 represents fully pressed pedal. Normally every clutch would have two points," +
             "[0,1] and [1,0], and the in-between will vary from vehicle to vehicle.")]
-        public AnimationCurve clutchEngagementCurve = new AnimationCurve(new Keyframe[2] {
-                new Keyframe(0f, 1f),
-                new Keyframe(1f, 0f)
-            });
+        public AnimationCurve clutchEngagementCurve = new AnimationCurve(new Keyframe[2]
+        {
+            new Keyframe(0f, 1f),
+            new Keyframe(1f, 0f)
+        });
 
         [Header("Automatic Clutch")]
-
         /// <summary>
         /// Engine will try and hold RPM at this value while the clutch is being released.
         /// </summary>
@@ -161,8 +171,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Time since the start of the scene when the last shift happened.
         /// </summary>
-        [HideInInspector]
-        private float lastShiftTime;
+        [HideInInspector] private float lastShiftTime;
 
         private float addedClutchRPM;
 
@@ -174,16 +183,13 @@ namespace NWH.VehiclePhysics
 
         private VehicleController vc;
 
-        [ShowInSettings(0.01f, 0.5f, 0.1f)]
-        private float initialShiftDuration;
+        [ShowInSettings(0.01f, 0.5f, 0.1f)] private float initialShiftDuration;
         private float randomShiftDownPointAddition;
         private float randomShiftUpPointAddition;
 
         // Self-adjusting shift points
-        [ShowInTelemetry]
-        private float adjustedShiftUpRpm;
-        [ShowInTelemetry]
-        private float adjustedShiftDownRpm;
+        [ShowInTelemetry] private float adjustedShiftUpRpm;
+        [ShowInTelemetry] private float adjustedShiftDownRpm;
 
         private float smoothedVerticalInput;
         private float verticalInputChangeVelocity;
@@ -209,12 +215,13 @@ namespace NWH.VehiclePhysics
             {
                 ManualShift();
             }
-            else if (transmissionType == TransmissionType.Automatic || transmissionType == TransmissionType.AutomaticSequential)
+            else if (transmissionType == TransmissionType.Automatic ||
+                     transmissionType == TransmissionType.AutomaticSequential)
             {
                 AutomaticShift();
             }
         }
-        
+
 
         /// <summary>
         /// Updates clutch state.
@@ -226,18 +233,24 @@ namespace NWH.VehiclePhysics
             {
                 clutchPedalPressedPercent = 0;
                 // Only apply clutch when accelerating
-                if ( (vc.transmission.transmissionType == TransmissionType.Automatic) && (Gear == -1 && vc.input.Vertical < 0)
-                    || (vc.transmission.transmissionType == TransmissionType.Manual) && (Gear == -1 && vc.input.Vertical > 0)
+                if ((vc.transmission.transmissionType == TransmissionType.Automatic) &&
+                    (Gear == -1 && vc.input.Vertical < 0)
+                    || (vc.transmission.transmissionType == TransmissionType.Manual) &&
+                    (Gear == -1 && vc.input.Vertical > 0)
                     || (Gear == 1 && vc.input.Vertical > 0))
                 {
-                    clutchPedalPressedPercent = Mathf.Clamp01((targetClutchRPM - Mathf.Abs(ReverseRPM)) / targetClutchRPM) * Mathf.Abs(vc.input.Vertical);
+                    clutchPedalPressedPercent =
+                        Mathf.Clamp01((targetClutchRPM - Mathf.Abs(ReverseRPM)) / targetClutchRPM) *
+                        Mathf.Abs(vc.input.Vertical);
                 }
+
                 addedClutchRPM = (1f - GetClutchEngagementAtPedalPosition(clutchPedalPressedPercent)) * targetClutchRPM;
             }
             else
             {
                 clutchPedalPressedPercent = vc.input.Clutch;
-                addedClutchRPM = (1f - GetClutchEngagementAtPedalPosition(clutchPedalPressedPercent)) * (vc.engine.maxRPM - vc.engine.minRPM) * Mathf.Abs(vc.input.Vertical);
+                addedClutchRPM = (1f - GetClutchEngagementAtPedalPosition(clutchPedalPressedPercent)) *
+                                 (vc.engine.maxRPM - vc.engine.minRPM) * Mathf.Abs(vc.input.Vertical);
             }
         }
 
@@ -250,19 +263,13 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float ClutchPercent
         {
-            get
-            {
-                return clutchPedalPressedPercent;
-            }
+            get { return clutchPedalPressedPercent; }
         }
 
 
         public float AddedClutchRPM
         {
-            get
-            {
-                return addedClutchRPM;
-            }
+            get { return addedClutchRPM; }
         }
 
 
@@ -271,10 +278,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public int ForwardGearCount
         {
-            get
-            {
-                return gears.Count - 1 - reverseGears.Count;
-            }
+            get { return gears.Count - 1 - reverseGears.Count; }
         }
 
         /// <summary>
@@ -282,10 +286,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public int ReverseGearCount
         {
-            get
-            {
-                return reverseGears.Count;
-            }
+            get { return reverseGears.Count; }
         }
 
         /// <summary>
@@ -293,10 +294,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public List<float> ForwardGears
         {
-            get
-            {
-                return forwardGears;
-            }
+            get { return forwardGears; }
             set
             {
                 forwardGears = value;
@@ -309,10 +307,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public List<float> ReverseGears
         {
-            get
-            {
-                return reverseGears;
-            }
+            get { return reverseGears; }
             set
             {
                 reverseGears = value;
@@ -330,19 +325,20 @@ namespace NWH.VehiclePhysics
             float wheelRadiusSum = 0;
             int wheelCount = 0;
 
-            foreach(Wheel wheel in vc.Wheels)
+            foreach (Wheel wheel in vc.Wheels)
             {
                 wheelRadiusSum += wheel.Radius;
                 wheelCount++;
             }
 
-            if(wheelCount > 0)
+            if (wheelCount > 0)
             {
                 float avgWheelRadius = wheelRadiusSum / wheelCount;
                 float maxRpmForGear = TransmitRPM(vc.engine.maxRPM);
                 float maxSpeed = avgWheelRadius * maxRpmForGear * 0.105f;
                 return maxSpeed;
             }
+
             return 0;
         }
 
@@ -351,10 +347,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float AdjustedShiftUpRpm
         {
-            get
-            {
-                return adjustedShiftUpRpm;
-            }
+            get { return adjustedShiftUpRpm; }
         }
 
         /// <summary>
@@ -362,10 +355,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float AdjustedShiftDownRpm
         {
-            get
-            {
-                return adjustedShiftDownRpm;
-            }
+            get { return adjustedShiftDownRpm; }
         }
 
         /// <summary>
@@ -411,7 +401,7 @@ namespace NWH.VehiclePhysics
                 }
                 else
                 {
-                    if(reverseGears.Count > 1)
+                    if (reverseGears.Count > 1)
                     {
                         return "R" + Mathf.Abs(Gear).ToString();
                     }
@@ -420,7 +410,6 @@ namespace NWH.VehiclePhysics
                         return "R";
                     }
                 }
-
             }
         }
 
@@ -429,10 +418,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public List<float> Gears
         {
-            get
-            {
-                return gears;
-            }
+            get { return gears; }
         }
 
         /// <summary>
@@ -441,10 +427,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float GearRatio
         {
-            get
-            {
-                return gears[GearToIndex(gear)] * gearMultiplier;
-            }
+            get { return gears[GearToIndex(gear)] * gearMultiplier; }
         }
 
         /// <summary>
@@ -484,10 +467,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float ReverseRPM
         {
-            get
-            {
-                return ReverseTransmitRPM(RPM);
-            }
+            get { return ReverseTransmitRPM(RPM); }
         }
 
 
@@ -513,7 +493,8 @@ namespace NWH.VehiclePhysics
         public void TorqueSplit(float torque, float topRPM)
         {
             // 0 torque on reverse direction
-            if (transmissionType == TransmissionType.Automatic || transmissionType == TransmissionType.AutomaticSequential)
+            if (transmissionType == TransmissionType.Automatic ||
+                transmissionType == TransmissionType.AutomaticSequential)
             {
                 if ((Gear < 0 && vc.input.Vertical > 0) || (Gear >= 0 && vc.input.Vertical < 0) || Gear == 0)
                 {
@@ -532,6 +513,7 @@ namespace NWH.VehiclePhysics
             {
                 torqueClutchMod = GetClutchEngagementAtPedalPosition(clutchPedalPressedPercent);
             }
+
             torque = torque * Mathf.Sign(Gear) * torqueClutchMod;
 
             // Non-tracked vehicle torque split
@@ -558,7 +540,7 @@ namespace NWH.VehiclePhysics
                 {
                     float rpmSum = 0;
                     float biasSum = 0;
-                     
+
                     foreach (Axle axle in vc.axles)
                         rpmSum += axle.SmoothRPM;
 
@@ -609,13 +591,14 @@ namespace NWH.VehiclePhysics
                 int leftCount = 0;
                 int rightCount = 0;
 
-                foreach(Axle axle in vc.axles)
+                foreach (Axle axle in vc.axles)
                 {
-                    if(axle.leftWheel.IsGrounded)
+                    if (axle.leftWheel.IsGrounded)
                     {
                         leftCount++;
                     }
-                    if(axle.rightWheel.IsGrounded)
+
+                    if (axle.rightWheel.IsGrounded)
                     {
                         rightCount++;
                     }
@@ -627,17 +610,17 @@ namespace NWH.VehiclePhysics
                 float leftPerWheelTorque = leftCount == 0 ? 0 : leftTorque / leftCount;
                 float rightPerWheelTorque = rightCount == 0 ? 0 : rightTorque / rightCount;
 
-                foreach(Axle axle in vc.axles)
+                foreach (Axle axle in vc.axles)
                 {
-                    if(axle.leftWheel.IsGrounded)
+                    if (axle.leftWheel.IsGrounded)
                     {
                         axle.leftWheel.MotorTorque = leftPerWheelTorque;
                     }
-                    if(axle.rightWheel.IsGrounded)
+
+                    if (axle.rightWheel.IsGrounded)
                     {
                         axle.rightWheel.MotorTorque = rightPerWheelTorque;
                     }
-
                 }
             }
         }
@@ -655,7 +638,7 @@ namespace NWH.VehiclePhysics
                 {
                     UpdateRandomShiftDuration();
                     UpdateRandomShiftPointAddition();
-                    if(startTimer) StartTimer();
+                    if (startTimer) StartTimer();
                 }
             }
         }
@@ -671,6 +654,7 @@ namespace NWH.VehiclePhysics
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -682,10 +666,11 @@ namespace NWH.VehiclePhysics
         {
             get
             {
-                if(Time.realtimeSinceStartup < lastShiftTime + shiftDuration)
+                if (Time.realtimeSinceStartup < lastShiftTime + shiftDuration)
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -714,7 +699,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float TransmitRPM(float inputRPM)
         {
-            if(GearRatio != 0)
+            if (GearRatio != 0)
                 return Mathf.Abs(inputRPM / GearRatio);
             return 0;
         }
@@ -739,10 +724,11 @@ namespace NWH.VehiclePhysics
         private float GetMaxGearRatio()
         {
             float max = 0;
-            for(int i = 0; i < forwardGears.Count; i++)
+            for (int i = 0; i < forwardGears.Count; i++)
             {
                 if (forwardGears[i] > max) max = forwardGears[i];
             }
+
             return max;
         }
 
@@ -754,6 +740,7 @@ namespace NWH.VehiclePhysics
             {
                 if (forwardGears[i] < min) min = forwardGears[i];
             }
+
             return min;
         }
 
@@ -784,6 +771,7 @@ namespace NWH.VehiclePhysics
                     Gear++;
                 }
             }
+
             if (vc.input.ShiftDown)
             {
                 if (!(Gear == 0 && vc.Speed > 2f))
@@ -810,7 +798,7 @@ namespace NWH.VehiclePhysics
             {
                 allowedToReverse = true;
             }
-            else if(reverseType == ReverseType.DoubleTap)
+            else if (reverseType == ReverseType.DoubleTap)
             {
                 allowedToReverse = reverseHasBeenPressed ? false : true;
 
@@ -825,7 +813,8 @@ namespace NWH.VehiclePhysics
             }
 
             float damping = Mathf.Abs(vc.input.Vertical) > smoothedVerticalInput ? 0.3f : 5f;
-            smoothedVerticalInput = Mathf.SmoothDamp(smoothedVerticalInput, Mathf.Abs(vc.input.Vertical), ref verticalInputChangeVelocity, damping);
+            smoothedVerticalInput = Mathf.SmoothDamp(smoothedVerticalInput, Mathf.Abs(vc.input.Vertical),
+                ref verticalInputChangeVelocity, damping);
 
             adjustedShiftDownRpm = targetShiftDownRPM + randomShiftDownPointAddition;
             adjustedShiftUpRpm = targetShiftUpRPM + randomShiftUpPointAddition;
@@ -840,7 +829,8 @@ namespace NWH.VehiclePhysics
                 adjustedShiftUpRpm += vc.engine.maxRPM * inclineModifier;
 
                 adjustedShiftUpRpm = Mathf.Clamp(adjustedShiftUpRpm, targetShiftUpRPM, vc.engine.maxRPM * 0.95f);
-                adjustedShiftDownRpm = Mathf.Clamp(adjustedShiftDownRpm, vc.engine.minRPM * 1.2f, adjustedShiftUpRpm * 0.7f);
+                adjustedShiftDownRpm =
+                    Mathf.Clamp(adjustedShiftDownRpm, vc.engine.minRPM * 1.2f, adjustedShiftUpRpm * 0.7f);
             }
 
             // In neutral
@@ -880,12 +870,12 @@ namespace NWH.VehiclePhysics
                 else if (vc.engine.RPM < adjustedShiftDownRpm)
                 {
                     // 1st reverse gear to neutral
-                    if(Gear == -1 && (vc.input.Vertical == 0 || vc.engine.RpmOverflow < -(vc.engine.minRPM / 5f)))
+                    if (Gear == -1 && (vc.input.Vertical == 0 || vc.engine.RpmOverflow < -(vc.engine.minRPM / 5f)))
                     {
                         ShiftInto(0);
                     }
                     // To first gear
-                    else if(Gear < -1)
+                    else if (Gear < -1)
                     {
                         ShiftInto(Gear + 1);
                     }
@@ -925,7 +915,8 @@ namespace NWH.VehiclePhysics
                                     while (g < forwardGears.Count - 1)
                                     {
                                         float wouldBeEngineRpm = ReverseTransmitRPM(RPM, g);
-                                        if (wouldBeEngineRpm > adjustedShiftDownRpm && wouldBeEngineRpm < (adjustedShiftDownRpm + adjustedShiftUpRpm) / 2f)
+                                        if (wouldBeEngineRpm > adjustedShiftDownRpm && wouldBeEngineRpm <
+                                            (adjustedShiftDownRpm + adjustedShiftUpRpm) / 2f)
                                         {
                                             break;
                                         }
@@ -938,21 +929,21 @@ namespace NWH.VehiclePhysics
                                             break;
                                         }
                                     }
+
                                     if (g != Gear)
                                     {
                                         ShiftInto(g);
-                                    }                              
+                                    }
                                 }
                             }
                             else
                             {
                                 ShiftInto(Gear + 1);
                             }
-
                         }
                     }
                     else if (vc.engine.RPM < adjustedShiftDownRpm)
-					{
+                    {
                         // Check if downshift allowed on tracked vehicle
                         if (vc.tracks.trackedVehicle)
                         {
@@ -964,6 +955,7 @@ namespace NWH.VehiclePhysics
                                     notGroundedCount++;
                                 }
                             }
+
                             if (notGroundedCount > vc.Wheels.Count * 0.4f)
                             {
                                 return;
@@ -986,6 +978,7 @@ namespace NWH.VehiclePhysics
                                         break;
                                     }
                                 }
+
                                 if (g != Gear)
                                 {
                                     ShiftInto(g);
@@ -1008,15 +1001,16 @@ namespace NWH.VehiclePhysics
                                 ShiftInto(0);
                             }
                         }
-					}
+                    }
                 }
                 // Shift into reverse
-                else if (vc.ForwardVelocity <= 0.2f && vc.input.Vertical < -0.05f && allowedToReverse) 
+                else if (vc.ForwardVelocity <= 0.2f && vc.input.Vertical < -0.05f && allowedToReverse)
                 {
                     ShiftInto(-1, false);
                 }
                 // Shift into neutral
-                else if (vc.input.Vertical == 0 || (!allowedToReverse && vc.input.Vertical < 0) || vc.engine.RpmOverflow < -(vc.engine.minRPM / 5f))
+                else if (vc.input.Vertical == 0 || (!allowedToReverse && vc.input.Vertical < 0) ||
+                         vc.engine.RpmOverflow < -(vc.engine.minRPM / 5f))
                 {
                     ShiftInto(0);
                 }
@@ -1025,13 +1019,16 @@ namespace NWH.VehiclePhysics
 
         private void UpdateRandomShiftDuration()
         {
-            shiftDuration = initialShiftDuration + Random.Range(-shiftDurationRandomness * initialShiftDuration, shiftDurationRandomness * initialShiftDuration);
+            shiftDuration = initialShiftDuration + Random.Range(-shiftDurationRandomness * initialShiftDuration,
+                shiftDurationRandomness * initialShiftDuration);
         }
 
         private void UpdateRandomShiftPointAddition()
         {
-            randomShiftDownPointAddition = Random.Range(-shiftPointRandomness * targetShiftDownRPM, shiftPointRandomness * targetShiftDownRPM);
-            randomShiftUpPointAddition = Random.Range(-shiftPointRandomness * targetShiftUpRPM, shiftPointRandomness * targetShiftUpRPM);
+            randomShiftDownPointAddition = Random.Range(-shiftPointRandomness * targetShiftDownRPM,
+                shiftPointRandomness * targetShiftDownRPM);
+            randomShiftUpPointAddition = Random.Range(-shiftPointRandomness * targetShiftUpRPM,
+                shiftPointRandomness * targetShiftUpRPM);
         }
-    } 
+    }
 }

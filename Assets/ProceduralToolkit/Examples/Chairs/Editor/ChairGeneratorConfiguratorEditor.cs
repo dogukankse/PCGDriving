@@ -28,6 +28,7 @@ namespace ProceduralToolkit.Examples
                 }, "Generate chair");
                 generator.Generate(randomizeConfig: false);
             }
+
             if (GUILayout.Button("Randomize config and generate mesh"))
             {
                 Undo.RecordObjects(new Object[]

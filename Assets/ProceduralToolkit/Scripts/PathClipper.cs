@@ -13,16 +13,30 @@ namespace ProceduralToolkit
         /// <summary>
         /// If set to true, polygons returned by clipping operations will have orientations opposite to their normal orientations.
         /// </summary>
-        public bool reverseSolution { get { return clipper.ReverseSolution; } set { clipper.ReverseSolution = value; } }
+        public bool reverseSolution
+        {
+            get { return clipper.ReverseSolution; }
+            set { clipper.ReverseSolution = value; }
+        }
+
         /// <summary>
         /// If set to true, polygons returned by clipping operations will be strictly simple, otherwise they may be weakly simple.
         /// Computationally expensive.
         /// </summary>
-        public bool strictlySimple { get { return clipper.StrictlySimple; } set { clipper.StrictlySimple = value; } }
+        public bool strictlySimple
+        {
+            get { return clipper.StrictlySimple; }
+            set { clipper.StrictlySimple = value; }
+        }
+
         /// <summary>
         /// If set to true, collinear vertices in input paths will not be removed before clipping.
         /// </summary>
-        public bool preserveCollinear { get { return clipper.PreserveCollinear; } set { clipper.PreserveCollinear = value; } }
+        public bool preserveCollinear
+        {
+            get { return clipper.PreserveCollinear; }
+            set { clipper.PreserveCollinear = value; }
+        }
 
         private readonly Clipper clipper;
 
@@ -104,7 +118,8 @@ namespace ProceduralToolkit
         /// <param name="output"> The List that will receive the result of the clipping operation. </param>
         /// <param name="fillType"> Fill rule that will be applied to the paths. </param>
         /// <returns> True if the operation was successful, false otherwise. </returns>
-        public bool Clip(ClipType clipType, ref List<List<Vector2>> output, PolyFillType fillType = PolyFillType.pftEvenOdd)
+        public bool Clip(ClipType clipType, ref List<List<Vector2>> output,
+            PolyFillType fillType = PolyFillType.pftEvenOdd)
         {
             return Clip(clipType, ref output, fillType, fillType);
         }
@@ -119,7 +134,8 @@ namespace ProceduralToolkit
         /// <param name="subjectFillType"> Fill rule that will be applied to the subject paths. </param>
         /// <param name="clipFillType"> Fill rule that will be applied to the clip paths. </param>
         /// <returns> True if the operation was successful, false otherwise. </returns>
-        public bool Clip(ClipType clipType, ref List<List<Vector2>> output, PolyFillType subjectFillType, PolyFillType clipFillType)
+        public bool Clip(ClipType clipType, ref List<List<Vector2>> output, PolyFillType subjectFillType,
+            PolyFillType clipFillType)
         {
             var intOutput = new List<List<IntPoint>>();
             bool succeeded = clipper.Execute(clipType, intOutput, subjectFillType, clipFillType);
@@ -136,7 +152,8 @@ namespace ProceduralToolkit
         /// <param name="output"> The List that will receive the result of the clipping operation. </param>
         /// <param name="fillType"> Fill rule that will be applied to the paths. </param>
         /// <returns> True if the operation was successful, false otherwise. </returns>
-        public bool Clip(ClipType clipType, ref List<List<IntPoint>> output, PolyFillType fillType = PolyFillType.pftEvenOdd)
+        public bool Clip(ClipType clipType, ref List<List<IntPoint>> output,
+            PolyFillType fillType = PolyFillType.pftEvenOdd)
         {
             return Clip(clipType, ref output, fillType, fillType);
         }
@@ -151,7 +168,8 @@ namespace ProceduralToolkit
         /// <param name="subjectFillType"> Fill rule that will be applied to the subject paths. </param>
         /// <param name="clipFillType"> Fill rule that will be applied to the clip paths. </param>
         /// <returns> True if the operation was successful, false otherwise. </returns>
-        public bool Clip(ClipType clipType, ref List<List<IntPoint>> output, PolyFillType subjectFillType, PolyFillType clipFillType)
+        public bool Clip(ClipType clipType, ref List<List<IntPoint>> output, PolyFillType subjectFillType,
+            PolyFillType clipFillType)
         {
             return clipper.Execute(clipType, output, subjectFillType, clipFillType);
         }
@@ -180,7 +198,8 @@ namespace ProceduralToolkit
         /// <param name="subjectFillType"> Fill rule that will be applied to the subject paths. </param>
         /// <param name="clipFillType"> Fill rule that will be applied to the clip paths. </param>
         /// <returns> True if the operation was successful, false otherwise. </returns>
-        public bool Clip(ClipType clipType, ref PolyTree output, PolyFillType subjectFillType, PolyFillType clipFillType)
+        public bool Clip(ClipType clipType, ref PolyTree output, PolyFillType subjectFillType,
+            PolyFillType clipFillType)
         {
             return clipper.Execute(clipType, output, subjectFillType, clipFillType);
         }

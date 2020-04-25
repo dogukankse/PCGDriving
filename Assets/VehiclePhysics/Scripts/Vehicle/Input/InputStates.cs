@@ -9,13 +9,12 @@ namespace NWH.VehiclePhysics
     /// </summary>
     [HideInInspector]
     [System.Serializable]
-	public class InputStates
-	{
+    public class InputStates
+    {
         /// <summary>
         /// True if vehicle is local, false if non-local, networked vehicle
         /// </summary>
-        [HideInInspector]
-        public bool settable = true;
+        [HideInInspector] public bool settable = true;
 
         /// <summary>
         /// Horizontal axis. Used for steering.
@@ -62,32 +61,26 @@ namespace NWH.VehiclePhysics
         }
 
 
-		public bool ShiftUp
+        public bool ShiftUp
         {
             get
             {
                 if (!vc.Active) return false;
                 return shiftUp;
             }
-            set
+            set { shiftUp = value; }
+        }
+
+
+        public bool ShiftDown
+        {
+            get
             {
-                shiftUp = value;
-            }
-		}
-
-
-		public bool ShiftDown
-		{
-			get
-			{
                 if (!vc.Active) return false;
                 return shiftDown;
-			}
-            set
-            {
-                shiftDown = value;
             }
-		}
+            set { shiftDown = value; }
+        }
 
 
         /// <summary>
@@ -109,7 +102,7 @@ namespace NWH.VehiclePhysics
 
             set
             {
-                if(settable) horizontal = Mathf.Clamp(value, -1f, 1f);
+                if (settable) horizontal = Mathf.Clamp(value, -1f, 1f);
             }
         }
 
@@ -141,7 +134,8 @@ namespace NWH.VehiclePhysics
                 if (!vc.Active) return 0;
 
                 // If tracked add vertical input when turning as tank requires power to turn
-                if (vc.tracks.trackedVehicle) return Mathf.Clamp(vertical + Mathf.Sign(vertical) * Mathf.Abs(horizontal), -1f, 1f);
+                if (vc.tracks.trackedVehicle)
+                    return Mathf.Clamp(vertical + Mathf.Sign(vertical) * Mathf.Abs(horizontal), -1f, 1f);
 
                 return vertical;
             }
@@ -155,14 +149,8 @@ namespace NWH.VehiclePhysics
 
         public float Clutch
         {
-            get
-            {
-                return clutch;
-            }
-            set
-            {
-                clutch = Mathf.Clamp01(value);
-            }
+            get { return clutch; }
+            set { clutch = Mathf.Clamp01(value); }
         }
 
 
@@ -174,10 +162,7 @@ namespace NWH.VehiclePhysics
                 return handbrake;
             }
 
-            set
-            {
-                handbrake = Mathf.Clamp01(value);
-            }
+            set { handbrake = Mathf.Clamp01(value); }
         }
     }
 }

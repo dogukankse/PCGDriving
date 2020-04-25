@@ -16,7 +16,7 @@ namespace _Scripts.Menu
         [SerializeField] private TMP_InputField _name;
         [SerializeField] private TMP_InputField _seed;
         [SerializeField] private Button _playButton;
-        
+
 
         #region UnityEvents
 
@@ -55,9 +55,8 @@ namespace _Scripts.Menu
             SceneManager.LoadScene(1);
         }
 
-
         #endregion
-       
+
         private void SwitchMenus()
         {
             _playMenu.SetActive(!_playMenu.activeSelf);

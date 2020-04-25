@@ -22,7 +22,12 @@ namespace ProceduralToolkit
         }
 
         private bool[,] _cells;
-        public bool[,] cells { get { return _cells; } private set { _cells = value; } }
+
+        public bool[,] cells
+        {
+            get { return _cells; }
+            private set { _cells = value; }
+        }
 
         private Config config;
         private readonly Action<int, int> visitAliveBorders;
@@ -145,6 +150,7 @@ namespace ProceduralToolkit
             {
                 copy.Visit8(x, y, visitDeadBorders);
             }
+
             return aliveNeighbours;
         }
 
@@ -156,34 +162,145 @@ namespace ProceduralToolkit
         {
             #region Common rulesets
 
-            public static Ruleset life { get { return new Ruleset("3", "23"); } }
-            public static Ruleset highlife { get { return new Ruleset("36", "23"); } }
-            public static Ruleset lifeWithoutDeath { get { return new Ruleset("3", "012345678"); } }
-            public static Ruleset thirtyFour { get { return new Ruleset("34", "34"); } }
-            public static Ruleset inverseLife { get { return new Ruleset("0123478", "34678"); } }
-            public static Ruleset pseudoLife { get { return new Ruleset("357", "238"); } }
-            public static Ruleset longLife { get { return new Ruleset("345", "5"); } }
-            public static Ruleset dotLife { get { return new Ruleset("3", "023"); } }
-            public static Ruleset dryLife { get { return new Ruleset("37", "23"); } }
-            public static Ruleset seeds { get { return new Ruleset("2"); } }
-            public static Ruleset serviettes { get { return new Ruleset("234"); } }
-            public static Ruleset gnarl { get { return new Ruleset("1", "1"); } }
-            public static Ruleset liveFreeOrDie { get { return new Ruleset("2", "0"); } }
-            public static Ruleset dayAndNight { get { return new Ruleset("3678", "34678"); } }
-            public static Ruleset replicator { get { return new Ruleset("1357", "1357"); } }
-            public static Ruleset twoXTwo { get { return new Ruleset("36", "125"); } }
-            public static Ruleset move { get { return new Ruleset("368", "245"); } }
-            public static Ruleset maze { get { return new Ruleset("3", "12345"); } }
-            public static Ruleset mazectric { get { return new Ruleset("3", "1234"); } }
-            public static Ruleset amoeba { get { return new Ruleset("357", "1358"); } }
-            public static Ruleset diamoeba { get { return new Ruleset("35678", "5678"); } }
-            public static Ruleset coral { get { return new Ruleset("3", "45678"); } }
-            public static Ruleset anneal { get { return new Ruleset("4678", "35678"); } }
-            public static Ruleset majority { get { return new Ruleset("5678", "45678"); } }
-            public static Ruleset walledCities { get { return new Ruleset("45678", "2345"); } }
-            public static Ruleset stains { get { return new Ruleset("3678", "235678"); } }
-            public static Ruleset coagulations { get { return new Ruleset("378", "235678"); } }
-            public static Ruleset assimilation { get { return new Ruleset("345", "4567"); } }
+            public static Ruleset life
+            {
+                get { return new Ruleset("3", "23"); }
+            }
+
+            public static Ruleset highlife
+            {
+                get { return new Ruleset("36", "23"); }
+            }
+
+            public static Ruleset lifeWithoutDeath
+            {
+                get { return new Ruleset("3", "012345678"); }
+            }
+
+            public static Ruleset thirtyFour
+            {
+                get { return new Ruleset("34", "34"); }
+            }
+
+            public static Ruleset inverseLife
+            {
+                get { return new Ruleset("0123478", "34678"); }
+            }
+
+            public static Ruleset pseudoLife
+            {
+                get { return new Ruleset("357", "238"); }
+            }
+
+            public static Ruleset longLife
+            {
+                get { return new Ruleset("345", "5"); }
+            }
+
+            public static Ruleset dotLife
+            {
+                get { return new Ruleset("3", "023"); }
+            }
+
+            public static Ruleset dryLife
+            {
+                get { return new Ruleset("37", "23"); }
+            }
+
+            public static Ruleset seeds
+            {
+                get { return new Ruleset("2"); }
+            }
+
+            public static Ruleset serviettes
+            {
+                get { return new Ruleset("234"); }
+            }
+
+            public static Ruleset gnarl
+            {
+                get { return new Ruleset("1", "1"); }
+            }
+
+            public static Ruleset liveFreeOrDie
+            {
+                get { return new Ruleset("2", "0"); }
+            }
+
+            public static Ruleset dayAndNight
+            {
+                get { return new Ruleset("3678", "34678"); }
+            }
+
+            public static Ruleset replicator
+            {
+                get { return new Ruleset("1357", "1357"); }
+            }
+
+            public static Ruleset twoXTwo
+            {
+                get { return new Ruleset("36", "125"); }
+            }
+
+            public static Ruleset move
+            {
+                get { return new Ruleset("368", "245"); }
+            }
+
+            public static Ruleset maze
+            {
+                get { return new Ruleset("3", "12345"); }
+            }
+
+            public static Ruleset mazectric
+            {
+                get { return new Ruleset("3", "1234"); }
+            }
+
+            public static Ruleset amoeba
+            {
+                get { return new Ruleset("357", "1358"); }
+            }
+
+            public static Ruleset diamoeba
+            {
+                get { return new Ruleset("35678", "5678"); }
+            }
+
+            public static Ruleset coral
+            {
+                get { return new Ruleset("3", "45678"); }
+            }
+
+            public static Ruleset anneal
+            {
+                get { return new Ruleset("4678", "35678"); }
+            }
+
+            public static Ruleset majority
+            {
+                get { return new Ruleset("5678", "45678"); }
+            }
+
+            public static Ruleset walledCities
+            {
+                get { return new Ruleset("45678", "2345"); }
+            }
+
+            public static Ruleset stains
+            {
+                get { return new Ruleset("3678", "235678"); }
+            }
+
+            public static Ruleset coagulations
+            {
+                get { return new Ruleset("378", "235678"); }
+            }
+
+            public static Ruleset assimilation
+            {
+                get { return new Ruleset("345", "4567"); }
+            }
 
             #endregion Common rulesets
 
@@ -197,6 +314,7 @@ namespace ProceduralToolkit
                 {
                     this.birthRule[i] = birthRule[i];
                 }
+
                 this.survivalRule = new byte[survivalRule.Length];
                 for (int i = 0; i < survivalRule.Length; i++)
                 {
@@ -222,6 +340,7 @@ namespace ProceduralToolkit
                 {
                     if (birthRule[i] == aliveCells) return true;
                 }
+
                 return false;
             }
 
@@ -231,6 +350,7 @@ namespace ProceduralToolkit
                 {
                     if (survivalRule[i] == aliveCells) return true;
                 }
+
                 return false;
             }
 
@@ -250,8 +370,10 @@ namespace ProceduralToolkit
                             }
                         }
                     }
+
                     list.Sort();
                 }
+
                 return list;
             }
 
@@ -262,11 +384,13 @@ namespace ProceduralToolkit
                 {
                     b += digit;
                 }
+
                 string s = "";
                 foreach (var digit in survivalRule)
                 {
                     s += digit;
                 }
+
                 return string.Format("B{0}/S{1}", b, s);
             }
         }

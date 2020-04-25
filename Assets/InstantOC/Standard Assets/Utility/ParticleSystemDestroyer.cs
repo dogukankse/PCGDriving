@@ -36,6 +36,7 @@ namespace UnityStandardAssets.Utility
             {
                 yield return null;
             }
+
             Debug.Log("stopping " + name);
 
             // turn off emission
@@ -43,6 +44,7 @@ namespace UnityStandardAssets.Utility
             {
                 system.enableEmission = false;
             }
+
             BroadcastMessage("Extinguish", SendMessageOptions.DontRequireReceiver);
 
             // wait for any remaining particles to expire

@@ -14,15 +14,13 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Volume of longitudinal (forward) slip / wheel spin sound effect.
         /// </summary>
-        [Tooltip("Volume of longitudinal (forward) slip / wheel spin.")]
-        [Range(0, 4)]
+        [Tooltip("Volume of longitudinal (forward) slip / wheel spin.")] [Range(0, 4)]
         public float forwardSkidVolume = 0.8f;
 
         /// <summary>
         /// Volume of lateral (side) slip sound effect.
         /// </summary>
-        [Tooltip("Volume of lateral (side) slip sound effect.")]
-        [Range(0, 4)]
+        [Tooltip("Volume of lateral (side) slip sound effect.")] [Range(0, 4)]
         public float sideSkidVolume = 0.9f;
 
         public HysteresisSmoothedValue smoothedVolume;
@@ -39,7 +37,7 @@ namespace NWH.VehiclePhysics
             foreach (Wheel wheel in vc.Wheels)
             {
                 AudioSource a = wheel.ControllerGO.AddComponent<AudioSource>();
-                vc.sound.SetAudioSourceDefaults( a, true, true);
+                vc.sound.SetAudioSourceDefaults(a, true, true);
                 Sources.Add(a);
             }
 
@@ -48,15 +46,16 @@ namespace NWH.VehiclePhysics
 
         public override void Update()
         {
-            if(smoothedVolume == null) smoothedVolume = new HysteresisSmoothedValue(0, 0.25f, 0.5f);
-            if(smoothedPitch == null) smoothedPitch = new HysteresisSmoothedValue(0, 0.25f, 0.5f);
+            if (smoothedVolume == null) smoothedVolume = new HysteresisSmoothedValue(0, 0.25f, 0.5f);
+            if (smoothedPitch == null) smoothedPitch = new HysteresisSmoothedValue(0, 0.25f, 0.5f);
 
             if (vc.groundDetection != null)
             {
                 for (int i = 0; i < vc.Wheels.Count; i++)
                 {
                     Wheel wheel = vc.Wheels[i];
-                    GroundDetection.GroundEntity groundEntity = vc.groundDetection.GetCurrentGroundEntity(wheel.WheelController);
+                    GroundDetection.GroundEntity groundEntity =
+                        vc.groundDetection.GetCurrentGroundEntity(wheel.WheelController);
 
                     if (wheel.IsGrounded && groundEntity != null)
                     {
@@ -74,16 +73,27 @@ namespace NWH.VehiclePhysics
                             if (wheel.HasForwardSlip || wheel.HasSideSlip)
                             {
                                 // Calculate skid volume and pitch
-                                float forwardSkid = Mathf.Max(0f, (Mathf.Clamp01(Mathf.Pow((Mathf.Abs(wheel.SmoothForwardSlip) - vc.forwardSlipThreshold), 2f)) * forwardSkidVolume));
+                                float forwardSkid = Mathf.Max(0f,
+                                    (Mathf.Clamp01(
+                                        Mathf.Pow((Mathf.Abs(wheel.SmoothForwardSlip) - vc.forwardSlipThreshold),
+                                            2f)) * forwardSkidVolume));
 
-                                float sideSkid = Mathf.Clamp01(Mathf.Pow((Mathf.Abs(wheel.SmoothSideSlip) - vc.sideSlipThreshold), 2f)) * sideSkidVolume;
+                                float sideSkid =
+                                    Mathf.Clamp01(Mathf.Pow((Mathf.Abs(wheel.SmoothSideSlip) - vc.sideSlipThreshold),
+                                        2f)) * sideSkidVolume;
 
-                                float skidPitch = Mathf.Clamp(Mathf.Abs(wheel.WheelController.suspensionForce / (vc.vehicleRigidbody.mass * 3f)), groundEntity.skidSoundComponent.pitch * 0.7f, groundEntity.skidSoundComponent.pitch * 1.3f);
+                                float skidPitch =
+                                    Mathf.Clamp(
+                                        Mathf.Abs(wheel.WheelController.suspensionForce /
+                                                  (vc.vehicleRigidbody.mass * 3f)),
+                                        groundEntity.skidSoundComponent.pitch * 0.7f,
+                                        groundEntity.skidSoundComponent.pitch * 1.3f);
 
                                 float skidVolume = Mathf.Clamp01(forwardSkid + sideSkid) * 30f;
 
                                 Sources[i].time = Random.Range(0f, Sources[i].clip.length);
-                                float newVolume = Mathf.Clamp01(skidVolume) * volume * groundEntity.skidSoundComponent.volume * vc.sound.masterVolume;
+                                float newVolume = Mathf.Clamp01(skidVolume) * volume *
+                                                  groundEntity.skidSoundComponent.volume * vc.sound.masterVolume;
                                 smoothedVolume.Tick(newVolume);
                                 SetVolume(smoothedVolume.Value, i);
 
@@ -108,8 +118,7 @@ namespace NWH.VehiclePhysics
 
                     SetVolume(smoothedVolume.Value, i);
                 }
-            }        
+            }
         }
     }
 }
-

@@ -18,7 +18,7 @@ namespace NWH.VehiclePhysics
             this.vc = vc;
             this.audioMixerGroup = amg;
 
-            if(Clip != null)
+            if (Clip != null)
             {
                 Source = vc.gameObject.AddComponent<AudioSource>();
                 vc.sound.SetAudioSourceDefaults(Source, false, false, volume);
@@ -28,7 +28,7 @@ namespace NWH.VehiclePhysics
 
         public override void Update()
         {
-            if(Clip != null)
+            if (Clip != null)
             {
                 if (prevActive && !vc.brakes.Active && vc.Speed < 1f && !Source.isPlaying)
                 {
@@ -37,6 +37,7 @@ namespace NWH.VehiclePhysics
                     Source.Play();
                     vc.brakes.airBrakePressure = 0;
                 }
+
                 prevActive = vc.brakes.Active;
             }
         }

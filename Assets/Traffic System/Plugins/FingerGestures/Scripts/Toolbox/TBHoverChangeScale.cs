@@ -12,9 +12,9 @@ public class TBHoverChangeScale : MonoBehaviour
         originalScale = transform.localScale;
     }
 
-    void OnFingerHover( FingerHoverEvent e )
+    void OnFingerHover(FingerHoverEvent e)
     {
-        if( e.Phase == FingerHoverPhase.Enter )
+        if (e.Phase == FingerHoverPhase.Enter)
         {
             // apply scale modifier
             transform.localScale = hoverScaleFactor * originalScale;

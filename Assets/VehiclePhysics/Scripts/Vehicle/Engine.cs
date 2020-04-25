@@ -56,8 +56,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Power at the peak of the power curve.
         /// </summary>
-        [Tooltip("Power at the peak of the power curve.")]
-        [ShowInTelemetry, ShowInSettings(50, 500, 25)]
+        [Tooltip("Power at the peak of the power curve.")] [ShowInTelemetry, ShowInSettings(50, 500, 25)]
         public float maxPower = 150;
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace NWH.VehiclePhysics
         /// Can be used to immitate the flywheel.
         /// </summary>
         [Tooltip("Maximum RPM change per second when engine is running without load or when wheels are slipping." +
-            "Can be used to immitate the flywheel.")]
+                 "Can be used to immitate the flywheel.")]
         public float maxRpmChange = 10000;
 
         /// <summary>
@@ -74,8 +73,8 @@ namespace NWH.VehiclePhysics
         /// Smoothing only works on throttle, off throttle there is no smoothing.
         /// </summary>
         [Tooltip("Power delivery smoothing so that the vehicle does not go from 0 to full power instantly. " +
-            "Number represents time needed to reach the input [s]." +
-            "Smoothing is only on throttle, off throttle there is no smoothing.")]
+                 "Number represents time needed to reach the input [s]." +
+                 "Smoothing is only on throttle, off throttle there is no smoothing.")]
         [Range(0f, 1f)]
         public float throttleSmoothing = 0.2f;
 
@@ -83,25 +82,23 @@ namespace NWH.VehiclePhysics
         /// Curve showing how power (Y axis) depends on RPM of the engine (shown on X axis as percentage).
         /// </summary>
         [Tooltip("Curve showing how power (Y axis) depends on RPM of the engine (shown on X axis as percentage).")]
-        public AnimationCurve powerCurve = new AnimationCurve(new Keyframe[3] {
-                new Keyframe(0f, 0f),
-                new Keyframe(0.75f, 1f),
-                new Keyframe(1f, 0.92f)
-            });
+        public AnimationCurve powerCurve = new AnimationCurve(new Keyframe[3]
+        {
+            new Keyframe(0f, 0f),
+            new Keyframe(0.75f, 1f),
+            new Keyframe(1f, 0.92f)
+        });
 
         private bool isRunning = true;
         private bool wasRunning = false;
 
-        [ShowInTelemetry]
-        private float rpm;
+        [ShowInTelemetry] private float rpm;
         private float prevRpm;
         private float rpmOverflow;
 
-        [ShowInTelemetry]
-        private float power;
+        [ShowInTelemetry] private float power;
 
-        [ShowInTelemetry]
-        private float throttle = 0f;
+        [ShowInTelemetry] private float throttle = 0f;
         private float prevThrottle = 0f;
         private float throttleVelocity = 0f;
 
@@ -113,21 +110,19 @@ namespace NWH.VehiclePhysics
         private float fuelCutoffStart;
         private float fuelCutoffDuration = 0.01f;
 
-        [Tooltip("Only relevant if the engine has forced induction - Forced Induction Type is set to other than none. " +
+        [Tooltip(
+            "Only relevant if the engine has forced induction - Forced Induction Type is set to other than none. " +
             "Apart from sound effects it also adds power to the engine.")]
         public ForcedInduction forcedInduction = new ForcedInduction();
 
-		private VehicleController vc;
+        private VehicleController vc;
 
         /// <summary>
         /// Returns true if engine is running. To start or stop the engine call Start() or Stop() respectively.
         /// </summary>
         public bool IsRunning
         {
-            get
-            {
-                return isRunning;
-            }
+            get { return isRunning; }
         }
 
         /// <summary>
@@ -186,15 +181,16 @@ namespace NWH.VehiclePhysics
                 }
                 else
                 {
-                    if(starting)
+                    if (starting)
                     {
                         r = StartingPercent * minRPM;
                     }
-                    else if(stopping)
+                    else if (stopping)
                     {
                         r = (1f - StoppingPercent) * minRPM;
                     }
                 }
+
                 return r;
             }
         }
@@ -213,10 +209,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float RPMPercent
         {
-            get
-            {
-                return Mathf.Clamp01((RPM - minRPM) / (maxRPM - minRPM));
-            }
+            get { return Mathf.Clamp01((RPM - minRPM) / (maxRPM - minRPM)); }
         }
 
         /// <summary>
@@ -225,10 +218,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float Power
         {
-            get
-            {
-                return power;
-            }
+            get { return power; }
         }
 
         /// <summary>
@@ -236,10 +226,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float PowerInHP
         {
-            get
-            {
-                return Power * 1.341f;
-            }
+            get { return Power * 1.341f; }
         }
 
         /// <summary>
@@ -247,14 +234,8 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float TcsPowerReduction
         {
-            get
-            {
-                return vc.drivingAssists.tcs.powerReduction;
-            }
-            set
-            {
-                vc.drivingAssists.tcs.powerReduction = Mathf.Clamp01(value);
-            }
+            get { return vc.drivingAssists.tcs.powerReduction; }
+            set { vc.drivingAssists.tcs.powerReduction = Mathf.Clamp01(value); }
         }
 
 
@@ -263,10 +244,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float TotalPowerReduction
         {
-            get
-            {
-                return Mathf.Clamp01(TcsPowerReduction + vc.trailer.NoTrailerPowerReduction);
-            }
+            get { return Mathf.Clamp01(TcsPowerReduction + vc.trailer.NoTrailerPowerReduction); }
         }
 
         /// <summary>
@@ -281,11 +259,12 @@ namespace NWH.VehiclePhysics
                 {
                     return (9548f * Power) / RPM;
                 }
+
                 return 0;
             }
         }
-        
-        
+
+
         /// <summary>
         /// Maximum engine torque, calculated from power curve.
         /// Simplified - calculates max torque as torque
@@ -301,6 +280,7 @@ namespace NWH.VehiclePhysics
                 {
                     return (9548f * maxPower) / (maxRPM * 0.6f);
                 }
+
                 return 0;
             }
         }
@@ -328,7 +308,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void Start()
         {
-            if(!vc.fuel.HasFuel || (vc.damage.enabled && vc.damage.DamagePercent == 1f))
+            if (!vc.fuel.HasFuel || (vc.damage.enabled && vc.damage.DamagePercent == 1f))
             {
                 vc.sound.engineStartStopComponent.Source.Play();
                 isRunning = false;
@@ -387,7 +367,7 @@ namespace NWH.VehiclePhysics
             if (vc.sound.engineStartStopComponent.Clips.Count > 0)
                 startDuration = vc.sound.engineStartStopComponent.Clips[0].length * 0.9f;
 
-            if(!isRunning && runOnStartup)
+            if (!isRunning && runOnStartup)
             {
                 Start();
             }
@@ -416,7 +396,7 @@ namespace NWH.VehiclePhysics
 
             if (isRunning)
             {
-                float allowedRpmChange = maxRpmChange * Time.fixedDeltaTime * powerCurve.Evaluate(rpm/maxRPM);
+                float allowedRpmChange = maxRpmChange * Time.fixedDeltaTime * powerCurve.Evaluate(rpm / maxRPM);
 
                 forcedInduction.Update();
 
@@ -440,15 +420,15 @@ namespace NWH.VehiclePhysics
 
                 // Get RPM from wheels if not in neutral
                 if (vc.transmission.Gear != 0 && !vc.transmission.Shifting)
-                {           
+                {
                     rpm = vc.transmission.ReverseRPM;
-                    if(!vc.input.Vertical.IsDeadzoneZero()) rpm += vc.transmission.AddedClutchRPM;
+                    if (!vc.input.Vertical.IsDeadzoneZero()) rpm += vc.transmission.AddedClutchRPM;
 
                     if (rpm > (prevRpm + allowedRpmChange))
                         rpm = prevRpm + allowedRpmChange;
                     else if (rpm < (prevRpm - allowedRpmChange))
                         rpm = prevRpm - allowedRpmChange;
-                    
+
                     if (rpm < minRPM) rpm = minRPM;
                     //else if (rpm > maxRPM) rpm = maxRPM;
                 }
@@ -462,11 +442,11 @@ namespace NWH.VehiclePhysics
                     rpm += allowedRpmChange * userInput;
                 }
 
-                if(vc.transmission.Gear != 0 && vc.Speed > vc.transmission.GetMaxSpeedForGear(vc.transmission.Gear))
+                if (vc.transmission.Gear != 0 && vc.Speed > vc.transmission.GetMaxSpeedForGear(vc.transmission.Gear))
                 {
                     StartFuelCutoff();
                 }
-            }          
+            }
             else
             {
                 rpmOverflow = 0;
@@ -492,11 +472,13 @@ namespace NWH.VehiclePhysics
                     throttleVelocity = 0;
                 }
 
-                float directionInversion = vc.transmission.transmissionType == Transmission.TransmissionType.Manual ? Mathf.Sign(vc.transmission.Gear) : 1f;
+                float directionInversion = vc.transmission.transmissionType == Transmission.TransmissionType.Manual
+                    ? Mathf.Sign(vc.transmission.Gear)
+                    : 1f;
                 float userInput = Mathf.Clamp01(throttle * Mathf.Sign(vc.transmission.Gear) * directionInversion);
 
                 power = Mathf.Abs(powerCurve.Evaluate(RPM / maxRPM) * maxPower * userInput)
-                    * (1f - TotalPowerReduction) * forcedInduction.PowerGainMultiplier;
+                        * (1f - TotalPowerReduction) * forcedInduction.PowerGainMultiplier;
 
                 // Reduce power if damaged
                 if (vc.damage.enabled && vc.damage.performanceDegradation)
@@ -513,7 +495,5 @@ namespace NWH.VehiclePhysics
         {
             fuelCutoffStart = Time.realtimeSinceStartup;
         }
-
     }
 }
-

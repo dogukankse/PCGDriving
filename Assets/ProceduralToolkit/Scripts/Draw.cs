@@ -11,7 +11,7 @@ namespace ProceduralToolkit
         public delegate void DebugDrawLine(Vector3 start, Vector3 end, Color color, float duration, bool depthTest);
 
         private const int circleSegments = 64;
-        private const float circleSegmentAngle = 360f/circleSegments;
+        private const float circleSegmentAngle = 360f / circleSegments;
 
         private static readonly Func<float, float, Vector3> pointOnCircleXY;
         private static readonly Func<float, float, Vector3> pointOnCircleXZ;
@@ -24,13 +24,14 @@ namespace ProceduralToolkit
             pointOnCircleYZ = Geometry.PointOnCircle3YZ;
         }
 
-        private static void GetSegmentsAndSegmentAngle(float fromAngle, float toAngle, out int segments, out float segmentAngle)
+        private static void GetSegmentsAndSegmentAngle(float fromAngle, float toAngle, out int segments,
+            out float segmentAngle)
         {
             float range = toAngle - fromAngle;
             if (range > circleSegmentAngle)
             {
-                segments = Mathf.FloorToInt(range/circleSegmentAngle);
-                segmentAngle = range/segments;
+                segments = Mathf.FloorToInt(range / circleSegmentAngle);
+                segmentAngle = range / segments;
             }
             else
             {
@@ -64,7 +65,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuadXY(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, Vector2 scale)
+        public static void WireQuadXY(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            Vector2 scale)
         {
             WireQuad(drawLine, position, rotation, scale, Vector3.right, Vector3.up);
         }
@@ -72,7 +74,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuadXY(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale, Color color, float duration,
+        public static void WireQuadXY(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale,
+            Color color, float duration,
             bool depthTest)
         {
             WireQuad(drawLine, position, rotation, scale, Vector3.right, Vector3.up, color, duration, depthTest);
@@ -81,7 +84,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuadXZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, Vector2 scale)
+        public static void WireQuadXZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            Vector2 scale)
         {
             WireQuad(drawLine, position, rotation, scale, Vector3.right, Vector3.forward);
         }
@@ -89,7 +93,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuadXZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale, Color color, float duration,
+        public static void WireQuadXZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale,
+            Color color, float duration,
             bool depthTest)
         {
             WireQuad(drawLine, position, rotation, scale, Vector3.right, Vector3.forward, color, duration, depthTest);
@@ -98,7 +103,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuadYZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, Vector2 scale)
+        public static void WireQuadYZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            Vector2 scale)
         {
             WireQuad(drawLine, position, rotation, scale, Vector3.up, Vector3.forward);
         }
@@ -106,7 +112,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuadYZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale, Color color, float duration,
+        public static void WireQuadYZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale,
+            Color color, float duration,
             bool depthTest)
         {
             WireQuad(drawLine, position, rotation, scale, Vector3.up, Vector3.forward, color, duration, depthTest);
@@ -115,12 +122,13 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuad(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, Vector2 scale, Vector3 planeRight,
+        public static void WireQuad(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            Vector2 scale, Vector3 planeRight,
             Vector3 planeForward)
         {
-            Vector3 right = rotation*planeRight*scale.x;
-            Vector3 forward = rotation*planeForward*scale.y;
-            Vector3 forwardRight = position + right*0.5f + forward*0.5f;
+            Vector3 right = rotation * planeRight * scale.x;
+            Vector3 forward = rotation * planeForward * scale.y;
+            Vector3 forwardRight = position + right * 0.5f + forward * 0.5f;
             Vector3 backRight = forwardRight - forward;
             Vector3 backLeft = backRight - right;
             Vector3 forwardLeft = forwardRight - right;
@@ -134,12 +142,13 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe quad with position, rotation and scale
         /// </summary>
-        public static void WireQuad(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale, Vector3 planeRight,
+        public static void WireQuad(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector2 scale,
+            Vector3 planeRight,
             Vector3 planeForward, Color color, float duration, bool depthTest)
         {
-            Vector3 right = rotation*planeRight*scale.x;
-            Vector3 forward = rotation*planeForward*scale.y;
-            Vector3 forwardRight = position + right*0.5f + forward*0.5f;
+            Vector3 right = rotation * planeRight * scale.x;
+            Vector3 forward = rotation * planeForward * scale.y;
+            Vector3 forwardRight = position + right * 0.5f + forward * 0.5f;
             Vector3 backRight = forwardRight - forward;
             Vector3 backLeft = backRight - right;
             Vector3 forwardLeft = forwardRight - right;
@@ -157,13 +166,14 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe cube with position, rotation and scale
         /// </summary>
-        public static void WireCube(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, Vector3 scale)
+        public static void WireCube(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            Vector3 scale)
         {
-            Vector3 right = rotation*Vector3.right*scale.x;
-            Vector3 up = rotation*Vector3.up*scale.y;
-            Vector3 forward = rotation*Vector3.forward*scale.z;
+            Vector3 right = rotation * Vector3.right * scale.x;
+            Vector3 up = rotation * Vector3.up * scale.y;
+            Vector3 forward = rotation * Vector3.forward * scale.z;
 
-            Vector3 a1 = position + right*0.5f + up*0.5f + forward*0.5f;
+            Vector3 a1 = position + right * 0.5f + up * 0.5f + forward * 0.5f;
             Vector3 b1 = a1 - up;
             Vector3 c1 = b1 - right;
             Vector3 d1 = a1 - right;
@@ -192,14 +202,15 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe cube with position, rotation and scale
         /// </summary>
-        public static void WireCube(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector3 scale, Color color, float duration,
+        public static void WireCube(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, Vector3 scale,
+            Color color, float duration,
             bool depthTest)
         {
-            Vector3 right = rotation*Vector3.right*scale.x;
-            Vector3 up = rotation*Vector3.up*scale.y;
-            Vector3 forward = rotation*Vector3.forward*scale.z;
+            Vector3 right = rotation * Vector3.right * scale.x;
+            Vector3 up = rotation * Vector3.up * scale.y;
+            Vector3 forward = rotation * Vector3.forward * scale.z;
 
-            Vector3 a1 = position + right*0.5f + up*0.5f + forward*0.5f;
+            Vector3 a1 = position + right * 0.5f + up * 0.5f + forward * 0.5f;
             Vector3 b1 = a1 - up;
             Vector3 c1 = b1 - right;
             Vector3 d1 = a1 - right;
@@ -240,7 +251,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position and radius
         /// </summary>
-        public static void WireCircleXY(DebugDrawLine drawLine, Vector3 position, float radius, Color color, float duration, bool depthTest)
+        public static void WireCircleXY(DebugDrawLine drawLine, Vector3 position, float radius, Color color,
+            float duration, bool depthTest)
         {
             WireCircle(pointOnCircleXY, drawLine, position, radius, color, duration, depthTest);
         }
@@ -248,7 +260,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircleXY(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius)
+        public static void WireCircleXY(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius)
         {
             WireCircle(pointOnCircleXY, drawLine, position, rotation, radius);
         }
@@ -256,7 +269,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircleXY(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, Color color, float duration,
+        public static void WireCircleXY(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            Color color, float duration,
             bool depthTest)
         {
             WireCircle(pointOnCircleXY, drawLine, position, rotation, radius, color, duration, depthTest);
@@ -277,7 +291,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position and radius
         /// </summary>
-        public static void WireCircleXZ(DebugDrawLine drawLine, Vector3 position, float radius, Color color, float duration, bool depthTest)
+        public static void WireCircleXZ(DebugDrawLine drawLine, Vector3 position, float radius, Color color,
+            float duration, bool depthTest)
         {
             WireCircle(pointOnCircleXZ, drawLine, position, radius, color, duration, depthTest);
         }
@@ -285,7 +300,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircleXZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius)
+        public static void WireCircleXZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius)
         {
             WireCircle(pointOnCircleXZ, drawLine, position, rotation, radius);
         }
@@ -293,7 +309,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircleXZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, Color color, float duration,
+        public static void WireCircleXZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            Color color, float duration,
             bool depthTest)
         {
             WireCircle(pointOnCircleXZ, drawLine, position, rotation, radius, color, duration, depthTest);
@@ -314,7 +331,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position and radius
         /// </summary>
-        public static void WireCircleYZ(DebugDrawLine drawLine, Vector3 position, float radius, Color color, float duration, bool depthTest)
+        public static void WireCircleYZ(DebugDrawLine drawLine, Vector3 position, float radius, Color color,
+            float duration, bool depthTest)
         {
             WireCircle(pointOnCircleYZ, drawLine, position, radius, color, duration, depthTest);
         }
@@ -322,7 +340,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircleYZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius)
+        public static void WireCircleYZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius)
         {
             WireCircle(pointOnCircleYZ, drawLine, position, rotation, radius);
         }
@@ -330,7 +349,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircleYZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, Color color, float duration,
+        public static void WireCircleYZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            Color color, float duration,
             bool depthTest)
         {
             WireCircle(pointOnCircleYZ, drawLine, position, rotation, radius, color, duration, depthTest);
@@ -343,7 +363,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position and radius
         /// </summary>
-        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine, Vector3 position, float radius)
+        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine,
+            Vector3 position, float radius)
         {
             WireArc(pointOnCircle, drawLine, position, radius, 0, circleSegments, circleSegmentAngle);
         }
@@ -351,16 +372,19 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position and radius
         /// </summary>
-        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position, float radius, Color color,
+        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine,
+            Vector3 position, float radius, Color color,
             float duration, bool depthTest)
         {
-            WireArc(pointOnCircle, drawLine, position, radius, 0, circleSegments, circleSegmentAngle, color, duration, depthTest);
+            WireArc(pointOnCircle, drawLine, position, radius, 0, circleSegments, circleSegmentAngle, color, duration,
+                depthTest);
         }
 
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine, Vector3 position,
+        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine,
+            Vector3 position,
             Quaternion rotation, float radius)
         {
             WireArc(pointOnCircle, drawLine, position, rotation, radius, 0, circleSegments, circleSegmentAngle);
@@ -369,10 +393,12 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circle with position, rotation and radius
         /// </summary>
-        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position, Quaternion rotation,
+        public static void WireCircle(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine,
+            Vector3 position, Quaternion rotation,
             float radius, Color color, float duration, bool depthTest)
         {
-            WireArc(pointOnCircle, drawLine, position, rotation, radius, 0, circleSegments, circleSegmentAngle, color, duration, depthTest);
+            WireArc(pointOnCircle, drawLine, position, rotation, radius, 0, circleSegments, circleSegmentAngle, color,
+                duration, depthTest);
         }
 
         #endregion WireCircle Universal
@@ -382,7 +408,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArcXY(Action<Vector3, Vector3> drawLine, Vector3 position, float radius, float fromAngle, float toAngle)
+        public static void WireArcXY(Action<Vector3, Vector3> drawLine, Vector3 position, float radius, float fromAngle,
+            float toAngle)
         {
             WireArc(pointOnCircleXY, drawLine, position, radius, fromAngle, toAngle);
         }
@@ -390,7 +417,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArcXY(DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle, float toAngle, Color color,
+        public static void WireArcXY(DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle,
+            float toAngle, Color color,
             float duration, bool depthTest)
         {
             WireArc(pointOnCircleXY, drawLine, position, radius, fromAngle, toAngle, color, duration, depthTest);
@@ -399,7 +427,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArcXY(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius, float fromAngle,
+        public static void WireArcXY(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius, float fromAngle,
             float toAngle)
         {
             WireArc(pointOnCircleXY, drawLine, position, rotation, radius, fromAngle, toAngle);
@@ -408,10 +437,12 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArcXY(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, float fromAngle, float toAngle,
+        public static void WireArcXY(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            float fromAngle, float toAngle,
             Color color, float duration, bool depthTest)
         {
-            WireArc(pointOnCircleXY, drawLine, position, rotation, radius, fromAngle, toAngle, color, duration, depthTest);
+            WireArc(pointOnCircleXY, drawLine, position, rotation, radius, fromAngle, toAngle, color, duration,
+                depthTest);
         }
 
         #endregion WireCircleXY
@@ -421,7 +452,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArcXZ(Action<Vector3, Vector3> drawLine, Vector3 position, float radius, float fromAngle, float toAngle)
+        public static void WireArcXZ(Action<Vector3, Vector3> drawLine, Vector3 position, float radius, float fromAngle,
+            float toAngle)
         {
             WireArc(pointOnCircleXZ, drawLine, position, radius, fromAngle, toAngle);
         }
@@ -429,7 +461,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArcXZ(DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle, float toAngle, Color color,
+        public static void WireArcXZ(DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle,
+            float toAngle, Color color,
             float duration, bool depthTest)
         {
             WireArc(pointOnCircleXZ, drawLine, position, radius, fromAngle, toAngle, color, duration, depthTest);
@@ -438,7 +471,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArcXZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius, float fromAngle,
+        public static void WireArcXZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius, float fromAngle,
             float toAngle)
         {
             WireArc(pointOnCircleXZ, drawLine, position, rotation, radius, fromAngle, toAngle);
@@ -447,10 +481,12 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArcXZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, float fromAngle, float toAngle,
+        public static void WireArcXZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            float fromAngle, float toAngle,
             Color color, float duration, bool depthTest)
         {
-            WireArc(pointOnCircleXZ, drawLine, position, rotation, radius, fromAngle, toAngle, color, duration, depthTest);
+            WireArc(pointOnCircleXZ, drawLine, position, rotation, radius, fromAngle, toAngle, color, duration,
+                depthTest);
         }
 
         #endregion WireCircleXZ
@@ -460,7 +496,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArcYZ(Action<Vector3, Vector3> drawLine, Vector3 position, float radius, float fromAngle, float toAngle)
+        public static void WireArcYZ(Action<Vector3, Vector3> drawLine, Vector3 position, float radius, float fromAngle,
+            float toAngle)
         {
             WireArc(pointOnCircleYZ, drawLine, position, radius, fromAngle, toAngle);
         }
@@ -468,7 +505,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArcYZ(DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle, float toAngle, Color color,
+        public static void WireArcYZ(DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle,
+            float toAngle, Color color,
             float duration, bool depthTest)
         {
             WireArc(pointOnCircleYZ, drawLine, position, radius, fromAngle, toAngle, color, duration, depthTest);
@@ -477,7 +515,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArcYZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius, float fromAngle,
+        public static void WireArcYZ(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius, float fromAngle,
             float toAngle)
         {
             WireArc(pointOnCircleYZ, drawLine, position, rotation, radius, fromAngle, toAngle);
@@ -486,10 +525,12 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArcYZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, float fromAngle, float toAngle,
+        public static void WireArcYZ(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            float fromAngle, float toAngle,
             Color color, float duration, bool depthTest)
         {
-            WireArc(pointOnCircleYZ, drawLine, position, rotation, radius, fromAngle, toAngle, color, duration, depthTest);
+            WireArc(pointOnCircleYZ, drawLine, position, rotation, radius, fromAngle, toAngle, color, duration,
+                depthTest);
         }
 
         #endregion WireCircleYZ
@@ -499,7 +540,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine, Vector3 position, float radius,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine,
+            Vector3 position, float radius,
             float fromAngle, float toAngle)
         {
             int segments;
@@ -512,20 +554,23 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position,
+            float radius, float fromAngle,
             float toAngle, Color color, float duration, bool depthTest)
         {
             int segments;
             float segmentAngle;
             GetSegmentsAndSegmentAngle(fromAngle, toAngle, out segments, out segmentAngle);
 
-            WireArc(pointOnCircle, drawLine, position, radius, fromAngle, segments, segmentAngle, color, duration, depthTest);
+            WireArc(pointOnCircle, drawLine, position, radius, fromAngle, segments, segmentAngle, color, duration,
+                depthTest);
         }
 
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine, Vector3 position,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine,
+            Vector3 position,
             Quaternion rotation, float radius, float fromAngle, float toAngle)
         {
             int segments;
@@ -538,20 +583,23 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position, Quaternion rotation,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position,
+            Quaternion rotation,
             float radius, float fromAngle, float toAngle, Color color, float duration, bool depthTest)
         {
             int segments;
             float segmentAngle;
             GetSegmentsAndSegmentAngle(fromAngle, toAngle, out segments, out segmentAngle);
 
-            WireArc(pointOnCircle, drawLine, position, rotation, radius, fromAngle, segments, segmentAngle, color, duration, depthTest);
+            WireArc(pointOnCircle, drawLine, position, rotation, radius, fromAngle, segments, segmentAngle, color,
+                duration, depthTest);
         }
 
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine, Vector3 position, float radius,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine,
+            Vector3 position, float radius,
             float fromAngle, int segments, float segmentAngle)
         {
             float currentAngle = fromAngle;
@@ -567,7 +615,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position, float radius, float fromAngle,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position,
+            float radius, float fromAngle,
             int segments, float segmentAngle, Color color, float duration, bool depthTest)
         {
             float currentAngle = fromAngle;
@@ -583,15 +632,16 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine, Vector3 position,
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, Action<Vector3, Vector3> drawLine,
+            Vector3 position,
             Quaternion rotation, float radius, float fromAngle, int segments, float segmentAngle)
         {
             float currentAngle = fromAngle;
             for (var i = 0; i < segments; i++)
             {
-                Vector3 a = position + rotation*pointOnCircle(radius, currentAngle);
+                Vector3 a = position + rotation * pointOnCircle(radius, currentAngle);
                 currentAngle += segmentAngle;
-                Vector3 b = position + rotation*pointOnCircle(radius, currentAngle);
+                Vector3 b = position + rotation * pointOnCircle(radius, currentAngle);
                 drawLine(a, b);
             }
         }
@@ -599,15 +649,17 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position, Quaternion rotation,
-            float radius, float fromAngle, int segments, float segmentAngle, Color color, float duration, bool depthTest)
+        public static void WireArc(Func<float, float, Vector3> pointOnCircle, DebugDrawLine drawLine, Vector3 position,
+            Quaternion rotation,
+            float radius, float fromAngle, int segments, float segmentAngle, Color color, float duration,
+            bool depthTest)
         {
             float currentAngle = fromAngle;
             for (var i = 0; i < segments; i++)
             {
-                Vector3 a = position + rotation*pointOnCircle(radius, currentAngle);
+                Vector3 a = position + rotation * pointOnCircle(radius, currentAngle);
                 currentAngle += segmentAngle;
-                Vector3 b = position + rotation*pointOnCircle(radius, currentAngle);
+                Vector3 b = position + rotation * pointOnCircle(radius, currentAngle);
                 drawLine(a, b, color, duration, depthTest);
             }
         }
@@ -619,7 +671,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe sphere with position, rotation and radius
         /// </summary>
-        public static void WireSphere(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius)
+        public static void WireSphere(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius)
         {
             WireCircleXY(drawLine, position, rotation, radius);
             WireCircleXZ(drawLine, position, rotation, radius);
@@ -629,7 +682,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe sphere with position, rotation and radius
         /// </summary>
-        public static void WireSphere(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, Color color, float duration,
+        public static void WireSphere(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            Color color, float duration,
             bool depthTest)
         {
             WireCircleXY(drawLine, position, rotation, radius, color, duration, depthTest);
@@ -644,7 +698,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe hemisphere with position, rotation and radius
         /// </summary>
-        public static void WireHemisphere(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float radius)
+        public static void WireHemisphere(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float radius)
         {
             WireArcXY(drawLine, position, rotation, radius, -90, 90);
             WireCircleXZ(drawLine, position, rotation, radius);
@@ -654,7 +709,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe hemisphere with position, rotation and radius
         /// </summary>
-        public static void WireHemisphere(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius, Color color, float duration,
+        public static void WireHemisphere(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float radius,
+            Color color, float duration,
             bool depthTest)
         {
             WireArcXY(drawLine, position, rotation, radius, -90, 90, color, duration, depthTest);
@@ -669,17 +725,18 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe cone with position and rotation
         /// </summary>
-        public static void WireCone(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation, float apexRadius, float angle,
+        public static void WireCone(Action<Vector3, Vector3> drawLine, Vector3 position, Quaternion rotation,
+            float apexRadius, float angle,
             float length)
         {
-            Vector3 baseCenter = position + rotation*Vector3.up*length;
-            float baseRadius = Mathf.Tan(angle*Mathf.Deg2Rad)*length + apexRadius;
+            Vector3 baseCenter = position + rotation * Vector3.up * length;
+            float baseRadius = Mathf.Tan(angle * Mathf.Deg2Rad) * length + apexRadius;
             WireCircleXZ(drawLine, baseCenter, rotation, baseRadius);
 
-            Vector3 a2 = baseCenter + rotation*Geometry.PointOnCircle3XZ(baseRadius, 0);
-            Vector3 b2 = baseCenter + rotation*Geometry.PointOnCircle3XZ(baseRadius, 90);
-            Vector3 c2 = baseCenter + rotation*Geometry.PointOnCircle3XZ(baseRadius, 180);
-            Vector3 d2 = baseCenter + rotation*Geometry.PointOnCircle3XZ(baseRadius, 270);
+            Vector3 a2 = baseCenter + rotation * Geometry.PointOnCircle3XZ(baseRadius, 0);
+            Vector3 b2 = baseCenter + rotation * Geometry.PointOnCircle3XZ(baseRadius, 90);
+            Vector3 c2 = baseCenter + rotation * Geometry.PointOnCircle3XZ(baseRadius, 180);
+            Vector3 d2 = baseCenter + rotation * Geometry.PointOnCircle3XZ(baseRadius, 270);
 
             if (apexRadius == 0)
             {
@@ -692,10 +749,10 @@ namespace ProceduralToolkit
             {
                 WireCircleXZ(drawLine, position, rotation, apexRadius);
 
-                Vector3 a1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 0);
-                Vector3 b1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 90);
-                Vector3 c1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 180);
-                Vector3 d1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 270);
+                Vector3 a1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 0);
+                Vector3 b1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 90);
+                Vector3 c1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 180);
+                Vector3 d1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 270);
 
                 drawLine(a1, a2);
                 drawLine(b1, b2);
@@ -707,17 +764,18 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe cone with position and rotation
         /// </summary>
-        public static void WireCone(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float apexRadius, float angle, float length,
+        public static void WireCone(DebugDrawLine drawLine, Vector3 position, Quaternion rotation, float apexRadius,
+            float angle, float length,
             Color color, float duration, bool depthTest)
         {
-            Vector3 upperCenter = position + rotation*Vector3.up*length;
-            float upperRadius = Mathf.Tan(angle*Mathf.Deg2Rad)*length + apexRadius;
+            Vector3 upperCenter = position + rotation * Vector3.up * length;
+            float upperRadius = Mathf.Tan(angle * Mathf.Deg2Rad) * length + apexRadius;
             WireCircleXZ(drawLine, upperCenter, rotation, upperRadius, color, duration, depthTest);
 
-            Vector3 a2 = upperCenter + rotation*Geometry.PointOnCircle3XZ(upperRadius, 0);
-            Vector3 b2 = upperCenter + rotation*Geometry.PointOnCircle3XZ(upperRadius, 90);
-            Vector3 c2 = upperCenter + rotation*Geometry.PointOnCircle3XZ(upperRadius, 180);
-            Vector3 d2 = upperCenter + rotation*Geometry.PointOnCircle3XZ(upperRadius, 270);
+            Vector3 a2 = upperCenter + rotation * Geometry.PointOnCircle3XZ(upperRadius, 0);
+            Vector3 b2 = upperCenter + rotation * Geometry.PointOnCircle3XZ(upperRadius, 90);
+            Vector3 c2 = upperCenter + rotation * Geometry.PointOnCircle3XZ(upperRadius, 180);
+            Vector3 d2 = upperCenter + rotation * Geometry.PointOnCircle3XZ(upperRadius, 270);
 
             if (apexRadius == 0)
             {
@@ -730,10 +788,10 @@ namespace ProceduralToolkit
             {
                 WireCircleXZ(drawLine, position, rotation, apexRadius, color, duration, depthTest);
 
-                Vector3 a1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 0);
-                Vector3 b1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 90);
-                Vector3 c1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 180);
-                Vector3 d1 = position + rotation*Geometry.PointOnCircle3XZ(apexRadius, 270);
+                Vector3 a1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 0);
+                Vector3 b1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 90);
+                Vector3 c1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 180);
+                Vector3 d1 = position + rotation * Geometry.PointOnCircle3XZ(apexRadius, 270);
 
                 drawLine(a1, a2, color, duration, depthTest);
                 drawLine(b1, b2, color, duration, depthTest);

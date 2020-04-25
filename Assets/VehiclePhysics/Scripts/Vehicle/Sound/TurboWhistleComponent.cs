@@ -13,8 +13,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Pitch range that will be added to the base pitch depending on turbos's RPM.
         /// </summary>
-        [Range(0, 5)]
-        public float pitchRange = 1.4f;
+        [Range(0, 5)] public float pitchRange = 1.4f;
 
         public override void Initialize(VehicleController vc, AudioMixerGroup amg)
         {
@@ -33,15 +32,15 @@ namespace NWH.VehiclePhysics
         {
             if (Clip != null && vc.engine.IsRunning && vc.engine.forcedInduction.useForcedInduction)
             {
-                SetVolume(Mathf.Clamp01(volume * Mathf.Pow(vc.engine.forcedInduction.SpoolPercent, 1.4f)) * vc.sound.masterVolume);
+                SetVolume(Mathf.Clamp01(volume * Mathf.Pow(vc.engine.forcedInduction.SpoolPercent, 1.4f)) *
+                          vc.sound.masterVolume);
                 Source.pitch = pitch + pitchRange * vc.engine.forcedInduction.SpoolPercent;
             }
             else
             {
-                if(Source != null)
+                if (Source != null)
                     Source.volume = 0;
             }
         }
     }
 }
-

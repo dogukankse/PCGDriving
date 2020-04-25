@@ -9,13 +9,12 @@ public class MapTile
     {
     }
 
-    public MapTile(Tile tile,GameObject road)
+    public MapTile(Tile tile, GameObject road)
     {
         this.tile = tile;
         this.road = road;
     }
-    
-    
+
 
     public override string ToString()
     {

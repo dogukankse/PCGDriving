@@ -42,13 +42,16 @@ namespace ProceduralToolkit.Skeleton
                     Debug.LogError("Too many iterations");
                     break;
                 }
+
                 bool success = OffsetAndDetectEvents();
                 if (!success)
                 {
                     return skeleton;
                 }
+
                 count++;
             }
+
             return skeleton;
         }
 
@@ -76,6 +79,7 @@ namespace ProceduralToolkit.Skeleton
                 {
                     ProcessIntersectionEvent(plan, intersectionEvent);
                 }
+
                 newPlans.AddRange(plan.Split());
             }
 
@@ -119,6 +123,7 @@ namespace ProceduralToolkit.Skeleton
                         {
                             continue;
                         }
+
                         if (BisectorSegment(vertex, segmentA.position, segmentB.position, out offset))
                         {
                             smallestOffset = Mathf.Min(smallestOffset, offset);
@@ -126,6 +131,7 @@ namespace ProceduralToolkit.Skeleton
                     }
                 }
             }
+
             return smallestOffset;
         }
 
@@ -145,6 +151,7 @@ namespace ProceduralToolkit.Skeleton
                         return intersectionEvents;
                     }
                 }
+
                 vertex = vertex.next;
             } while (vertex != plan.First);
 
@@ -195,8 +202,10 @@ namespace ProceduralToolkit.Skeleton
                     ExpandEvent(intersectionEvent, searchVertex);
                     return intersectionEvent;
                 }
+
                 vertex = vertex.next;
             } while (vertex != searchVertex);
+
             return null;
         }
 
@@ -236,6 +245,7 @@ namespace ProceduralToolkit.Skeleton
                     break;
                 }
             } while (vertex != startVertex);
+
             return chain;
         }
 
@@ -262,6 +272,7 @@ namespace ProceduralToolkit.Skeleton
             {
                 SimplifyChain(plan, chain);
             }
+
             intersectionEvent.chains.RemoveAll(c => c.Count == 0);
 
             if (intersectionEvent.chains.Count >= 2)
@@ -298,6 +309,7 @@ namespace ProceduralToolkit.Skeleton
                 plan.Remove(vertex);
                 skeleton.AddVertex(vertex);
             }
+
             chain.Clear();
             if (next != first)
             {
@@ -346,13 +358,15 @@ namespace ProceduralToolkit.Skeleton
             {
                 return Intersect.PointSegment(point, segmentA, segmentB);
             }
+
             return false;
         }
 
         private static bool BisectorBisector(Plan.Vertex vertexA, Plan.Vertex vertexB, out float offset)
         {
             IntersectionRayRay2 intersection;
-            if (Intersect.RayRay(vertexA.position, vertexA.bisector, vertexB.position, vertexB.bisector, out intersection))
+            if (Intersect.RayRay(vertexA.position, vertexA.bisector, vertexB.position, vertexB.bisector,
+                out intersection))
             {
                 if (intersection.type == IntersectionType.Point)
                 {
@@ -361,20 +375,23 @@ namespace ProceduralToolkit.Skeleton
                     offset = Mathf.Min(offsetA, offsetB);
                     return true;
                 }
+
                 if (intersection.type == IntersectionType.Segment)
                 {
                     float toIntersection = Vector2.Distance(vertexA.position, vertexB.position);
-                    float offsetA = GetBisectorBisectorOffset(vertexA, toIntersection)/2;
-                    float offsetB = GetBisectorBisectorOffset(vertexB, toIntersection)/2;
+                    float offsetA = GetBisectorBisectorOffset(vertexA, toIntersection) / 2;
+                    float offsetB = GetBisectorBisectorOffset(vertexB, toIntersection) / 2;
                     offset = Mathf.Min(offsetA, offsetB);
                     return true;
                 }
 
-                Debug.LogErrorFormat("Invalid bisector intersection\ntype: {0}\npointA: {1} pointB: {2}\nbisectorA: {3} bisectorB:{4}",
+                Debug.LogErrorFormat(
+                    "Invalid bisector intersection\ntype: {0}\npointA: {1} pointB: {2}\nbisectorA: {3} bisectorB:{4}",
                     intersection.type, intersection.pointA, intersection.pointB, vertexA.bisector, vertexB.bisector);
                 offset = 0;
                 return false;
             }
+
             offset = 0;
             return false;
         }
@@ -387,7 +404,7 @@ namespace ProceduralToolkit.Skeleton
 
         private static float GetBisectorBisectorOffset(Plan.Vertex vertex, float toIntersection)
         {
-            return toIntersection*Geometry.GetAngleBisectorSin(vertex.angle);
+            return toIntersection * Geometry.GetAngleBisectorSin(vertex.angle);
         }
 
         private static bool BisectorSegment(Plan.Vertex vertex, Vector2 segmentA, Vector2 segmentB, out float offset)
@@ -400,17 +417,19 @@ namespace ProceduralToolkit.Skeleton
                     Vector2 segmentDirection = (segmentB - segmentA).normalized;
                     float toIntersection = Vector2.Distance(vertex.position, intersection.pointA);
                     float intersectionAngle = Vector2.Angle(vertex.bisector, segmentDirection);
-                    float intersectionSin = Mathf.Sin(intersectionAngle*Mathf.Deg2Rad);
+                    float intersectionSin = Mathf.Sin(intersectionAngle * Mathf.Deg2Rad);
                     float bisectorSin = Geometry.GetAngleBisectorSin(vertex.angle);
-                    offset = toIntersection/(1/intersectionSin + 1/bisectorSin);
+                    offset = toIntersection / (1 / intersectionSin + 1 / bisectorSin);
                     return true;
                 }
 
-                Debug.LogErrorFormat("Invalid bisector intersection\ntype: {0}\npointA: {1} pointB: {2}\nray: {3} segmentA:{4} segmentB:{5}",
+                Debug.LogErrorFormat(
+                    "Invalid bisector intersection\ntype: {0}\npointA: {1} pointB: {2}\nray: {3} segmentA:{4} segmentB:{5}",
                     intersection.type, intersection.pointA, intersection.pointB, vertex.bisector, segmentA, segmentB);
                 offset = 0;
                 return false;
             }
+
             offset = 0;
             return false;
         }

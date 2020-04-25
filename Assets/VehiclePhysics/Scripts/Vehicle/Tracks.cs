@@ -21,7 +21,8 @@ namespace NWH.VehiclePhysics
         /// If larger than zero virtual wheel size inside simulation will be increased at initialization time which results in better and more
         /// track-like behavior and prevents tank from getting stuck on small objects that would normally be able to wedge themselves between individual wheels.
         /// </summary>
-        [Tooltip("If larger than zero virtual wheel size inside simulation will be increased at initialization time which results in better and more " +
+        [Tooltip(
+            "If larger than zero virtual wheel size inside simulation will be increased at initialization time which results in better and more " +
             "track-like behavior and prevents tank from getting stuck on small objects that would normally be able to wedge themselves between individual wheels.")]
         [Range(1f, 2f)]
         public float wheelEnlargementCoefficient = 2f;
@@ -53,13 +54,15 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Left side drive sprocket and other rotating wheels that are not wheel controllers but need to be rotated with track.
         /// </summary>
-        [Tooltip("Left side drive sprocket and other rotating wheels that are not wheel controllers but need to be rotated with track.")]
+        [Tooltip(
+            "Left side drive sprocket and other rotating wheels that are not wheel controllers but need to be rotated with track.")]
         public List<GameObject> leftSprockets = new List<GameObject>();
 
         /// <summary>
         /// Right side drive sprocket and other rotating wheels that are not wheel controllers but need to be rotated with track.
         /// </summary>
-        [Tooltip("Right side drive sprocket and other rotating wheels that are not wheel controllers but need to be rotated with track.")]
+        [Tooltip(
+            "Right side drive sprocket and other rotating wheels that are not wheel controllers but need to be rotated with track.")]
         public List<GameObject> rightSprockets = new List<GameObject>();
 
         private VehicleController vc;
@@ -80,6 +83,7 @@ namespace NWH.VehiclePhysics
                 wheel.WheelController.trackedVehicle = true;
                 radiusSum += wheel.Radius;
             }
+
             averageRadius = radiusSum / vc.Wheels.Count;
         }
 
@@ -93,16 +97,16 @@ namespace NWH.VehiclePhysics
 
             foreach (Wheel wheel in vc.Wheels)
             {
-                if(wheel.WheelController.VehicleSide == WheelController.Side.Left)
+                if (wheel.WheelController.VehicleSide == WheelController.Side.Left)
                 {
-                    if(Mathf.Abs(wheel.RPM) > maxLeftRpm)
+                    if (Mathf.Abs(wheel.RPM) > maxLeftRpm)
                     {
                         maxLeftRpm = wheel.RPM;
                     }
                 }
-                else if(wheel.WheelController.VehicleSide == WheelController.Side.Right)
+                else if (wheel.WheelController.VehicleSide == WheelController.Side.Right)
                 {
-                    if(Mathf.Abs(wheel.RPM) > maxRightRpm)
+                    if (Mathf.Abs(wheel.RPM) > maxRightRpm)
                     {
                         maxRightRpm = wheel.RPM;
                     }
@@ -110,23 +114,26 @@ namespace NWH.VehiclePhysics
             }
 
             leftDistance = -averageRadius * maxLeftRpm * 0.10472f * textureOffsetSpeedCoefficient * Time.fixedDeltaTime;
-            rightDistance = -averageRadius * maxRightRpm * 0.10472f * textureOffsetSpeedCoefficient * Time.fixedDeltaTime;
+            rightDistance = -averageRadius * maxRightRpm * 0.10472f * textureOffsetSpeedCoefficient *
+                            Time.fixedDeltaTime;
 
             if (leftTrackRenderer != null)
             {
-                leftTrackRenderer.material.SetTextureOffset("_MainTex", leftTrackRenderer.material.mainTextureOffset + leftDistance * textureOffsetDirection);
+                leftTrackRenderer.material.SetTextureOffset("_MainTex",
+                    leftTrackRenderer.material.mainTextureOffset + leftDistance * textureOffsetDirection);
                 //leftTrackRenderer.material.SetTextureOffset("_MainTex", new Vector2(leftTrackRenderer.material.mainTextureOffset.x + leftDistance, leftTrackRenderer.material.mainTextureOffset.y));
             }
 
             if (rightTrackRenderer != null)
             {
-                rightTrackRenderer.material.SetTextureOffset("_MainTex", rightTrackRenderer.material.mainTextureOffset + rightDistance * textureOffsetDirection);
+                rightTrackRenderer.material.SetTextureOffset("_MainTex",
+                    rightTrackRenderer.material.mainTextureOffset + rightDistance * textureOffsetDirection);
                 //rightTrackRenderer.material.SetTextureOffset("_MainTex", new Vector2(rightTrackRenderer.material.mainTextureOffset.x + rightDistance, rightTrackRenderer.material.mainTextureOffset.y));
             }
 
             if (leftSprockets != null && leftSprockets.Count > 0)
             {
-                foreach(GameObject sprocket in leftSprockets)
+                foreach (GameObject sprocket in leftSprockets)
                 {
                     // 0.016667 * 360 = 6.00012
                     float rotationAngle = maxLeftRpm * 6.00012f * Time.fixedDeltaTime;
@@ -134,7 +141,7 @@ namespace NWH.VehiclePhysics
                 }
             }
 
-            if(rightSprockets != null && rightSprockets.Count > 0)
+            if (rightSprockets != null && rightSprockets.Count > 0)
             {
                 foreach (GameObject sprocket in rightSprockets)
                 {
@@ -143,7 +150,5 @@ namespace NWH.VehiclePhysics
                 }
             }
         }
-
     }
 }
-

@@ -63,7 +63,10 @@ namespace ProceduralToolkit.LibTessDotNet
         private int _freeList;
         private bool _initialized;
 
-        public bool Empty { get { return _size == 0; } }
+        public bool Empty
+        {
+            get { return _size == 0; }
+        }
 
         public PriorityHeap(int initialSize, LessOrEqual leq)
         {
@@ -78,7 +81,7 @@ namespace ProceduralToolkit.LibTessDotNet
             _initialized = false;
 
             _nodes[1] = 1;
-            _handles[1] = new HandleElem { _key = null };
+            _handles[1] = new HandleElem {_key = null};
         }
 
         private void FloatDown(int curr)
@@ -127,6 +130,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     _handles[hCurr]._node = curr;
                     break;
                 }
+
                 _nodes[curr] = hParent;
                 _handles[hParent]._node = curr;
                 curr = parent;
@@ -139,6 +143,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 FloatDown(i);
             }
+
             _initialized = true;
         }
 
@@ -166,7 +171,7 @@ namespace ProceduralToolkit.LibTessDotNet
             _nodes[curr] = free;
             if (_handles[free] == null)
             {
-                _handles[free] = new HandleElem { _key = value, _node = curr };
+                _handles[free] = new HandleElem {_key = value, _node = curr};
             }
             else
             {
@@ -180,7 +185,7 @@ namespace ProceduralToolkit.LibTessDotNet
             }
 
             Debug.Assert(free != PQHandle.Invalid);
-            return new PQHandle { _handle = free };
+            return new PQHandle {_handle = free};
         }
 
         public TValue ExtractMin()

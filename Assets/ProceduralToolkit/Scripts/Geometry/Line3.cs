@@ -12,9 +12,20 @@ namespace ProceduralToolkit
         public Vector3 origin;
         public Vector3 direction;
 
-        public static Line3 xAxis { get { return new Line3(Vector3.zero, Vector3.right); } }
-        public static Line3 yAxis { get { return new Line3(Vector3.zero, Vector3.up); } }
-        public static Line3 zAxis { get { return new Line3(Vector3.zero, Vector3.forward); } }
+        public static Line3 xAxis
+        {
+            get { return new Line3(Vector3.zero, Vector3.right); }
+        }
+
+        public static Line3 yAxis
+        {
+            get { return new Line3(Vector3.zero, Vector3.up); }
+        }
+
+        public static Line3 zAxis
+        {
+            get { return new Line3(Vector3.zero, Vector3.forward); }
+        }
 
         public Line3(Ray ray)
         {
@@ -33,7 +44,7 @@ namespace ProceduralToolkit
         /// </summary>
         public Vector3 GetPoint(float distance)
         {
-            return origin + direction*distance;
+            return origin + direction * distance;
         }
 
         /// <summary>
@@ -42,7 +53,7 @@ namespace ProceduralToolkit
         public static Line3 Lerp(Line3 a, Line3 b, float t)
         {
             t = Mathf.Clamp01(t);
-            return new Line3(a.origin + (b.origin - a.origin)*t, a.direction + (b.direction - a.direction)*t);
+            return new Line3(a.origin + (b.origin - a.origin) * t, a.direction + (b.direction - a.direction) * t);
         }
 
         /// <summary>
@@ -50,7 +61,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Line3 LerpUnclamped(Line3 a, Line3 b, float t)
         {
-            return new Line3(a.origin + (b.origin - a.origin)*t, a.direction + (b.direction - a.direction)*t);
+            return new Line3(a.origin + (b.origin - a.origin) * t, a.direction + (b.direction - a.direction) * t);
         }
 
         #region Casting operators
@@ -119,7 +130,8 @@ namespace ProceduralToolkit
 
         public string ToString(string format)
         {
-            return string.Format("Line3(origin: {0}, direction: {1})", origin.ToString(format), direction.ToString(format));
+            return string.Format("Line3(origin: {0}, direction: {1})", origin.ToString(format),
+                direction.ToString(format));
         }
 
         public string ToString(string format, IFormatProvider formatProvider)

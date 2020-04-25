@@ -34,10 +34,12 @@ namespace ProceduralToolkit
             {
                 index += list.Count;
             }
+
             if (index >= list.Count)
             {
                 index %= list.Count;
             }
+
             return list[index];
         }
 
@@ -50,10 +52,12 @@ namespace ProceduralToolkit
             {
                 index += list.Count;
             }
+
             if (index >= list.Count)
             {
                 index %= list.Count;
             }
+
             list[index] = value;
         }
 
@@ -126,6 +130,7 @@ namespace ProceduralToolkit
                     {
                         queue.Enqueue(new Vector2Int(x, y));
                     }
+
                     processed[x, y] = true;
                 }
             };
@@ -138,14 +143,17 @@ namespace ProceduralToolkit
                 {
                     process(cell.x - 1, cell.y);
                 }
+
                 if (cell.x + 1 < lengthX)
                 {
                     process(cell.x + 1, cell.y);
                 }
+
                 if (cell.y > 0)
                 {
                     process(cell.x, cell.y - 1);
                 }
+
                 if (cell.y + 1 < lengthY)
                 {
                     process(cell.x, cell.y + 1);
@@ -209,6 +217,7 @@ namespace ProceduralToolkit
                     {
                         queue.Enqueue(new Vector2Int(x, y));
                     }
+
                     processed[x, y] = true;
                 }
             };
@@ -278,14 +287,17 @@ namespace ProceduralToolkit
             {
                 visit(x - 1, y);
             }
+
             if (x + 1 < array.GetLength(0))
             {
                 visit(x + 1, y);
             }
+
             if (y > 0)
             {
                 visit(x, y - 1);
             }
+
             if (y + 1 < array.GetLength(1))
             {
                 visit(x, y + 1);

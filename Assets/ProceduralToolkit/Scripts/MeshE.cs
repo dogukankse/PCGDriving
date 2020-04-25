@@ -18,11 +18,13 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var vertices = mesh.vertices;
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i] += vector;
             }
+
             mesh.vertices = vertices;
         }
 
@@ -35,13 +37,15 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var vertices = mesh.vertices;
             var normals = mesh.normals;
             for (int i = 0; i < vertices.Length; i++)
             {
-                vertices[i] = rotation*vertices[i];
-                normals[i] = rotation*normals[i];
+                vertices[i] = rotation * vertices[i];
+                normals[i] = rotation * normals[i];
             }
+
             mesh.vertices = vertices;
             mesh.normals = normals;
         }
@@ -55,11 +59,13 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var vertices = mesh.vertices;
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i] *= scale;
             }
+
             mesh.vertices = vertices;
         }
 
@@ -72,6 +78,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var vertices = mesh.vertices;
             var normals = mesh.normals;
             for (int i = 0; i < vertices.Length; i++)
@@ -79,6 +86,7 @@ namespace ProceduralToolkit
                 vertices[i] = Vector3.Scale(vertices[i], scale);
                 normals[i] = Vector3.Scale(normals[i], scale).normalized;
             }
+
             mesh.vertices = vertices;
             mesh.normals = normals;
         }
@@ -92,11 +100,13 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var colors = new Color[mesh.vertexCount];
             for (int i = 0; i < mesh.vertexCount; i++)
             {
                 colors[i] = color;
             }
+
             mesh.colors = colors;
         }
 
@@ -109,6 +119,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             mesh.FlipTriangles();
             mesh.FlipNormals();
         }
@@ -122,6 +133,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             for (int i = 0; i < mesh.subMeshCount; i++)
             {
                 var triangles = mesh.GetTriangles(i);
@@ -129,6 +141,7 @@ namespace ProceduralToolkit
                 {
                     PTUtils.Swap(ref triangles[j], ref triangles[j + 1]);
                 }
+
                 mesh.SetTriangles(triangles, i);
             }
         }
@@ -142,11 +155,13 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var normals = mesh.normals;
             for (int i = 0; i < normals.Length; i++)
             {
                 normals[i] = -normals[i];
             }
+
             mesh.normals = normals;
         }
 
@@ -159,12 +174,14 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var list = new List<Vector2>();
             mesh.GetUVs(channel, list);
             for (var i = 0; i < list.Count; i++)
             {
                 list[i] = new Vector2(1 - list[i].x, list[i].y);
             }
+
             mesh.SetUVs(channel, list);
         }
 
@@ -177,12 +194,14 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var list = new List<Vector2>();
             mesh.GetUVs(channel, list);
             for (var i = 0; i < list.Count; i++)
             {
                 list[i] = new Vector2(list[i].x, 1 - list[i].y);
             }
+
             mesh.SetUVs(channel, list);
         }
 
@@ -195,13 +214,15 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             var vertices = mesh.vertices;
             var normals = mesh.normals;
             for (var i = 0; i < vertices.Length; i++)
             {
                 normals[i] = (vertices[i] - center).normalized;
-                vertices[i] = normals[i]*radius;
+                vertices[i] = normals[i] * radius;
             }
+
             mesh.vertices = vertices;
             mesh.normals = normals;
         }

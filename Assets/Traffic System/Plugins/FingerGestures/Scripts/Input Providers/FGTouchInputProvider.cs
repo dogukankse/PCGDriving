@@ -1,36 +1,36 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class FGTouchInputProvider : FGInputProvider 
+public class FGTouchInputProvider : FGInputProvider
 {
     public int maxTouches = 5;
 
     #region Android Bug Workaround
 
     // not necessary with Unity 4.1+
-    public bool fixAndroidTouchIdBug = true;    
+    public bool fixAndroidTouchIdBug = true;
     int touchIdOffset = 0;
-    
+
     #endregion
 
     void Start()
     {
         finger2touchMap = new int[maxTouches];
     }
-    
+
     void Update()
     {
         UpdateFingerTouchMap();
     }
-    
+
     #region Touch > Finger mapping
 
     UnityEngine.Touch nullTouch = new UnityEngine.Touch();
-    int[] finger2touchMap;  // finger.index -> touch index map
+    int[] finger2touchMap; // finger.index -> touch index map
 
     void UpdateFingerTouchMap()
     {
-        for( int i = 0; i < finger2touchMap.Length; ++i )
+        for (int i = 0; i < finger2touchMap.Length; ++i)
             finger2touchMap[i] = -1;
 
         // Android: work around strange Touch.fingerId values after resuming application. 
@@ -45,32 +45,32 @@ public class FGTouchInputProvider : FGInputProvider
         }
 #endif
 
-        for( int i = 0; i < Input.touchCount; ++i )
+        for (int i = 0; i < Input.touchCount; ++i)
         {
             int fingerIndex = Input.touches[i].fingerId - touchIdOffset;
 
-            if( fingerIndex < finger2touchMap.Length )
+            if (fingerIndex < finger2touchMap.Length)
                 finger2touchMap[fingerIndex] = i;
         }
     }
 
-    bool HasValidTouch( int fingerIndex )
+    bool HasValidTouch(int fingerIndex)
     {
         return finger2touchMap[fingerIndex] != -1;
     }
 
-    UnityEngine.Touch GetTouch( int fingerIndex )
+    UnityEngine.Touch GetTouch(int fingerIndex)
     {
         int touchIndex = finger2touchMap[fingerIndex];
 
-        if( touchIndex == -1 )
+        if (touchIndex == -1)
             return nullTouch;
 
         return Input.touches[touchIndex];
     }
 
     #endregion
-    
+
     #region FGInputProvider Implementation
 
     public override int MaxSimultaneousFingers
@@ -78,16 +78,16 @@ public class FGTouchInputProvider : FGInputProvider
         get { return maxTouches; }
     }
 
-    public override void GetInputState( int fingerIndex, out bool down, out Vector2 position )
+    public override void GetInputState(int fingerIndex, out bool down, out Vector2 position)
     {
         down = false;
         position = Vector2.zero;
 
-        if( HasValidTouch( fingerIndex ) )
+        if (HasValidTouch(fingerIndex))
         {
-            UnityEngine.Touch touch = GetTouch( fingerIndex );
+            UnityEngine.Touch touch = GetTouch(fingerIndex);
 
-            if( touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled )
+            if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                 down = false;
             else
             {

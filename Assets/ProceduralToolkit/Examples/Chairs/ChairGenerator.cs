@@ -59,8 +59,8 @@ namespace ProceduralToolkit.Examples
             Assert.IsTrue(config.seatHeight > 0);
             Assert.IsTrue(config.backHeight > 0);
 
-            Vector3 right = Vector3.right*(config.seatWidth - config.legWidth)/2;
-            Vector3 forward = Vector3.forward*(config.seatDepth - config.legWidth)/2;
+            Vector3 right = Vector3.right * (config.seatWidth - config.legWidth) / 2;
+            Vector3 forward = Vector3.forward * (config.seatDepth - config.legWidth) / 2;
 
             var chair = new MeshDraft {name = "Chair"};
 
@@ -85,11 +85,11 @@ namespace ProceduralToolkit.Examples
             }
 
             // Generate seat
-            chair.Add(Seat0(Vector3.up*config.legHeight, config.seatWidth, config.seatDepth, config.seatHeight));
+            chair.Add(Seat0(Vector3.up * config.legHeight, config.seatWidth, config.seatDepth, config.seatHeight));
 
             // Generate chair back
-            Vector3 backCenter = Vector3.up*(config.legHeight + config.seatHeight) +
-                                 Vector3.forward*(config.seatDepth - config.legWidth)/2;
+            Vector3 backCenter = Vector3.up * (config.legHeight + config.seatHeight) +
+                                 Vector3.forward * (config.seatDepth - config.legWidth) / 2;
             var backConstructor = backConstructors.GetRandom();
             chair.Add(backConstructor(backCenter, config.seatWidth, config.legWidth, config.backHeight));
 
@@ -109,14 +109,14 @@ namespace ProceduralToolkit.Examples
         private static MeshDraft Leg0(Vector3 center, float width, float height)
         {
             var draft = MeshDraft.Hexahedron(width, width, height, false);
-            draft.Move(center + Vector3.up*height/2);
+            draft.Move(center + Vector3.up * height / 2);
             return draft;
         }
 
         private static MeshDraft Seat0(Vector3 center, float width, float length, float height)
         {
             var draft = MeshDraft.Hexahedron(width, length, height, false);
-            draft.Move(center + Vector3.up*height/2);
+            draft.Move(center + Vector3.up * height / 2);
             return draft;
         }
 
@@ -131,8 +131,9 @@ namespace ProceduralToolkit.Examples
             {
                 quaternion = Quaternion.LookRotation(direction);
             }
-            draft.Rotate(Quaternion.FromToRotation(Vector3.up, up)*Quaternion.Euler(0, rotation, 0)*quaternion);
-            draft.Move((from + to)/2);
+
+            draft.Rotate(Quaternion.FromToRotation(Vector3.up, up) * Quaternion.Euler(0, rotation, 0) * quaternion);
+            draft.Move((from + to) / 2);
             return draft;
         }
     }

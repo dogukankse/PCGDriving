@@ -23,15 +23,19 @@ namespace NWH.VehiclePhysics
 
         void Update()
         {
-            if(vehicleChanger.ActiveVehicleController != null && vehicleChanger.ActiveVehicleController.trailer.trailerInRange && !vehicleChanger.ActiveVehicleController.trailer.attached)
+            if (vehicleChanger.ActiveVehicleController != null &&
+                vehicleChanger.ActiveVehicleController.trailer.trailerInRange &&
+                !vehicleChanger.ActiveVehicleController.trailer.attached)
             {
                 promptText.text = "Press T to attach trailer.";
             }
-            else if(characterVehicleChanger != null && characterVehicleChanger.nearVehicle)
+            else if (characterVehicleChanger != null && characterVehicleChanger.nearVehicle)
             {
                 promptText.text = "Press V to enter vehicle.";
             }
-            else if(vehicleChanger.ActiveVehicleController != null && vehicleChanger.ActiveVehicleController.flipOver.manual && vehicleChanger.ActiveVehicleController.flipOver.flippedOver)
+            else if (vehicleChanger.ActiveVehicleController != null &&
+                     vehicleChanger.ActiveVehicleController.flipOver.manual &&
+                     vehicleChanger.ActiveVehicleController.flipOver.flippedOver)
             {
                 promptText.text = "Press P to recover the vehicle.";
             }
@@ -68,4 +72,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

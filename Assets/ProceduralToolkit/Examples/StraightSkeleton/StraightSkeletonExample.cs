@@ -31,7 +31,7 @@ namespace ProceduralToolkit.Skeleton
             GL.Color(Color.white);
             for (var polygonIndex = 0; polygonIndex < skeleton.polygons.Count; polygonIndex++)
             {
-                Vector3 zOffset = Vector3.back*(skeletonPolygonOffset*polygonIndex);
+                Vector3 zOffset = Vector3.back * (skeletonPolygonOffset * polygonIndex);
 
                 var skeletonPolygon = skeleton.polygons[polygonIndex];
                 for (int vertexIndex = 0; vertexIndex < skeletonPolygon.Count; vertexIndex++)

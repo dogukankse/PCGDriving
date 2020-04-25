@@ -3,16 +3,16 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 
-[CustomEditor( typeof( PointCloudGestureTemplate ) )]
+[CustomEditor(typeof(PointCloudGestureTemplate))]
 public class PointCloudGestureTemplateInspector : Editor
 {
     public const float GestureEditorSize = 400;
 
-    [MenuItem( "Assets/Create/PointCloud Gesture Template" )]
+    [MenuItem("Assets/Create/PointCloud Gesture Template")]
     public static void CreatePointCloudGesture()
     {
         PointCloudGestureTemplate template = FingerGesturesEditorUtils.CreateAsset<PointCloudGestureTemplate>();
-        FingerGesturesEditorUtils.SelectAssetInProjectView( template );
+        FingerGesturesEditorUtils.SelectAssetInProjectView(template);
     }
 
     public override void OnInspectorGUI()
@@ -23,8 +23,8 @@ public class PointCloudGestureTemplateInspector : Editor
 
         PointCloudGestureTemplate template = target as PointCloudGestureTemplate;
 
-        if( GUILayout.Button( "Edit", GUILayout.Height( 50 ) ) )
-            PointCloudGestureEditor.Open( template );
+        if (GUILayout.Button("Edit", GUILayout.Height(50)))
+            PointCloudGestureEditor.Open(template);
 
         /*
         if( GUILayout.Button( "Triangle" ) )
@@ -49,7 +49,7 @@ public class PointCloudGestureTemplateInspector : Editor
         }*/
     }
 
-    static GUIContent previewTitle = new GUIContent( "Gesture Preview" );
+    static GUIContent previewTitle = new GUIContent("Gesture Preview");
 
     public override bool HasPreviewGUI()
     {
@@ -66,16 +66,16 @@ public class PointCloudGestureTemplateInspector : Editor
         base.OnPreviewSettings();
 
         PointCloudGestureTemplate template = target as PointCloudGestureTemplate;
-        GUILayout.Label( template.PointCount + " points, " + template.StrokeCount + " stroke(s)" );
+        GUILayout.Label(template.PointCount + " points, " + template.StrokeCount + " stroke(s)");
     }
 
-    public override void OnPreviewGUI( Rect r, GUIStyle background )
+    public override void OnPreviewGUI(Rect r, GUIStyle background)
     {
-        base.OnPreviewGUI( r, background );
+        base.OnPreviewGUI(r, background);
 
-        float size = 0.95f * Mathf.Min( r.width, r.height );
-        Rect canvasRect = new Rect( r.center.x - 0.5f * size, r.center.y - 0.5f * size, size, size );
-        
+        float size = 0.95f * Mathf.Min(r.width, r.height);
+        Rect canvasRect = new Rect(r.center.x - 0.5f * size, r.center.y - 0.5f * size, size, size);
+
         PointCloudGestureTemplate template = target as PointCloudGestureTemplate;
 
         Vector2 center = canvasRect.center;
@@ -83,24 +83,24 @@ public class PointCloudGestureTemplateInspector : Editor
         float scale = 0.95f * size;
 
         Handles.color = Color.white;
-        for( int i = 1; i < template.PointCount; ++i )
+        for (int i = 1; i < template.PointCount; ++i)
         {
-            Vector2 p1 = template.GetPosition( i - 1 );
-            Vector2 p2 = template.GetPosition( i );
-            
+            Vector2 p1 = template.GetPosition(i - 1);
+            Vector2 p2 = template.GetPosition(i);
+
             p1.y = -p1.y;
             p2.y = -p2.y;
-            
+
             p1 = center + scale * p1;
             p2 = center + scale * p2;
 
-            if( canvasRect.width > 100 )
+            if (canvasRect.width > 100)
             {
                 float handleSize = canvasRect.width / 200.0f;
-                Handles.CircleCap( 0, p1, Quaternion.identity, handleSize );
+                Handles.CircleCap(0, p1, Quaternion.identity, handleSize);
             }
 
-            Handles.DrawLine( p1, p2 );
-        }        
+            Handles.DrawLine(p1, p2);
+        }
     }
 }

@@ -107,8 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5153421c1dba54aa777722415fbc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_objectPrefabs:
-  - {fileID: 4694431896087400348, guid: 7a406a10a8db7914bb2d25f045d0a5af, type: 3}
+  m_objectPrefabs: []
   m_nodeObjectSpawnChance: 0.1
   m_onStartDelay: 2
   m_totalToSpawn: 1

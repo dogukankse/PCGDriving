@@ -11,14 +11,15 @@ namespace NWH.WheelController3D
         /// </summary>
         void OnDrawGizmosSelected()
         {
-            if(!Application.isPlaying) transformPosition = transform.position;
+            if (!Application.isPlaying) transformPosition = transform.position;
 
             // Draw spring travel
             Gizmos.color = Color.green;
             var forwardOffset = transform.forward * 0.07f;
             var springOffset = transform.up * spring.maxLength;
             Gizmos.DrawLine(transformPosition - forwardOffset, transformPosition + forwardOffset);
-            Gizmos.DrawLine(transformPosition - springOffset - forwardOffset, transformPosition - springOffset + forwardOffset);
+            Gizmos.DrawLine(transformPosition - springOffset - forwardOffset,
+                transformPosition - springOffset + forwardOffset);
             Gizmos.DrawLine(transformPosition, transformPosition - springOffset);
 
             Vector3 interpolatedPos = Vector3.zero;
@@ -66,20 +67,20 @@ namespace NWH.WheelController3D
                     float maxWeight = 0f;
 
                     foreach (WheelHit hit in wheelHits)
-                        {
-                            weightSum += hit.weight;
-                            if (hit.weight < minWeight) minWeight = hit.weight;
-                            if (hit.weight > maxWeight) maxWeight = hit.weight;
-                        }
+                    {
+                        weightSum += hit.weight;
+                        if (hit.weight < minWeight) minWeight = hit.weight;
+                        if (hit.weight > maxWeight) maxWeight = hit.weight;
+                    }
 
                     foreach (WheelHit hit in wheelHits)
-                        {
-                            float t = (hit.weight - minWeight) / (maxWeight - minWeight);
-                            Gizmos.color = Color.Lerp(Color.black, Color.white, t);
-                            Gizmos.DrawSphere(hit.point, 0.04f);
-                            Gizmos.color = new Color(1f, 1f, 1f, 0.5f);
-                            Gizmos.DrawLine(hit.point, hit.point + wheel.up * hit.distanceFromTire);
-                        }
+                    {
+                        float t = (hit.weight - minWeight) / (maxWeight - minWeight);
+                        Gizmos.color = Color.Lerp(Color.black, Color.white, t);
+                        Gizmos.DrawSphere(hit.point, 0.04f);
+                        Gizmos.color = new Color(1f, 1f, 1f, 0.5f);
+                        Gizmos.DrawLine(hit.point, hit.point + wheel.up * hit.distanceFromTire);
+                    }
 
                     //Draw hit forward and right
                     Gizmos.color = Color.cyan;
@@ -109,7 +110,8 @@ namespace NWH.WheelController3D
         /// <summary>
         /// Draw a wheel radius on both side of the wheel, interconected with lines perpendicular to wheel axle.
         /// </summary>
-        private void DrawWheelGizmo(float radius, float width, Vector3 position, Vector3 up, Vector3 forward, Vector3 right)
+        private void DrawWheelGizmo(float radius, float width, Vector3 position, Vector3 up, Vector3 forward,
+            Vector3 right)
         {
             var halfWidth = width / 2.0f;
             float theta = 0.0f;

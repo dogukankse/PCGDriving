@@ -79,7 +79,7 @@ namespace ProceduralToolkit
         /// </remarks>
         public static float PerpDot(Vector2 a, Vector2 b)
         {
-            return a.x*b.y - a.y*b.x;
+            return a.x * b.y - a.y * b.x;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace ProceduralToolkit
         /// <param name="to">The angle extends round to this vector</param>
         public static float SignedAngle(Vector2 from, Vector2 to)
         {
-            return Mathf.Atan2(PerpDot(to, from), Vector2.Dot(to, from))*Mathf.Rad2Deg;
+            return Mathf.Atan2(PerpDot(to, from), Vector2.Dot(to, from)) * Mathf.Rad2Deg;
         }
 
         /// <summary>
@@ -104,6 +104,7 @@ namespace ProceduralToolkit
             {
                 angle += 360;
             }
+
             return angle;
         }
 
@@ -122,12 +123,12 @@ namespace ProceduralToolkit
         /// </summary>
         public static Vector2 RotateCW(this Vector2 vector, float degrees)
         {
-            float radians = degrees*Mathf.Deg2Rad;
+            float radians = degrees * Mathf.Deg2Rad;
             float sin = Mathf.Sin(radians);
             float cos = Mathf.Cos(radians);
             return new Vector2(
-                vector.x*cos + vector.y*sin,
-                vector.y*cos - vector.x*sin);
+                vector.x * cos + vector.y * sin,
+                vector.y * cos - vector.x * sin);
         }
 
         /// <summary>
@@ -135,12 +136,12 @@ namespace ProceduralToolkit
         /// </summary>
         public static Vector2 RotateCCW(this Vector2 vector, float degrees)
         {
-            float radians = degrees*Mathf.Deg2Rad;
+            float radians = degrees * Mathf.Deg2Rad;
             float sin = Mathf.Sin(radians);
             float cos = Mathf.Cos(radians);
             return new Vector2(
-                vector.x*cos - vector.y*sin,
-                vector.y*cos + vector.x*sin);
+                vector.x * cos - vector.y * sin,
+                vector.y * cos + vector.x * sin);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Vector2 RotateCW45(this Vector2 vector)
         {
-            return new Vector2((vector.x + vector.y)*PTUtils.Sqrt05, (vector.y - vector.x)*PTUtils.Sqrt05);
+            return new Vector2((vector.x + vector.y) * PTUtils.Sqrt05, (vector.y - vector.x) * PTUtils.Sqrt05);
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Vector2 RotateCCW45(this Vector2 vector)
         {
-            return new Vector2((vector.x - vector.y)*PTUtils.Sqrt05, (vector.y + vector.x)*PTUtils.Sqrt05);
+            return new Vector2((vector.x - vector.y) * PTUtils.Sqrt05, (vector.y + vector.x) * PTUtils.Sqrt05);
         }
 
         /// <summary>
@@ -177,7 +178,8 @@ namespace ProceduralToolkit
 
         public static string ToString(this Vector2 vector, string format, IFormatProvider formatProvider)
         {
-            return string.Format("({0}, {1})", vector.x.ToString(format, formatProvider), vector.y.ToString(format, formatProvider));
+            return string.Format("({0}, {1})", vector.x.ToString(format, formatProvider),
+                vector.y.ToString(format, formatProvider));
         }
 
         #endregion Vector2
@@ -205,7 +207,7 @@ namespace ProceduralToolkit
         /// </remarks>
         public static int PerpDot(Vector2Int a, Vector2Int b)
         {
-            return a.x*b.y - a.y*b.x;
+            return a.x * b.y - a.y * b.x;
         }
 
         #endregion Vector2Int
@@ -297,6 +299,7 @@ namespace ProceduralToolkit
             {
                 angle += 360;
             }
+
             return angle;
         }
 

@@ -17,15 +17,13 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Distance at which camera will follow.
         /// </summary>
-        [Tooltip("Distance at which camera will follow.")]
-        [Range(0, 30f)]
+        [Tooltip("Distance at which camera will follow.")] [Range(0, 30f)]
         public float distance = 6f;
 
         /// <summary>
         /// Height in relation to the target at which the camera will follow.
         /// </summary>
-        [Tooltip("Height in relation to the target at which the camera will follow.")]
-        [Range(0, 10f)]
+        [Tooltip("Height in relation to the target at which the camera will follow.")] [Range(0, 10f)]
         public float height = 2.5f;
 
         /// <summary>
@@ -38,21 +36,18 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Offset in the forward direction from the target. Use this if you do not want to use camera baits.
         /// </summary>
-        [Range(-10f, 10f)]
-        public float targetForwardOffset = 0;
+        [Range(-10f, 10f)] public float targetForwardOffset = 0;
 
         /// <summary>
         /// Positional and rotational smoothing of the camera.
         /// </summary>
-        [Tooltip("Positional and rotational smoothing of the camera.")]
-        [Range(0, 1f)]
+        [Tooltip("Positional and rotational smoothing of the camera.")] [Range(0, 1f)]
         public float smoothing = 0.2f;
 
         /// <summary>
         /// Allows camera to match target's angle to some extent.
         /// </summary>
-        [Tooltip("Allows camera to match target's angle to some extent.")]
-        [Range(0, 1f)]
+        [Tooltip("Allows camera to match target's angle to some extent.")] [Range(0, 1f)]
         public float angleFollowStrength = 0;
 
         private float angle;
@@ -67,12 +62,12 @@ namespace NWH.VehiclePhysics
 
         void FixedUpdate()
         {
-
             Vector3 prevTargetForward = targetForward;
 
-            if(!firstFrame)
+            if (!firstFrame)
             {
-                targetForward = Vector3.SmoothDamp(prevTargetForward, target.forward, ref targetForwardVelocity, smoothing);
+                targetForward = Vector3.SmoothDamp(prevTargetForward, target.forward, ref targetForwardVelocity,
+                    smoothing);
             }
             else
             {

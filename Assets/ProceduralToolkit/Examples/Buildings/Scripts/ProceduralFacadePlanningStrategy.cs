@@ -15,6 +15,7 @@ namespace ProceduralToolkit.Examples.Buildings
 
         private Dictionary<PanelType, List<Func<ILayoutElement>>> constructors =
             new Dictionary<PanelType, List<Func<ILayoutElement>>>();
+
         private Dictionary<PanelType, Func<ILayoutElement>> commonConstructors =
             new Dictionary<PanelType, Func<ILayoutElement>>();
 
@@ -41,13 +42,15 @@ namespace ProceduralToolkit.Examples.Buildings
 
                 if (i == 0)
                 {
-                    layouts.Add(PlanEntranceFacade(width, config.floors, config.entranceInterval, config.hasAttic, leftIsConvex, rightIsConvex));
+                    layouts.Add(PlanEntranceFacade(width, config.floors, config.entranceInterval, config.hasAttic,
+                        leftIsConvex, rightIsConvex));
                 }
                 else
                 {
                     layouts.Add(PlanNormalFacade(width, config.floors, config.hasAttic, leftIsConvex, rightIsConvex));
                 }
             }
+
             return layouts;
         }
 
@@ -64,7 +67,8 @@ namespace ProceduralToolkit.Examples.Buildings
             constructors[PanelType.Balcony] = new List<Func<ILayoutElement>>
             {
                 () => new ProceduralBalcony(palette.wallColor, palette.frameColor, palette.glassColor),
-                () => new ProceduralBalconyGlazed(palette.wallColor, palette.frameColor, palette.glassColor, palette.roofColor)
+                () => new ProceduralBalconyGlazed(palette.wallColor, palette.frameColor, palette.glassColor,
+                    palette.roofColor)
             };
             constructors[PanelType.Entrance] = new List<Func<ILayoutElement>>
             {
@@ -92,7 +96,8 @@ namespace ProceduralToolkit.Examples.Buildings
             };
         }
 
-        private ILayout PlanNormalFacade(float facadeWidth, int floors, bool hasAttic, bool leftIsConvex, bool rightIsConvex)
+        private ILayout PlanNormalFacade(float facadeWidth, int floors, bool hasAttic, bool leftIsConvex,
+            bool rightIsConvex)
         {
             float remainder;
             List<PanelSize> panelSizes = DivideFacade(facadeWidth, leftIsConvex, rightIsConvex, out remainder);
@@ -103,15 +108,17 @@ namespace ProceduralToolkit.Examples.Buildings
             {
                 return new HorizontalLayout
                 {
-                    CreateBufferWallVertical(remainder/2, floors, hasAttic),
+                    CreateBufferWallVertical(remainder / 2, floors, hasAttic),
                     vertical,
-                    CreateBufferWallVertical(remainder/2, floors, hasAttic)
+                    CreateBufferWallVertical(remainder / 2, floors, hasAttic)
                 };
             }
+
             return vertical;
         }
 
-        private ILayout PlanEntranceFacade(float facadeWidth, int floors, float entranceInterval, bool hasAttic, bool leftIsConvex,
+        private ILayout PlanEntranceFacade(float facadeWidth, int floors, float entranceInterval, bool hasAttic,
+            bool leftIsConvex,
             bool rightIsConvex)
         {
             float remainder;
@@ -127,32 +134,36 @@ namespace ProceduralToolkit.Examples.Buildings
             bool hasRemainder = remainder > Geometry.Epsilon;
             if (hasRemainder)
             {
-                horizontal.Add(CreateBufferWallVertical(remainder/2, floors, hasAttic));
+                horizontal.Add(CreateBufferWallVertical(remainder / 2, floors, hasAttic));
             }
 
-            int entranceCount = Mathf.Max(Mathf.FloorToInt(facadeWidth/entranceInterval) - 1, 1);
-            int entranceIndexInterval = (panelSizes.Count - entranceCount)/(entranceCount + 1);
+            int entranceCount = Mathf.Max(Mathf.FloorToInt(facadeWidth / entranceInterval) - 1, 1);
+            int entranceIndexInterval = (panelSizes.Count - entranceCount) / (entranceCount + 1);
 
             int lastEntranceIndex = -1;
             for (int i = 0; i < entranceCount; i++)
             {
-                int entranceIndex = (i + 1)*entranceIndexInterval + i;
+                int entranceIndex = (i + 1) * entranceIndexInterval + i;
 
-                horizontal.Add(CreateNormalFacadeVertical(panelSizes, lastEntranceIndex + 1, entranceIndex, floors, hasAttic, hasBalconies));
+                horizontal.Add(CreateNormalFacadeVertical(panelSizes, lastEntranceIndex + 1, entranceIndex, floors,
+                    hasAttic, hasBalconies));
 
                 horizontal.Add(CreateEntranceVertical(sizeValues[panelSizes[entranceIndex]], floors, hasAttic));
 
                 if (i == entranceCount - 1)
                 {
-                    horizontal.Add(CreateNormalFacadeVertical(panelSizes, entranceIndex + 1, panelSizes.Count, floors, hasAttic, hasBalconies));
+                    horizontal.Add(CreateNormalFacadeVertical(panelSizes, entranceIndex + 1, panelSizes.Count, floors,
+                        hasAttic, hasBalconies));
                 }
 
                 lastEntranceIndex = entranceIndex;
             }
+
             if (hasRemainder)
             {
-                horizontal.Add(CreateBufferWallVertical(remainder/2, floors, hasAttic));
+                horizontal.Add(CreateBufferWallVertical(remainder / 2, floors, hasAttic));
             }
+
             return horizontal;
         }
 
@@ -167,10 +178,12 @@ namespace ProceduralToolkit.Examples.Buildings
             {
                 vertical.Add(Construct(constructors[PanelType.Attic], width, atticHeight));
             }
+
             return vertical;
         }
 
-        private VerticalLayout CreateNormalFacadeVertical(List<PanelSize> panelSizes, int from, int to, int floors, bool hasAttic, bool hasBalconies)
+        private VerticalLayout CreateNormalFacadeVertical(List<PanelSize> panelSizes, int from, int to, int floors,
+            bool hasAttic, bool hasBalconies)
         {
             var vertical = new VerticalLayout();
             vertical.Add(CreateHorizontal(panelSizes, from, to, socleHeight, constructors[PanelType.Socle]));
@@ -185,10 +198,12 @@ namespace ProceduralToolkit.Examples.Buildings
                     vertical.Add(CreateHorizontal(panelSizes, from, to, floorHeight, constructors[PanelType.Balcony]));
                 }
             }
+
             if (hasAttic)
             {
                 vertical.Add(CreateHorizontal(panelSizes, from, to, atticHeight, constructors[PanelType.Attic]));
             }
+
             return vertical;
         }
 
@@ -200,22 +215,26 @@ namespace ProceduralToolkit.Examples.Buildings
             {
                 vertical.Add(Construct(commonConstructors[PanelType.EntranceWindow], width, floorHeight));
             }
+
             vertical.Add(Construct(PanelType.EntranceWallLast, width, socleHeight));
 
             if (hasAttic)
             {
                 vertical.Add(Construct(PanelType.Attic, width, atticHeight));
             }
+
             return vertical;
         }
 
-        private List<PanelSize> DivideFacade(float facadeWidth, bool leftIsConvex, bool rightIsConvex, out float remainder)
+        private List<PanelSize> DivideFacade(float facadeWidth, bool leftIsConvex, bool rightIsConvex,
+            out float remainder)
         {
             float availableWidth = facadeWidth;
             if (!leftIsConvex)
             {
                 availableWidth -= bufferWidth;
             }
+
             if (!rightIsConvex)
             {
                 availableWidth -= bufferWidth;
@@ -232,11 +251,13 @@ namespace ProceduralToolkit.Examples.Buildings
                     remainder -= sizeValues[pair.Key];
                 }
             }
+
             sizes.Shuffle();
             return sizes;
         }
 
-        private HorizontalLayout CreateHorizontal(List<PanelSize> panelSizes, int from, int to, float height, List<Func<ILayoutElement>> constructors)
+        private HorizontalLayout CreateHorizontal(List<PanelSize> panelSizes, int from, int to, float height,
+            List<Func<ILayoutElement>> constructors)
         {
             var horizontal = new HorizontalLayout();
             for (int i = from; i < to; i++)
@@ -244,6 +265,7 @@ namespace ProceduralToolkit.Examples.Buildings
                 float width = sizeValues[panelSizes[i]];
                 horizontal.Add(Construct(constructors, width, height));
             }
+
             return horizontal;
         }
 
@@ -254,6 +276,7 @@ namespace ProceduralToolkit.Examples.Buildings
             {
                 verticalLayout.Add(Construct(constructor, width, height));
             }
+
             return verticalLayout;
         }
 

@@ -15,6 +15,7 @@ namespace NWH.VehiclePhysics
     {
         [Tooltip("Distance at which vehicle will be deactivated. Set to 0 to disable.")]
         public float distance = 10f;
+
         public Transform player;
 
         private VehicleController vc;
@@ -48,6 +49,7 @@ namespace NWH.VehiclePhysics
                 {
                     wc.enabled = false;
                 }
+
                 rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
                 rb.isKinematic = true;
             }
@@ -59,6 +61,7 @@ namespace NWH.VehiclePhysics
                 {
                     wc.enabled = true;
                 }
+
                 if (rb.isKinematic)
                 {
                     rb.isKinematic = false;

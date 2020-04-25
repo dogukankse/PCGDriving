@@ -42,6 +42,7 @@ namespace ProceduralToolkit.Examples
                     edges.Add(new Edge(origin, new Vertex(position, Directions.Right, origin.depth + 1)));
                 }
             }
+
             if (!origin.connections.HasFlag(Directions.Right))
             {
                 var position = origin.position + Vector2Int.right;
@@ -50,6 +51,7 @@ namespace ProceduralToolkit.Examples
                     edges.Add(new Edge(origin, new Vertex(position, Directions.Left, origin.depth + 1)));
                 }
             }
+
             if (!origin.connections.HasFlag(Directions.Down))
             {
                 var position = origin.position + Vector2Int.down;
@@ -58,6 +60,7 @@ namespace ProceduralToolkit.Examples
                     edges.Add(new Edge(origin, new Vertex(position, Directions.Up, origin.depth + 1)));
                 }
             }
+
             if (!origin.connections.HasFlag(Directions.Up))
             {
                 var position = origin.position + Vector2Int.up;
@@ -66,6 +69,7 @@ namespace ProceduralToolkit.Examples
                     edges.Add(new Edge(origin, new Vertex(position, Directions.Down, origin.depth + 1)));
                 }
             }
+
             return edges;
         }
 

@@ -12,9 +12,9 @@ public class TBHoverChangeMaterial : MonoBehaviour
         normalMaterial = GetComponent<Renderer>().sharedMaterial;
     }
 
-    void OnFingerHover( FingerHoverEvent e )
+    void OnFingerHover(FingerHoverEvent e)
     {
-        if( e.Phase == FingerHoverPhase.Enter )
+        if (e.Phase == FingerHoverPhase.Enter)
             GetComponent<Renderer>().sharedMaterial = hoverMaterial; // show hover-state material
         else
             GetComponent<Renderer>().sharedMaterial = normalMaterial; // restore original material

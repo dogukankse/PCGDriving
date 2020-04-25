@@ -41,6 +41,7 @@ namespace ProceduralToolkit
                     .AddTriangle(vertex3, vertex0, vertex2, true)
                     .AddTriangle(vertex1, vertex0, vertex3, true);
             }
+
             return draft;
         }
 
@@ -59,7 +60,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft Hexahedron(float width, float length, float height, bool generateUV = true)
         {
-            return Hexahedron(Vector3.right*width, Vector3.forward*length, Vector3.up*height, generateUV);
+            return Hexahedron(Vector3.right * width, Vector3.forward * length, Vector3.up * height, generateUV);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft Hexahedron(Vector3 width, Vector3 length, Vector3 height, bool generateUV = true)
         {
-            Vector3 v000 = -width/2 - length/2 - height/2;
+            Vector3 v000 = -width / 2 - length / 2 - height / 2;
             Vector3 v001 = v000 + height;
             Vector3 v010 = v000 + width;
             Vector3 v011 = v000 + width + height;
@@ -99,6 +100,7 @@ namespace ProceduralToolkit
                     .AddQuad(v000, v001, v011, v010, Vector3.back)
                     .AddQuad(v110, v111, v101, v100, Vector3.forward);
             }
+
             return draft;
         }
 
@@ -107,7 +109,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft Octahedron(float radius, bool generateUV = true)
         {
-            var draft = BiPyramid(radius, 4, radius*2, generateUV);
+            var draft = BiPyramid(radius, 4, radius * 2, generateUV);
             draft.name = "Octahedron";
             return draft;
         }
@@ -122,7 +124,7 @@ namespace ProceduralToolkit
             const float segmentAngle = 72;
 
             float lowerAngle = 0;
-            float upperAngle = segmentAngle/2;
+            float upperAngle = segmentAngle / 2;
 
             var lowerCap = new Vector3[5];
             var lowerRing = new Vector3[5];
@@ -156,7 +158,7 @@ namespace ProceduralToolkit
             const float segmentAngle = 72;
 
             float lowerAngle = 0;
-            float upperAngle = segmentAngle/2;
+            float upperAngle = segmentAngle / 2;
 
             var lowerRing = new Vector3[5];
             var upperRing = new Vector3[5];
@@ -185,45 +187,51 @@ namespace ProceduralToolkit
             var draft = new MeshDraft {name = "Quad"};
             if (generateUV)
             {
-                draft.AddQuad(origin, width, height, true, new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0));
+                draft.AddQuad(origin, width, height, true, new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1),
+                    new Vector2(1, 0));
             }
             else
             {
                 draft.AddQuad(origin, width, height, true);
             }
+
             return draft;
         }
 
         /// <summary>
         /// Constructs a quad draft
         /// </summary>
-        public static MeshDraft Quad(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, bool generateUV = true)
+        public static MeshDraft Quad(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3,
+            bool generateUV = true)
         {
             var draft = new MeshDraft {name = "Quad"};
             if (generateUV)
             {
-                draft.AddQuad(vertex0, vertex1, vertex2, vertex3, true, new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0));
+                draft.AddQuad(vertex0, vertex1, vertex2, vertex3, true, new Vector2(0, 0), new Vector2(0, 1),
+                    new Vector2(1, 1), new Vector2(1, 0));
             }
             else
             {
                 draft.AddQuad(vertex0, vertex1, vertex2, vertex3, true);
             }
+
             return draft;
         }
 
         /// <summary>
         /// Constructs a plane draft
         /// </summary>
-        public static MeshDraft Plane(float xSize = 1, float zSize = 1, int xSegments = 1, int zSegments = 1, bool generateUV = true)
+        public static MeshDraft Plane(float xSize = 1, float zSize = 1, int xSegments = 1, int zSegments = 1,
+            bool generateUV = true)
         {
-            float xStep = xSize/xSegments;
-            float zStep = zSize/zSegments;
-            var vertexCount = (xSegments + 1)*(zSegments + 1);
+            float xStep = xSize / xSegments;
+            float zStep = zSize / zSegments;
+            var vertexCount = (xSegments + 1) * (zSegments + 1);
             var draft = new MeshDraft
             {
                 name = "Plane",
                 vertices = new List<Vector3>(vertexCount),
-                triangles = new List<int>(xSegments*zSegments*6),
+                triangles = new List<int>(xSegments * zSegments * 6),
                 normals = new List<Vector3>(vertexCount)
             };
 
@@ -231,11 +239,11 @@ namespace ProceduralToolkit
             {
                 for (int x = 0; x <= xSegments; x++)
                 {
-                    draft.vertices.Add(new Vector3(x*xStep, 0f, z*zStep));
+                    draft.vertices.Add(new Vector3(x * xStep, 0f, z * zStep));
                     draft.normals.Add(Vector3.up);
                     if (generateUV)
                     {
-                        draft.uv.Add(new Vector2((float) x/xSegments, (float) z/zSegments));
+                        draft.uv.Add(new Vector2((float) x / xSegments, (float) z / zSegments));
                     }
                 }
             }
@@ -253,8 +261,10 @@ namespace ProceduralToolkit
                     draft.triangles.Add(i + xSegments + 2);
                     i++;
                 }
+
                 i++;
             }
+
             return draft;
         }
 
@@ -263,7 +273,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft Pyramid(float radius, int segments, float height, bool generateUV = true)
         {
-            float segmentAngle = 360f/segments;
+            float segmentAngle = 360f / segments;
             float currentAngle = 0;
 
             var ring = new Vector3[segments];
@@ -273,7 +283,7 @@ namespace ProceduralToolkit
                 currentAngle += segmentAngle;
             }
 
-            var draft = new MeshDraft().AddBaselessPyramid(Vector3.up*height, ring, generateUV);
+            var draft = new MeshDraft().AddBaselessPyramid(Vector3.up * height, ring, generateUV);
             if (generateUV)
             {
                 var fanUV = new Vector2[segments];
@@ -285,12 +295,14 @@ namespace ProceduralToolkit
                     fanUV[i] = uv;
                     currentAngle += segmentAngle;
                 }
+
                 draft.AddTriangleFan(ring, Vector3.down, fanUV, true);
             }
             else
             {
                 draft.AddTriangleFan(ring, Vector3.down, true);
             }
+
             draft.name = "Pyramid";
             return draft;
         }
@@ -300,7 +312,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft BiPyramid(float radius, int segments, float height, bool generateUV = true)
         {
-            float segmentAngle = 360f/segments;
+            float segmentAngle = 360f / segments;
             float currentAngle = 0;
 
             var ring = new Vector3[segments];
@@ -311,8 +323,8 @@ namespace ProceduralToolkit
             }
 
             var draft = new MeshDraft {name = "Bipyramid"}
-                .AddBaselessPyramid(Vector3.up*height/2, ring, generateUV)
-                .AddBaselessPyramid(Vector3.down*height/2, ring, generateUV, true);
+                .AddBaselessPyramid(Vector3.up * height / 2, ring, generateUV)
+                .AddBaselessPyramid(Vector3.down * height / 2, ring, generateUV, true);
             return draft;
         }
 
@@ -321,9 +333,9 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft Prism(float radius, int segments, float height, bool generateUV = true)
         {
-            float segmentAngle = 360f/segments;
+            float segmentAngle = 360f / segments;
             float currentAngle = 0;
-            Vector3 halfHeightUp = Vector3.up*height/2;
+            Vector3 halfHeightUp = Vector3.up * height / 2;
 
             var lowerRing = new List<Vector3>(segments);
             var lowerDiskUV = new List<Vector2>();
@@ -342,6 +354,7 @@ namespace ProceduralToolkit
                     uv.x = 1 - uv.x;
                     lowerDiskUV.Add(uv);
                 }
+
                 currentAngle += segmentAngle;
             }
 
@@ -358,6 +371,7 @@ namespace ProceduralToolkit
                 draft.AddTriangleFan(upperRing, Vector3.up)
                     .AddTriangleFan(lowerRing, Vector3.down, true);
             }
+
             return draft;
         }
 
@@ -366,9 +380,9 @@ namespace ProceduralToolkit
         /// </summary>
         public static MeshDraft Cylinder(float radius, int segments, float height, bool generateUV = true)
         {
-            float segmentAngle = 360f/segments;
+            float segmentAngle = 360f / segments;
             float currentAngle = 0;
-            Vector3 halfHeightUp = Vector3.up*height/2;
+            Vector3 halfHeightUp = Vector3.up * height / 2;
 
             var draft = new MeshDraft {name = "Cylinder"};
             var lowerRing = new List<Vector3>(segments);
@@ -394,6 +408,7 @@ namespace ProceduralToolkit
                     uv.x = 1 - uv.x;
                     lowerDiskUV.Add(uv);
                 }
+
                 currentAngle += segmentAngle;
             }
 
@@ -413,6 +428,7 @@ namespace ProceduralToolkit
                 draft.AddTriangleFan(lowerRing, Vector3.down, true);
                 draft.AddTriangleFan(upperRing, Vector3.up);
             }
+
             return draft;
         }
 
@@ -421,7 +437,7 @@ namespace ProceduralToolkit
             out Vector3 lowerVertex, out Vector3 upperVertex)
         {
             Vector3 normal = Geometry.PointOnCircle3XZ(1, currentAngle);
-            Vector3 point = normal*radius;
+            Vector3 point = normal * radius;
             lowerVertex = point - halfHeightUp;
             upperVertex = point + halfHeightUp;
 
@@ -432,7 +448,7 @@ namespace ProceduralToolkit
 
             if (generateUV)
             {
-                float u = 1 - currentAngle/360;
+                float u = 1 - currentAngle / 360;
                 uv.Add(new Vector2(u, 1));
                 uv.Add(new Vector2(u, 0));
             }
@@ -441,7 +457,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Constructs a flat sphere draft
         /// </summary>
-        public static MeshDraft FlatSphere(float radius, int horizontalSegments, int verticalSegments, bool generateUV = true)
+        public static MeshDraft FlatSphere(float radius, int horizontalSegments, int verticalSegments,
+            bool generateUV = true)
         {
             var draft = FlatSpheroid(radius, radius, horizontalSegments, verticalSegments, generateUV);
             draft.name = "Flat sphere";
@@ -451,9 +468,11 @@ namespace ProceduralToolkit
         /// <summary>
         /// Constructs a flat spheroid draft
         /// </summary>
-        public static MeshDraft FlatSpheroid(float radius, float height, int horizontalSegments, int verticalSegments, bool generateUV = true)
+        public static MeshDraft FlatSpheroid(float radius, float height, int horizontalSegments, int verticalSegments,
+            bool generateUV = true)
         {
-            var draft = FlatRevolutionSurface(Geometry.PointOnSpheroid, radius, height, horizontalSegments, verticalSegments, generateUV);
+            var draft = FlatRevolutionSurface(Geometry.PointOnSpheroid, radius, height, horizontalSegments,
+                verticalSegments, generateUV);
             draft.name = "Flat spheroid";
             return draft;
         }
@@ -461,9 +480,11 @@ namespace ProceduralToolkit
         /// <summary>
         /// Constructs a flat teardrop draft
         /// </summary>
-        public static MeshDraft FlatTeardrop(float radius, float height, int horizontalSegments, int verticalSegments, bool generateUV = true)
+        public static MeshDraft FlatTeardrop(float radius, float height, int horizontalSegments, int verticalSegments,
+            bool generateUV = true)
         {
-            var draft = FlatRevolutionSurface(Geometry.PointOnTeardrop, radius, height, horizontalSegments, verticalSegments, generateUV);
+            var draft = FlatRevolutionSurface(Geometry.PointOnTeardrop, radius, height, horizontalSegments,
+                verticalSegments, generateUV);
             draft.name = "Flat teardrop";
             return draft;
         }
@@ -479,8 +500,8 @@ namespace ProceduralToolkit
             int verticalSegments,
             bool generateUV = true)
         {
-            float horizontalSegmentAngle = 360f/horizontalSegments;
-            float verticalSegmentAngle = 180f/verticalSegments;
+            float horizontalSegmentAngle = 360f / horizontalSegments;
+            float verticalSegmentAngle = 180f / verticalSegments;
             float currentVerticalAngle = -90;
             int horizontalCount = horizontalSegments + 1;
 
@@ -498,10 +519,12 @@ namespace ProceduralToolkit
                     ringVertices.Add(point);
                     if (generateUV)
                     {
-                        ringUV.Add(new Vector2(1 - (float) x/horizontalSegments, (float) y/verticalSegments));
+                        ringUV.Add(new Vector2(1 - (float) x / horizontalSegments, (float) y / verticalSegments));
                     }
+
                     currentHorizontalAngle += horizontalSegmentAngle;
                 }
+
                 ringsVertices.Add(ringVertices);
                 ringsUV.Add(ringUV);
                 currentVerticalAngle += verticalSegmentAngle;
@@ -527,13 +550,15 @@ namespace ProceduralToolkit
                     draft.AddQuad(v00, v01, v11, v10, true, uv00, uv01, uv11, uv10);
                 }
             }
+
             return draft;
         }
 
         /// <summary>
         /// Constructs a sphere draft
         /// </summary>
-        public static MeshDraft Sphere(float radius, int horizontalSegments, int verticalSegments, bool generateUV = true)
+        public static MeshDraft Sphere(float radius, int horizontalSegments, int verticalSegments,
+            bool generateUV = true)
         {
             var draft = Spheroid(radius, radius, horizontalSegments, verticalSegments, generateUV);
             draft.name = "Sphere";
@@ -543,9 +568,11 @@ namespace ProceduralToolkit
         /// <summary>
         /// Constructs a spheroid draft
         /// </summary>
-        public static MeshDraft Spheroid(float radius, float height, int horizontalSegments, int verticalSegments, bool generateUV = true)
+        public static MeshDraft Spheroid(float radius, float height, int horizontalSegments, int verticalSegments,
+            bool generateUV = true)
         {
-            var draft = RevolutionSurface(Geometry.PointOnSpheroid, radius, height, horizontalSegments, verticalSegments, generateUV);
+            var draft = RevolutionSurface(Geometry.PointOnSpheroid, radius, height, horizontalSegments,
+                verticalSegments, generateUV);
             draft.name = "Spheroid";
             return draft;
         }
@@ -553,9 +580,11 @@ namespace ProceduralToolkit
         /// <summary>
         /// Constructs a teardrop draft
         /// </summary>
-        public static MeshDraft Teardrop(float radius, float height, int horizontalSegments, int verticalSegments, bool generateUV = true)
+        public static MeshDraft Teardrop(float radius, float height, int horizontalSegments, int verticalSegments,
+            bool generateUV = true)
         {
-            var draft = RevolutionSurface(Geometry.PointOnTeardrop, radius, height, horizontalSegments, verticalSegments, generateUV);
+            var draft = RevolutionSurface(Geometry.PointOnTeardrop, radius, height, horizontalSegments,
+                verticalSegments, generateUV);
             draft.name = "Teardrop";
             return draft;
         }
@@ -573,8 +602,8 @@ namespace ProceduralToolkit
         {
             var draft = new MeshDraft {name = "Revolution surface"};
 
-            float horizontalSegmentAngle = 360f/horizontalSegments;
-            float verticalSegmentAngle = 180f/verticalSegments;
+            float horizontalSegmentAngle = 360f / horizontalSegments;
+            float verticalSegmentAngle = 180f / verticalSegments;
             float currentVerticalAngle = -90;
 
             for (int y = 0; y <= verticalSegments; y++)
@@ -587,10 +616,12 @@ namespace ProceduralToolkit
                     draft.normals.Add(point.normalized);
                     if (generateUV)
                     {
-                        draft.uv.Add(new Vector2((float) x/horizontalSegments, (float) y/verticalSegments));
+                        draft.uv.Add(new Vector2((float) x / horizontalSegments, (float) y / verticalSegments));
                     }
+
                     currentHorizontalAngle -= horizontalSegmentAngle;
                 }
+
                 currentVerticalAngle += verticalSegmentAngle;
             }
 
@@ -600,10 +631,10 @@ namespace ProceduralToolkit
             {
                 for (int i = 0; i < horizontalCount - 1; i++)
                 {
-                    int i0 = ring*horizontalCount + i;
-                    int i1 = (ring + 1)*horizontalCount + i;
-                    int i2 = ring*horizontalCount + i + 1;
-                    int i3 = (ring + 1)*horizontalCount + i + 1;
+                    int i0 = ring * horizontalCount + i;
+                    int i1 = (ring + 1) * horizontalCount + i;
+                    int i2 = ring * horizontalCount + i + 1;
+                    int i3 = (ring + 1) * horizontalCount + i + 1;
 
                     draft.triangles.Add(i0);
                     draft.triangles.Add(i1);
@@ -614,15 +645,17 @@ namespace ProceduralToolkit
                     draft.triangles.Add(i3);
                 }
             }
+
             return draft;
         }
 
         /// <summary>
         /// Constructs a partial box with specified faces
         /// </summary>
-        public static MeshDraft PartialBox(Vector3 width, Vector3 depth, Vector3 height, Directions parts, bool generateUV = true)
+        public static MeshDraft PartialBox(Vector3 width, Vector3 depth, Vector3 height, Directions parts,
+            bool generateUV = true)
         {
-            Vector3 v000 = -width/2 - depth/2 - height/2;
+            Vector3 v000 = -width / 2 - depth / 2 - height / 2;
             Vector3 v001 = v000 + height;
             Vector3 v010 = v000 + width;
             Vector3 v011 = v000 + width + height;
@@ -656,6 +689,7 @@ namespace ProceduralToolkit
                 if (parts.HasFlag(Directions.Back)) draft.AddQuad(v000, v001, v011, v010, true);
                 if (parts.HasFlag(Directions.Forward)) draft.AddQuad(v110, v111, v101, v100, true);
             }
+
             return draft;
         }
     }

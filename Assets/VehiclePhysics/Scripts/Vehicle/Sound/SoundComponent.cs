@@ -13,22 +13,21 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Base volume of the sound component.
         /// </summary>
-        [Tooltip("Base volume of the sound component.")]
-        [Range(0f, 1f)]
+        [Tooltip("Base volume of the sound component.")] [Range(0f, 1f)]
         public float volume = 0.1f;
 
         /// <summary>
         /// Base pitch of the sound component.
         /// </summary>
-        [Tooltip("Base pitch of the sound component.")]
-        [Range(0f, 2f)]
+        [Tooltip("Base pitch of the sound component.")] [Range(0f, 2f)]
         public float pitch = 1f;
 
         /// <summary>
         /// List of audio clips this component can use. Some components can use multiple clips in which case they will be chosen at random, and some components can use only one 
         /// in which case only the first clip will be selected. Check manual for more details.
         /// </summary>
-        [Tooltip("List of audio clips this component can use. Some components can use multiple clips in which case they will be chosen at random, and some components can use only one " +
+        [Tooltip(
+            "List of audio clips this component can use. Some components can use multiple clips in which case they will be chosen at random, and some components can use only one " +
             "in which case only the first clip will be selected. Check manual for more details.")]
         public List<AudioClip> clips = new List<AudioClip>();
 
@@ -41,7 +40,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void RegisterSources()
         {
-            foreach(AudioSource source in sources)
+            foreach (AudioSource source in sources)
             {
                 source.outputAudioMixerGroup = audioMixerGroup;
             }
@@ -54,18 +53,20 @@ namespace NWH.VehiclePhysics
         {
             get
             {
-                if(clips.Count > 0)
+                if (clips.Count > 0)
                 {
                     return clips[0];
                 }
+
                 return null;
             }
             set
             {
-                if(clips.Count > 0)
+                if (clips.Count > 0)
                 {
                     clips[0] = value;
                 }
+
                 clips.Add(value);
             }
         }
@@ -75,14 +76,8 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public List<AudioClip> Clips
         {
-            get
-            {
-                return clips;
-            }
-            set
-            {
-                clips = value;
-            }
+            get { return clips; }
+            set { clips = value; }
         }
 
         /// <summary>
@@ -92,18 +87,20 @@ namespace NWH.VehiclePhysics
         {
             get
             {
-                if(sources.Count > 0)
+                if (sources.Count > 0)
                 {
                     return sources[0];
                 }
+
                 return null;
             }
             set
             {
-                if(sources.Count > 0)
+                if (sources.Count > 0)
                 {
                     sources[0] = value;
                 }
+
                 sources.Add(value);
             }
         }
@@ -113,14 +110,8 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public List<AudioSource> Sources
         {
-            get
-            {
-                return sources;
-            }
-            set
-            {
-                sources = value;
-            }
+            get { return sources; }
+            set { sources = value; }
         }
 
 
@@ -129,10 +120,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public AudioClip RandomClip
         {
-            get
-            {
-                return clips[Random.Range(0, clips.Count)];
-            }
+            get { return clips[Random.Range(0, clips.Count)]; }
         }
 
 
@@ -195,7 +183,7 @@ namespace NWH.VehiclePhysics
 
         public void Enable()
         {
-            foreach(AudioSource source in sources)
+            foreach (AudioSource source in sources)
             {
                 if (!source.enabled) source.enabled = true;
             }

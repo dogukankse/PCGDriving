@@ -22,7 +22,7 @@ public class FGMouseInputProvider : FGInputProvider
     public KeyCode twistAndPinchKey = KeyCode.LeftShift;
 
     Vector2 pivot = Vector2.zero;
-    Vector2[] pos = { Vector2.zero, Vector2.zero };
+    Vector2[] pos = {Vector2.zero, Vector2.zero};
 
     bool pinching = false;
     float pinchResetTime = 0;
@@ -44,31 +44,31 @@ public class FGMouseInputProvider : FGInputProvider
         UpdatePinchEmulation();
         UpdateTwistEmulation();
 
-        if( pinching || twisting )
+        if (pinching || twisting)
         {
             // dont move the pivot point after the start phase
-            if( !wasPinchingOrTwisting )
+            if (!wasPinchingOrTwisting)
                 pivot = Input.mousePosition;
 
             float angle = 0;
             float radius = initialPinchDistance;
 
-            if( pinching && twisting && Input.GetKey( twistAndPinchKey ) )
+            if (pinching && twisting && Input.GetKey(twistAndPinchKey))
             {
                 angle = Mathf.Deg2Rad * twistAngle;
                 radius = pinchDistance;
             }
-            else if( twisting )
+            else if (twisting)
             {
                 angle = Mathf.Deg2Rad * twistAngle;
             }
-            else if( pinching )
+            else if (pinching)
             {
                 radius = pinchDistance;
             }
 
-            float cos = Mathf.Cos( angle );
-            float sin = Mathf.Sin( angle );
+            float cos = Mathf.Cos(angle);
+            float sin = Mathf.Sin(angle);
 
             pos[0].x = pivot.x - 0.5f * radius * cos;
             pos[0].y = pivot.y - 0.5f * radius * sin;
@@ -76,20 +76,20 @@ public class FGMouseInputProvider : FGInputProvider
             pos[1].y = pivot.y + 0.5f * radius * sin;
         }
 
-        if( Input.GetKey( pivotKey ) )
+        if (Input.GetKey(pivotKey))
         {
-            if( Input.GetKeyDown( pivotKey ) )
+            if (Input.GetKeyDown(pivotKey))
             {
                 pivot = Input.mousePosition;
             }
 
-            if( !pivoting )
+            if (!pivoting)
             {
-                if( Vector2.Distance( Input.mousePosition, pivot ) > 50.0f )
+                if (Vector2.Distance(Input.mousePosition, pivot) > 50.0f)
                     pivoting = true;
             }
 
-            if( pivoting )
+            if (pivoting)
             {
                 pos[0] = pivot;
                 pos[1] = Input.mousePosition;
@@ -103,21 +103,20 @@ public class FGMouseInputProvider : FGInputProvider
 
     void UpdatePinchEmulation()
     {
-        float pinchAxisMotion = pinchAxisScale * Input.GetAxis( pinchAxis );
+        float pinchAxisMotion = pinchAxisScale * Input.GetAxis(pinchAxis);
 
-        if( Mathf.Abs( pinchAxisMotion ) > 0.0001f )
+        if (Mathf.Abs(pinchAxisMotion) > 0.0001f)
         {
-            if( !pinching )
+            if (!pinching)
             {
                 pinching = true;
                 pinchDistance = initialPinchDistance;
             }
 
             pinchResetTime = Time.time + pinchResetTimeDelay;
-            pinchDistance = Mathf.Max( 5.0f, pinchDistance + pinchAxisMotion );
-
+            pinchDistance = Mathf.Max(5.0f, pinchDistance + pinchAxisMotion);
         }
-        else if( pinchResetTime <= Time.time )
+        else if (pinchResetTime <= Time.time)
         {
             pinching = false;
             pinchDistance = initialPinchDistance;
@@ -126,13 +125,13 @@ public class FGMouseInputProvider : FGInputProvider
 
     void UpdateTwistEmulation()
     {
-        float twistAxisMotion = twistAxisScale * Input.GetAxis( twistAxis );
+        float twistAxisMotion = twistAxisScale * Input.GetAxis(twistAxis);
 
-        if( twistKey != KeyCode.None &&
-            Input.GetKey( twistKey ) &&
-            Mathf.Abs( twistAxisMotion ) > 0.0001f )
+        if (twistKey != KeyCode.None &&
+            Input.GetKey(twistKey) &&
+            Mathf.Abs(twistAxisMotion) > 0.0001f)
         {
-            if( !twisting )
+            if (!twisting)
             {
                 twisting = true;
                 twistAngle = 0;
@@ -141,7 +140,7 @@ public class FGMouseInputProvider : FGInputProvider
             twistResetTime = Time.time + twistResetTimeDelay;
             twistAngle += twistAxisMotion;
         }
-        else if( twistResetTime <= Time.time )
+        else if (twistResetTime <= Time.time)
         {
             twisting = false;
             twistAngle = 0;
@@ -155,12 +154,12 @@ public class FGMouseInputProvider : FGInputProvider
         get { return maxButtons; }
     }
 
-    public override void GetInputState( int fingerIndex, out bool down, out Vector2 position )
+    public override void GetInputState(int fingerIndex, out bool down, out Vector2 position)
     {
-        down = Input.GetMouseButton( fingerIndex );
+        down = Input.GetMouseButton(fingerIndex);
         position = Input.mousePosition;
 
-        if( ( pivoting || pinching || twisting ) && ( fingerIndex == 0 || fingerIndex == 1 ) )
+        if ((pivoting || pinching || twisting) && (fingerIndex == 0 || fingerIndex == 1))
         {
             down = true;
             position = pos[fingerIndex];

@@ -5,7 +5,7 @@ using System.Collections;
 /// A simple twist gesture handler to manipulate the current object's rotation
 /// Allows the user to pick from a list of rotation axis (world/local/camera) to rotate the object around
 /// </summary>
-[AddComponentMenu( "FingerGestures/Toolbox/Twist To Rotate" )]
+[AddComponentMenu("FingerGestures/Toolbox/Twist To Rotate")]
 public class TBTwistToRotate : MonoBehaviour
 {
     public enum RotationAxis
@@ -32,14 +32,14 @@ public class TBTwistToRotate : MonoBehaviour
 
     void Start()
     {
-        if( !ReferenceCamera )
+        if (!ReferenceCamera)
             ReferenceCamera = Camera.main;
     }
 
     // determine current rotation axis
     public Vector3 GetRotationAxis()
     {
-        switch( Axis )
+        switch (Axis)
         {
             case RotationAxis.WorldX:
                 return Vector3.right;
@@ -69,15 +69,15 @@ public class TBTwistToRotate : MonoBehaviour
                 return ReferenceCamera.transform.forward;
         }
 
-        Debug.LogWarning( "Unhandled rotation axis: " + Axis );
+        Debug.LogWarning("Unhandled rotation axis: " + Axis);
         return Vector3.forward;
     }
 
     // event message sent by FingerGestures
-    void OnTwist( TwistGesture gesture )
+    void OnTwist(TwistGesture gesture)
     {
         // rotate around current rotation axis by amount proportional to rotation gesture's angle delta
-        Quaternion qRot = Quaternion.AngleAxis( Sensitivity * gesture.DeltaRotation, GetRotationAxis() );
+        Quaternion qRot = Quaternion.AngleAxis(Sensitivity * gesture.DeltaRotation, GetRotationAxis());
 
         // apply rotation to current object
         transform.rotation = qRot * transform.rotation;

@@ -52,7 +52,7 @@ namespace NWH.VehiclePhysics
             SavePage();
 
             int count = 0;
-            foreach(Axle axle in vc.axles)
+            foreach (Axle axle in vc.axles)
             {
                 AddTitle("Axle " + count, '_');
                 PrintProperties(axle);
@@ -78,19 +78,19 @@ namespace NWH.VehiclePhysics
             text = "";
             lineCount = 0;
             pages.Clear();
-
         }
 
         private void PrintProperties(object obj)
         {
-            foreach (var field in obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | 
-                BindingFlags.GetProperty | BindingFlags.Instance))
+            foreach (var field in obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                                                          BindingFlags.GetField |
+                                                          BindingFlags.GetProperty | BindingFlags.Instance))
             {
                 if (!field.IsDefined(typeof(ShowInTelemetry), false)) continue;
 
                 if (field.FieldType == typeof(float))
                 {
-                    string value = ((float)field.GetValue(obj)).ToString("0.00");
+                    string value = ((float) field.GetValue(obj)).ToString("0.00");
                     AddLine(field.Name, value);
                 }
                 else
@@ -99,29 +99,38 @@ namespace NWH.VehiclePhysics
                     {
                         AddLine(field.Name, field.GetValue(obj).ToString());
                     }
-                    catch { };
+                    catch
+                    {
+                    }
+
+                    ;
                 }
 
                 if (lineCount > linesPerColumn) SavePage();
             }
 
-            foreach (var property in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField |
-                BindingFlags.GetProperty | BindingFlags.Instance))
+            foreach (var property in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                                                                 BindingFlags.GetField |
+                                                                 BindingFlags.GetProperty | BindingFlags.Instance))
             {
                 if (!property.IsDefined(typeof(ShowInTelemetry), false)) continue;
 
                 if (property.PropertyType == typeof(float))
                 {
-                    string value = ((float)property.GetValue(obj, null)).ToString("0.00");
+                    string value = ((float) property.GetValue(obj, null)).ToString("0.00");
                     AddLine(property.Name, value);
                 }
                 else
                 {
                     try
                     {
-                        AddLine(property.Name, (string)property.GetValue(obj, null).ToString());
+                        AddLine(property.Name, (string) property.GetValue(obj, null).ToString());
                     }
-                    catch { };
+                    catch
+                    {
+                    }
+
+                    ;
                 }
 
                 if (lineCount > linesPerColumn) SavePage();
@@ -163,8 +172,8 @@ namespace NWH.VehiclePhysics
         private string CenterString(string stringToCenter, int totalLength, char filler)
         {
             return stringToCenter.PadLeft(((totalLength - stringToCenter.Length) / 2)
-                                + stringToCenter.Length, filler)
-                       .PadRight(totalLength, filler) + "\n";
+                                          + stringToCenter.Length, filler)
+                .PadRight(totalLength, filler) + "\n";
         }
 
         public string Truncate(string value, int maxChars)
@@ -189,4 +198,3 @@ namespace NWH.VehiclePhysics
     {
     }
 }
-

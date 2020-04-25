@@ -14,8 +14,7 @@ public class DigitalGauge : MonoBehaviour
     public string stringValue;
 
     public string format = "0.0";
-    [Range(0,1)]
-    public float numericalSmoothing = 0.5f;
+    [Range(0, 1)] public float numericalSmoothing = 0.5f;
     public string unit;
     public bool dynamicLine = false;
     public float maxValue;
@@ -57,7 +56,7 @@ public class DigitalGauge : MonoBehaviour
     void Update()
     {
         // Update readout
-        if(readout != null)
+        if (readout != null)
         {
             readout.text = "";
             if (displayNumerical)
@@ -73,7 +72,7 @@ public class DigitalGauge : MonoBehaviour
         }
 
         // Update line
-        if(line != null && dynamicLine)
+        if (line != null && dynamicLine)
         {
             float percentage = Mathf.Clamp01(numericalValue / maxValue);
             line.rectTransform.sizeDelta = new Vector2(percentage * fullLineWidth, line.rectTransform.sizeDelta.y);

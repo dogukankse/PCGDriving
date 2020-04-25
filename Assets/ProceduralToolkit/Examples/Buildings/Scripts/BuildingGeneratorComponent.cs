@@ -5,21 +5,15 @@ namespace ProceduralToolkit.Examples.Buildings
 {
     public class BuildingGeneratorComponent : MonoBehaviour
     {
-        [SerializeField]
-        private FacadePlanningStrategy facadePlanningStrategy;
-        [SerializeField]
-        private FacadeConstructionStrategy facadeConstructionStrategy;
-        [SerializeField]
-        private RoofPlanningStrategy roofPlanningStrategy;
-        [SerializeField]
-        private RoofConstructionStrategy roofConstructionStrategy;
-        [SerializeField]
-        public PolygonAsset foundationPolygon;
-        [SerializeField]
-        public BuildingGenerator.Config config = new BuildingGenerator.Config();
+        [SerializeField] private FacadePlanningStrategy facadePlanningStrategy;
+        [SerializeField] private FacadeConstructionStrategy facadeConstructionStrategy;
+        [SerializeField] private RoofPlanningStrategy roofPlanningStrategy;
+        [SerializeField] private RoofConstructionStrategy roofConstructionStrategy;
+        [SerializeField] public PolygonAsset foundationPolygon;
+        [SerializeField] public BuildingGenerator.Config config = new BuildingGenerator.Config();
 
         private BuildingGenerator generator;
-        
+
         public Transform generate()
         {
             generator = new BuildingGenerator();
@@ -29,6 +23,5 @@ namespace ProceduralToolkit.Examples.Buildings
             generator.SetRoofConstructionStrategy(roofConstructionStrategy);
             return generator.Generate(foundationPolygon.vertices, config, transform);
         }
-
     }
 }

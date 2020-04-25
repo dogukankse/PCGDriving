@@ -2,6 +2,7 @@
 // The FingerGestures library is copyright (c) of William Ravaine
 // Please send feedback or bug reports to fingergestures@fatalfrog.com
 // More FingerGestures information at http://fingergestures.fatalfrog.com
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,14 +13,14 @@ using System.Collections.Generic;
 /// <summary>
 /// FignerGestures Manager
 /// </summary>
-[AddComponentMenu( "FingerGestures/Finger Gestures Singleton" )]
+[AddComponentMenu("FingerGestures/Finger Gestures Singleton")]
 public class FingerGestures : MonoBehaviour
 {
     /// <summary>
     /// This is a list of all the platforms that will use touch-based input instead of mouse
     /// </summary>
-    public static readonly RuntimePlatform[] TouchScreenPlatforms = 
-    { 
+    public static readonly RuntimePlatform[] TouchScreenPlatforms =
+    {
         RuntimePlatform.IPhonePlayer,
         RuntimePlatform.Android,
 #if !UNITY_3_5
@@ -35,25 +36,26 @@ public class FingerGestures : MonoBehaviour
         Moving,
         Stationary,
     }
-    
+
     #region Global Events
 
     public static event Gesture.EventHandler OnGestureEvent;
     public static event FingerEventDetector<FingerEvent>.FingerEventHandler OnFingerEvent;
-    
+
     public delegate void EventHandler();
+
     public static event EventHandler OnInputProviderChanged;
 
-    internal static void FireEvent( Gesture gesture )
+    internal static void FireEvent(Gesture gesture)
     {
-        if( OnGestureEvent != null )
-            OnGestureEvent( gesture );
+        if (OnGestureEvent != null)
+            OnGestureEvent(gesture);
     }
 
-    internal static void FireEvent( FingerEvent eventData )
+    internal static void FireEvent(FingerEvent eventData)
     {
-        if( OnFingerEvent != null )
-            OnFingerEvent( eventData );
+        if (OnFingerEvent != null)
+            OnFingerEvent(eventData);
     }
 
     #endregion
@@ -89,7 +91,7 @@ public class FingerGestures : MonoBehaviour
         InitInputProvider();
 
         fingerClusterManager = GetComponent<FingerClusterManager>();
-        if( !fingerClusterManager )
+        if (!fingerClusterManager)
             fingerClusterManager = gameObject.AddComponent<FingerClusterManager>();
     }
 
@@ -97,7 +99,7 @@ public class FingerGestures : MonoBehaviour
 
     // reference to the inputProvider currently in use
     FGInputProvider inputProvider;
-        
+
     public FGInputProvider InputProvider
     {
         get { return inputProvider; }
@@ -108,11 +110,11 @@ public class FingerGestures : MonoBehaviour
         public FGInputProvider inputProviderPrefab;
     }
 
-    public static bool IsTouchScreenPlatform( RuntimePlatform platform )
+    public static bool IsTouchScreenPlatform(RuntimePlatform platform)
     {
-        for( int i = 0; i < TouchScreenPlatforms.Length; ++i )
+        for (int i = 0; i < TouchScreenPlatforms.Length; ++i)
         {
-            if( platform == TouchScreenPlatforms[i] )
+            if (platform == TouchScreenPlatforms[i])
                 return true;
         }
 
@@ -123,43 +125,43 @@ public class FingerGestures : MonoBehaviour
     {
         InputProviderEvent e = new InputProviderEvent();
 
-        if( IsTouchScreenPlatform( Application.platform ) )
+        if (IsTouchScreenPlatform(Application.platform))
             e.inputProviderPrefab = touchInputProviderPrefab;
         else
             e.inputProviderPrefab = mouseInputProviderPrefab;
 
         // let other scripts on the same game object override the e.inputProviderPrefab if they want to install a different one
-        gameObject.SendMessage( "OnSelectInputProvider", e, SendMessageOptions.DontRequireReceiver );
+        gameObject.SendMessage("OnSelectInputProvider", e, SendMessageOptions.DontRequireReceiver);
 
         // install it
-        InstallInputProvider( e.inputProviderPrefab );
+        InstallInputProvider(e.inputProviderPrefab);
     }
 
-    public void InstallInputProvider( FGInputProvider inputProviderPrefab )
+    public void InstallInputProvider(FGInputProvider inputProviderPrefab)
     {
-        if( !inputProviderPrefab )
+        if (!inputProviderPrefab)
         {
-            Debug.LogError( "Invalid InputProvider (null)" );
+            Debug.LogError("Invalid InputProvider (null)");
             return;
         }
 
-        Debug.Log( "FingerGestures: using " + inputProviderPrefab.name );
+        Debug.Log("FingerGestures: using " + inputProviderPrefab.name);
 
         // remove any existing one
-        if( inputProvider )
-            Destroy( inputProvider.gameObject );
-        
-        inputProvider = Instantiate( inputProviderPrefab ) as FGInputProvider;
+        if (inputProvider)
+            Destroy(inputProvider.gameObject);
+
+        inputProvider = Instantiate(inputProviderPrefab) as FGInputProvider;
         inputProvider.name = inputProviderPrefab.name;
         inputProvider.transform.parent = this.transform;
 
         // Create fingers & gesture recognizers
-        InitFingers( MaxFingers );
+        InitFingers(MaxFingers);
 
-        if( OnInputProviderChanged != null )
+        if (OnInputProviderChanged != null)
             OnInputProviderChanged();
     }
-    
+
     #endregion
 
     #region Finger
@@ -183,7 +185,7 @@ public class FingerGestures : MonoBehaviour
         {
             get { return index; }
         }
-        
+
         /// <summary>
         /// Return true if the finger is currently down
         /// </summary>
@@ -223,11 +225,11 @@ public class FingerGestures : MonoBehaviour
         {
             get { return phase == FingerPhase.Moving; }
         }
-        
+
         /// <summary>
         /// Return true if the finger was down & moving during the previous update/frame
         /// </summary>
-        public bool WasMoving 
+        public bool WasMoving
         {
             get { return prevPhase == FingerPhase.Moving; }
         }
@@ -356,9 +358,9 @@ public class FingerGestures : MonoBehaviour
         Collider prevCollider;
         float elapsedTimeStationary = 0;
         List<GestureRecognizer> gestureRecognizers = new List<GestureRecognizer>();
-        Dictionary<string, object> extendedProperties = new Dictionary<string,object>();
-        
-        public Finger( int index )
+        Dictionary<string, object> extendedProperties = new Dictionary<string, object>();
+
+        public Finger(int index)
         {
             this.index = index;
         }
@@ -368,19 +370,19 @@ public class FingerGestures : MonoBehaviour
             return "Finger" + index;
         }
 
-        public static implicit operator bool( Finger finger )
+        public static implicit operator bool(Finger finger)
         {
             return finger != null;
         }
 
-        internal void Update( bool newDownState, Vector2 newPos )
+        internal void Update(bool newDownState, Vector2 newPos)
         {
             // stop ignoring this touch when the finger is no longer touching the screen
-            if( filteredOut && !newDownState )
+            if (filteredOut && !newDownState)
                 filteredOut = false;
-            
+
             // Apply global touch filter on new touches
-            if( !IsDown && newDownState && !FingerGestures.instance.ShouldProcessTouch( index, newPos ) )
+            if (!IsDown && newDownState && !FingerGestures.instance.ShouldProcessTouch(index, newPos))
             {
                 filteredOut = true;
                 newDownState = false;
@@ -388,14 +390,14 @@ public class FingerGestures : MonoBehaviour
 
             // process touch
             prevPhase = phase;
-            
-            if( newDownState )
+
+            if (newDownState)
             {
                 // new touch? reset finger state
-                if( !WasDown )
+                if (!WasDown)
                 {
                     phase = FingerPhase.Begin;
-                    
+
                     pos = newPos;
                     startPos = pos;
                     prevPos = pos;
@@ -411,27 +413,28 @@ public class FingerGestures : MonoBehaviour
                 {
                     prevPos = pos;
                     pos = newPos;
-                    distFromStart = Vector3.Distance( startPos, pos );
+                    distFromStart = Vector3.Distance(startPos, pos);
                     deltaPos = pos - prevPos;
 
-                    if( deltaPos.sqrMagnitude > 0 )
+                    if (deltaPos.sqrMagnitude > 0)
                     {
                         lastMoveTime = Time.time;
                         phase = FingerPhase.Moving;
                     }
-                    else if( !IsMoving || ( ( Time.time - lastMoveTime ) > 0.05f ) )    // allow for a small time buffer after we stopped moving
+                    else if (!IsMoving || ((Time.time - lastMoveTime) > 0.05f)
+                    ) // allow for a small time buffer after we stopped moving
                     {
                         phase = FingerPhase.Stationary;
                     }
 
-                    if( IsMoving )
+                    if (IsMoving)
                     {
                         // finger moved at least once
                         moved = true;
                     }
                     else
                     {
-                        if( !WasStationary ) // begin a new stationary phase
+                        if (!WasStationary) // begin a new stationary phase
                             elapsedTimeStationary = 0;
                         else
                             elapsedTimeStationary += Time.deltaTime;
@@ -446,7 +449,7 @@ public class FingerGestures : MonoBehaviour
 
         #endregion
     }
-    
+
     /// <summary>
     /// Maximum number of simultaneous fingers supported
     /// </summary>
@@ -458,11 +461,11 @@ public class FingerGestures : MonoBehaviour
     /// <summary>
     /// Get a finger by its index
     /// </summary>
-    public static Finger GetFinger( int index )
+    public static Finger GetFinger(int index)
     {
         return instance.fingers[index];
     }
-    
+
     /// <summary>
     /// List of fingers currently touching the screen
     /// </summary>
@@ -480,18 +483,18 @@ public class FingerGestures : MonoBehaviour
         get { return gestureRecognizers; }
     }
 
-    public static void Register( GestureRecognizer recognizer )
+    public static void Register(GestureRecognizer recognizer)
     {
-        if( gestureRecognizers.Contains( recognizer ) )
+        if (gestureRecognizers.Contains(recognizer))
             return;
 
-        gestureRecognizers.Add( recognizer );
+        gestureRecognizers.Add(recognizer);
         //Debug.Log( "Registered gesture recognizer: " + recognizer );
     }
 
-    public static void Unregister( GestureRecognizer recognizer )
+    public static void Unregister(GestureRecognizer recognizer)
     {
-        gestureRecognizers.Remove( recognizer );
+        gestureRecognizers.Remove(recognizer);
     }
 
     #region Engine Callbacks
@@ -503,10 +506,10 @@ public class FingerGestures : MonoBehaviour
 
     void Start()
     {
-        if( makePersistent )
-            DontDestroyOnLoad( this.gameObject );
+        if (makePersistent)
+            DontDestroyOnLoad(this.gameObject);
     }
-    
+
     // this is called after Awake() OR after the script is recompiled (Recompile > Disable > Enable)
     void OnEnable()
     {
@@ -515,15 +518,16 @@ public class FingerGestures : MonoBehaviour
 
     void CheckInit()
     {
-        if( instance == null )
+        if (instance == null)
         {
             instance = this;
             Init();
         }
-        else if( instance != this )
+        else if (instance != this)
         {
-            Debug.LogWarning( "There is already an instance of FingerGestures created (" + instance.name + "). Destroying new one." );
-            Destroy( this.gameObject );
+            Debug.LogWarning("There is already an instance of FingerGestures created (" + instance.name +
+                             "). Destroying new one.");
+            Destroy(this.gameObject);
             return;
         }
     }
@@ -531,16 +535,16 @@ public class FingerGestures : MonoBehaviour
     void Update()
     {
 #if UNITY_EDITOR
-        if( detectUnityRemote && Input.touchCount > 0 && inputProvider.GetType() != touchInputProviderPrefab.GetType() )
+        if (detectUnityRemote && Input.touchCount > 0 && inputProvider.GetType() != touchInputProviderPrefab.GetType())
         {
-            Debug.Log( "UnityRemote presence detected. Switching to touch input." );
-            InstallInputProvider( touchInputProviderPrefab );
+            Debug.Log("UnityRemote presence detected. Switching to touch input.");
+            InstallInputProvider(touchInputProviderPrefab);
             detectUnityRemote = false;
-            
+
             return; // skip a frame
         }
 #endif
-        if( inputProvider )
+        if (inputProvider)
         {
             UpdateFingers();
         }
@@ -557,14 +561,14 @@ public class FingerGestures : MonoBehaviour
 
     Finger[] fingers;
     FingerList touches;
-    
-    void InitFingers( int count )
+
+    void InitFingers(int count)
     {
         // pre-allocate a touch data entry for each finger
         fingers = new Finger[count];
 
-        for( int i = 0; i < count; ++i )
-            fingers[i] = new Finger( i );
+        for (int i = 0; i < count; ++i)
+            fingers[i] = new Finger(i);
 
         touches = new FingerList();
 
@@ -576,7 +580,7 @@ public class FingerGestures : MonoBehaviour
         touches.Clear();
 
         // update all fingers
-        for( int i = 0; i < fingers.Length; ++i )
+        for (int i = 0; i < fingers.Length; ++i)
         {
             Finger finger = fingers[i];
 
@@ -584,12 +588,12 @@ public class FingerGestures : MonoBehaviour
             bool down = false;
 
             // request fresh input state from provider
-            inputProvider.GetInputState( finger.Index, out down, out pos );
+            inputProvider.GetInputState(finger.Index, out down, out pos);
 
-            finger.Update( down, pos );
+            finger.Update(down, pos);
 
-            if( finger.IsDown )
-                touches.Add( finger );
+            if (finger.IsDown)
+                touches.Add(finger);
         }
     }
 
@@ -603,7 +607,7 @@ public class FingerGestures : MonoBehaviour
     /// <param name="fingerIndex">The index of the finger that just touched the screen</param>
     /// <param name="position">The new finger position if the input is let through</param>
     /// <returns>True to let the touch go through, or false to block it</returns>
-    public delegate bool GlobalTouchFilterDelegate( int fingerIndex, Vector2 position );
+    public delegate bool GlobalTouchFilterDelegate(int fingerIndex, Vector2 position);
 
     GlobalTouchFilterDelegate globalTouchFilterFunc;
 
@@ -618,10 +622,10 @@ public class FingerGestures : MonoBehaviour
         set { instance.globalTouchFilterFunc = value; }
     }
 
-    protected bool ShouldProcessTouch( int fingerIndex, Vector2 position )
+    protected bool ShouldProcessTouch(int fingerIndex, Vector2 position)
     {
-        if( globalTouchFilterFunc != null )
-            return globalTouchFilterFunc( fingerIndex, position );
+        if (globalTouchFilterFunc != null)
+            return globalTouchFilterFunc(fingerIndex, position);
 
         return true;
     }
@@ -632,9 +636,9 @@ public class FingerGestures : MonoBehaviour
 
     Transform[] fingerNodes;
 
-    Transform CreateNode( string name, Transform parent )
+    Transform CreateNode(string name, Transform parent)
     {
-        GameObject go = new GameObject( name );
+        GameObject go = new GameObject(name);
         go.transform.parent = parent;
         return go.transform;
     }
@@ -643,17 +647,17 @@ public class FingerGestures : MonoBehaviour
     {
         int fingerCount = fingers.Length;
 
-        if( fingerNodes != null )
+        if (fingerNodes != null)
         {
-            foreach( Transform fingerCompNode in fingerNodes )
-                Destroy( fingerCompNode.gameObject );
+            foreach (Transform fingerCompNode in fingerNodes)
+                Destroy(fingerCompNode.gameObject);
         }
 
         fingerNodes = new Transform[fingerCount];
-        for( int i = 0; i < fingerNodes.Length; ++i )
-            fingerNodes[i] = CreateNode( "Finger" + i, this.transform );
+        for (int i = 0; i < fingerNodes.Length; ++i)
+            fingerNodes[i] = CreateNode("Finger" + i, this.transform);
     }
-    
+
     #endregion
 
     #endregion
@@ -669,10 +673,7 @@ public class FingerGestures : MonoBehaviour
         /// Get finger in array by index
         /// </summary>
         /// <param name="index">The array index</param>
-        Finger this[int index]
-        {
-            get;
-        }
+        Finger this[int index] { get; }
 
         /// <summary>
         /// Number of fingers in the list
@@ -715,7 +716,7 @@ public class FingerGestures : MonoBehaviour
         /// </summary>
         /// <param name="tolerance">0->1 range that maps to 0->90 degrees from reference</param>
         /// <returns></returns>
-        bool MovingInSameDirection( float tolerance );
+        bool MovingInSameDirection(float tolerance);
     }
 
     /// <summary>
@@ -724,15 +725,14 @@ public class FingerGestures : MonoBehaviour
     [System.Serializable]
     public class FingerList : IFingerList
     {
-        [SerializeField]
-        List<Finger> list;
+        [SerializeField] List<Finger> list;
 
         public FingerList()
         {
             list = new List<Finger>();
         }
 
-        public FingerList( List<Finger> list )
+        public FingerList(List<Finger> list)
         {
             this.list = list;
         }
@@ -757,24 +757,24 @@ public class FingerGestures : MonoBehaviour
             return GetEnumerator();
         }
 
-        public void Add( Finger touch )
+        public void Add(Finger touch)
         {
-            list.Add( touch );
+            list.Add(touch);
         }
 
-        public bool Remove( Finger touch )
+        public bool Remove(Finger touch)
         {
-            return list.Remove( touch );
+            return list.Remove(touch);
         }
 
-        public bool Contains( Finger touch )
+        public bool Contains(Finger touch)
         {
-            return list.Contains( touch );
+            return list.Contains(touch);
         }
 
-        public void AddRange( IEnumerable<Finger> touches )
+        public void AddRange(IEnumerable<Finger> touches)
         {
-            list.AddRange( touches );
+            list.AddRange(touches);
         }
 
         public void Clear()
@@ -782,16 +782,16 @@ public class FingerGestures : MonoBehaviour
             list.Clear();
         }
 
-        public delegate T FingerPropertyGetterDelegate<T>( Finger finger );
-        
-        public Vector2 AverageVector( FingerPropertyGetterDelegate<Vector2> getProperty )
+        public delegate T FingerPropertyGetterDelegate<T>(Finger finger);
+
+        public Vector2 AverageVector(FingerPropertyGetterDelegate<Vector2> getProperty)
         {
             Vector2 avg = Vector2.zero;
 
-            if( Count > 0 )
+            if (Count > 0)
             {
-                for( int i = 0; i < list.Count; ++i )
-                    avg += getProperty( list[i] );
+                for (int i = 0; i < list.Count; ++i)
+                    avg += getProperty(list[i]);
 
                 avg /= Count;
             }
@@ -799,14 +799,14 @@ public class FingerGestures : MonoBehaviour
             return avg;
         }
 
-        public float AverageFloat( FingerPropertyGetterDelegate<float> getProperty )
+        public float AverageFloat(FingerPropertyGetterDelegate<float> getProperty)
         {
             float avg = 0;
 
-            if( Count > 0 )
+            if (Count > 0)
             {
-                for( int i = 0; i < list.Count; ++i )
-                    avg += getProperty( list[i] );
+                for (int i = 0; i < list.Count; ++i)
+                    avg += getProperty(list[i]);
 
                 avg /= Count;
             }
@@ -820,60 +820,75 @@ public class FingerGestures : MonoBehaviour
         static FingerPropertyGetterDelegate<Vector2> delGetFingerPreviousPosition = GetFingerPreviousPosition;
         static FingerPropertyGetterDelegate<float> delGetFingerDistanceFromStart = GetFingerDistanceFromStart;
 
-        static Vector2 GetFingerStartPosition( Finger finger ) { return finger.StartPosition; }
-        static Vector2 GetFingerPosition( Finger finger ) { return finger.Position; }
-        static Vector2 GetFingerPreviousPosition( Finger finger ) { return finger.PreviousPosition; }
-        static float GetFingerDistanceFromStart( Finger finger ) { return finger.DistanceFromStart; }
+        static Vector2 GetFingerStartPosition(Finger finger)
+        {
+            return finger.StartPosition;
+        }
+
+        static Vector2 GetFingerPosition(Finger finger)
+        {
+            return finger.Position;
+        }
+
+        static Vector2 GetFingerPreviousPosition(Finger finger)
+        {
+            return finger.PreviousPosition;
+        }
+
+        static float GetFingerDistanceFromStart(Finger finger)
+        {
+            return finger.DistanceFromStart;
+        }
 
         public Vector2 GetAverageStartPosition()
         {
-            return AverageVector( delGetFingerStartPosition );
+            return AverageVector(delGetFingerStartPosition);
         }
 
         public Vector2 GetAveragePosition()
         {
-            return AverageVector( delGetFingerPosition );
+            return AverageVector(delGetFingerPosition);
         }
 
         public Vector2 GetAveragePreviousPosition()
         {
-            return AverageVector( delGetFingerPreviousPosition );
+            return AverageVector(delGetFingerPreviousPosition);
         }
 
         public float GetAverageDistanceFromStart()
         {
-            return AverageFloat( delGetFingerDistanceFromStart );
+            return AverageFloat(delGetFingerDistanceFromStart);
         }
 
         public Finger GetOldest()
         {
             Finger oldest = null;
 
-            foreach( Finger finger in list )
+            foreach (Finger finger in list)
             {
-                if( oldest == null || ( finger.StarTime < oldest.StarTime ) )
+                if (oldest == null || (finger.StarTime < oldest.StarTime))
                     oldest = finger;
             }
 
             return oldest;
         }
 
-        public bool MovingInSameDirection( float tolerance )
+        public bool MovingInSameDirection(float tolerance)
         {
-            if( Count < 2 )
+            if (Count < 2)
                 return true;
 
-            float minDOT = Mathf.Max( 0.1f, 1.0f - tolerance ); 
-            
+            float minDOT = Mathf.Max(0.1f, 1.0f - tolerance);
+
             Vector2 refDir = this[0].Position - this[0].StartPosition;
             refDir.Normalize();
-            
-            for( int i = 1; i < Count; ++i )
+
+            for (int i = 1; i < Count; ++i)
             {
                 Vector2 dir = this[i].Position - this[i].StartPosition;
                 dir.Normalize();
 
-                if( Vector2.Dot( refDir, dir ) < minDOT )
+                if (Vector2.Dot(refDir, dir) < minDOT)
                     return false;
             }
 
@@ -882,13 +897,13 @@ public class FingerGestures : MonoBehaviour
 
         public bool AllMoving()
         {
-            if( Count == 0 )
+            if (Count == 0)
                 return false;
 
             // all touches must be moving
-            for( int i = 0; i < list.Count; ++i )
+            for (int i = 0; i < list.Count; ++i)
             {
-                if( !list[i].IsMoving )
+                if (!list[i].IsMoving)
                     return false;
             }
 
@@ -960,14 +975,14 @@ public class FingerGestures : MonoBehaviour
 
     static readonly SwipeDirection[] AngleToDirectionMap = new SwipeDirection[]
     {
-        SwipeDirection.Right,               // 0
-        SwipeDirection.UpperRightDiagonal,  // 45
-        SwipeDirection.Up,                  // 90
-        SwipeDirection.UpperLeftDiagonal,   // 135
-        SwipeDirection.Left,                // 180
-        SwipeDirection.LowerLeftDiagonal,   // 225
-        SwipeDirection.Down,                // 270
-        SwipeDirection.LowerRightDiagonal,  // 315
+        SwipeDirection.Right, // 0
+        SwipeDirection.UpperRightDiagonal, // 45
+        SwipeDirection.Up, // 90
+        SwipeDirection.UpperLeftDiagonal, // 135
+        SwipeDirection.Left, // 180
+        SwipeDirection.LowerLeftDiagonal, // 225
+        SwipeDirection.Down, // 270
+        SwipeDirection.LowerRightDiagonal, // 315
     };
 
     /// <summary>
@@ -976,27 +991,27 @@ public class FingerGestures : MonoBehaviour
     /// <param name="dir">A normalized swipe motion vector (must be normalized!)</param>
     /// <param name="tolerance">Percentage of tolerance (0..1)</param>
     /// <returns>The constrained swipe direction identifier</returns>
-    public static SwipeDirection GetSwipeDirection( Vector2 dir, float tolerance )
+    public static SwipeDirection GetSwipeDirection(Vector2 dir, float tolerance)
     {
         // max +/- 22.5 degrees around reference angle
-        float maxAngleDelta = Mathf.Max( Mathf.Clamp01( tolerance ) * 22.5f, 0.0001f );
+        float maxAngleDelta = Mathf.Max(Mathf.Clamp01(tolerance) * 22.5f, 0.0001f);
 
         // get the angle formed by the dir vector (0 = right, 90 = up, 180 = left, 270 = down)
-        float angle = NormalizeAngle360( Mathf.Rad2Deg * Mathf.Atan2( dir.y, dir.x ) );
+        float angle = NormalizeAngle360(Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x));
 
-        if( angle >= 360 - 22.5f )
-            angle -= 360;   // wrap around in negative direction
+        if (angle >= 360 - 22.5f)
+            angle -= 360; // wrap around in negative direction
 
-        for( int i = 0; i < 8; ++i )
+        for (int i = 0; i < 8; ++i)
         {
             float refAngle = 45.0f * i;
 
-            if( angle <= refAngle + 22.5f )
+            if (angle <= refAngle + 22.5f)
             {
                 float minAngle = refAngle - maxAngleDelta;
                 float maxAngle = refAngle + maxAngleDelta;
 
-                if( angle >= minAngle && angle <= maxAngle )
+                if (angle >= minAngle && angle <= maxAngle)
                     return AngleToDirectionMap[i];
 
                 break;
@@ -1010,13 +1025,13 @@ public class FingerGestures : MonoBehaviour
     /// <summary>
     /// Extract a swipe direction from an input direction vector, with 100% tolerance (this is guaranteed to return a valid direction)
     /// </summary>
-    public static SwipeDirection GetSwipeDirection( Vector2 dir )
+    public static SwipeDirection GetSwipeDirection(Vector2 dir)
     {
-        return GetSwipeDirection( dir, 1.0f );
+        return GetSwipeDirection(dir, 1.0f);
     }
 
     #endregion
-    
+
     #region Utils
 
     public static bool UsingUnityRemote()
@@ -1028,7 +1043,7 @@ public class FingerGestures : MonoBehaviour
     /// <summary>
     /// Check if all the fingers are moving
     /// </summary>
-    public static bool AllFingersMoving( Finger finger0, Finger finger1 )
+    public static bool AllFingersMoving(Finger finger0, Finger finger1)
     {
         return finger0.IsMoving && finger1.IsMoving;
     }
@@ -1036,28 +1051,28 @@ public class FingerGestures : MonoBehaviour
     /// <summary>
     /// Check if the input fingers are moving in opposite direction
     /// </summary>
-    public static bool FingersMovedInOppositeDirections( Finger finger0, Finger finger1, float minDOT )
+    public static bool FingersMovedInOppositeDirections(Finger finger0, Finger finger1, float minDOT)
     {
-        float dot = Vector2.Dot( finger0.DeltaPosition.normalized, finger1.DeltaPosition.normalized );
+        float dot = Vector2.Dot(finger0.DeltaPosition.normalized, finger1.DeltaPosition.normalized);
         return dot < minDOT;
     }
 
     /// <summary>
     /// returns signed angle in radians between "from" -> "to"
     /// </summary>
-    public static float SignedAngle( Vector2 from, Vector2 to )
+    public static float SignedAngle(Vector2 from, Vector2 to)
     {
         // perpendicular dot product
-        float perpDot = ( from.x * to.y ) - ( from.y * to.x );
-        return Mathf.Atan2( perpDot, Vector2.Dot( from, to ) );
+        float perpDot = (from.x * to.y) - (from.y * to.x);
+        return Mathf.Atan2(perpDot, Vector2.Dot(from, to));
     }
 
     // normalize angle to (0, 360) range
-    public static float NormalizeAngle360( float angleInDegrees )
+    public static float NormalizeAngle360(float angleInDegrees)
     {
         angleInDegrees = angleInDegrees % 360.0f;
 
-        if( angleInDegrees < 0 )
+        if (angleInDegrees < 0)
             angleInDegrees += 360;
 
         return angleInDegrees;
@@ -1092,15 +1107,15 @@ iPad mini2    2048x1536 326 ppi
     /// </summary>
     public static float ScreenDPI
     {
-        get 
+        get
         {
             // not intialized?
-            if( screenDPI <= 0 )
+            if (screenDPI <= 0)
             {
                 screenDPI = Screen.dpi;
 
                 // on desktop, dpi can be 0 - default to a standard dpi for screens
-                if( screenDPI <= 0 )
+                if (screenDPI <= 0)
                     screenDPI = DESKTOP_SCREEN_STANDARD_DPI;
 
 #if UNITY_IPHONE
@@ -1116,19 +1131,19 @@ iPad mini2    2048x1536 326 ppi
 #endif
             }
 
-            return FingerGestures.screenDPI; 
+            return FingerGestures.screenDPI;
         }
 
         set { FingerGestures.screenDPI = value; }
     }
 
-    
-    public static float Convert( float distance, DistanceUnit fromUnit, DistanceUnit toUnit )
+
+    public static float Convert(float distance, DistanceUnit fromUnit, DistanceUnit toUnit)
     {
         float dpi = ScreenDPI;
-        float pixelDistance; 
+        float pixelDistance;
 
-        switch( fromUnit )
+        switch (fromUnit)
         {
             case DistanceUnit.Centimeters:
                 pixelDistance = distance * CENTIMETERS_TO_INCHES * dpi; // cm -> in -> px
@@ -1144,14 +1159,14 @@ iPad mini2    2048x1536 326 ppi
                 break;
         }
 
-        switch( toUnit )
+        switch (toUnit)
         {
             case DistanceUnit.Inches:
                 return pixelDistance / dpi; // px -> in
 
             case DistanceUnit.Centimeters:
-                return ( pixelDistance / dpi ) * INCHES_TO_CENTIMETERS;  // px -> in -> cm
-            
+                return (pixelDistance / dpi) * INCHES_TO_CENTIMETERS; // px -> in -> cm
+
             case DistanceUnit.Pixels:
                 return pixelDistance;
         }
@@ -1160,10 +1175,10 @@ iPad mini2    2048x1536 326 ppi
     }
 
     // convert a 2D motion vector from one distance unit to another one
-    public static Vector2 Convert( Vector2 v, DistanceUnit fromUnit, DistanceUnit toUnit )
+    public static Vector2 Convert(Vector2 v, DistanceUnit fromUnit, DistanceUnit toUnit)
     {
-        return new Vector2( Convert( v.x, fromUnit, toUnit ),
-                            Convert( v.y, fromUnit, toUnit ) );
+        return new Vector2(Convert(v.x, fromUnit, toUnit),
+            Convert(v.y, fromUnit, toUnit));
     }
 
     #endregion
@@ -1184,9 +1199,9 @@ public static class FingerGesturesExtensions
     /// <summary>
     /// Return short version of unit name (cm, in, px)
     /// </summary>
-    public static string Abreviation( this DistanceUnit unit )
+    public static string Abreviation(this DistanceUnit unit)
     {
-        switch( unit )
+        switch (unit)
         {
             case DistanceUnit.Centimeters:
                 return "cm";
@@ -1204,64 +1219,64 @@ public static class FingerGesturesExtensions
     /// <summary>
     /// Convert the current value from 'fromUnit' to 'toUnit'
     /// </summary>
-    public static float Convert( this float value, DistanceUnit fromUnit, DistanceUnit toUnit )
+    public static float Convert(this float value, DistanceUnit fromUnit, DistanceUnit toUnit)
     {
-        return FingerGestures.Convert( value, fromUnit, toUnit );
+        return FingerGestures.Convert(value, fromUnit, toUnit);
     }
 
     /// <summary>
     /// Convert the current pixel-distance based value to the desired unit
     /// </summary>
-    public static float In( this float valueInPixels, DistanceUnit toUnit )
+    public static float In(this float valueInPixels, DistanceUnit toUnit)
     {
-        return valueInPixels.Convert( DistanceUnit.Pixels, toUnit );
+        return valueInPixels.Convert(DistanceUnit.Pixels, toUnit);
     }
 
     /// <summary>
     /// Convert the current pixel-distance based value to centimeters
     /// </summary>
-    public static float Centimeters( this float valueInPixels )
+    public static float Centimeters(this float valueInPixels)
     {
-        return valueInPixels.In( DistanceUnit.Centimeters );
+        return valueInPixels.In(DistanceUnit.Centimeters);
     }
 
     /// <summary>
     /// Convert the current pixel-distance based value to inches
     /// </summary>
-    public static float Inches( this float valueInPixels )
+    public static float Inches(this float valueInPixels)
     {
-        return valueInPixels.In( DistanceUnit.Inches );
+        return valueInPixels.In(DistanceUnit.Inches);
     }
 
     /// <summary>
     /// Convert the current Vector2 from 'fromUnit' to 'toUnit'
     /// </summary>
-    public static Vector2 Convert( this Vector2 v, DistanceUnit fromUnit, DistanceUnit toUnit )
+    public static Vector2 Convert(this Vector2 v, DistanceUnit fromUnit, DistanceUnit toUnit)
     {
-        return FingerGestures.Convert( v, fromUnit, toUnit );
+        return FingerGestures.Convert(v, fromUnit, toUnit);
     }
 
     /// <summary>
     /// Convert the current pixel-based Vector2 to the desired unit
     /// </summary>
-    public static Vector2 In( this Vector2 vecInPixels, DistanceUnit toUnit )
+    public static Vector2 In(this Vector2 vecInPixels, DistanceUnit toUnit)
     {
-        return vecInPixels.Convert( DistanceUnit.Pixels, toUnit );
+        return vecInPixels.Convert(DistanceUnit.Pixels, toUnit);
     }
 
     /// <summary>
     /// Convert the current pixel-based Vector2 to centimeters
     /// </summary>
-    public static Vector2 Centimeters( this Vector2 vecInPixels )
+    public static Vector2 Centimeters(this Vector2 vecInPixels)
     {
-        return vecInPixels.In( DistanceUnit.Centimeters );
+        return vecInPixels.In(DistanceUnit.Centimeters);
     }
 
     /// <summary>
     /// Convert the current pixel-based Vector2 to inches
     /// </summary>
-    public static Vector2 Inches( this Vector2 vecInPixels )
+    public static Vector2 Inches(this Vector2 vecInPixels)
     {
-        return vecInPixels.In( DistanceUnit.Inches );
+        return vecInPixels.In(DistanceUnit.Inches);
     }
 }

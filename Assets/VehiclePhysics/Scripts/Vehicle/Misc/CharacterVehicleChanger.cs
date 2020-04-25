@@ -13,8 +13,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Maximum distance at which the character will be able to enter the vehicle.
         /// </summary>
-        [Tooltip("Maximum distance at which the character will be able to enter the vehicle.")]
-        [Range(0.2f, 3f)]
+        [Tooltip("Maximum distance at which the character will be able to enter the vehicle.")] [Range(0.2f, 3f)]
         public float enterDistance = 2f;
 
         /// <summary>
@@ -26,7 +25,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Tag of the object representing the point from which the enter distance will be measured. Useful if you want to enable you character to enter only when near the door.
         /// </summary>
-        [Tooltip("Tag of the object representing the point from which the enter distance will be measured. Useful if you want to enable you character to enter only when near the door.")]
+        [Tooltip(
+            "Tag of the object representing the point from which the enter distance will be measured. Useful if you want to enable you character to enter only when near the door.")]
         public string enterExitTag = "EnterExitPoint";
 
         /// <summary>
@@ -38,8 +38,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// True when character can enter the vehicle.
         /// </summary>
-        [HideInInspector]
-        public bool nearVehicle = false;
+        [HideInInspector] public bool nearVehicle = false;
 
         private bool insideVehicle = false;
         private VehicleChanger vehicleChanger;
@@ -73,7 +72,8 @@ namespace NWH.VehiclePhysics
                 nearestVehicle = vehicleChanger.NearestVehicleFrom(characterControllerObject);
 
                 // Only check if vehicle close enough
-                if (Vector3.Distance(characterControllerObject.transform.position, nearestVehicle.transform.position) < 10f)
+                if (Vector3.Distance(characterControllerObject.transform.position, nearestVehicle.transform.position) <
+                    10f)
                 {
                     List<GameObject> enterExitObjects = new List<GameObject>();
 
@@ -100,7 +100,8 @@ namespace NWH.VehiclePhysics
 
                             for (int i = 0; i < enterExitObjects.Count; i++)
                             {
-                                float distance = Vector3.Distance(enterExitObjects[i].transform.position, characterControllerObject.transform.position);
+                                float distance = Vector3.Distance(enterExitObjects[i].transform.position,
+                                    characterControllerObject.transform.position);
                                 if (distance < minDistance)
                                 {
                                     minDistance = distance;
@@ -109,7 +110,8 @@ namespace NWH.VehiclePhysics
                             }
                         }
 
-                        if (Vector3.Distance(nearestEnterExitObject.transform.position, characterControllerObject.transform.position) < enterDistance)
+                        if (Vector3.Distance(nearestEnterExitObject.transform.position,
+                            characterControllerObject.transform.position) < enterDistance)
                         {
                             nearVehicle = true;
                         }
@@ -143,7 +145,8 @@ namespace NWH.VehiclePhysics
                 characterControllerObject.SetActive(false);
 
                 vehicleChanger.DeactivateAll = false;
-                relativeEnterPosition = nearestVehicle.transform.InverseTransformPoint(characterControllerObject.transform.position);
+                relativeEnterPosition =
+                    nearestVehicle.transform.InverseTransformPoint(characterControllerObject.transform.position);
                 insideVehicle = true;
                 vehicleChanger.ChangeVehicle(nearestVehicle);
 
@@ -153,7 +156,8 @@ namespace NWH.VehiclePhysics
             else if (insideVehicle && changeVehicle && nearestVehicle.Speed < maxEnterExitVehicleSpeed)
             {
                 insideVehicle = false;
-                characterControllerObject.transform.position = nearestVehicle.transform.TransformPoint(relativeEnterPosition);
+                characterControllerObject.transform.position =
+                    nearestVehicle.transform.TransformPoint(relativeEnterPosition);
                 vehicleChanger.DeactivateAll = true;
 
                 characterControllerObject.SetActive(true);
@@ -161,4 +165,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

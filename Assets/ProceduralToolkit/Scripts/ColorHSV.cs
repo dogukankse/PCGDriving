@@ -33,7 +33,10 @@ namespace ProceduralToolkit
         /// <summary>
         /// Returns the opposite color on the color wheel
         /// </summary>
-        public ColorHSV complementary { get { return WithOffsetH(180); } }
+        public ColorHSV complementary
+        {
+            get { return WithOffsetH(180); }
+        }
 
         /// <summary>
         /// Access the h, s, v, a components using [0], [1], [2], [3] respectively
@@ -148,22 +151,22 @@ namespace ProceduralToolkit
 
         public static ColorHSV operator *(ColorHSV a, ColorHSV b)
         {
-            return new ColorHSV(a.h*b.h, a.s*b.s, a.v*b.v, a.a*b.a);
+            return new ColorHSV(a.h * b.h, a.s * b.s, a.v * b.v, a.a * b.a);
         }
 
         public static ColorHSV operator *(ColorHSV a, float b)
         {
-            return new ColorHSV(a.h*b, a.s*b, a.v*b, a.a*b);
+            return new ColorHSV(a.h * b, a.s * b, a.v * b, a.a * b);
         }
 
         public static ColorHSV operator *(float b, ColorHSV a)
         {
-            return new ColorHSV(a.h*b, a.s*b, a.v*b, a.a*b);
+            return new ColorHSV(a.h * b, a.s * b, a.v * b, a.a * b);
         }
 
         public static ColorHSV operator /(ColorHSV a, float b)
         {
-            return new ColorHSV(a.h/b, a.s/b, a.v/b, a.a/b);
+            return new ColorHSV(a.h / b, a.s / b, a.v / b, a.a / b);
         }
 
         public static bool operator ==(ColorHSV lhs, ColorHSV rhs)
@@ -211,11 +214,13 @@ namespace ProceduralToolkit
             {
                 return false;
             }
+
             ColorHSV color = (ColorHSV) other;
             if (h.Equals(color.h) && s.Equals(color.s) && v.Equals(color.v))
             {
                 return a.Equals(color.a);
             }
+
             return false;
         }
 
@@ -234,7 +239,7 @@ namespace ProceduralToolkit
         /// </summary>
         public ColorHSV WithOffsetH(float angle)
         {
-            return WithH(Mathf.Repeat(h + angle/360, 1));
+            return WithH(Mathf.Repeat(h + angle / 360, 1));
         }
 
         /// <summary>
@@ -285,21 +290,24 @@ namespace ProceduralToolkit
             const float analogousAngle = 30;
 
             var palette = new List<ColorHSV> {this};
-            int rightCount = count/2;
+            int rightCount = count / 2;
             int leftCount = count - rightCount;
 
             for (int i = 0; i < leftCount; i++)
             {
-                palette.Add(WithOffsetH(-(i + 1)*analogousAngle));
+                palette.Add(WithOffsetH(-(i + 1) * analogousAngle));
             }
+
             for (int i = 0; i < rightCount; i++)
             {
-                palette.Add(WithOffsetH((i + 1)*analogousAngle));
+                palette.Add(WithOffsetH((i + 1) * analogousAngle));
             }
+
             if (withComplementary)
             {
                 palette.Add(complementary);
             }
+
             return palette;
         }
 
@@ -320,6 +328,7 @@ namespace ProceduralToolkit
             {
                 palette.Add(complementary);
             }
+
             return palette;
         }
 
@@ -359,11 +368,12 @@ namespace ProceduralToolkit
             {
                 deltaH -= 1;
             }
+
             return new ColorHSV(
-                Mathf.Repeat(a.h + deltaH*t, 1),
-                a.s + (b.s - a.s)*t,
-                a.v + (b.v - a.v)*t,
-                a.a + (b.a - a.a)*t);
+                Mathf.Repeat(a.h + deltaH * t, 1),
+                a.s + (b.s - a.s) * t,
+                a.v + (b.v - a.v) * t,
+                a.a + (b.a - a.a) * t);
         }
     }
 }

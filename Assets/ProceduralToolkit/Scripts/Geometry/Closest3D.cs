@@ -45,8 +45,8 @@ namespace ProceduralToolkit
         public static Vector3 PointLine(Vector3 point, Vector3 lineOrigin, Vector3 lineDirection, out float projectedX)
         {
             // In theory, sqrMagnitude should be 1, but in practice this division helps with numerical stability
-            projectedX = Vector3.Dot(lineDirection, point - lineOrigin)/lineDirection.sqrMagnitude;
-            return lineOrigin + lineDirection*projectedX;
+            projectedX = Vector3.Dot(lineDirection, point - lineOrigin) / lineDirection.sqrMagnitude;
+            return lineOrigin + lineDirection * projectedX;
         }
 
         #endregion Point-Line
@@ -97,8 +97,8 @@ namespace ProceduralToolkit
             }
 
             // In theory, sqrMagnitude should be 1, but in practice this division helps with numerical stability
-            projectedX = pointProjection/rayDirection.sqrMagnitude;
-            return rayOrigin + rayDirection*projectedX;
+            projectedX = pointProjection / rayDirection.sqrMagnitude;
+            return rayOrigin + rayDirection * projectedX;
         }
 
         #endregion Point-Ray
@@ -157,14 +157,15 @@ namespace ProceduralToolkit
                 projectedX = 0;
                 return segmentA;
             }
+
             if (pointProjection >= sqrSegmentLength)
             {
                 projectedX = 1;
                 return segmentB;
             }
 
-            projectedX = pointProjection/sqrSegmentLength;
-            return segmentA + segmentDirection*projectedX;
+            projectedX = pointProjection / sqrSegmentLength;
+            return segmentA + segmentDirection * projectedX;
         }
 
         #endregion Point-Segment
@@ -184,7 +185,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Vector3 PointSphere(Vector3 point, Vector3 sphereCenter, float sphereRadius)
         {
-            return sphereCenter + (point - sphereCenter).normalized*sphereRadius;
+            return sphereCenter + (point - sphereCenter).normalized * sphereRadius;
         }
 
         #endregion Point-Sphere
@@ -202,31 +203,33 @@ namespace ProceduralToolkit
         /// <summary>
         /// Finds closest points on the line and the sphere
         /// </summary>
-        public static void LineSphere(Vector3 lineOrigin, Vector3 lineDirection, Vector3 sphereCenter, float sphereRadius,
+        public static void LineSphere(Vector3 lineOrigin, Vector3 lineDirection, Vector3 sphereCenter,
+            float sphereRadius,
             out Vector3 linePoint, out Vector3 spherePoint)
         {
             Vector3 originToCenter = sphereCenter - lineOrigin;
             float centerProjection = Vector3.Dot(lineDirection, originToCenter);
-            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection*centerProjection;
-            float sqrDistanceToIntersection = sphereRadius*sphereRadius - sqrDistanceToLine;
+            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection * centerProjection;
+            float sqrDistanceToIntersection = sphereRadius * sphereRadius - sqrDistanceToLine;
             if (sqrDistanceToIntersection < -Geometry.Epsilon)
             {
                 // No intersection
-                linePoint = lineOrigin + lineDirection*centerProjection;
-                spherePoint = sphereCenter + (linePoint - sphereCenter).normalized*sphereRadius;
+                linePoint = lineOrigin + lineDirection * centerProjection;
+                spherePoint = sphereCenter + (linePoint - sphereCenter).normalized * sphereRadius;
                 return;
             }
+
             if (sqrDistanceToIntersection < Geometry.Epsilon)
             {
                 // Point intersection
-                linePoint = spherePoint = lineOrigin + lineDirection*centerProjection;
+                linePoint = spherePoint = lineOrigin + lineDirection * centerProjection;
                 return;
             }
 
             // Two points intersection
             float distanceToIntersection = Mathf.Sqrt(sqrDistanceToIntersection);
             float distanceA = centerProjection - distanceToIntersection;
-            linePoint = spherePoint = lineOrigin + lineDirection*distanceA;
+            linePoint = spherePoint = lineOrigin + lineDirection * distanceA;
         }
 
         #endregion Line-Sphere
@@ -253,36 +256,39 @@ namespace ProceduralToolkit
             {
                 // No intersection
                 rayPoint = rayOrigin;
-                spherePoint = sphereCenter - originToCenter.normalized*sphereRadius;
+                spherePoint = sphereCenter - originToCenter.normalized * sphereRadius;
                 return;
             }
 
-            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection*centerProjection;
-            float sqrDistanceToIntersection = sphereRadius*sphereRadius - sqrDistanceToLine;
+            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection * centerProjection;
+            float sqrDistanceToIntersection = sphereRadius * sphereRadius - sqrDistanceToLine;
             if (sqrDistanceToIntersection < -Geometry.Epsilon)
             {
                 // No intersection
                 if (centerProjection < -Geometry.Epsilon)
                 {
                     rayPoint = rayOrigin;
-                    spherePoint = sphereCenter - originToCenter.normalized*sphereRadius;
+                    spherePoint = sphereCenter - originToCenter.normalized * sphereRadius;
                     return;
                 }
-                rayPoint = rayOrigin + rayDirection*centerProjection;
-                spherePoint = sphereCenter + (rayPoint - sphereCenter).normalized*sphereRadius;
+
+                rayPoint = rayOrigin + rayDirection * centerProjection;
+                spherePoint = sphereCenter + (rayPoint - sphereCenter).normalized * sphereRadius;
                 return;
             }
+
             if (sqrDistanceToIntersection < Geometry.Epsilon)
             {
                 if (centerProjection < -Geometry.Epsilon)
                 {
                     // No intersection
                     rayPoint = rayOrigin;
-                    spherePoint = sphereCenter - originToCenter.normalized*sphereRadius;
+                    spherePoint = sphereCenter - originToCenter.normalized * sphereRadius;
                     return;
                 }
+
                 // Point intersection
-                rayPoint = spherePoint = rayOrigin + rayDirection*centerProjection;
+                rayPoint = spherePoint = rayOrigin + rayDirection * centerProjection;
                 return;
             }
 
@@ -297,17 +303,17 @@ namespace ProceduralToolkit
                 {
                     // No intersection
                     rayPoint = rayOrigin;
-                    spherePoint = sphereCenter - originToCenter.normalized*sphereRadius;
+                    spherePoint = sphereCenter - originToCenter.normalized * sphereRadius;
                     return;
                 }
 
                 // Point intersection
-                rayPoint = spherePoint = rayOrigin + rayDirection*distanceB;
+                rayPoint = spherePoint = rayOrigin + rayDirection * distanceB;
                 return;
             }
 
             // Two points intersection
-            rayPoint = spherePoint = rayOrigin + rayDirection*distanceA;
+            rayPoint = spherePoint = rayOrigin + rayDirection * distanceA;
         }
 
         #endregion Ray-Sphere
@@ -317,7 +323,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Finds closest points on the segment and the sphere
         /// </summary>
-        public static void SegmentSphere(Segment3 segment, Sphere sphere, out Vector3 segmentPoint, out Vector3 spherePoint)
+        public static void SegmentSphere(Segment3 segment, Sphere sphere, out Vector3 segmentPoint,
+            out Vector3 spherePoint)
         {
             SegmentSphere(segment.a, segment.b, sphere.center, sphere.radius, out segmentPoint, out spherePoint);
         }
@@ -342,14 +349,16 @@ namespace ProceduralToolkit
                         spherePoint = segmentPoint;
                         return;
                     }
+
                     if (distanceToPoint < Geometry.Epsilon)
                     {
                         spherePoint = segmentPoint;
                         return;
                     }
                 }
-                Vector3 toPoint = -segmentAToCenter/distanceToPoint;
-                spherePoint = sphereCenter + toPoint*sphereRadius;
+
+                Vector3 toPoint = -segmentAToCenter / distanceToPoint;
+                spherePoint = sphereCenter + toPoint * sphereRadius;
                 return;
             }
 
@@ -362,33 +371,36 @@ namespace ProceduralToolkit
                 if (centerProjection < 0)
                 {
                     segmentPoint = segmentA;
-                    spherePoint = sphereCenter - segmentAToCenter.normalized*sphereRadius;
+                    spherePoint = sphereCenter - segmentAToCenter.normalized * sphereRadius;
                     return;
                 }
+
                 segmentPoint = segmentB;
-                spherePoint = sphereCenter - (sphereCenter - segmentB).normalized*sphereRadius;
+                spherePoint = sphereCenter - (sphereCenter - segmentB).normalized * sphereRadius;
                 return;
             }
 
-            float sqrDistanceToLine = segmentAToCenter.sqrMagnitude - centerProjection*centerProjection;
-            float sqrDistanceToIntersection = sphereRadius*sphereRadius - sqrDistanceToLine;
+            float sqrDistanceToLine = segmentAToCenter.sqrMagnitude - centerProjection * centerProjection;
+            float sqrDistanceToIntersection = sphereRadius * sphereRadius - sqrDistanceToLine;
             if (sqrDistanceToIntersection < -Geometry.Epsilon)
             {
                 // No intersection
                 if (centerProjection < -Geometry.Epsilon)
                 {
                     segmentPoint = segmentA;
-                    spherePoint = sphereCenter - segmentAToCenter.normalized*sphereRadius;
+                    spherePoint = sphereCenter - segmentAToCenter.normalized * sphereRadius;
                     return;
                 }
+
                 if (centerProjection > segmentLength + Geometry.Epsilon)
                 {
                     segmentPoint = segmentB;
-                    spherePoint = sphereCenter - (sphereCenter - segmentB).normalized*sphereRadius;
+                    spherePoint = sphereCenter - (sphereCenter - segmentB).normalized * sphereRadius;
                     return;
                 }
-                segmentPoint = segmentA + segmentDirection*centerProjection;
-                spherePoint = sphereCenter + (segmentPoint - sphereCenter).normalized*sphereRadius;
+
+                segmentPoint = segmentA + segmentDirection * centerProjection;
+                spherePoint = sphereCenter + (segmentPoint - sphereCenter).normalized * sphereRadius;
                 return;
             }
 
@@ -398,18 +410,20 @@ namespace ProceduralToolkit
                 {
                     // No intersection
                     segmentPoint = segmentA;
-                    spherePoint = sphereCenter - segmentAToCenter.normalized*sphereRadius;
+                    spherePoint = sphereCenter - segmentAToCenter.normalized * sphereRadius;
                     return;
                 }
+
                 if (centerProjection > segmentLength + Geometry.Epsilon)
                 {
                     // No intersection
                     segmentPoint = segmentB;
-                    spherePoint = sphereCenter - (sphereCenter - segmentB).normalized*sphereRadius;
+                    spherePoint = sphereCenter - (sphereCenter - segmentB).normalized * sphereRadius;
                     return;
                 }
+
                 // Point intersection
-                segmentPoint = spherePoint = segmentA + segmentDirection*centerProjection;
+                segmentPoint = spherePoint = segmentA + segmentDirection * centerProjection;
                 return;
             }
 
@@ -423,20 +437,22 @@ namespace ProceduralToolkit
 
             if (pointAIsAfterSegmentA && pointBIsBeforeSegmentB)
             {
-                segmentPoint = spherePoint = segmentA + segmentDirection*distanceA;
+                segmentPoint = spherePoint = segmentA + segmentDirection * distanceA;
                 return;
             }
+
             if (!pointAIsAfterSegmentA && !pointBIsBeforeSegmentB)
             {
                 // The segment is inside, but no intersection
                 if (distanceA > -(distanceB - segmentLength))
                 {
                     segmentPoint = segmentA;
-                    spherePoint = segmentA + segmentDirection*distanceA;
+                    spherePoint = segmentA + segmentDirection * distanceA;
                     return;
                 }
+
                 segmentPoint = segmentB;
-                spherePoint = segmentA + segmentDirection*distanceB;
+                spherePoint = segmentA + segmentDirection * distanceB;
                 return;
             }
 
@@ -444,14 +460,15 @@ namespace ProceduralToolkit
             if (pointAIsAfterSegmentA && pointAIsBeforeSegmentB)
             {
                 // Point A intersection
-                segmentPoint = spherePoint = segmentA + segmentDirection*distanceA;
+                segmentPoint = spherePoint = segmentA + segmentDirection * distanceA;
                 return;
             }
+
             bool pointBIsAfterSegmentA = distanceB > -Geometry.Epsilon;
             if (pointBIsAfterSegmentA && pointBIsBeforeSegmentB)
             {
                 // Point B intersection
-                segmentPoint = spherePoint = segmentA + segmentDirection*distanceB;
+                segmentPoint = spherePoint = segmentA + segmentDirection * distanceB;
                 return;
             }
 
@@ -459,11 +476,12 @@ namespace ProceduralToolkit
             if (centerProjection < 0)
             {
                 segmentPoint = segmentA;
-                spherePoint = sphereCenter - segmentAToCenter.normalized*sphereRadius;
+                spherePoint = sphereCenter - segmentAToCenter.normalized * sphereRadius;
                 return;
             }
+
             segmentPoint = segmentB;
-            spherePoint = sphereCenter - (sphereCenter - segmentB).normalized*sphereRadius;
+            spherePoint = sphereCenter - (sphereCenter - segmentB).normalized * sphereRadius;
         }
 
         #endregion Segment-Sphere
@@ -485,8 +503,8 @@ namespace ProceduralToolkit
             out Vector3 pointA, out Vector3 pointB)
         {
             Vector3 fromBtoA = (centerA - centerB).normalized;
-            pointA = centerA - fromBtoA*radiusA;
-            pointB = centerB + fromBtoA*radiusB;
+            pointA = centerA - fromBtoA * radiusA;
+            pointB = centerB + fromBtoA * radiusB;
         }
 
         #endregion Sphere-Sphere

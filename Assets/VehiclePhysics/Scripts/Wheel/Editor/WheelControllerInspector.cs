@@ -65,7 +65,7 @@ namespace NWH.WheelController3D
 
         void OnEnable()
         {
-            wc = (WheelController)target;
+            wc = (WheelController) target;
 
             // Wheel
             tireRadius = serializedObject.FindProperty("wheel.tireRadius");
@@ -133,14 +133,16 @@ namespace NWH.WheelController3D
             if (wc.Parent == null)
             {
                 hadParent = false;
-                EditorGUILayout.HelpBox("Parent object needs to be assigned (bottom of WC3D editor).", MessageType.Warning, true);
+                EditorGUILayout.HelpBox("Parent object needs to be assigned (bottom of WC3D editor).",
+                    MessageType.Warning, true);
             }
             else
             {
                 hadParent = true;
                 if (!(rb = wc.Parent.GetComponent<Rigidbody>()))
                 {
-                    EditorGUILayout.HelpBox("There is no rigidbody attached to parent object.", MessageType.Warning, true);
+                    EditorGUILayout.HelpBox("There is no rigidbody attached to parent object.", MessageType.Warning,
+                        true);
                 }
             }
 
@@ -167,8 +169,11 @@ namespace NWH.WheelController3D
             EditorGUILayout.PropertyField(tireRadius, new GUIContent("Tire Radius", "Radius of the whole wheel [m]."));
             EditorGUILayout.PropertyField(wheelWidth, new GUIContent("Wheel Width"));
             EditorGUILayout.PropertyField(wheelMass, new GUIContent("Wheel Mass"));
-            EditorGUILayout.PropertyField(rimOffset, new GUIContent("Rim Offset", "Side offset of the rim. Positive value will result in wheel further from the vehicle."));
-            EditorGUILayout.PropertyField(dragForce, new GUIContent("Drag Force", "Force representing losses related to the tyre. Unlike force calculated from torque, " +
+            EditorGUILayout.PropertyField(rimOffset,
+                new GUIContent("Rim Offset",
+                    "Side offset of the rim. Positive value will result in wheel further from the vehicle."));
+            EditorGUILayout.PropertyField(dragForce, new GUIContent("Drag Force",
+                "Force representing losses related to the tyre. Unlike force calculated from torque, " +
                 "not depended on the radius of the wheel and always constant. Example: if drag force is set to 50N, you will have to use 50N of AddForce() in forward direction" +
                 " to start moving the wheel."));
 
@@ -208,18 +213,24 @@ namespace NWH.WheelController3D
             EditorGUI.indentLevel++;
 
             // Max force
-            EditorGUILayout.PropertyField(maxSpringForce, new GUIContent("Max Spring Force", "Force applied when spring is fully compressed [N]."));
+            EditorGUILayout.PropertyField(maxSpringForce,
+                new GUIContent("Max Spring Force", "Force applied when spring is fully compressed [N]."));
             if (rb != null && maxSpringForce.floatValue < rb.mass * -Physics.gravity.y)
             {
-                EditorGUILayout.HelpBox("Spring force might be inadequate. Minimum recommended force for rigidbody mass of " + rb.mass + " is " + -(int)Physics.gravity.y * rb.mass, MessageType.Info, true);
+                EditorGUILayout.HelpBox(
+                    "Spring force might be inadequate. Minimum recommended force for rigidbody mass of " + rb.mass +
+                    " is " + -(int) Physics.gravity.y * rb.mass, MessageType.Info, true);
             }
 
             // Spring travel
-            EditorGUILayout.PropertyField(springTravel, new GUIContent("Spring Travel", "Distance from fully compressed spring to fully extended spring [m]. Very small values may bring unstable behavior."));
+            EditorGUILayout.PropertyField(springTravel,
+                new GUIContent("Spring Travel",
+                    "Distance from fully compressed spring to fully extended spring [m]. Very small values may bring unstable behavior."));
 
 
             // Spring curve
-            EditorGUILayout.PropertyField(springForceCurve, new GUIContent("Spring Force Curve:"), GUILayout.Height(60));
+            EditorGUILayout.PropertyField(springForceCurve, new GUIContent("Spring Force Curve:"),
+                GUILayout.Height(60));
             EditorGUILayout.HelpBox("X: Spring compression [%], Y: Force coefficient", MessageType.Info, true);
 
             EditorGUI.indentLevel--;
@@ -251,15 +262,18 @@ namespace NWH.WheelController3D
             EditorGUI.indentLevel++;
 
             GUILayout.Space(4);
-            EditorGUILayout.PropertyField(activeFrictionPresetEnum, new GUIContent("Preset", "Surface friction preset."));
+            EditorGUILayout.PropertyField(activeFrictionPresetEnum,
+                new GUIContent("Preset", "Surface friction preset."));
             foreach (WheelController w in targets)
             {
-                w.activeFrictionPreset = WheelController.FrictionPreset.FrictionPresetList[(int)w.activeFrictionPresetEnum];
+                w.activeFrictionPreset =
+                    WheelController.FrictionPreset.FrictionPresetList[(int) w.activeFrictionPresetEnum];
             }
 
             EditorGUILayout.LabelField("Current side friction curve:", EditorStyles.miniLabel);
             EditorGUILayout.CurveField(wc.activeFrictionPreset.Curve, GUILayout.Height(90));
-            EditorGUILayout.LabelField("(note that preview is buggy in 5.3+, click on curve to see the real values!)", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("(note that preview is buggy in 5.3+, click on curve to see the real values!)",
+                EditorStyles.miniLabel);
 
             EditorGUILayout.HelpBox("X: Slip, Y: Force coefficient", MessageType.Info, true);
 
@@ -267,9 +281,13 @@ namespace NWH.WheelController3D
             EditorGUILayout.LabelField("Forward (longitudinal)", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
 
-            EditorGUILayout.PropertyField(fSlipCoefficient, new GUIContent("Slip Coefficient", "Modifier for the slip value. Default is 1."));
-            EditorGUILayout.PropertyField(fForceCoefficient, new GUIContent("Force Coefficient", "Modifier for the force value. Default is 1."));
-            EditorGUILayout.PropertyField(fMaxForce, new GUIContent("Max. Force", "Maximum force the tire can exert on the ground in the forward direction. Default is 0 = not limited."));
+            EditorGUILayout.PropertyField(fSlipCoefficient,
+                new GUIContent("Slip Coefficient", "Modifier for the slip value. Default is 1."));
+            EditorGUILayout.PropertyField(fForceCoefficient,
+                new GUIContent("Force Coefficient", "Modifier for the force value. Default is 1."));
+            EditorGUILayout.PropertyField(fMaxForce,
+                new GUIContent("Max. Force",
+                    "Maximum force the tire can exert on the ground in the forward direction. Default is 0 = not limited."));
 
             GUILayout.Space(8);
             EditorGUI.indentLevel--;
@@ -277,9 +295,13 @@ namespace NWH.WheelController3D
             EditorGUILayout.LabelField("Side (lateral)", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
 
-            EditorGUILayout.PropertyField(sSlipCoefficient, new GUIContent("Slip Coefficient", "Modifier for the slip value. Default is 1."));
-            EditorGUILayout.PropertyField(sForceCoefficient, new GUIContent("Force Coefficient", "Modifier for the force value. Default is 1."));
-            EditorGUILayout.PropertyField(sMaxForce, new GUIContent("Max. Force", "Maximum force the tire can exert on the ground in the sideways direction. Default is 0 = not limited."));
+            EditorGUILayout.PropertyField(sSlipCoefficient,
+                new GUIContent("Slip Coefficient", "Modifier for the slip value. Default is 1."));
+            EditorGUILayout.PropertyField(sForceCoefficient,
+                new GUIContent("Force Coefficient", "Modifier for the force value. Default is 1."));
+            EditorGUILayout.PropertyField(sMaxForce,
+                new GUIContent("Max. Force",
+                    "Maximum force the tire can exert on the ground in the sideways direction. Default is 0 = not limited."));
 
             GUILayout.Space(5);
             EditorGUI.indentLevel--;
@@ -293,16 +315,23 @@ namespace NWH.WheelController3D
             EditorGUILayout.LabelField("Wheel Scan", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
 
-            EditorGUILayout.PropertyField(singleRay, new GUIContent("Single Ray Mode", "Only one raycast will be used, similar to what wheelcollider does. Can be activated at runtime."));
+            EditorGUILayout.PropertyField(singleRay,
+                new GUIContent("Single Ray Mode",
+                    "Only one raycast will be used, similar to what wheelcollider does. Can be activated at runtime."));
             if (Application.isPlaying) GUI.enabled = false;
-            int suggestedForwardRes = (int)(Mathf.Clamp(wc.wheel.tireRadius * 20f, 5f, 30f));
-            int suggestedSideRes = (int)(Mathf.Clamp(wc.wheel.width * 10f, 2f, 5f));
-            EditorGUILayout.PropertyField(forwardScanResolution, new GUIContent("Forward Resolution (min. recommended: " + suggestedForwardRes + ")", "Scan resolution in the wheel's forward direction."));
-            EditorGUILayout.PropertyField(sideToSideScanResolution, new GUIContent("Side Resolution (min. recommended: " + suggestedSideRes + ")", "Number of scan planes parallel to the wheel. Default is 3 (left, right and center of the wheel)"));
+            int suggestedForwardRes = (int) (Mathf.Clamp(wc.wheel.tireRadius * 20f, 5f, 30f));
+            int suggestedSideRes = (int) (Mathf.Clamp(wc.wheel.width * 10f, 2f, 5f));
+            EditorGUILayout.PropertyField(forwardScanResolution,
+                new GUIContent("Forward Resolution (min. recommended: " + suggestedForwardRes + ")",
+                    "Scan resolution in the wheel's forward direction."));
+            EditorGUILayout.PropertyField(sideToSideScanResolution,
+                new GUIContent("Side Resolution (min. recommended: " + suggestedSideRes + ")",
+                    "Number of scan planes parallel to the wheel. Default is 3 (left, right and center of the wheel)"));
             if (forwardScanResolution.intValue < 5) forwardScanResolution.intValue = 5;
             if (sideToSideScanResolution.intValue < 1) sideToSideScanResolution.intValue = 1;
             GUI.enabled = true;
-            EditorGUILayout.PropertyField(applyForceToOthers, new GUIContent("Apply Force To Hit Objects", "If enabled will apply force to the hit object."));
+            EditorGUILayout.PropertyField(applyForceToOthers,
+                new GUIContent("Apply Force To Hit Objects", "If enabled will apply force to the hit object."));
 
             int rayCount = wc.ForwardScanResolution * wc.SideToSideScanResolution;
             EditorGUILayout.HelpBox("Number of rays: " + rayCount, MessageType.Info, true);
@@ -318,11 +347,15 @@ namespace NWH.WheelController3D
             EditorGUI.indentLevel++;
 
             if (Application.isPlaying) GUI.enabled = false;
-            EditorGUILayout.PropertyField(parentObject, new GUIContent("Parent Object", "Vehicle's top object in the hierarchy."));
-            EditorGUILayout.PropertyField(wheelVisual, new GUIContent("Wheel Visual", "Transform that is a visual representation of the wheel"));
-            EditorGUILayout.PropertyField(wheelNonRotating, new GUIContent("Nonrotating Objects", "[Optional] Object that contains all of the nonrotating objects such as calipers and external fenders. " +
+            EditorGUILayout.PropertyField(parentObject,
+                new GUIContent("Parent Object", "Vehicle's top object in the hierarchy."));
+            EditorGUILayout.PropertyField(wheelVisual,
+                new GUIContent("Wheel Visual", "Transform that is a visual representation of the wheel"));
+            EditorGUILayout.PropertyField(wheelNonRotating, new GUIContent("Nonrotating Objects",
+                "[Optional] Object that contains all of the nonrotating objects such as calipers and external fenders. " +
                 "Object will follow the wheel at a fixed relative postiion but will not rotate with it."));
-            EditorGUILayout.PropertyField(scanIgnoreLayers, new GUIContent("Scan Ignore Layers", "Ticked layers will be ignored."));
+            EditorGUILayout.PropertyField(scanIgnoreLayers,
+                new GUIContent("Scan Ignore Layers", "Ticked layers will be ignored."));
             GUI.enabled = true;
             EditorGUILayout.PropertyField(dbg, new GUIContent("Debug", "Show debug related gizmos."));
 
@@ -351,7 +384,7 @@ namespace NWH.WheelController3D
         private void DrawHR()
         {
             GUILayout.Space(4);
-            GUILayout.Box("", new GUILayoutOption[] { GUILayout.ExpandWidth(true), GUILayout.Height(1) });
+            GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
             GUILayout.Space(4);
         }
     }

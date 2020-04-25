@@ -49,7 +49,9 @@ namespace NWH.VehiclePhysics
         /// </summary>
         private class SkidmarkSection
         {
-            public SkidmarkSection() { }
+            public SkidmarkSection()
+            {
+            }
 
             public SkidmarkSection(SkidmarkSection ss)
             {
@@ -108,7 +110,9 @@ namespace NWH.VehiclePhysics
         private Vector2 vector11 = new Vector2(1, 1);
         private Color32 color0000 = new Color32(0, 0, 0, 0);
         private int[] result;
+
         private Vector3 direction, xDirection;
+
         //private RaycastHit hit;
         private List<int> A;
         private List<int> idx;
@@ -127,10 +131,10 @@ namespace NWH.VehiclePhysics
             }
 
             // Add skid container
-            if(snapshotCount == 0 || generateNew)
+            if (snapshotCount == 0 || generateNew)
             {
                 skidContainer = GameObject.Find("SkidContainer");
-                if(skidContainer == null)
+                if (skidContainer == null)
                 {
                     skidContainer = new GameObject("SkidContainer");
                 }
@@ -151,7 +155,7 @@ namespace NWH.VehiclePhysics
             skidmarkDestroy.distanceThreshold = vc.effects.skidmarks.persistentSkidmarkDistance;
 
             // Setup mesh renderer
-            if(!skidObject.GetComponent<MeshRenderer>())
+            if (!skidObject.GetComponent<MeshRenderer>())
                 meshRenderer = skidObject.AddComponent<MeshRenderer>();
 
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -171,7 +175,7 @@ namespace NWH.VehiclePhysics
 
             meshRenderer.materials = materials.ToArray();
 
-            foreach(Material mat in meshRenderer.materials)
+            foreach (Material mat in meshRenderer.materials)
             {
                 if (mat == null) continue;
 
@@ -179,6 +183,7 @@ namespace NWH.VehiclePhysics
                 {
                     mat.SetTexture("_MainTex", vc.effects.skidmarks.threadAlbedo);
                 }
+
                 try
                 {
                     if (vc.effects.skidmarks.threadBump != null)
@@ -192,7 +197,8 @@ namespace NWH.VehiclePhysics
                     }
                 }
                 catch
-                { }
+                {
+                }
             }
 
             // Add mesh arrays
@@ -238,7 +244,7 @@ namespace NWH.VehiclePhysics
 
         public void Update()
         {
-            if(skidObject == null || indices == null)
+            if (skidObject == null || indices == null)
             {
                 CreateNewSnapshot(true);
                 return;
@@ -252,23 +258,26 @@ namespace NWH.VehiclePhysics
             isGrounded = wheel.IsGrounded;
 
             // Calculate skidmark intensity on hard surfaces (asphalt, concrete, etc.)
-            if (isGrounded && groundIndex >= 0 && skidObject != null && vc.groundDetection.groundEntities[groundIndex].skidmarkMaterial != null)
+            if (isGrounded && groundIndex >= 0 && skidObject != null &&
+                vc.groundDetection.groundEntities[groundIndex].skidmarkMaterial != null)
             {
                 prevIntensity = intensity;
                 intensity = 0f;
                 if (wheel.HasForwardSlip || wheel.HasSideSlip)
                 {
                     intensity = Mathf.Clamp01(Mathf.Abs(wheel.ForwardSlip) - vc.forwardSlipThreshold)
-                        + Mathf.Clamp01(Mathf.Abs(wheel.SideSlip) - vc.sideSlipThreshold) * 2.5f;
+                                + Mathf.Clamp01(Mathf.Abs(wheel.SideSlip) - vc.sideSlipThreshold) * 2.5f;
                     intensity *= vc.effects.skidmarks.skidmarkStrength;
                     intensity = Mathf.Clamp(intensity, 0f, vc.effects.skidmarks.maxSkidmarkAlpha);
                 }
 
                 if (wheel.WheelController.isGrounded)
                 {
-                    Vector3 skidmarkPosition = skidObject.transform.InverseTransformPoint(wheel.WheelController.wheelHit.groundPoint);
+                    Vector3 skidmarkPosition =
+                        skidObject.transform.InverseTransformPoint(wheel.WheelController.wheelHit.groundPoint);
                     skidmarkPosition += wheel.WheelController.wheelHit.normal * groundOffset;
-                    skidmarkPosition += vc.vehicleRigidbody.GetPointVelocity(wheel.ControllerTransform.position) * Time.deltaTime * 1.8f;
+                    skidmarkPosition += vc.vehicleRigidbody.GetPointVelocity(wheel.ControllerTransform.position) *
+                                        Time.deltaTime * 1.8f;
 
                     // Add first skidmark in series
                     if (currentSkidmarkSection == null)
@@ -277,8 +286,10 @@ namespace NWH.VehiclePhysics
                         currentSkidmarkSection.position = skidmarkPosition;
                         currentSkidmarkSection.normal = wheel.WheelController.wheelHit.normal;
                         currentSkidmarkSection.intensity = 0;
-                        currentSkidmarkSection.positionLeft = skidmarkPosition - wheel.ControllerTransform.right * markWidth * 0.5f;
-                        currentSkidmarkSection.positionRight = skidmarkPosition + wheel.ControllerTransform.right * markWidth * 0.5f;
+                        currentSkidmarkSection.positionLeft =
+                            skidmarkPosition - wheel.ControllerTransform.right * markWidth * 0.5f;
+                        currentSkidmarkSection.positionRight =
+                            skidmarkPosition + wheel.ControllerTransform.right * markWidth * 0.5f;
 
                         direction = wheel.ControllerTransform.forward;
                         xDirection = -wheel.ControllerTransform.right;
@@ -293,7 +304,7 @@ namespace NWH.VehiclePhysics
                     {
                         currentSkidmarkSection.position = skidmarkPosition;
                         currentSkidmarkSection.normal = wheel.WheelController.wheelHit.normal;
-                        currentSkidmarkSection.intensity = (byte)(intensity * 255f);
+                        currentSkidmarkSection.intensity = (byte) (intensity * 255f);
 
                         direction = (currentSkidmarkSection.position - previousSkidmarkSection.position);
                         xDirection = Vector3.Cross(direction, wheel.WheelController.wheelHit.normal).normalized;
@@ -303,10 +314,11 @@ namespace NWH.VehiclePhysics
                         currentSkidmarkSection.tangent = new Vector4(xDirection.x, xDirection.y, xDirection.z, 1f);
 
                         // Calculate distance between last and current skidmark section
-                        float sqrDistance = (currentSkidmarkSection.position - previousSkidmarkSection.position).sqrMagnitude;
+                        float sqrDistance = (currentSkidmarkSection.position - previousSkidmarkSection.position)
+                            .sqrMagnitude;
 
                         // Ground has changed, start new section
-                        if(prevGroundIndex != groundIndex 
+                        if (prevGroundIndex != groundIndex
                             || (isGrounded == true && wasGrounded == false)
                             || (prevIntensity == 0 && intensity > 0))
                         {
@@ -424,10 +436,11 @@ namespace NWH.VehiclePhysics
             idx = sorted.Select(x => x.Value).ToList();
 
             bool endSnapshot = false;
-            for(int i = 0; i < idx.Count; i++)
+            for (int i = 0; i < idx.Count; i++)
             {
                 // Move the tail of the oldest skid section
-                if (indices[idx[i]].head != indices[idx[i]].tail && (GetTotalTriangleCount() >= maxTris || GetTriangleCount(idx[i]) >= maxTris))
+                if (indices[idx[i]].head != indices[idx[i]].tail &&
+                    (GetTotalTriangleCount() >= maxTris || GetTriangleCount(idx[i]) >= maxTris))
                 {
                     if (vc.effects.skidmarks.persistentSkidmarks)
                     {
@@ -461,13 +474,14 @@ namespace NWH.VehiclePhysics
 
 
         int GetTotalTriangleCount()
-        {   
-                int sum = 0;
-                for(int i = 0; i < triangleCounts.Length; i++)
-                {
-                    sum += GetTriangleCount(i);
-                }
-                return sum;
+        {
+            int sum = 0;
+            for (int i = 0; i < triangleCounts.Length; i++)
+            {
+                sum += GetTriangleCount(i);
+            }
+
+            return sum;
         }
 
 
@@ -489,6 +503,7 @@ namespace NWH.VehiclePhysics
             {
                 triangleCounts[i] = 0;
             }
+
             return triangleCounts[i];
         }
 
@@ -512,4 +527,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

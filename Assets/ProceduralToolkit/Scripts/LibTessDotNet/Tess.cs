@@ -34,12 +34,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
 #if DOUBLE
 using Real = System.Double;
 namespace ProceduralToolkit.LibTessDotNet.Double
 #else
 using Real = System.Single;
+
 namespace ProceduralToolkit.LibTessDotNet
 #endif
 {
@@ -67,6 +67,7 @@ namespace ProceduralToolkit.LibTessDotNet
         /// If a polygon has less than 'polySize' vertices, the remaining indices are stored as <see cref="Tess.Undef"/>.
         /// </summary>
         Polygons,
+
         /// <summary>
         /// Each element in <see cref="Tess.Elements"/> is polygon defined as 'polySize' number of vertex indices,
         /// followed by 'polySize' indices to neighbour polygons, that is each element is 'polySize' * 2 indices.
@@ -74,6 +75,7 @@ namespace ProceduralToolkit.LibTessDotNet
         /// If a polygon edge is a boundary, that is, not connected to another polygon, the neighbour index is <see cref="Tess.Undef"/>.
         /// </summary>
         ConnectedPolygons,
+
         /// <summary>
         /// Each element in <see cref="Tess.Elements"/> is [base index, count] pair defining a range of vertices for a contour.
         /// The first value is index to first vertex in contour and the second value is number of vertices in the contour.
@@ -158,7 +160,11 @@ namespace ProceduralToolkit.LibTessDotNet
         /// <summary>
         /// Normal of the tessellated mesh.
         /// </summary>
-        public Vec3 Normal { get { return _normal; } set { _normal = value; } }
+        public Vec3 Normal
+        {
+            get { return _normal; }
+            set { _normal = value; }
+        }
 
         public Real SUnitX = 1;
         public Real SUnitY = 0;
@@ -177,26 +183,39 @@ namespace ProceduralToolkit.LibTessDotNet
         /// OBSOLETE: use the IPool constructor to disable pooling by passing null.
         /// If true, will use pooling to reduce GC (compare performance with/without, can vary wildly).
         /// </summary>
-        [Obsolete]
-        public bool UsePooling = true;
+        [Obsolete] public bool UsePooling = true;
 
         /// <summary>
         /// Vertices of the tessellated mesh.
         /// </summary>
-        public ContourVertex[] Vertices { get { return _vertices; } }
+        public ContourVertex[] Vertices
+        {
+            get { return _vertices; }
+        }
+
         /// <summary>
         /// Number of vertices in the tessellated mesh.
         /// </summary>
-        public int VertexCount { get { return _vertexCount; } }
+        public int VertexCount
+        {
+            get { return _vertexCount; }
+        }
 
         /// <summary>
         /// Indices of the tessellated mesh. See <see cref="ElementType"/> for details on data layout.
         /// </summary>
-        public int[] Elements { get { return _elements; } }
+        public int[] Elements
+        {
+            get { return _elements; }
+        }
+
         /// <summary>
         /// Number of elements in the tessellated mesh.
         /// </summary>
-        public int ElementCount { get { return _elementCount; } }
+        public int ElementCount
+        {
+            get { return _elementCount; }
+        }
 
         public Tess()
             : this(new DefaultPool())
@@ -214,6 +233,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 _pool = new NullPool();
             }
+
             _mesh = null;
 
             _vertices = null;
@@ -226,26 +246,63 @@ namespace ProceduralToolkit.LibTessDotNet
         {
             var v = _mesh._vHead._next;
 
-            var minVal = new Real[3] { v._coords.X, v._coords.Y, v._coords.Z };
-            var minVert = new MeshUtils.Vertex[3] { v, v, v };
-            var maxVal = new Real[3] { v._coords.X, v._coords.Y, v._coords.Z };
-            var maxVert = new MeshUtils.Vertex[3] { v, v, v };
+            var minVal = new Real[3] {v._coords.X, v._coords.Y, v._coords.Z};
+            var minVert = new MeshUtils.Vertex[3] {v, v, v};
+            var maxVal = new Real[3] {v._coords.X, v._coords.Y, v._coords.Z};
+            var maxVert = new MeshUtils.Vertex[3] {v, v, v};
 
             for (; v != _mesh._vHead; v = v._next)
             {
-                if (v._coords.X < minVal[0]) { minVal[0] = v._coords.X; minVert[0] = v; }
-                if (v._coords.Y < minVal[1]) { minVal[1] = v._coords.Y; minVert[1] = v; }
-                if (v._coords.Z < minVal[2]) { minVal[2] = v._coords.Z; minVert[2] = v; }
-                if (v._coords.X > maxVal[0]) { maxVal[0] = v._coords.X; maxVert[0] = v; }
-                if (v._coords.Y > maxVal[1]) { maxVal[1] = v._coords.Y; maxVert[1] = v; }
-                if (v._coords.Z > maxVal[2]) { maxVal[2] = v._coords.Z; maxVert[2] = v; }
+                if (v._coords.X < minVal[0])
+                {
+                    minVal[0] = v._coords.X;
+                    minVert[0] = v;
+                }
+
+                if (v._coords.Y < minVal[1])
+                {
+                    minVal[1] = v._coords.Y;
+                    minVert[1] = v;
+                }
+
+                if (v._coords.Z < minVal[2])
+                {
+                    minVal[2] = v._coords.Z;
+                    minVert[2] = v;
+                }
+
+                if (v._coords.X > maxVal[0])
+                {
+                    maxVal[0] = v._coords.X;
+                    maxVert[0] = v;
+                }
+
+                if (v._coords.Y > maxVal[1])
+                {
+                    maxVal[1] = v._coords.Y;
+                    maxVert[1] = v;
+                }
+
+                if (v._coords.Z > maxVal[2])
+                {
+                    maxVal[2] = v._coords.Z;
+                    maxVert[2] = v;
+                }
             }
 
             // Find two vertices separated by at least 1/sqrt(3) of the maximum
             // distance between any two vertices
             int i = 0;
-            if (maxVal[1] - minVal[1] > maxVal[0] - minVal[0]) { i = 1; }
-            if (maxVal[2] - minVal[2] > maxVal[i] - minVal[i]) { i = 2; }
+            if (maxVal[1] - minVal[1] > maxVal[0] - minVal[0])
+            {
+                i = 1;
+            }
+
+            if (maxVal[2] - minVal[2] > maxVal[i] - minVal[i])
+            {
+                i = 2;
+            }
+
             if (minVal[i] >= maxVal[i])
             {
                 // All vertices are the same -- normal doesn't matter
@@ -266,7 +323,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 tNorm.X = d1.Y * d2.Z - d1.Z * d2.Y;
                 tNorm.Y = d1.Z * d2.X - d1.X * d2.Z;
                 tNorm.Z = d1.X * d2.Y - d1.Y * d2.X;
-                tLen2 = tNorm.X*tNorm.X + tNorm.Y*tNorm.Y + tNorm.Z*tNorm.Z;
+                tLen2 = tNorm.X * tNorm.X + tNorm.Y * tNorm.Y + tNorm.Z * tNorm.Z;
                 if (tLen2 > maxLen2)
                 {
                     maxLen2 = tLen2;
@@ -294,8 +351,10 @@ namespace ProceduralToolkit.LibTessDotNet
                 {
                     continue;
                 }
+
                 area += MeshUtils.FaceArea(f);
             }
+
             if (area < 0.0f)
             {
                 // Reverse the orientation by flipping all the t-coordinates
@@ -303,6 +362,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 {
                     v._t = -v._t;
                 }
+
                 Vec3.Neg(ref _tUnit);
             }
         }
@@ -335,6 +395,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 Vec3.Dot(ref v._coords, ref _sUnit, out v._s);
                 Vec3.Dot(ref v._coords, ref _tUnit, out v._t);
             }
+
             if (computedNormal)
             {
                 CheckOrientation();
@@ -410,20 +471,22 @@ namespace ProceduralToolkit.LibTessDotNet
                     // The EdgeGoesLeft test guarantees progress even when some triangles
                     // are CW, given that the upper and lower chains are truly monotone.
                     while (lo._Lnext != up && (Geom.EdgeGoesLeft(lo._Lnext)
-                        || Geom.EdgeSign(lo._Org, lo._Dst, lo._Lnext._Dst) <= 0.0f))
+                                               || Geom.EdgeSign(lo._Org, lo._Dst, lo._Lnext._Dst) <= 0.0f))
                     {
                         lo = _mesh.Connect(_pool, lo._Lnext, lo)._Sym;
                     }
+
                     lo = lo._Lprev;
                 }
                 else
                 {
                     // lo.Org is on the left.  We can make CCW triangles from up.Dst.
                     while (lo._Lnext != up && (Geom.EdgeGoesRight(up._Lprev)
-                        || Geom.EdgeSign(up._Dst, up._Org, up._Lprev._Org) >= 0.0f))
+                                               || Geom.EdgeSign(up._Dst, up._Org, up._Lprev._Org) >= 0.0f))
                     {
                         up = _mesh.Connect(_pool, up, up._Lprev)._Sym;
                     }
+
                     up = up._Lnext;
                 }
             }
@@ -470,7 +533,8 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 // Since f will be destroyed, save its next pointer.
                 next = f._next;
-                if( ! f._inside ) {
+                if (!f._inside)
+                {
                     _mesh.ZapFace(_pool, f);
                 }
             }
@@ -494,13 +558,11 @@ namespace ProceduralToolkit.LibTessDotNet
                 eNext = e._next;
                 if (e._Rface._inside != e._Lface._inside)
                 {
-
                     /* This is a boundary edge (one side is interior, one is exterior). */
                     e._winding = (e._Lface._inside) ? value : -value;
                 }
                 else
                 {
-
                     /* Both regions are interior, or both are exterior. */
                     if (!keepOnlyBoundary)
                     {
@@ -512,7 +574,6 @@ namespace ProceduralToolkit.LibTessDotNet
                     }
                 }
             }
-
         }
 
         private int GetNeighbourFace(MeshUtils.Edge edge)
@@ -537,6 +598,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 polySize = 3;
             }
+
             // Assume that the input data is triangles now.
             // Try to merge as many polygons as possible
             if (polySize > 3)
@@ -565,17 +627,18 @@ namespace ProceduralToolkit.LibTessDotNet
 
                 edge = f._anEdge;
                 faceVerts = 0;
-                do {
+                do
+                {
                     v = edge._Org;
                     if (v._n == Undef)
                     {
                         v._n = maxVertexCount;
                         maxVertexCount++;
                     }
+
                     faceVerts++;
                     edge = edge._Lnext;
-                }
-                while (edge != f._anEdge);
+                } while (edge != f._anEdge);
 
                 Debug.Assert(faceVerts <= polySize);
 
@@ -620,12 +683,14 @@ namespace ProceduralToolkit.LibTessDotNet
                 // Store polygon
                 edge = f._anEdge;
                 faceVerts = 0;
-                do {
+                do
+                {
                     v = edge._Org;
                     _elements[elementIndex++] = v._n;
                     faceVerts++;
                     edge = edge._Lnext;
                 } while (edge != f._anEdge);
+
                 // Fill unused.
                 for (i = faceVerts; i < polySize; ++i)
                 {
@@ -641,6 +706,7 @@ namespace ProceduralToolkit.LibTessDotNet
                         _elements[elementIndex++] = GetNeighbourFace(edge);
                         edge = edge._Lnext;
                     } while (edge != f._anEdge);
+
                     // Fill unused.
                     for (i = faceVerts; i < polySize; ++i)
                     {
@@ -669,8 +735,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 {
                     ++_vertexCount;
                     edge = edge._Lnext;
-                }
-                while (edge != start);
+                } while (edge != start);
 
                 ++_elementCount;
             }
@@ -689,7 +754,8 @@ namespace ProceduralToolkit.LibTessDotNet
 
                 vertCount = 0;
                 start = edge = f._anEdge;
-                do {
+                do
+                {
                     _vertices[vertIndex].Position = edge._Org._coords;
                     _vertices[vertIndex].Data = edge._Org._data;
                     ++vertIndex;
@@ -730,7 +796,8 @@ namespace ProceduralToolkit.LibTessDotNet
         /// <see cref="ContourOrientation.Clockwise"/> and <see cref="ContourOrientation.CounterClockwise"/> 
         /// force the vertices to have a specified orientation.
         /// </param>
-        public void AddContour(ContourVertex[] vertices, ContourOrientation forceOrientation = ContourOrientation.Original)
+        public void AddContour(ContourVertex[] vertices,
+            ContourOrientation forceOrientation = ContourOrientation.Original)
         {
             AddContourInternal(vertices, forceOrientation);
         }
@@ -745,7 +812,8 @@ namespace ProceduralToolkit.LibTessDotNet
         /// <see cref="ContourOrientation.Clockwise"/> and <see cref="ContourOrientation.CounterClockwise"/> 
         /// force the vertices to have a specified orientation.
         /// </param>
-        public void AddContour(IList<ContourVertex> vertices, ContourOrientation forceOrientation = ContourOrientation.Original)
+        public void AddContour(IList<ContourVertex> vertices,
+            ContourOrientation forceOrientation = ContourOrientation.Original)
         {
             AddContourInternal(vertices, forceOrientation);
         }
@@ -761,7 +829,8 @@ namespace ProceduralToolkit.LibTessDotNet
             if (forceOrientation != ContourOrientation.Original)
             {
                 var area = SignedArea(vertices);
-                reverse = (forceOrientation == ContourOrientation.Clockwise && area < 0.0f) || (forceOrientation == ContourOrientation.CounterClockwise && area > 0.0f);
+                reverse = (forceOrientation == ContourOrientation.Clockwise && area < 0.0f) ||
+                          (forceOrientation == ContourOrientation.CounterClockwise && area > 0.0f);
             }
 
             MeshUtils.Edge e = null;
@@ -802,7 +871,8 @@ namespace ProceduralToolkit.LibTessDotNet
         /// <param name="polySize"> Number of vertices per polygon if output is polygons. </param>
         /// <param name="combineCallback"> Interpolator used to determine the data payload of generated vertices. </param>
         /// <param name="normal"> Normal of the input contours. If set to zero, the normal will be calculated during tessellation. </param>
-        public void Tessellate(WindingRule windingRule = WindingRule.EvenOdd, ElementType elementType = ElementType.Polygons, int polySize = 3,
+        public void Tessellate(WindingRule windingRule = WindingRule.EvenOdd,
+            ElementType elementType = ElementType.Polygons, int polySize = 3,
             CombineCallback combineCallback = null, Vec3 normal = new Vec3())
         {
             _normal = normal;

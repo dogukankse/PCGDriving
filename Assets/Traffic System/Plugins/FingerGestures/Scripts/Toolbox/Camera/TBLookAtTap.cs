@@ -7,8 +7,8 @@ using System.Collections;
 /// TBLookAtTap
 /// Utility script that will point the current object's transform/TBDragView at the scene point tapped by the user
 /// </summary>
-[AddComponentMenu( "FingerGestures/Toolbox/Camera/Look At Tap" )]
-[RequireComponent( typeof( TapRecognizer ) )]
+[AddComponentMenu("FingerGestures/Toolbox/Camera/Look At Tap")]
+[RequireComponent(typeof(TapRecognizer))]
 public class TBLookAtTap : MonoBehaviour
 {
     TBDragView dragView;
@@ -21,24 +21,24 @@ public class TBLookAtTap : MonoBehaviour
     void Start()
     {
         // sanity check
-        if( !GetComponent<TapRecognizer>() )
+        if (!GetComponent<TapRecognizer>())
         {
-            Debug.LogWarning( "No tap recognizer found on " + this.name + ". Disabling TBLookAtTap." );
+            Debug.LogWarning("No tap recognizer found on " + this.name + ". Disabling TBLookAtTap.");
             enabled = false;
         }
     }
 
-    void OnTap( TapGesture gesture )
+    void OnTap(TapGesture gesture)
     {
-        Ray ray = Camera.main.ScreenPointToRay( gesture.Position );
+        Ray ray = Camera.main.ScreenPointToRay(gesture.Position);
         RaycastHit hit;
 
-        if( Physics.Raycast( ray, out hit ) )
+        if (Physics.Raycast(ray, out hit))
         {
-            if( dragView )
-                dragView.LookAt( hit.point );
+            if (dragView)
+                dragView.LookAt(hit.point);
             else
-                transform.LookAt( hit.point );
+                transform.LookAt(hit.point);
         }
     }
 }

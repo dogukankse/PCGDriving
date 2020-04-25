@@ -13,8 +13,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Should forced induction be used?
         /// </summary>
-        [Tooltip("Should forced induction be used?")]
-        [ShowInTelemetry, ShowInSettings]
+        [Tooltip("Should forced induction be used?")] [ShowInTelemetry, ShowInSettings]
         public bool useForcedInduction = true;
 
         /// <summary>
@@ -35,8 +34,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Flutter can sound when true.
         /// </summary>
-        [HideInInspector]
-        public bool flutterSoundFlag = false;
+        [HideInInspector] public bool flutterSoundFlag = false;
 
         private float maxRPM = 120000;
         private float spoolVelocity;
@@ -54,7 +52,7 @@ namespace NWH.VehiclePhysics
 
         public void Update()
         {
-            if(useForcedInduction)
+            if (useForcedInduction)
             {
                 float t = prevEngineRPMPercent > vc.engine.RPMPercent ? spoolUpTime * 0.4f : spoolUpTime;
 
@@ -63,12 +61,14 @@ namespace NWH.VehiclePhysics
                 rpm = Mathf.Clamp(rpm, 0f, maxRPM);
 
                 // Flutter
-                if ((prevGear != vc.transmission.Gear && vc.transmission.Gear > 1) || vc.input.Vertical < 0.3f && prevVerticalInput > 0.7f)
+                if ((prevGear != vc.transmission.Gear && vc.transmission.Gear > 1) ||
+                    vc.input.Vertical < 0.3f && prevVerticalInput > 0.7f)
                 {
                     flutterSoundFlag = true;
                     targetRpm = targetRpm / 2f;
                 }
             }
+
             prevGear = vc.transmission.Gear;
             prevEngineRPMPercent = vc.engine.RPMPercent;
             prevVerticalInput = vc.input.Vertical;
@@ -80,10 +80,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float SpoolPercent
         {
-            get
-            {
-                return rpm / maxRPM;
-            }
+            get { return rpm / maxRPM; }
         }
 
         /// <summary>
@@ -94,9 +91,9 @@ namespace NWH.VehiclePhysics
         {
             get
             {
-               if (!useForcedInduction)
+                if (!useForcedInduction)
                     return 1f;
-               else
+                else
                     return 1f + ((rpm / maxRPM) * maxPowerGainMultiplier);
             }
         }

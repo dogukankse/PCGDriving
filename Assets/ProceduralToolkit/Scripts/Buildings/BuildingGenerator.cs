@@ -44,6 +44,7 @@ namespace ProceduralToolkit.Buildings
             {
                 parent = new GameObject("Building").transform;
             }
+
             facadeConstructionStrategy.Construct(foundationPolygon, facadeLayouts, parent);
 
             if (roofPlanningStrategy != null && roofConstructionStrategy != null)
@@ -56,7 +57,7 @@ namespace ProceduralToolkit.Buildings
                 roof.localRotation = Quaternion.identity;
                 roofConstructionStrategy.Construct(roofLayout, roof);
             }
-            
+
             return parent;
         }
 
@@ -66,12 +67,14 @@ namespace ProceduralToolkit.Buildings
             public int floors = 5;
             public float entranceInterval = 12;
             public bool hasAttic = true;
+
             public RoofConfig roofConfig = new RoofConfig
             {
                 type = RoofType.Flat,
                 thickness = 0.2f,
                 overhang = 0.2f,
             };
+
             public Palette palette = new Palette();
         }
     }
@@ -88,12 +91,12 @@ namespace ProceduralToolkit.Buildings
     public class Palette
     {
         public Color socleColor = ColorE.silver;
-        public Color socleWindowColor = (ColorE.silver/2).WithA(1);
-        public Color doorColor = (ColorE.silver/2).WithA(1);
+        public Color socleWindowColor = (ColorE.silver / 2).WithA(1);
+        public Color doorColor = (ColorE.silver / 2).WithA(1);
         public Color wallColor = ColorE.white;
         public Color frameColor = ColorE.silver;
         public Color glassColor = ColorE.white;
-        public Color roofColor = (ColorE.gray/4).WithA(1);
+        public Color roofColor = (ColorE.gray / 4).WithA(1);
     }
 
     public enum RoofType

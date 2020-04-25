@@ -15,8 +15,8 @@ namespace ProceduralToolkit.Examples
         private void Update()
         {
             Color color = ColorE.aqua;
-            Quaternion rotation = transform.rotation*Quaternion.Euler(0, 0, -120);
-            Vector3 position = transform.position + rotation*Vector3.up;
+            Quaternion rotation = transform.rotation * Quaternion.Euler(0, 0, -120);
+            Vector3 position = transform.position + rotation * Vector3.up;
 
             DebugE.DrawWireHemisphere(position, rotation, radius, color);
             DebugE.DrawWireCone(position, rotation, radius, coneAngle, coneLength, color);
@@ -39,8 +39,8 @@ namespace ProceduralToolkit.Examples
         private void OnDrawGizmos()
         {
             Gizmos.color = ColorE.lime;
-            Quaternion rotation = transform.rotation*Quaternion.Euler(0, 0, 120);
-            Vector3 position = transform.position + rotation*Vector3.up;
+            Quaternion rotation = transform.rotation * Quaternion.Euler(0, 0, 120);
+            Vector3 position = transform.position + rotation * Vector3.up;
 
             GizmosE.DrawWireHemisphere(position, rotation, radius);
             GizmosE.DrawWireCone(position, rotation, radius, coneAngle, coneLength);

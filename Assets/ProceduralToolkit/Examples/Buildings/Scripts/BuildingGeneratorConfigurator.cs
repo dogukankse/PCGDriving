@@ -23,6 +23,7 @@ namespace ProceduralToolkit.Examples.Buildings
 
         private const int minFloorCount = 1;
         private const int maxFloorCount = 15;
+
         private static readonly RoofType[] roofTypes = new RoofType[]
         {
             RoofType.Flat,
@@ -104,6 +105,7 @@ namespace ProceduralToolkit.Examples.Buildings
                     DestroyImmediate(building);
                 }
             }
+
             generator.SetFacadePlanningStrategy(facadePlanningStrategy);
             generator.SetFacadeConstructionStrategy(facadeConstructionStrategy);
             generator.SetRoofPlanningStrategy(roofPlanningStrategy);

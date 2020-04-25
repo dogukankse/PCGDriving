@@ -33,12 +33,12 @@
 
 using System;
 using System.Diagnostics;
-
 #if DOUBLE
 using Real = System.Double;
 namespace ProceduralToolkit.LibTessDotNet.Double
 #else
 using Real = System.Single;
+
 namespace ProceduralToolkit.LibTessDotNet
 #endif
 {
@@ -59,6 +59,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 case WindingRule.AbsGeqTwo:
                     return n >= 2 || n <= -2;
             }
+
             throw new Exception("Wrong winding rule");
         }
 
@@ -66,10 +67,12 @@ namespace ProceduralToolkit.LibTessDotNet
         {
             return (u._s * (v._t - w._t) + v._s * (w._t - u._t) + w._s * (u._t - v._t)) >= 0.0f;
         }
+
         public static bool VertEq(MeshUtils.Vertex lhs, MeshUtils.Vertex rhs)
         {
             return lhs._s == rhs._s && lhs._t == rhs._t;
         }
+
         public static bool VertLeq(MeshUtils.Vertex lhs, MeshUtils.Vertex rhs)
         {
             return (lhs._s < rhs._s) || (lhs._s == rhs._s && lhs._t <= rhs._t);
@@ -104,6 +107,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     return (v._t - w._t) + (w._t - u._t) * (gapR / (gapL + gapR));
                 }
             }
+
             /* vertical line */
             return 0;
         }
@@ -124,6 +128,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 return (v._t - w._t) * gapL + (v._t - u._t) * gapR;
             }
+
             /* vertical line */
             return 0;
         }
@@ -151,6 +156,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     return (v._s - w._s) + (w._s - u._s) * (gapR / (gapL + gapR));
                 }
             }
+
             /* vertical line */
             return 0;
         }
@@ -166,6 +172,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 return (v._s - w._s) * gapL + (v._s - u._s) * gapR;
             }
+
             /* vertical line */
             return 0;
         }
@@ -197,13 +204,17 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 a = 0.0f;
             }
+
             if (b < 0.0f)
             {
                 b = 0.0f;
             }
-            return ((a <= b) ? ((b == 0.0f) ? ((x+y) / 2.0f)
-                    : (x + (y-x) * (a/(a+b))))
-                    : (y + (x-y) * (b/(a+b))));
+
+            return ((a <= b)
+                ? ((b == 0.0f)
+                    ? ((x + y) / 2.0f)
+                    : (x + (y - x) * (a / (a + b))))
+                : (y + (x - y) * (b / (a + b))));
         }
 
         static void Swap(ref MeshUtils.Vertex a, ref MeshUtils.Vertex b)
@@ -218,7 +229,8 @@ namespace ProceduralToolkit.LibTessDotNet
         /// The computed point is guaranteed to lie in the intersection of the
         /// bounding rectangles defined by each edge.
         /// </summary>
-        public static void EdgeIntersect(MeshUtils.Vertex o1, MeshUtils.Vertex d1, MeshUtils.Vertex o2, MeshUtils.Vertex d2, MeshUtils.Vertex v)
+        public static void EdgeIntersect(MeshUtils.Vertex o1, MeshUtils.Vertex d1, MeshUtils.Vertex o2,
+            MeshUtils.Vertex d2, MeshUtils.Vertex v)
         {
             // This is certainly not the most efficient way to find the intersection
             // of two line segments, but it is very numerically stable.
@@ -227,9 +239,21 @@ namespace ProceduralToolkit.LibTessDotNet
             // and interpolate the intersection s-value from these.  Then repeat
             // using the TransLeq ordering to find the intersection t-value.
 
-            if (!VertLeq(o1, d1)) { Swap(ref o1, ref d1); }
-            if (!VertLeq(o2, d2)) { Swap(ref o2, ref d2); }
-            if (!VertLeq(o1, o2)) { Swap(ref o1, ref o2); Swap(ref d1, ref d2); }
+            if (!VertLeq(o1, d1))
+            {
+                Swap(ref o1, ref d1);
+            }
+
+            if (!VertLeq(o2, d2))
+            {
+                Swap(ref o2, ref d2);
+            }
+
+            if (!VertLeq(o1, o2))
+            {
+                Swap(ref o1, ref o2);
+                Swap(ref d1, ref d2);
+            }
 
             if (!VertLeq(o2, d1))
             {
@@ -246,6 +270,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     z1 = -z1;
                     z2 = -z2;
                 }
+
                 v._s = Interpolate(z1, o2._s, z2, d1._s);
             }
             else
@@ -258,14 +283,27 @@ namespace ProceduralToolkit.LibTessDotNet
                     z1 = -z1;
                     z2 = -z2;
                 }
+
                 v._s = Interpolate(z1, o2._s, z2, d2._s);
             }
 
             // Now repeat the process for t
 
-            if (!TransLeq(o1, d1)) { Swap(ref o1, ref d1); }
-            if (!TransLeq(o2, d2)) { Swap(ref o2, ref d2); }
-            if (!TransLeq(o1, o2)) { Swap(ref o1, ref o2); Swap(ref d1, ref d2); }
+            if (!TransLeq(o1, d1))
+            {
+                Swap(ref o1, ref d1);
+            }
+
+            if (!TransLeq(o2, d2))
+            {
+                Swap(ref o2, ref d2);
+            }
+
+            if (!TransLeq(o1, o2))
+            {
+                Swap(ref o1, ref o2);
+                Swap(ref d1, ref d2);
+            }
 
             if (!TransLeq(o2, d1))
             {
@@ -282,6 +320,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     z1 = -z1;
                     z2 = -z2;
                 }
+
                 v._t = Interpolate(z1, o2._t, z2, d1._t);
             }
             else
@@ -294,6 +333,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     z1 = -z1;
                     z2 = -z2;
                 }
+
                 v._t = Interpolate(z1, o2._t, z2, d2._t);
             }
         }

@@ -23,8 +23,8 @@ namespace ProceduralToolkit
         /// <param name="angle">Angle in degrees</param>
         public static Vector2 PointOnCircle2(float radius, float angle)
         {
-            float angleInRadians = angle*Mathf.Deg2Rad;
-            return new Vector2(radius*Mathf.Sin(angleInRadians), radius*Mathf.Cos(angleInRadians));
+            float angleInRadians = angle * Mathf.Deg2Rad;
+            return new Vector2(radius * Mathf.Sin(angleInRadians), radius * Mathf.Cos(angleInRadians));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace ProceduralToolkit
         /// <param name="count">Number of points</param>
         public static List<Vector2> PointsOnCircle2(float radius, int count)
         {
-            float segmentAngle = 360f/count;
+            float segmentAngle = 360f / count;
             float currentAngle = 0;
             var points = new List<Vector2>(count);
             for (var i = 0; i < count; i++)
@@ -42,6 +42,7 @@ namespace ProceduralToolkit
                 points.Add(PointOnCircle2(radius, currentAngle));
                 currentAngle += segmentAngle;
             }
+
             return points;
         }
 
@@ -57,10 +58,11 @@ namespace ProceduralToolkit
             for (int i = 0; i < count; i++)
             {
                 // The 0.5 offset improves the position of the first point
-                float r = Mathf.Sqrt((i + 0.5f)/count);
-                points.Add(new Vector2(radius*Mathf.Sin(currentAngle)*r, radius*Mathf.Cos(currentAngle)*r));
+                float r = Mathf.Sqrt((i + 0.5f) / count);
+                points.Add(new Vector2(radius * Mathf.Sin(currentAngle) * r, radius * Mathf.Cos(currentAngle) * r));
                 currentAngle += PTUtils.GoldenAngle;
             }
+
             return points;
         }
 
@@ -160,16 +162,16 @@ namespace ProceduralToolkit
 
         private static Vector3 PointOnCircle3(int xIndex, int yIndex, float radius, float angle)
         {
-            float angleInRadians = angle*Mathf.Deg2Rad;
+            float angleInRadians = angle * Mathf.Deg2Rad;
             var point = new Vector3();
-            point[xIndex] = radius*Mathf.Sin(angleInRadians);
-            point[yIndex] = radius*Mathf.Cos(angleInRadians);
+            point[xIndex] = radius * Mathf.Sin(angleInRadians);
+            point[yIndex] = radius * Mathf.Cos(angleInRadians);
             return point;
         }
 
         private static List<Vector3> PointsOnCircle3(int xIndex, int yIndex, float radius, int count)
         {
-            float segmentAngle = 360f/count;
+            float segmentAngle = 360f / count;
             float currentAngle = 0;
             var points = new List<Vector3>(count);
             for (var i = 0; i < count; i++)
@@ -177,6 +179,7 @@ namespace ProceduralToolkit
                 points.Add(PointOnCircle3(xIndex, yIndex, radius, currentAngle));
                 currentAngle += segmentAngle;
             }
+
             return points;
         }
 
@@ -187,13 +190,14 @@ namespace ProceduralToolkit
             for (int i = 0; i < count; i++)
             {
                 // The 0.5 offset improves the position of the first point
-                float r = Mathf.Sqrt((i + 0.5f)/count);
+                float r = Mathf.Sqrt((i + 0.5f) / count);
                 var point = new Vector3();
-                point[xIndex] = radius*Mathf.Sin(currentAngle)*r;
-                point[yIndex] = radius*Mathf.Cos(currentAngle)*r;
+                point[xIndex] = radius * Mathf.Sin(currentAngle) * r;
+                point[yIndex] = radius * Mathf.Cos(currentAngle) * r;
                 points.Add(point);
                 currentAngle += PTUtils.GoldenAngle;
             }
+
             return points;
         }
 
@@ -217,14 +221,14 @@ namespace ProceduralToolkit
         /// <param name="verticalAngle">Vertical angle in degrees [-90, 90]</param>
         public static Vector3 PointOnSpheroid(float radius, float height, float horizontalAngle, float verticalAngle)
         {
-            float horizontalRadians = horizontalAngle*Mathf.Deg2Rad;
-            float verticalRadians = verticalAngle*Mathf.Deg2Rad;
+            float horizontalRadians = horizontalAngle * Mathf.Deg2Rad;
+            float verticalRadians = verticalAngle * Mathf.Deg2Rad;
             float cosVertical = Mathf.Cos(verticalRadians);
 
             return new Vector3(
-                x: radius*Mathf.Sin(horizontalRadians)*cosVertical,
-                y: height*Mathf.Sin(verticalRadians),
-                z: radius*Mathf.Cos(horizontalRadians)*cosVertical);
+                x: radius * Mathf.Sin(horizontalRadians) * cosVertical,
+                y: height * Mathf.Sin(verticalRadians),
+                z: radius * Mathf.Cos(horizontalRadians) * cosVertical);
         }
 
         /// <summary>
@@ -236,15 +240,15 @@ namespace ProceduralToolkit
         /// <param name="verticalAngle">Vertical angle in degrees [-90, 90]</param>
         public static Vector3 PointOnTeardrop(float radius, float height, float horizontalAngle, float verticalAngle)
         {
-            float horizontalRadians = horizontalAngle*Mathf.Deg2Rad;
-            float verticalRadians = verticalAngle*Mathf.Deg2Rad;
+            float horizontalRadians = horizontalAngle * Mathf.Deg2Rad;
+            float verticalRadians = verticalAngle * Mathf.Deg2Rad;
             float sinVertical = Mathf.Sin(verticalRadians);
-            float teardrop = (1 - sinVertical)*Mathf.Cos(verticalRadians)/2;
+            float teardrop = (1 - sinVertical) * Mathf.Cos(verticalRadians) / 2;
 
             return new Vector3(
-                x: radius*Mathf.Sin(horizontalRadians)*teardrop,
-                y: height*sinVertical,
-                z: radius*Mathf.Cos(horizontalRadians)*teardrop);
+                x: radius * Mathf.Sin(horizontalRadians) * teardrop,
+                y: height * sinVertical,
+                z: radius * Mathf.Cos(horizontalRadians) * teardrop);
         }
 
         /// <summary>
@@ -255,19 +259,20 @@ namespace ProceduralToolkit
         public static List<Vector3> PointsOnSphere(float radius, int count)
         {
             var points = new List<Vector3>(count);
-            float deltaY = -2f/count;
-            float y = 1 + deltaY/2;
+            float deltaY = -2f / count;
+            float y = 1 + deltaY / 2;
             float currentAngle = 0;
             for (int i = 0; i < count; i++)
             {
-                float r = Mathf.Sqrt(1 - y*y);
+                float r = Mathf.Sqrt(1 - y * y);
                 points.Add(new Vector3(
-                    x: radius*Mathf.Sin(currentAngle)*r,
-                    y: radius*y,
-                    z: radius*Mathf.Cos(currentAngle)*r));
+                    x: radius * Mathf.Sin(currentAngle) * r,
+                    y: radius * y,
+                    z: radius * Mathf.Cos(currentAngle) * r));
                 y += deltaY;
                 currentAngle += PTUtils.GoldenAngle;
             }
+
             return points;
         }
 
@@ -291,8 +296,8 @@ namespace ProceduralToolkit
         /// <param name="vertices">Number of polygon vertices</param>
         public static List<Vector2> StarPolygon2(int vertices, float innerRadius, float outerRadius)
         {
-            float segmentAngle = 360f/vertices;
-            float halfSegmentAngle = segmentAngle/2;
+            float segmentAngle = 360f / vertices;
+            float halfSegmentAngle = segmentAngle / 2;
             float currentAngle = 0;
             var polygon = new List<Vector2>(vertices);
             for (var i = 0; i < vertices; i++)
@@ -301,6 +306,7 @@ namespace ProceduralToolkit
                 polygon.Add(PointOnCircle2(innerRadius, currentAngle + halfSegmentAngle));
                 currentAngle += segmentAngle;
             }
+
             return polygon;
         }
 
@@ -331,7 +337,7 @@ namespace ProceduralToolkit
 
             degrees = VectorE.Angle360(toNext, toPrevious);
             Assert.IsFalse(float.IsNaN(degrees));
-            return toNext.RotateCW(degrees/2);
+            return toNext.RotateCW(degrees / 2);
         }
 
         /// <summary>
@@ -352,8 +358,9 @@ namespace ProceduralToolkit
                 float angle;
                 Vector2 bisector = GetAngleBisector(previous, current, next, out angle);
                 float angleOffset = GetAngleOffset(distance, angle);
-                newPolygon.Add(current - bisector*angleOffset);
+                newPolygon.Add(current - bisector * angleOffset);
             }
+
             return newPolygon;
         }
 
@@ -375,7 +382,7 @@ namespace ProceduralToolkit
                 float angle;
                 Vector2 bisector = GetAngleBisector(previous, current, next, out angle);
                 float angleOffset = GetAngleOffset(distance, angle);
-                offsets[i] = -bisector*angleOffset;
+                offsets[i] = -bisector * angleOffset;
             }
 
             for (int i = 0; i < polygon.Count; i++)
@@ -402,7 +409,7 @@ namespace ProceduralToolkit
                 float angle;
                 Vector2 bisector = GetAngleBisector(previous, current, next, out angle);
                 float angleOffset = GetAngleOffset(distance, angle);
-                offsets[i] = -bisector*angleOffset;
+                offsets[i] = -bisector * angleOffset;
             }
 
             for (int i = 0; i < polygon.Length; i++)
@@ -413,12 +420,12 @@ namespace ProceduralToolkit
 
         public static float GetAngleOffset(float edgeOffset, float angle)
         {
-            return edgeOffset/GetAngleBisectorSin(angle);
+            return edgeOffset / GetAngleBisectorSin(angle);
         }
 
         public static float GetAngleBisectorSin(float angle)
         {
-            return Mathf.Sin(angle*Mathf.Deg2Rad/2);
+            return Mathf.Sin(angle * Mathf.Deg2Rad / 2);
         }
 
         /// <summary>
@@ -434,6 +441,7 @@ namespace ProceduralToolkit
                 min = Vector2.Min(min, vertex);
                 max = Vector2.Max(max, vertex);
             }
+
             return Rect.MinMaxRect(min.x, min.y, max.x, max.y);
         }
 
@@ -450,7 +458,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static float GetCircumradius(float width, float height)
         {
-            return Mathf.Sqrt(width/2*width/2 + height/2*height/2);
+            return Mathf.Sqrt(width / 2 * width / 2 + height / 2 * height / 2);
         }
     }
 }

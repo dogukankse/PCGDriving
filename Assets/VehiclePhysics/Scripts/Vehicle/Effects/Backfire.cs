@@ -27,7 +27,7 @@ namespace NWH.VehiclePhysics
 
             if (vc.engine.FuelCutoff) Flash();
 
-            if(renderers != null && renderers.Count > 0)
+            if (renderers != null && renderers.Count > 0)
             {
                 progress = Mathf.Clamp01((startTime + duration) - Time.realtimeSinceStartup);
 

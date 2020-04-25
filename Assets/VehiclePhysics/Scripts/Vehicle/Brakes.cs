@@ -10,7 +10,7 @@ namespace NWH.VehiclePhysics
         /// Max brake torque that can be applied to each wheel. To adjust braking on per-axle basis change brake coefficients under Axle settings.
         /// </summary>
         [Tooltip("Max brake torque that can be applied to each wheel. " +
-            "To adjust braking on per-axle basis change brake coefficients under Axle settings")]
+                 "To adjust braking on per-axle basis change brake coefficients under Axle settings")]
         public float maxTorque = 5000f;
 
         /// <summary>
@@ -22,8 +22,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Time in seconds needed to reach full braking torque.
         /// </summary>
-        [Tooltip("Time in seconds needed to reach full braking torque.")]
-        [Range(0f, 5f)]
+        [Tooltip("Time in seconds needed to reach full braking torque.")] [Range(0f, 5f)]
         public float smoothing = 0.9f;
 
         /// <summary>
@@ -38,8 +37,7 @@ namespace NWH.VehiclePhysics
         [Tooltip("Set to true to use the air brake sound effect. Does not affect braking performance otherwise.")]
         public bool airBrakes = false;
 
-        [HideInInspector]
-        public float airBrakePressure;
+        [HideInInspector] public float airBrakePressure;
 
         private float intensity;
         private float intensityVelocity;
@@ -50,14 +48,8 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public bool Active
         {
-            get
-            {
-                return active;
-            }
-            set
-            {
-                active = value;
-            }
+            get { return active; }
+            set { active = value; }
         }
 
         public void Update(VehicleController vc)
@@ -69,7 +61,7 @@ namespace NWH.VehiclePhysics
                 wheel.ResetBrakes(0);
 
             // Add friction 
-            if(vc.input.Vertical.IsDeadzoneZero())
+            if (vc.input.Vertical.IsDeadzoneZero())
                 foreach (Wheel wheel in vc.Wheels)
                     wheel.AddBrakeTorque(frictionTorque);
 
@@ -78,10 +70,11 @@ namespace NWH.VehiclePhysics
 
             // Engine braking on too high RPM (e.g. improper downshift)
             float axleRpmSum = 0f;
-            foreach(Axle axle in vc.axles)
+            foreach (Axle axle in vc.axles)
             {
                 axleRpmSum += axle.NoSlipRPM;
             }
+
             float rpmFromWheels = axleRpmSum / vc.axles.Count;
             rpmFromWheels = vc.transmission.ReverseTransmitRPM(rpmFromWheels);
 
@@ -93,18 +86,24 @@ namespace NWH.VehiclePhysics
                 foreach (Axle axle in vc.axles)
                 {
                     // Only brake on powered axles as non-powered axles are not connected to the engine.
-                    if(axle.IsPowered)
+                    if (axle.IsPowered)
                     {
-                        axle.leftWheel.AddBrakeTorque(axle.leftWheel.WheelController.MaxPutDownForce * 1.1f * axle.leftWheel.Radius * axle.powerCoefficient * brakingIntensityModifier);
-                        axle.rightWheel.AddBrakeTorque(axle.rightWheel.WheelController.MaxPutDownForce * 1.1f * axle.rightWheel.Radius * axle.powerCoefficient * brakingIntensityModifier);
+                        axle.leftWheel.AddBrakeTorque(axle.leftWheel.WheelController.MaxPutDownForce * 1.1f *
+                                                      axle.leftWheel.Radius * axle.powerCoefficient *
+                                                      brakingIntensityModifier);
+                        axle.rightWheel.AddBrakeTorque(axle.rightWheel.WheelController.MaxPutDownForce * 1.1f *
+                                                       axle.rightWheel.Radius * axle.powerCoefficient *
+                                                       brakingIntensityModifier);
                     }
                 }
             }
-            
+
             // Engine braking when no throttle applied
             if (vc.input.Vertical.IsDeadzoneZero() && vc.transmission.Gear != 0 && !vc.transmission.Shifting)
             {
-                float bTorque = vc.transmission.TransmitTorque(vc.engine.ApproxMaxTorque * vc.engine.RPMPercent * vc.engine.RPMPercent * 0.15f);
+                float bTorque =
+                    vc.transmission.TransmitTorque(vc.engine.ApproxMaxTorque * vc.engine.RPMPercent *
+                                                   vc.engine.RPMPercent * 0.15f);
                 foreach (Axle axle in vc.axles)
                 {
                     // Only brake on powered axles as non-powered axles are not connected to the engine.
@@ -121,8 +120,10 @@ namespace NWH.VehiclePhysics
                 {
                     if (axle.handbrakeCoefficient > 0)
                     {
-                        axle.leftWheel.AddBrakeTorque(maxTorque * axle.handbrakeCoefficient * vc.input.Handbrake * brakingIntensityModifier);
-                        axle.rightWheel.AddBrakeTorque(maxTorque * axle.handbrakeCoefficient * vc.input.Handbrake * brakingIntensityModifier);
+                        axle.leftWheel.AddBrakeTorque(maxTorque * axle.handbrakeCoefficient * vc.input.Handbrake *
+                                                      brakingIntensityModifier);
+                        axle.rightWheel.AddBrakeTorque(maxTorque * axle.handbrakeCoefficient * vc.input.Handbrake *
+                                                       brakingIntensityModifier);
                     }
                 }
             }
@@ -131,7 +132,8 @@ namespace NWH.VehiclePhysics
             active = false;
 
             // Brake when idle
-            if (!vc.Active || (vc.Active && brakeWhileIdle && vc.input.Vertical.IsDeadzoneZero() && vc.transmission.Gear == 0 && vc.Speed < 0.1f))
+            if (!vc.Active || (vc.Active && brakeWhileIdle && vc.input.Vertical.IsDeadzoneZero() &&
+                               vc.transmission.Gear == 0 && vc.Speed < 0.1f))
             {
                 foreach (Axle axle in vc.axles)
                 {
@@ -141,14 +143,17 @@ namespace NWH.VehiclePhysics
             }
 
             // Brake on reverse direction
-            if (vc.transmission.transmissionType == Transmission.TransmissionType.Automatic || vc.transmission.transmissionType == Transmission.TransmissionType.AutomaticSequential)
+            if (vc.transmission.transmissionType == Transmission.TransmissionType.Automatic ||
+                vc.transmission.transmissionType == Transmission.TransmissionType.AutomaticSequential)
             {
-                if (Mathf.Abs(vc.input.Vertical) > 0.05f && 
-                    (Mathf.Sign(vc.transmission.Gear) != Mathf.Sign(vc.input.Vertical) || Mathf.Sign(vc.ForwardVelocity) != Mathf.Sign(vc.input.Vertical)))
+                if (Mathf.Abs(vc.input.Vertical) > 0.05f &&
+                    (Mathf.Sign(vc.transmission.Gear) != Mathf.Sign(vc.input.Vertical) ||
+                     Mathf.Sign(vc.ForwardVelocity) != Mathf.Sign(vc.input.Vertical)))
                 {
                     foreach (Wheel wheel in vc.Wheels)
                     {
-                        intensity = Mathf.SmoothDamp(intensity, Mathf.Abs(vc.input.Vertical), ref intensityVelocity, smoothing);
+                        intensity = Mathf.SmoothDamp(intensity, Mathf.Abs(vc.input.Vertical), ref intensityVelocity,
+                            smoothing);
                         wheel.SetBrakeIntensity(intensity * brakingIntensityModifier);
                     }
                 }
@@ -156,11 +161,13 @@ namespace NWH.VehiclePhysics
             else if (vc.transmission.transmissionType == Transmission.TransmissionType.Manual)
             {
                 if (vc.input.Vertical < 0
-                    || Mathf.Sign(vc.input.Vertical) != Mathf.Sign((vc.ForwardVelocity + 0.1f) * vc.transmission.GearRatio))
+                    || Mathf.Sign(vc.input.Vertical) !=
+                    Mathf.Sign((vc.ForwardVelocity + 0.1f) * vc.transmission.GearRatio))
                 {
                     foreach (Wheel wheel in vc.Wheels)
                     {
-                        intensity = Mathf.SmoothDamp(intensity, Mathf.Abs(vc.input.Vertical), ref intensityVelocity, smoothing);
+                        intensity = Mathf.SmoothDamp(intensity, Mathf.Abs(vc.input.Vertical), ref intensityVelocity,
+                            smoothing);
                         wheel.SetBrakeIntensity(intensity * brakingIntensityModifier);
                     }
                 }
@@ -188,8 +195,7 @@ namespace NWH.VehiclePhysics
                         wheel.BrakeTorque = -maxTorque;
                     }
                 }
-            }            
+            }
         }
     }
 }
-

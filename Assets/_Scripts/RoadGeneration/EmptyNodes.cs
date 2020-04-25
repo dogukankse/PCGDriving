@@ -1,35 +1,34 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class EmptyNodes : MonoBehaviour
+namespace _Scripts.RoadGeneration
 {
-    #region Car Nodes
-    [Header("Road")]
+    public class EmptyNodes : MonoBehaviour
+    {
+        #region Car Nodes
 
-    public TrafficSystemNode topLeft;
-    public TrafficSystemNode topRight;
-    public TrafficSystemNode bottomLeft;
-    public TrafficSystemNode bottomRight;
-    public TrafficSystemNode startLeft;
-    public TrafficSystemNode startRight;
-    public TrafficSystemNode endLeft;
-    public TrafficSystemNode endRight;
+        [Header("Road")] public TrafficSystemNode topLeft;
+        public TrafficSystemNode topRight;
+        public TrafficSystemNode bottomLeft;
+        public TrafficSystemNode bottomRight;
+        public TrafficSystemNode startLeft;
+        public TrafficSystemNode startRight;
+        public TrafficSystemNode endLeft;
+        public TrafficSystemNode endRight;
 
-    #endregion
+        #endregion
 
-    #region Pedestrian Nodes
+        #region Pedestrian Nodes
 
-    [Header("Pedestrian")]
+        [Header("Pedestrian")] 
+        public AIPoint topLeftP;
+        public AIPoint topRightP;
+        public AIPoint bottomLeftP;
+        public AIPoint bottomRightP;
+        public AIPoint startLeftP;
+        public AIPoint startRightP;
+        public AIPoint endLeftP;
+        public AIPoint endRightP;
 
-    
-    public PedestrianNode topLeftP;
-    public PedestrianNode topRightP;
-    public PedestrianNode bottomLeftP;
-    public PedestrianNode bottomRightP;
-    public PedestrianNode startLeftP;
-    public PedestrianNode startRightP;
-    public PedestrianNode endLeftP;
-    public PedestrianNode endRightP;
-
-    #endregion
+        #endregion
+    }
 }

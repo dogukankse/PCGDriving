@@ -13,22 +13,19 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Volume added to the base engine volume depending on engine state.
         /// </summary>
-        [Tooltip("Volume added to the base engine volume depending on engine state.")]
-        [Range(0, 1)]
+        [Tooltip("Volume added to the base engine volume depending on engine state.")] [Range(0, 1)]
         public float volumeRange = 0.5f;
 
         /// <summary>
         /// Pitch added to the base engine pitch depending on engine RPM.
         /// </summary>
-        [Tooltip("Pitch added to the base engine pitch depending on engine RPM.")]
-        [Range(0, 4)]
+        [Tooltip("Pitch added to the base engine pitch depending on engine RPM.")] [Range(0, 4)]
         public float pitchRange = 1.5f;
 
         /// <summary>
         /// Smoothing of engine sound.
         /// </summary>
-        [Tooltip("Smoothing of engine sound.")]
-        [Range(0, 1)]
+        [Tooltip("Smoothing of engine sound.")] [Range(0, 1)]
         public float smoothing = 0.1f;
 
         /// <summary>
@@ -87,7 +84,8 @@ namespace NWH.VehiclePhysics
                     float newVolume = (volume + Mathf.Clamp01(volumeModifier) * volumeRange);
 
                     // Set distortion
-                    audioMixerGroup.audioMixer.SetFloat("engineDistortion", Mathf.Lerp(0f, maxDistortion, volumeModifier));
+                    audioMixerGroup.audioMixer.SetFloat("engineDistortion",
+                        Mathf.Lerp(0f, maxDistortion, volumeModifier));
 
                     if (vc.engine.Starting)
                         newVolume = vc.engine.StartingPercent * volume;
@@ -116,4 +114,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

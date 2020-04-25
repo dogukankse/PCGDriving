@@ -36,12 +36,12 @@ namespace NWH.VehiclePhysics
             this.wheel = wheel;
 
             // Initialize skid smoke
-            if(vc.groundDetection.smokePrefab != null)
+            if (vc.groundDetection.smokePrefab != null)
             {
                 smokeGo = GameObject.Instantiate(vc.groundDetection.smokePrefab);
                 smokeGo.transform.parent = wheel.ControllerTransform;
                 smokeGo.transform.position = wheel.VisualTransform.position - wheel.VisualTransform.up * wheel.Radius
-                    + vc.transform.forward * wheel.Radius;
+                                             + vc.transform.forward * wheel.Radius;
                 smoke = smokeGo.GetComponent<ParticleSystem>();
 
                 var shape = smoke.shape;
@@ -73,19 +73,23 @@ namespace NWH.VehiclePhysics
             // Update skid smoke
             if (smoke != null)
             {
-                float forwardSmokeStrength = Mathf.Clamp01(wheel.ForwardSlip - vc.forwardSlipThreshold) * forwardSmokeCoeff;
+                float forwardSmokeStrength =
+                    Mathf.Clamp01(wheel.ForwardSlip - vc.forwardSlipThreshold) * forwardSmokeCoeff;
                 float sideSmokeStrength = Mathf.Clamp01(wheel.SideSlip - vc.sideSlipThreshold * 3f) * sideSmokeCoeff;
 
-                if(wheel.SmoothRPM < 100f)
+                if (wheel.SmoothRPM < 100f)
                 {
                     forwardSmokeStrength = 0;
                 }
 
                 float newSmokeEmissionRate = 0f;
-                if(groundEntity != null && wheel.IsGrounded && (wheel.HasForwardSlip || wheel.HasSideSlip) && prevGroundEntity == groundEntity)
+                if (groundEntity != null && wheel.IsGrounded && (wheel.HasForwardSlip || wheel.HasSideSlip) &&
+                    prevGroundEntity == groundEntity)
                 {
-                    newSmokeEmissionRate = groundEntity.smokeIntensity * Mathf.Clamp01(forwardSmokeStrength + sideSmokeStrength);
-                    smokeEmissionRate = Mathf.SmoothDamp(smokeEmissionRate, newSmokeEmissionRate, ref smokeEmissionRateVelocity, 4f);
+                    newSmokeEmissionRate = groundEntity.smokeIntensity *
+                                           Mathf.Clamp01(forwardSmokeStrength + sideSmokeStrength);
+                    smokeEmissionRate = Mathf.SmoothDamp(smokeEmissionRate, newSmokeEmissionRate,
+                        ref smokeEmissionRateVelocity, 4f);
                 }
                 else
                 {

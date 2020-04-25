@@ -9,6 +9,7 @@ namespace NWH.VehiclePhysics
     public partial class VehicleController : MonoBehaviour
     {
         #region PHOTON
+
 #if PHOTON_MULTIPLAYER
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
@@ -46,6 +47,7 @@ namespace NWH.VehiclePhysics
             }
         }
 #endif
-            #endregion
-        }
+
+        #endregion
+    }
 }

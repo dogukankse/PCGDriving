@@ -13,18 +13,22 @@ namespace ProceduralToolkit
         /// Lowercase letters from a to z
         /// </summary>
         public const string LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+
         /// <summary>
         /// Uppercase letters from A to Z
         /// </summary>
         public const string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
         /// <summary>
         /// Digits from 0 to 9
         /// </summary>
         public const string Digits = "0123456789";
+
         /// <summary>
         /// The concatenation of the strings <see cref="LowercaseLetters"/> and <see cref="UppercaseLetters"/>
         /// </summary>
         public const string Letters = LowercaseLetters + UppercaseLetters;
+
         /// <summary>
         /// The concatenation of the strings <see cref="Letters"/> and <see cref="Digits"/>
         /// </summary>
@@ -34,18 +38,21 @@ namespace ProceduralToolkit
         /// Square root of 0.5
         /// </summary>
         public const float Sqrt05 = 0.7071067811865475244f;
+
         /// <summary>
         /// Square root of 2
         /// </summary>
         public const float Sqrt2 = 1.4142135623730950488f;
+
         /// <summary>
         /// Square root of 5
         /// </summary>
         public const float Sqrt5 = 2.2360679774997896964f;
+
         /// <summary>
         /// Golden angle in radians
         /// </summary>
-        public const float GoldenAngle = Mathf.PI*(3 - Sqrt5);
+        public const float GoldenAngle = Mathf.PI * (3 - Sqrt5);
 
         /// <summary>
         /// Swaps values of <paramref name="left"/> and <paramref name="right"/>
@@ -86,6 +93,7 @@ namespace ProceduralToolkit
                     knapsack[key] = 0;
                 }
             }
+
             return Knapsack(set, keys, capacity, knapsack, 0);
         }
 
@@ -98,15 +106,17 @@ namespace ProceduralToolkit
                 knapsack[smallestKey] = 1;
                 return knapsack;
             }
+
             // Cycle through items and try to put them in knapsack
             for (var i = startIndex; i < keys.Count; i++)
             {
                 T key = keys[i];
                 float weight = set[key];
                 // Larger items won't fit, smaller items will fill as much space as they can
-                knapsack[key] += (int) (remainder/weight);
+                knapsack[key] += (int) (remainder / weight);
                 remainder %= weight;
             }
+
             if (remainder > 0)
             {
                 // Throw out largest item and try again
@@ -120,26 +130,31 @@ namespace ProceduralToolkit
                         {
                             return knapsack;
                         }
+
                         knapsack[key]--;
                         remainder += set[key];
                         startIndex = i + 1;
                         break;
                     }
                 }
+
                 knapsack = Knapsack(set, keys, remainder, knapsack, startIndex);
             }
+
             return knapsack;
         }
 
         public static string ToString(this Vector3 vector, string format, IFormatProvider formatProvider)
         {
-            return string.Format("({0}, {1}, {2})", vector.x.ToString(format, formatProvider), vector.y.ToString(format, formatProvider),
+            return string.Format("({0}, {1}, {2})", vector.x.ToString(format, formatProvider),
+                vector.y.ToString(format, formatProvider),
                 vector.z.ToString(format, formatProvider));
         }
 
         public static string ToString(this Quaternion quaternion, string format, IFormatProvider formatProvider)
         {
-            return string.Format("({0}, {1}, {2}, {3})", quaternion.x.ToString(format, formatProvider), quaternion.y.ToString(format, formatProvider),
+            return string.Format("({0}, {1}, {2}, {3})", quaternion.x.ToString(format, formatProvider),
+                quaternion.y.ToString(format, formatProvider),
                 quaternion.z.ToString(format, formatProvider), quaternion.w.ToString(format, formatProvider));
         }
 

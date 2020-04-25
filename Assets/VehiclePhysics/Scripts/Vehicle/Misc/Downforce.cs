@@ -54,7 +54,8 @@ namespace NWH.VehiclePhysics
 
             foreach (DownforcePoint dp in downforcePoints)
             {
-                vc.vehicleRigidbody.AddForceAtPosition(forceCoeff * dp.maxForce * -transform.up, transform.TransformPoint(dp.position));
+                vc.vehicleRigidbody.AddForceAtPosition(forceCoeff * dp.maxForce * -transform.up,
+                    transform.TransformPoint(dp.position));
             }
         }
 
@@ -68,4 +69,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

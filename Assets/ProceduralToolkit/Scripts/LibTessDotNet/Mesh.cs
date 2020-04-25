@@ -91,18 +91,20 @@ namespace ProceduralToolkit.LibTessDotNet
                 fNext = f._next;
                 pool.Return(f);
             }
+
             for (MeshUtils.Vertex v = _vHead, vNext = _vHead; v._next != null; v = vNext)
             {
                 vNext = v._next;
                 pool.Return(v);
             }
+
             for (MeshUtils.Edge e = _eHead, eNext = _eHead; e._next != null; e = eNext)
             {
                 eNext = e._next;
                 pool.Return(e._Sym);
                 pool.Return(e);
             }
-            
+
             _vHead = null;
             _fHead = null;
             _eHead = _eHeadSym = null;
@@ -161,6 +163,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 joiningVertices = true;
                 MeshUtils.KillVertex(pool, eDst._Org, eOrg._Org);
             }
+
             bool joiningLoops = false;
             if (eDst._Lface != eOrg._Lface)
             {
@@ -179,6 +182,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 MeshUtils.MakeVertex(pool, eDst, eOrg._Org);
                 eOrg._Org._anEdge = eOrg;
             }
+
             if (!joiningLoops)
             {
                 // We split one loop into two -- the new loop is eDst->Lface.
@@ -351,7 +355,8 @@ namespace ProceduralToolkit.LibTessDotNet
             // walk around face, deleting edges whose right face is also NULL
             var eNext = eStart._Lnext;
             MeshUtils.Edge e, eSym;
-            do {
+            do
+            {
                 e = eNext;
                 eNext = e._Lnext;
 
@@ -370,6 +375,7 @@ namespace ProceduralToolkit.LibTessDotNet
                         e._Org._anEdge = e._Onext;
                         MeshUtils.Splice(e, e._Oprev);
                     }
+
                     eSym = e._Sym;
                     if (eSym._Onext == eSym)
                     {
@@ -381,6 +387,7 @@ namespace ProceduralToolkit.LibTessDotNet
                         eSym._Org._anEdge = eSym._Onext;
                         MeshUtils.Splice(eSym, eSym._Oprev);
                     }
+
                     MeshUtils.KillEdge(pool, e);
                 }
             } while (e != eStart);
@@ -449,7 +456,8 @@ namespace ProceduralToolkit.LibTessDotNet
             for (fPrev = _fHead; (f = fPrev._next) != _fHead; fPrev = f)
             {
                 e = f._anEdge;
-                do {
+                do
+                {
                     Debug.Assert(e._Sym != e);
                     Debug.Assert(e._Sym._Sym == e);
                     Debug.Assert(e._Lnext._Onext._Sym == e);
@@ -458,6 +466,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     e = e._Lnext;
                 } while (e != f._anEdge);
             }
+
             Debug.Assert(f._prev == fPrev && f._anEdge == null);
 
             MeshUtils.Vertex vPrev = _vHead, v;
@@ -475,6 +484,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     e = e._Onext;
                 } while (e != v._anEdge);
             }
+
             Debug.Assert(v._prev == vPrev && v._anEdge == null);
 
             MeshUtils.Edge ePrev = _eHead;
@@ -488,11 +498,12 @@ namespace ProceduralToolkit.LibTessDotNet
                 Debug.Assert(e._Lnext._Onext._Sym == e);
                 Debug.Assert(e._Onext._Sym._Lnext == e);
             }
+
             Debug.Assert(e._Sym._next == ePrev._Sym
-                && e._Sym == _eHeadSym
-                && e._Sym._Sym == e
-                && e._Org == null && e._Dst == null
-                && e._Lface == null && e._Rface == null);
+                         && e._Sym == _eHeadSym
+                         && e._Sym._Sym == e
+                         && e._Org == null && e._Dst == null
+                         && e._Lface == null && e._Rface == null);
         }
     }
 }

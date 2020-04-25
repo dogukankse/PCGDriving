@@ -14,8 +14,7 @@ namespace ProceduralToolkit.Examples
         public RectTransform leftPanel;
         public ToggleGroup toggleGroup;
         public RawImage image;
-        [Space]
-        public CellularAutomaton.Config config = new CellularAutomaton.Config();
+        [Space] public CellularAutomaton.Config config = new CellularAutomaton.Config();
 
         private enum RulesetName
         {
@@ -35,20 +34,21 @@ namespace ProceduralToolkit.Examples
         private Color aliveColor;
         private TextControl header;
 
-        private Dictionary<RulesetName, CellularAutomaton.Ruleset> nameToRuleset = new Dictionary<RulesetName, CellularAutomaton.Ruleset>
-        {
-            {RulesetName.Life, CellularAutomaton.Ruleset.life},
-            {RulesetName.Mazectric, CellularAutomaton.Ruleset.mazectric},
-            {RulesetName.Coral, CellularAutomaton.Ruleset.coral},
-            {RulesetName.WalledCities, CellularAutomaton.Ruleset.walledCities},
-            {RulesetName.Coagulations, CellularAutomaton.Ruleset.coagulations},
-            {RulesetName.Anneal, CellularAutomaton.Ruleset.anneal},
-            {RulesetName.Majority, CellularAutomaton.Ruleset.majority},
-        };
+        private Dictionary<RulesetName, CellularAutomaton.Ruleset> nameToRuleset =
+            new Dictionary<RulesetName, CellularAutomaton.Ruleset>
+            {
+                {RulesetName.Life, CellularAutomaton.Ruleset.life},
+                {RulesetName.Mazectric, CellularAutomaton.Ruleset.mazectric},
+                {RulesetName.Coral, CellularAutomaton.Ruleset.coral},
+                {RulesetName.WalledCities, CellularAutomaton.Ruleset.walledCities},
+                {RulesetName.Coagulations, CellularAutomaton.Ruleset.coagulations},
+                {RulesetName.Anneal, CellularAutomaton.Ruleset.anneal},
+                {RulesetName.Majority, CellularAutomaton.Ruleset.majority},
+            };
 
         private void Awake()
         {
-            pixels = new Color[config.width*config.height];
+            pixels = new Color[config.width * config.height];
             texture = new Texture2D(config.width, config.height, TextureFormat.ARGB32, false, true)
             {
                 filterMode = FilterMode.Point
@@ -121,11 +121,11 @@ namespace ProceduralToolkit.Examples
                 {
                     if (automaton.cells[x, y])
                     {
-                        pixels[y*config.width + x] = aliveColor;
+                        pixels[y * config.width + x] = aliveColor;
                     }
                     else
                     {
-                        pixels[y*config.width + x] = deadColor;
+                        pixels[y * config.width + x] = deadColor;
                     }
                 }
             }

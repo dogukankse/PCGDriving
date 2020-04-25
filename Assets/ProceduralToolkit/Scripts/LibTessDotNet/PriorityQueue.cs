@@ -51,7 +51,10 @@ namespace ProceduralToolkit.LibTessDotNet
         private int _size, _max;
         private bool _initialized;
 
-        public bool Empty { get { return _size == 0 && _heap.Empty; } }
+        public bool Empty
+        {
+            get { return _size == 0 && _heap.Empty; }
+        }
 
         public PriorityQueue(int initialSize, PriorityHeap<TValue>.LessOrEqual leq)
         {
@@ -91,7 +94,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 _order[i] = piv;
             }
 
-            stack.Push(new StackItem { p = p, r = r });
+            stack.Push(new StackItem {p = p, r = r});
             while (stack.Count > 0)
             {
                 var top = stack.Pop();
@@ -101,29 +104,40 @@ namespace ProceduralToolkit.LibTessDotNet
                 while (r > p + 10)
                 {
                     seed = seed * 1539415821 + 1;
-                    i = p + (int)(seed % (r - p + 1));
+                    i = p + (int) (seed % (r - p + 1));
                     piv = _order[i];
                     _order[i] = _order[p];
                     _order[p] = piv;
                     i = p - 1;
                     j = r + 1;
-                    do {
-                        do { ++i; } while (!_leq(_keys[_order[i]], _keys[piv]));
-                        do { --j; } while (!_leq(_keys[piv], _keys[_order[j]]));
+                    do
+                    {
+                        do
+                        {
+                            ++i;
+                        } while (!_leq(_keys[_order[i]], _keys[piv]));
+
+                        do
+                        {
+                            --j;
+                        } while (!_leq(_keys[piv], _keys[_order[j]]));
+
                         Swap(ref _order[i], ref _order[j]);
                     } while (i < j);
+
                     Swap(ref _order[i], ref _order[j]);
                     if (i - p < r - j)
                     {
-                        stack.Push(new StackItem { p = j + 1, r = r });
+                        stack.Push(new StackItem {p = j + 1, r = r});
                         r = i - 1;
                     }
                     else
                     {
-                        stack.Push(new StackItem { p = p, r = i - 1 });
+                        stack.Push(new StackItem {p = p, r = i - 1});
                         p = j + 1;
                     }
                 }
+
                 for (i = p + 1; i <= r; ++i)
                 {
                     piv = _order[i];
@@ -131,6 +145,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     {
                         _order[j] = _order[j - 1];
                     }
+
                     _order[j] = piv;
                 }
             }
@@ -164,7 +179,7 @@ namespace ProceduralToolkit.LibTessDotNet
             }
 
             _keys[curr] = value;
-            return new PQHandle { _handle = -(curr + 1) };
+            return new PQHandle {_handle = -(curr + 1)};
         }
 
         public TValue ExtractMin()
@@ -175,6 +190,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 return _heap.ExtractMin();
             }
+
             TValue sortMin = _keys[_order[_size - 1]];
             if (!_heap.Empty)
             {
@@ -182,7 +198,9 @@ namespace ProceduralToolkit.LibTessDotNet
                 if (_leq(heapMin, sortMin))
                     return _heap.ExtractMin();
             }
-            do {
+
+            do
+            {
                 --_size;
             } while (_size > 0 && _keys[_order[_size - 1]] == null);
 
@@ -197,6 +215,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 return _heap.Minimum();
             }
+
             TValue sortMin = _keys[_order[_size - 1]];
             if (!_heap.Empty)
             {
@@ -204,6 +223,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 if (_leq(heapMin, sortMin))
                     return heapMin;
             }
+
             return sortMin;
         }
 
@@ -217,6 +237,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 _heap.Remove(handle);
                 return;
             }
+
             curr = -(curr + 1);
             Debug.Assert(curr < _max && _keys[curr] != null);
 

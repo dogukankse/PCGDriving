@@ -32,7 +32,7 @@ namespace NWH.VehiclePhysics
                     vc.engine.forcedInduction.flutterSoundFlag = false;
                     Source.pitch = pitch + pitch * Random.Range(-0.3f, 0.3f);
                     float newVolume = Mathf.Clamp01(volume * Mathf.Pow(vc.engine.forcedInduction.SpoolPercent, 4f));
-                    if(newVolume > 0.2f * volume)
+                    if (newVolume > 0.2f * volume)
                     {
                         SetVolume(newVolume);
                         Source.Play();

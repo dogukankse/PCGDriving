@@ -19,7 +19,8 @@ namespace NWH.VehiclePhysics
         /// If the vehicle is a trailer, this is the object placed at the point at which it will connect to the towing vehicle.
         /// If the vehicle is towing, this is the object placed at point at which trailer will be coneected.
         /// </summary>
-        [Tooltip("If the vehicle is a trailer, this is the object placed at the point at which it will connect to the towing vehicle." +
+        [Tooltip(
+            "If the vehicle is a trailer, this is the object placed at the point at which it will connect to the towing vehicle." +
             " If the vehicle is towing, this is the object placed at point at which trailer will be coneected.")]
         public GameObject attachmentPoint = null;
 
@@ -56,8 +57,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// True if object is trailer and is attached to a towing vehicle and also true if towing vehicle and has trailer attached.
         /// </summary>
-        [HideInInspector]
-        public bool attached;
+        [HideInInspector] public bool attached;
 
         /// <summary>
         /// Power reduction that will be applied when vehicle has no trailer to avoid wheel spin when controlled with a binary controller.
@@ -93,10 +93,11 @@ namespace NWH.VehiclePhysics
         {
             get
             {
-                if(!isTrailer && !attached)
+                if (!isTrailer && !attached)
                 {
                     return maxNoTrailerPowerReduction;
                 }
+
                 return 0;
             }
         }
@@ -104,17 +105,17 @@ namespace NWH.VehiclePhysics
         // Update is called once per frame
         public void Update()
         {
-            if(!isTrailer)
+            if (!isTrailer)
             {
                 UpdateTractor();
-            }    
+            }
             else
             {
                 UpdateTrailer();
             }
 
             // Wait for physics to settle before attaching trailer
-            if(Time.frameCount == 15f)
+            if (Time.frameCount == 15f)
             {
                 if (attachOnPlay && !isTrailer)
                 {
@@ -145,7 +146,8 @@ namespace NWH.VehiclePhysics
                             otherController = trailerGO.GetComponent<VehicleController>();
                             if (otherController != null && otherController.trailer.isTrailer && otherController.enabled)
                             {
-                                Vector3 dir = otherController.trailer.attachmentPoint.transform.position - vc.trailer.attachmentPoint.transform.position;
+                                Vector3 dir = otherController.trailer.attachmentPoint.transform.position -
+                                              vc.trailer.attachmentPoint.transform.position;
                                 float dist = dir.sqrMagnitude;
 
                                 if (dist < attachDistanceThreshold)
@@ -182,7 +184,7 @@ namespace NWH.VehiclePhysics
                 DetachTrailer();
             }
 
-            if(trailerVC != null && attached)
+            if (trailerVC != null && attached)
             {
                 trailerVC.transmission.Gear = vc.transmission.Gear;
             }
@@ -192,10 +194,12 @@ namespace NWH.VehiclePhysics
 
         private void AttachTrailer()
         {
-            if(nearestTrailerVC != null)
+            if (nearestTrailerVC != null)
             {
                 trailerVC = nearestTrailerVC;
-                trailerVC.transform.position = trailerVC.transform.position - (trailerVC.trailer.attachmentPoint.transform.position - vc.trailer.attachmentPoint.transform.position);
+                trailerVC.transform.position = trailerVC.transform.position -
+                                               (trailerVC.trailer.attachmentPoint.transform.position -
+                                                vc.trailer.attachmentPoint.transform.position);
 
                 cj = trailerVC.gameObject.GetComponent<ConfigurableJoint>();
                 if (cj == null)
@@ -243,11 +247,10 @@ namespace NWH.VehiclePhysics
         private void RemoveAllJoints()
         {
             var joints = vc.gameObject.GetComponents<ConfigurableJoint>();
-            foreach(ConfigurableJoint joint in joints)
+            foreach (ConfigurableJoint joint in joints)
             {
                 GameObject.Destroy(joint);
             }
         }
     }
 }
-

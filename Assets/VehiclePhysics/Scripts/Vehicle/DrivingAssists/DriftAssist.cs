@@ -16,17 +16,19 @@ namespace NWH.VehiclePhysics
         public void Update(VehicleController vc)
         {
             // Drift assist
-            if(intensity > 0)
+            if (intensity > 0)
             {
                 Vector3 normVel = vc.vehicleRigidbody.velocity.normalized;
                 Vector3 vehicleDir = vc.transform.forward;
                 float driftAngle = VehicleController.AngleSigned(normVel, vehicleDir, vc.transform.up);
-                driftAngle = Mathf.Sign(driftAngle) * Mathf.Clamp(Mathf.Abs(Mathf.Clamp(driftAngle, -90f, 90f)), 0f, Mathf.Infinity);
+                driftAngle = Mathf.Sign(driftAngle) *
+                             Mathf.Clamp(Mathf.Abs(Mathf.Clamp(driftAngle, -90f, 90f)), 0f, Mathf.Infinity);
 
                 if (vc.axles.Count > 0)
                 {
                     Axle a = vc.axles[vc.axles.Count - 1];
-                    Vector3 center = (a.leftWheel.ControllerTransform.position + a.rightWheel.ControllerTransform.position) / 2f;
+                    Vector3 center = (a.leftWheel.ControllerTransform.position +
+                                      a.rightWheel.ControllerTransform.position) / 2f;
                     float forceMag = driftAngle * Mathf.Lerp(0f, vc.vehicleRigidbody.mass, vc.Speed / 15f) * intensity;
                     Vector3 force = vc.transform.right * forceMag;
                     vc.vehicleRigidbody.AddForceAtPosition(force, center);

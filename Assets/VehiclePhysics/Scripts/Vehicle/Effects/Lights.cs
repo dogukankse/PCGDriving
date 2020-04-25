@@ -13,8 +13,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Determines the state of all lights.
         /// </summary>
-        [HideInInspector]
-        public bool enabled = true;
+        [HideInInspector] public bool enabled = true;
+
         private bool prevEnabled = false;
 
         /// <summary>
@@ -34,13 +34,17 @@ namespace NWH.VehiclePhysics
             /// <summary>
             /// List of mesh renderers with standard shader. Emission will be turned on or off depending on light state.
             /// </summary>
-            [Tooltip("List of mesh renderers with standard shader. Emission will be turned on or off depending on light state.")]
+            [Tooltip(
+                "List of mesh renderers with standard shader. Emission will be turned on or off depending on light state.")]
             public List<MeshRenderer> lightMeshRenderers = new List<MeshRenderer>();
 
             /// <summary>
             /// State of the light.
             /// </summary>
-            public bool On { get { return active; } }
+            public bool On
+            {
+                get { return active; }
+            }
 
             /// <summary>
             /// Turns on the light source or enables emission on the mesh. Mesh is required to have standard shader.
@@ -67,7 +71,7 @@ namespace NWH.VehiclePhysics
             {
                 active = false;
 
-                foreach(Light light in lightSources)
+                foreach (Light light in lightSources)
                 {
                     light.enabled = false;
                 }
@@ -100,14 +104,12 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Low beam lights.
         /// </summary>
-        [Tooltip("Low beam lights.")]
-        public VehicleLight headLights = new VehicleLight();
+        [Tooltip("Low beam lights.")] public VehicleLight headLights = new VehicleLight();
 
         /// <summary>
         /// High (full) beam lights.
         /// </summary>
-        [Tooltip("High (full) beam lights.")]
-        public VehicleLight fullBeams = new VehicleLight();
+        [Tooltip("High (full) beam lights.")] public VehicleLight fullBeams = new VehicleLight();
 
         /// <summary>
         /// Blinkers on the left side of the vehicle.
@@ -128,10 +130,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public bool BlinkerState
         {
-            get
-            {
-                return (int)(Time.realtimeSinceStartup * 2) % 2 == 0;
-            }
+            get { return (int) (Time.realtimeSinceStartup * 2) % 2 == 0; }
         }
 
         public void Initialize(VehicleController vc)
@@ -156,7 +155,7 @@ namespace NWH.VehiclePhysics
 
         public void Update()
         {
-            if(enabled && vc != null)
+            if (enabled && vc != null)
             {
                 // Stop lights
                 if (stopLights != null)
@@ -174,7 +173,7 @@ namespace NWH.VehiclePhysics
                 // Reverse lights
                 if (reverseLights != null)
                 {
-                    if(vc.transmission.Gear < 0)
+                    if (vc.transmission.Gear < 0)
                     {
                         reverseLights.TurnOn();
                     }
@@ -277,7 +276,7 @@ namespace NWH.VehiclePhysics
             }
 
             // Disable all lights if enabled is set to false.
-            if(prevEnabled == true && enabled == false)
+            if (prevEnabled == true && enabled == false)
             {
                 TurnOffAllLights();
             }

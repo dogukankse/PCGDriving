@@ -15,8 +15,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Spatial blend of all audio sources. Can not be changed at runtime.
         /// </summary>
-        [Tooltip("Spatial blend of all audio sources. Can not be changed at runtime.")]
-        [Range(0, 1)]
+        [Tooltip("Spatial blend of all audio sources. Can not be changed at runtime.")] [Range(0, 1)]
         public float spatialBlend = 1f;
 
         /// <summary>
@@ -27,7 +26,6 @@ namespace NWH.VehiclePhysics
         public float masterVolume = 1f;
 
         [Header("Engine")]
-
         /// <summary>
         /// Sound of engine idling.
         /// </summary>
@@ -43,7 +41,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Forced induction whistle component. Can be used for air intake noise or supercharger if spool up time is set to 0 under engine settings.
         /// </summary>
-        [Tooltip("Forced induction whistle component. Can be used for air intake noise or supercharger if spool up time is set to 0 under engine settings.")]
+        [Tooltip(
+            "Forced induction whistle component. Can be used for air intake noise or supercharger if spool up time is set to 0 under engine settings.")]
         public TurboWhistleComponent turboWhistleComponent = new TurboWhistleComponent();
 
         /// <summary>
@@ -59,7 +58,6 @@ namespace NWH.VehiclePhysics
         public BackfireComponent exhaustPopComponent = new BackfireComponent();
 
         [Header("Transmission")]
-
         /// <summary>
         /// Transmission whine from straight cut gears or just a noisy gearbox.
         /// </summary>
@@ -73,7 +71,6 @@ namespace NWH.VehiclePhysics
         public GearChangeComponent gearChangeComponent = new GearChangeComponent();
 
         [Header("Suspension")]
-
         /// <summary>
         /// Sound from wheels hitting ground and/or obstracles. Supports multiple clips.
         /// </summary>
@@ -81,7 +78,6 @@ namespace NWH.VehiclePhysics
         public SuspensionComponent suspensionComponent = new SuspensionComponent();
 
         [Header("Surface Noise")]
-
         /// <summary>
         /// Sound produced by wheel rolling over a surface. Tire hum.
         /// </summary>
@@ -95,7 +91,6 @@ namespace NWH.VehiclePhysics
         public SkidComponent skidComponent = new SkidComponent();
 
         [Header("Crash")]
-
         /// <summary>
         /// Sound of vehicle hitting other objects. Supports multiple clips.
         /// </summary>
@@ -103,7 +98,6 @@ namespace NWH.VehiclePhysics
         public CrashComponent crashComponent = new CrashComponent();
 
         [Header("Other")]
-
         /// <summary>
         /// Sound of air brakes releasing air. Supports multiple clips.
         /// </summary>
@@ -113,19 +107,19 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Tick-tock sound of a working blinker. First clip is played when blinker is turning on and second clip is played when blinker is turning off.
         /// </summary>
-        [Tooltip("Tick-tock sound of a working blinker. First clip is played when blinker is turning on and second clip is played when blinker is turning off.")]
+        [Tooltip(
+            "Tick-tock sound of a working blinker. First clip is played when blinker is turning on and second clip is played when blinker is turning off.")]
         public BlinkerComponent blinkerComponent = new BlinkerComponent();
 
-        [Tooltip("Horn sound.")]
-        public HornComponent hornComponent = new HornComponent();
+        [Tooltip("Horn sound.")] public HornComponent hornComponent = new HornComponent();
 
         [Header("Interior Parameters")]
-
         /// <summary>
         /// Set to true if listener inside vehicle. Mixer must be set up.
         /// </summary>
         [Tooltip("Set to true if listener is inside the vehicle. Mixer must be set up.")]
         public bool insideVehicle = false;
+
         private bool wasInsideVehickle = false;
 
         /// <summary>
@@ -136,33 +130,24 @@ namespace NWH.VehiclePhysics
 
         public float lowPassFrequency = 6000f;
 
-        [Range(1f, 10f)]
-        public float lowPassQ = 1f;
+        [Range(1f, 10f)] public float lowPassQ = 1f;
 
 
-        [HideInInspector]
-        public AudioMixerGroup masterGroup;
+        [HideInInspector] public AudioMixerGroup masterGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup engineMixerGroup;
+        [HideInInspector] public AudioMixerGroup engineMixerGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup transmissionMixerGroup;
+        [HideInInspector] public AudioMixerGroup transmissionMixerGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup surfaceNoiseMixerGroup;
+        [HideInInspector] public AudioMixerGroup surfaceNoiseMixerGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup turboMixerGroup;
+        [HideInInspector] public AudioMixerGroup turboMixerGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup suspensionMixerGroup;
+        [HideInInspector] public AudioMixerGroup suspensionMixerGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup crashMixerGroup;
+        [HideInInspector] public AudioMixerGroup crashMixerGroup;
 
-        [HideInInspector]
-        public AudioMixerGroup otherMixerGroup;
+        [HideInInspector] public AudioMixerGroup otherMixerGroup;
 
         private float originalAttenuation;
 
@@ -204,7 +189,7 @@ namespace NWH.VehiclePhysics
                 gearChangeComponent,
                 airBrakeComponent,
                 blinkerComponent,
-                hornComponent, 
+                hornComponent,
                 exhaustPopComponent
             };
 
@@ -239,12 +224,13 @@ namespace NWH.VehiclePhysics
                 audioMixer.SetFloat("lowPassFrequency", lowPassFrequency);
                 audioMixer.SetFloat("lowPassQ", lowPassQ);
             }
-            else if(wasInsideVehickle && !insideVehicle)
+            else if (wasInsideVehickle && !insideVehicle)
             {
                 audioMixer.SetFloat("attenuation", originalAttenuation);
                 audioMixer.SetFloat("lowPassFrequency", 22000f);
                 audioMixer.SetFloat("lowPassQ", 1f);
             }
+
             wasInsideVehickle = insideVehicle;
 
             // Update individual components.
@@ -275,7 +261,8 @@ namespace NWH.VehiclePhysics
         /// <param name="loop">Should clip be looped?</param>
         /// <param name="volume">Volume of the audio source.</param>
         /// <param name="clip">Clip that will be set at the start.</param>
-        public void SetAudioSourceDefaults(AudioSource audioSource, bool play = false, bool loop = false, float volume = 0f, AudioClip clip = null)
+        public void SetAudioSourceDefaults(AudioSource audioSource, bool play = false, bool loop = false,
+            float volume = 0f, AudioClip clip = null)
         {
             if (audioSource != null)
             {
@@ -394,9 +381,9 @@ namespace NWH.VehiclePhysics
             }
             catch
             {
-                Debug.LogWarning("One or more of the default sound resources could not be found. Default sounds will not be assigned.");
+                Debug.LogWarning(
+                    "One or more of the default sound resources could not be found. Default sounds will not be assigned.");
             }
         }
     }
 }
-

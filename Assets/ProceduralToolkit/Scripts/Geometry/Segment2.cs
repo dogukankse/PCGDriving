@@ -15,11 +15,18 @@ namespace ProceduralToolkit
         /// <summary>
         /// Returns the normalized direction of the segment
         /// </summary>
-        public Vector2 direction { get { return (b - a).normalized; } }
+        public Vector2 direction
+        {
+            get { return (b - a).normalized; }
+        }
+
         /// <summary>
         /// Returns the length of the segment
         /// </summary>
-        public float length { get { return (b - a).magnitude; } }
+        public float length
+        {
+            get { return (b - a).magnitude; }
+        }
 
         public Segment2(Vector2 a, Vector2 b)
         {
@@ -72,7 +79,7 @@ namespace ProceduralToolkit
         public static Segment2 Lerp(Segment2 a, Segment2 b, float t)
         {
             t = Mathf.Clamp01(t);
-            return new Segment2(a.a + (b.a - a.a)*t, a.b + (b.b - a.b)*t);
+            return new Segment2(a.a + (b.a - a.a) * t, a.b + (b.b - a.b) * t);
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Segment2 LerpUnclamped(Segment2 a, Segment2 b, float t)
         {
-            return new Segment2(a.a + (b.a - a.a)*t, a.b + (b.b - a.b)*t);
+            return new Segment2(a.a + (b.a - a.a) * t, a.b + (b.b - a.b) * t);
         }
 
         #region Casting operators
@@ -149,7 +156,8 @@ namespace ProceduralToolkit
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return string.Format("Segment2(a: {0}, b: {1})", a.ToString(format, formatProvider), b.ToString(format, formatProvider));
+            return string.Format("Segment2(a: {0}, b: {1})", a.ToString(format, formatProvider),
+                b.ToString(format, formatProvider));
         }
     }
 }

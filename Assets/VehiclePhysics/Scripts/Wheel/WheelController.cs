@@ -11,56 +11,46 @@ namespace NWH.WheelController3D
     [Serializable]
     public partial class WheelController : MonoBehaviour
     {
-        [SerializeField]
-        public Wheel wheel;
+        [SerializeField] public Wheel wheel;
 
-        [SerializeField, HideInInspector]
-        public Spring spring;
+        [SerializeField, HideInInspector] public Spring spring;
 
-        [SerializeField, HideInInspector]
-        public Damper damper;
+        [SerializeField, HideInInspector] public Damper damper;
 
         /// <summary>
         /// Forward (longitudinal) friction info.
         /// </summary>
-        [SerializeField, HideInInspector]
-        public Friction fFriction;
+        [SerializeField, HideInInspector] public Friction fFriction;
 
         /// <summary>
         /// Side (lateral) friction info.
         /// </summary>
-        [SerializeField, HideInInspector]
-        public Friction sFriction;
+        [SerializeField, HideInInspector] public Friction sFriction;
 
         /// <summary>
         /// Array of rays and related data that are shot each frame to detect surface features.
         /// Contains offsets, hit points, normals, etc. of each point.
         /// </summary>
-        [SerializeField]
-        private WheelHit[] wheelHits;
+        [SerializeField] private WheelHit[] wheelHits;
 
-        [SerializeField]
-        private LayerMask scanIgnoreLayers = Physics.IgnoreRaycastLayer;
+        [SerializeField] private LayerMask scanIgnoreLayers = Physics.IgnoreRaycastLayer;
 
         /// <summary>
         /// Number of raycasts in the forward / longitudinal direction.
         /// </summary>
-        [SerializeField]
-        private int forwardScanResolution = 8; // resolution of the first scan pass
+        [SerializeField] private int forwardScanResolution = 8; // resolution of the first scan pass
 
         /// <summary>
         /// Number of raycasts in the side / lateral direction.
         /// </summary>
-        [SerializeField]
-        private int sideToSideScanResolution = 3; // number of scan planes (side-to-side)
+        [SerializeField] private int sideToSideScanResolution = 3; // number of scan planes (side-to-side)
 
         /// <summary>
         /// True if wheel touching ground.
         /// </summary>
-        [SerializeField]
-        private bool hasHit = true;
-        [SerializeField]
-        private bool prevHasHit = true;
+        [SerializeField] private bool hasHit = true;
+
+        [SerializeField] private bool prevHasHit = true;
 
         // If set to true draws hit points and related data.
         public bool debug;
@@ -68,8 +58,8 @@ namespace NWH.WheelController3D
         /// <summary>
         /// Root object of the vehicle.
         /// </summary>
-        [SerializeField]
-        public GameObject parent;
+        [SerializeField] public GameObject parent;
+
         private Rigidbody parentRigidbody;
 
         /// <summary>
@@ -91,8 +81,7 @@ namespace NWH.WheelController3D
         /// <summary>
         /// Side the wheel is on.
         /// </summary>
-        [SerializeField]
-        private Side vehicleSide = Side.Auto;
+        [SerializeField] private Side vehicleSide = Side.Auto;
 
         /// <summary>
         /// Current active preset enum value.
@@ -115,15 +104,13 @@ namespace NWH.WheelController3D
         /// <summary>
         /// Enables some wheel behaviors specific to tracked vehicles, specifically the fact that there is no wheel spin.
         /// </summary>
-        [HideInInspector]
-        public bool trackedVehicle = false;
+        [HideInInspector] public bool trackedVehicle = false;
 
         /// <summary>
         /// Only for tracked vehicles that use NVP wheel enlargement.
         /// Determines how much larger the wheel radius virtually is.
         /// </summary>
-        [HideInInspector]
-        public float trackedOffset = 0;
+        [HideInInspector] public float trackedOffset = 0;
 
         // Wheel rotation
         private Quaternion steerQuaternion;
@@ -143,14 +130,10 @@ namespace NWH.WheelController3D
         private float weightSum = 0f;
         private int validCount = 0;
 
-        [NonSerialized]
-        private Vector3 hitPointSum = Vector3.zero;
-        [NonSerialized]
-        private Vector3 normalSum = Vector3.zero;
-        [NonSerialized]
-        private Vector3 point = new Vector3();
-        [NonSerialized]
-        private Vector3 normal = new Vector3();
+        [NonSerialized] private Vector3 hitPointSum = Vector3.zero;
+        [NonSerialized] private Vector3 normalSum = Vector3.zero;
+        [NonSerialized] private Vector3 point = new Vector3();
+        [NonSerialized] private Vector3 normal = new Vector3();
         private float weight = 0;
 
         private float forwardSum = 0;
@@ -203,7 +186,7 @@ namespace NWH.WheelController3D
         private float decelerationDelta;
         private float accelerationForce;
         private float accelerationDelta;
-        
+
 
 #if PHOTON_MULTIPLAYER
         private PhotonView photonView;
@@ -238,7 +221,8 @@ namespace NWH.WheelController3D
 
             if (wheel.nonRotating != null)
             {
-                wheel.nonRotatingPostionOffset = trans.InverseTransformDirection(wheel.nonRotating.transform.position - visualTrans.position);
+                wheel.nonRotatingPostionOffset =
+                    trans.InverseTransformDirection(wheel.nonRotating.transform.position - visualTrans.position);
             }
 
             // Initialize the wheel params
@@ -291,6 +275,7 @@ namespace NWH.WheelController3D
 
                     h++;
                 }
+
                 w++;
             }
 
@@ -347,20 +332,22 @@ namespace NWH.WheelController3D
                 raycastCommands.Dispose();
                 raycastHits.Dispose();
             }
-            catch { }
+            catch
+            {
+            }
         }
 
 
         private void CalculateWheelDirectionsAndRotations()
         {
             steerQuaternion = Quaternion.AngleAxis(wheel.steerAngle, transformUp);
-            camberQuaternion = Quaternion.AngleAxis(-(int)vehicleSide * wheel.camberAngle, transformForward);
+            camberQuaternion = Quaternion.AngleAxis(-(int) vehicleSide * wheel.camberAngle, transformForward);
             totalRotation = steerQuaternion * camberQuaternion;
 
             wheel.up = totalRotation * transformUp;
             wheel.forward = totalRotation * transformForward;
             wheel.right = totalRotation * transformRight;
-            wheel.inside = wheel.right * -(int)vehicleSide;
+            wheel.inside = wheel.right * -(int) vehicleSide;
         }
 
 
@@ -376,7 +363,8 @@ namespace NWH.WheelController3D
             float distanceThreshold = spring.maxLength - spring.length;
             rayLength = wheel.tireRadius * 2.1f + distanceThreshold;
 
-            offsetPrecalc = transformPosition - transformUp * spring.length + wheel.up * wheel.tireRadius - wheel.inside * wheel.rimOffset;
+            offsetPrecalc = transformPosition - transformUp * spring.length + wheel.up * wheel.tireRadius -
+                            wheel.inside * wheel.rimOffset;
 
             int validHitCount = 0;
             minDistRayIndex = -1;
@@ -386,7 +374,8 @@ namespace NWH.WheelController3D
             {
                 singleWheelHit.valid = false;
 
-                bool grounded = Physics.Raycast(offsetPrecalc, wheelDown, out singleWheelHit.raycastHit, rayLength + wheel.tireRadius, scanIgnoreLayers);
+                bool grounded = Physics.Raycast(offsetPrecalc, wheelDown, out singleWheelHit.raycastHit,
+                    rayLength + wheel.tireRadius, scanIgnoreLayers);
 
                 if (grounded)
                 {
@@ -413,7 +402,8 @@ namespace NWH.WheelController3D
                 int n = wheelHits.Length;
 
                 // Fix for runtime reload of scripts
-                if (!raycastCommands.IsCreated) raycastCommands = new NativeArray<RaycastCommand>(n, Allocator.Persistent);
+                if (!raycastCommands.IsCreated)
+                    raycastCommands = new NativeArray<RaycastCommand>(n, Allocator.Persistent);
                 if (!raycastHits.IsCreated) raycastHits = new NativeArray<RaycastHit>(n, Allocator.Persistent);
 
                 for (int i = 0; i < n; i++)
@@ -565,15 +555,15 @@ namespace NWH.WheelController3D
                 // Calculate spring length from ground hit, position of the wheel and transform position.     
                 if (singleRay)
                 {
-                    spring.targetPoint = wheelHit.raycastHit.point - wheel.right * wheel.rimOffset * (int)vehicleSide;
+                    spring.targetPoint = wheelHit.raycastHit.point - wheel.right * wheel.rimOffset * (int) vehicleSide;
                 }
                 else
                 {
                     spring.targetPoint = wheelHit.raycastHit.point
-                         + wheel.up * wheel.tireRadius * 0.03f
-                        - wheel.forward * wheelHit.offset.y
-                        - wheel.right * wheelHit.offset.x
-                        - wheel.right * wheel.rimOffset * (int)vehicleSide;
+                                         + wheel.up * wheel.tireRadius * 0.03f
+                                         - wheel.forward * wheelHit.offset.y
+                                         - wheel.right * wheelHit.offset.x
+                                         - wheel.right * wheel.rimOffset * (int) vehicleSide;
                 }
 
                 spring.length = -trans.InverseTransformPoint(spring.targetPoint).y;
@@ -608,9 +598,10 @@ namespace NWH.WheelController3D
             if (spring.overflow > 0)
             {
                 spring.overflowVelocity = (spring.overflow - spring.prevOverflow) / Time.fixedDeltaTime;
-                spring.bottomOutForce = parentRigidbody.mass * -Physics.gravity.y * ((spring.velocity + spring.overflowVelocity) + spring.overflow * 20f) * 0.5f;
+                spring.bottomOutForce = parentRigidbody.mass * -Physics.gravity.y *
+                                        ((spring.velocity + spring.overflowVelocity) + spring.overflow * 20f) * 0.5f;
                 parentRigidbody.AddForceAtPosition(spring.bottomOutForce * transformUp, transformPosition);
-            }        
+            }
             else
             {
                 damper.maxForce = spring.length < spring.prevLength ? damper.unitBumpForce : damper.unitReboundForce;
@@ -641,7 +632,8 @@ namespace NWH.WheelController3D
             if (hasHit) wheelHit.force = wheel.tireLoad;
 
             // Calculate visual rotation angle between 0 and 2PI radians.
-            wheel.rotationAngle = (wheel.rotationAngle % 360.0f) + (wheel.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
+            wheel.rotationAngle = (wheel.rotationAngle % 360.0f) +
+                                  (wheel.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
 
             var axleRotation = Quaternion.AngleAxis(wheel.rotationAngle, transformRight);
 
@@ -661,7 +653,6 @@ namespace NWH.WheelController3D
                 {
                     visualTrans.position = wheel.worldPosition;
                 }
-
             }
 
             // Apply rotation and position to the non-rotationg objects if assigned
@@ -671,11 +662,14 @@ namespace NWH.WheelController3D
 
                 if (trackedVehicle)
                 {
-                    wheel.nonRotating.transform.position = wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset) - transformUp * trackedOffset;
+                    wheel.nonRotating.transform.position =
+                        wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset) -
+                        transformUp * trackedOffset;
                 }
                 else
                 {
-                    wheel.nonRotating.transform.position = wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset);
+                    wheel.nonRotating.transform.position =
+                        wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset);
                 }
             }
 
@@ -694,7 +688,7 @@ namespace NWH.WheelController3D
         /// </summary>
         private void VisualOnlyUpdate()
         {
-            spring.targetPoint = wheelHit.raycastHit.point - wheel.right * wheel.rimOffset * (int)vehicleSide;
+            spring.targetPoint = wheelHit.raycastHit.point - wheel.right * wheel.rimOffset * (int) vehicleSide;
             spring.length = -trans.InverseTransformPoint(spring.targetPoint).y;
             spring.length = Mathf.Clamp(spring.length, 0, spring.maxLength);
             wheel.camberAngle = wheel.camberCurve.Evaluate(spring.length / spring.maxLength);
@@ -704,7 +698,8 @@ namespace NWH.WheelController3D
 
             wheel.velocity = (wheel.worldPosition - wheel.prevWorldPosition) / Time.fixedDeltaTime;
             wheel.angularVelocity = transform.InverseTransformVector(wheel.velocity).z / wheel.tireRadius;
-            wheel.rotationAngle = (wheel.rotationAngle % 360.0f) + (wheel.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
+            wheel.rotationAngle = (wheel.rotationAngle % 360.0f) +
+                                  (wheel.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
             steerQuaternion = Quaternion.AngleAxis(wheel.steerAngle, transformUp);
             axleRotation = Quaternion.AngleAxis(wheel.rotationAngle, transformRight);
             wheel.worldRotation = steerQuaternion * axleRotation * transformRotation;
@@ -724,7 +719,6 @@ namespace NWH.WheelController3D
                 {
                     visualTrans.position = wheel.worldPosition;
                 }
-
             }
 
             // Apply rotation and position to the non-rotationg objects if assigned
@@ -734,11 +728,14 @@ namespace NWH.WheelController3D
 
                 if (trackedVehicle)
                 {
-                    wheel.nonRotating.transform.position = wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset) - transformUp * trackedOffset;
+                    wheel.nonRotating.transform.position =
+                        wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset) -
+                        transformUp * trackedOffset;
                 }
                 else
                 {
-                    wheel.nonRotating.transform.position = wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset);
+                    wheel.nonRotating.transform.position =
+                        wheel.worldPosition + trans.TransformDirection(totalRotation * wheel.nonRotatingPostionOffset);
                 }
             }
         }
@@ -778,8 +775,12 @@ namespace NWH.WheelController3D
                 if (trackedVehicle)
                     SetActiveFrictionPreset(FrictionPreset.Tracks);
 
-                sFriction.slip = fFriction.speed == 0 ? 0 : (Mathf.Atan(sFriction.speed / clampedWheelForwardSpeed) * Mathf.Rad2Deg) / 80.0f;
-                sFriction.force = Mathf.Sign(sFriction.slip) * activeFrictionPreset.Curve.Evaluate(Mathf.Abs(sFriction.slip)) * wheel.tireLoad * sFriction.forceCoefficient * 1.3f;
+                sFriction.slip = fFriction.speed == 0
+                    ? 0
+                    : (Mathf.Atan(sFriction.speed / clampedWheelForwardSpeed) * Mathf.Rad2Deg) / 80.0f;
+                sFriction.force = Mathf.Sign(sFriction.slip) *
+                                  activeFrictionPreset.Curve.Evaluate(Mathf.Abs(sFriction.slip)) * wheel.tireLoad *
+                                  sFriction.forceCoefficient * 1.3f;
             }
 
             //*******************
@@ -796,7 +797,10 @@ namespace NWH.WheelController3D
             if (hasHit)
             {
                 float fClampedForwardSpeed = Mathf.Clamp(Mathf.Abs(fFriction.speed), 0.22f, Mathf.Infinity);
-                fFriction.slip = fClampedForwardSpeed == 0 ? 0 : (((wheel.angularVelocity * wheel.tireRadius) - fFriction.speed) / fClampedForwardSpeed) * fFriction.slipCoefficient;
+                fFriction.slip = fClampedForwardSpeed == 0
+                    ? 0
+                    : (((wheel.angularVelocity * wheel.tireRadius) - fFriction.speed) / fClampedForwardSpeed) *
+                      fFriction.slipCoefficient;
             }
 
             float clampedSlip = Mathf.Clamp(Mathf.Abs(fFriction.slip), 0.05f, Mathf.Infinity);
@@ -804,7 +808,8 @@ namespace NWH.WheelController3D
             // Calculate maximum force that wheel can put down before it starts to spin
             if (!trackedVehicle)
             {
-                maxPutDownForce = activeFrictionPreset.Curve.Evaluate(clampedSlip) * wheel.tireLoad * fFriction.forceCoefficient * 1.3f;
+                maxPutDownForce = activeFrictionPreset.Curve.Evaluate(clampedSlip) * wheel.tireLoad *
+                                  fFriction.forceCoefficient * 1.3f;
             }
             else
             {
@@ -812,14 +817,18 @@ namespace NWH.WheelController3D
             }
 
             // Reduce residual angular velocity by the unused force
-            decelerationForce = Mathf.Sign(motorForce) * Mathf.Clamp(maxPutDownForce - Mathf.Abs(motorForce), 0f, Mathf.Infinity);
+            decelerationForce = Mathf.Sign(motorForce) *
+                                Mathf.Clamp(maxPutDownForce - Mathf.Abs(motorForce), 0f, Mathf.Infinity);
             decelerationForce += wheel.dragForce;
             decelerationForce += brakeForce;
-            decelerationDelta = inertia == 0 ? 0 : ((decelerationForce * wheel.tireRadius) / inertia) * Time.fixedDeltaTime;
+            decelerationDelta =
+                inertia == 0 ? 0 : ((decelerationForce * wheel.tireRadius) / inertia) * Time.fixedDeltaTime;
 
             // Increase residual angular velocity by the motor force that could not be put down
-            accelerationForce = Mathf.Sign(motorForce) * Mathf.Clamp((Mathf.Abs(motorForce) - maxPutDownForce), 0f, Mathf.Infinity);
-            accelerationDelta = inertia == 0 ? 0 : ((accelerationForce * wheel.tireRadius) / inertia) * Time.fixedDeltaTime;
+            accelerationForce = Mathf.Sign(motorForce) *
+                                Mathf.Clamp((Mathf.Abs(motorForce) - maxPutDownForce), 0f, Mathf.Infinity);
+            accelerationDelta =
+                inertia == 0 ? 0 : ((accelerationForce * wheel.tireRadius) / inertia) * Time.fixedDeltaTime;
 
             // Calculate residual angular velocity
             wheel.residualAngularVelocity += accelerationDelta - decelerationDelta;
@@ -835,10 +844,14 @@ namespace NWH.WheelController3D
             {
                 wheel.residualAngularVelocity = prevFreeRollingAngularVelocity;
             }
+
             wheel.angularVelocity = wheel.freeRollingAngularVelocity + wheel.residualAngularVelocity;
 
             // Calculate brakes
-            angularDeceleration = inertia == 0 ? 0 : -Mathf.Sign(wheel.angularVelocity) * ((brakeForce * wheel.tireRadius) / inertia) * Time.fixedDeltaTime;
+            angularDeceleration = inertia == 0
+                ? 0
+                : -Mathf.Sign(wheel.angularVelocity) * ((brakeForce * wheel.tireRadius) / inertia) *
+                  Time.fixedDeltaTime;
 
             // Limit angular velocity after applying brakes so that brakes can slow down the rotation only until wheel is fully stopped.
             if (wheel.angularVelocity < 0)
@@ -848,7 +861,8 @@ namespace NWH.WheelController3D
 
             // Limit how much residual velocity a wheel can have. Too much will cause wheel to spin for long time after motor force is no longer applied.
             // Physically this would be more accurate but can be irritating (default wheelcollider does not limit this).
-            wheel.residualAngularVelocity = Mathf.Sign(wheel.residualAngularVelocity) * Mathf.Clamp(Mathf.Abs(wheel.residualAngularVelocity), 0f, 200f);
+            wheel.residualAngularVelocity = Mathf.Sign(wheel.residualAngularVelocity) *
+                                            Mathf.Clamp(Mathf.Abs(wheel.residualAngularVelocity), 0f, 200f);
 
             // Make wheels free roll when slight braking is applied, but not enough to lock the wheel.
             if (hasHit && brakeForce != 0 && Mathf.Abs(motorForce) < brakeForce && brakeForce < maxPutDownForce)
@@ -866,7 +880,10 @@ namespace NWH.WheelController3D
                 {
                     smoothSpeed = Mathf.SmoothStep(prevForwardSpeed, fFriction.speed, Time.fixedDeltaTime * 2f);
                 }
-                fFriction.force = Mathf.Clamp(motorForce - Mathf.Sign(fFriction.speed) * Mathf.Clamp01(Mathf.Abs(smoothSpeed)) * brakeForce,
+
+                fFriction.force = Mathf.Clamp(
+                    motorForce - Mathf.Sign(fFriction.speed) * Mathf.Clamp01(Mathf.Abs(smoothSpeed)) *
+                    brakeForce,
                     -maxPutDownForce, maxPutDownForce) * fFriction.forceCoefficient;
             }
             else
@@ -882,6 +899,7 @@ namespace NWH.WheelController3D
             {
                 fFriction.force = Mathf.Clamp(fFriction.force, -fFriction.maxForce, fFriction.maxForce);
             }
+
             if (sFriction.maxForce > 0)
             {
                 sFriction.force = Mathf.Clamp(sFriction.force, -sFriction.maxForce, sFriction.maxForce);
@@ -940,13 +958,17 @@ namespace NWH.WheelController3D
                     {
                         // Dot between normal and alternate normal
                         projectedNormal = Vector3.ProjectOnPlane(wheelHit.normal, wheel.right);
-                        float distace = Mathf.Sqrt(projectedNormal.x * projectedNormal.x + projectedNormal.y * projectedNormal.y + projectedNormal.z * projectedNormal.z);
+                        float distace = Mathf.Sqrt(projectedNormal.x * projectedNormal.x +
+                                                   projectedNormal.y * projectedNormal.y +
+                                                   projectedNormal.z * projectedNormal.z);
                         projectedNormal.x /= distace;
                         projectedNormal.y /= distace;
                         projectedNormal.z /= distace;
 
                         projectedAltNormal = Vector3.ProjectOnPlane(alternateForwardNormal, wheel.right);
-                        distace = Mathf.Sqrt(projectedAltNormal.x * projectedAltNormal.x + projectedAltNormal.y * projectedAltNormal.y + projectedAltNormal.z * projectedAltNormal.z);
+                        distace = Mathf.Sqrt(projectedAltNormal.x * projectedAltNormal.x +
+                                             projectedAltNormal.y * projectedAltNormal.y +
+                                             projectedAltNormal.z * projectedAltNormal.z);
                         projectedAltNormal.x /= distace;
                         projectedAltNormal.y /= distace;
                         projectedAltNormal.z /= distace;
@@ -956,23 +978,24 @@ namespace NWH.WheelController3D
                         // Abs dot
                         if (dot < 0) dot = -dot;
 
-                        obstracleForceMagnitude = (1f - dot) * suspensionForceMagnitude * -Mathf.Sign(wheelHit.angleForward);
+                        obstracleForceMagnitude =
+                            (1f - dot) * suspensionForceMagnitude * -Mathf.Sign(wheelHit.angleForward);
                     }
 
                     totalForce.x = obstracleForceMagnitude * wheel.forward.x
-                        + suspensionForceMagnitude * raycastHitNormal.x
-                        + wheelHit.sidewaysDir.x * -sFriction.force
-                        + wheelHit.forwardDir.x * fFriction.force;
+                                   + suspensionForceMagnitude * raycastHitNormal.x
+                                   + wheelHit.sidewaysDir.x * -sFriction.force
+                                   + wheelHit.forwardDir.x * fFriction.force;
 
                     totalForce.y = obstracleForceMagnitude * wheel.forward.y
-                        + suspensionForceMagnitude * raycastHitNormal.y
-                        + wheelHit.sidewaysDir.y * -sFriction.force
-                        + wheelHit.forwardDir.y * fFriction.force;
+                                   + suspensionForceMagnitude * raycastHitNormal.y
+                                   + wheelHit.sidewaysDir.y * -sFriction.force
+                                   + wheelHit.forwardDir.y * fFriction.force;
 
                     totalForce.z = obstracleForceMagnitude * wheel.forward.z
-                        + suspensionForceMagnitude * raycastHitNormal.z
-                        + wheelHit.sidewaysDir.z * -sFriction.force
-                        + wheelHit.forwardDir.z * fFriction.force;
+                                   + suspensionForceMagnitude * raycastHitNormal.z
+                                   + wheelHit.sidewaysDir.z * -sFriction.force
+                                   + wheelHit.forwardDir.z * fFriction.force;
 
                     forcePoint.x = (wheelHitPoint.x * 3 + spring.targetPoint.x) / 4f;
                     forcePoint.y = (wheelHitPoint.y * 3 + spring.targetPoint.y) / 4f;
@@ -993,6 +1016,7 @@ namespace NWH.WheelController3D
 
 
         #region Classes
+
         /*****************************/
         /* CLASSES                   */
         /*****************************/
@@ -1113,7 +1137,7 @@ namespace NWH.WheelController3D
                 // Instantiate rim (prevent ground passing through the side of the wheel)
                 rim = new GameObject();
                 rim.name = "RimCollider";
-                rim.transform.position = wc.transform.position + wc.transform.right * rimOffset * (int)wc.vehicleSide;
+                rim.transform.position = wc.transform.position + wc.transform.right * rimOffset * (int) wc.vehicleSide;
                 rim.transform.parent = wc.transform;
                 rim.layer = LayerMask.NameToLayer("Ignore Raycast");
 
@@ -1154,29 +1178,26 @@ namespace NWH.WheelController3D
         [System.Serializable]
         public class WheelHit
         {
-            [SerializeField]
-            public RaycastHit raycastHit;
+            [SerializeField] public RaycastHit raycastHit;
             public float angleForward;
             public float distanceFromTire;
             public Vector2 offset;
 
-            [HideInInspector]
-            public float weight;
+            [HideInInspector] public float weight;
             public bool valid = false;
             public float curvatureOffset;
             public Vector3 groundPoint;
 
-            public WheelHit() { }
+            public WheelHit()
+            {
+            }
 
             /// <summary>
             /// The point of contact between the wheel and the ground.
             /// </summary>
             public Vector3 point
             {
-                get
-                {
-                    return groundPoint;
-                }
+                get { return groundPoint; }
             }
 
             /// <summary>
@@ -1184,10 +1205,7 @@ namespace NWH.WheelController3D
             /// </summary>
             public Vector3 normal
             {
-                get
-                {
-                    return raycastHit.normal;
-                }
+                get { return raycastHit.normal; }
             }
 
             /// <summary>
@@ -1218,16 +1236,15 @@ namespace NWH.WheelController3D
             // WheelCollider compatibility variables
             public Collider collider
             {
-                get
-                {
-                    return raycastHit.collider;
-                }
+                get { return raycastHit.collider; }
             }
         }
+
         #endregion
 
 
         #region Functions
+
         /*****************************/
         /* FUNCTIONS                 */
         /*****************************/
@@ -1249,7 +1266,8 @@ namespace NWH.WheelController3D
             if (activeFrictionPreset == null) activeFrictionPreset = FrictionPreset.TarmacDry;
 
             //Other
-            if (vehicleSide == Side.Auto && parent != null) vehicleSide = DetermineSide(transform.position, parent.transform);
+            if (vehicleSide == Side.Auto && parent != null)
+                vehicleSide = DetermineSide(transform.position, parent.transform);
         }
 
 
@@ -1267,6 +1285,7 @@ namespace NWH.WheelController3D
                     t = t.parent;
                 }
             }
+
             return null;
         }
 
@@ -1366,6 +1385,7 @@ namespace NWH.WheelController3D
             {
                 sum += v;
             }
+
             return sum / vectors.Count;
         }
 
@@ -1412,8 +1432,6 @@ namespace NWH.WheelController3D
             return layermask == (layermask | (1 << layer));
         }
 
-
         #endregion
-
     }
 }

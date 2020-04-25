@@ -6,10 +6,8 @@ namespace ProceduralToolkit.Examples.Buildings
     [CreateAssetMenu(menuName = "ProceduralToolkit/Buildings/Procedural Roof Construction Strategy", order = 4)]
     public class ProceduralRoofConstructionStrategy : RoofConstructionStrategy
     {
-        [SerializeField]
-        private RendererProperties rendererProperties;
-        [SerializeField]
-        private Material roofMaterial;
+        [SerializeField] private RendererProperties rendererProperties;
+        [SerializeField] private Material roofMaterial;
 
         public override void Construct(IConstructible<MeshDraft> constructible, Transform parentTransform)
         {

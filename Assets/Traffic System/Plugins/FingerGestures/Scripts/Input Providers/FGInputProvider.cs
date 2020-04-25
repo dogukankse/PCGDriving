@@ -18,5 +18,5 @@ public abstract class FGInputProvider : MonoBehaviour
     /// <param name="fingerIndex"></param>
     /// <param name="down"></param>
     /// <param name="position"></param>
-    public abstract void GetInputState( int fingerIndex, out bool down, out Vector2 position );
+    public abstract void GetInputState(int fingerIndex, out bool down, out Vector2 position);
 }

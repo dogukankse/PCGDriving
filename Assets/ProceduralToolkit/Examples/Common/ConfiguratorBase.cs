@@ -21,14 +21,14 @@ namespace ProceduralToolkit.Examples
 
         public static MeshDraft Platform(float radius, float height, int segments = 128)
         {
-            float segmentAngle = 360f/segments;
+            float segmentAngle = 360f / segments;
             float currentAngle = 0;
 
             var lowerRing = new List<Vector3>(segments);
             var upperRing = new List<Vector3>(segments);
             for (var i = 0; i < segments; i++)
             {
-                lowerRing.Add(Geometry.PointOnCircle3XZ(radius + height, currentAngle) + Vector3.down*height);
+                lowerRing.Add(Geometry.PointOnCircle3XZ(radius + height, currentAngle) + Vector3.down * height);
                 upperRing.Add(Geometry.PointOnCircle3XZ(radius, currentAngle));
                 currentAngle += segmentAngle;
             }
@@ -57,10 +57,12 @@ namespace ProceduralToolkit.Examples
             {
                 draft.ToMesh(ref mesh);
             }
+
             meshFilter.sharedMesh = mesh;
         }
 
-        public static void AssignDraftToMeshFilter(CompoundMeshDraft compoundDraft, MeshFilter meshFilter, ref Mesh mesh)
+        public static void AssignDraftToMeshFilter(CompoundMeshDraft compoundDraft, MeshFilter meshFilter,
+            ref Mesh mesh)
         {
             if (mesh == null)
             {
@@ -70,6 +72,7 @@ namespace ProceduralToolkit.Examples
             {
                 compoundDraft.ToMeshWithSubMeshes(ref mesh);
             }
+
             meshFilter.sharedMesh = mesh;
         }
 

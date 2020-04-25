@@ -94,10 +94,11 @@ namespace NWH.VehiclePhysics
 
         public void Clear()
         {
-            foreach(Setting setting in settingList)
+            foreach (Setting setting in settingList)
             {
                 Destroy(setting.settingObject);
             }
+
             settingList.Clear();
         }
 
@@ -108,7 +109,7 @@ namespace NWH.VehiclePhysics
 
         private void Update()
         {
-            if(vehicleChanger.ActiveVehicleController != vc)
+            if (vehicleChanger.ActiveVehicleController != vc)
             {
                 vc = vehicleChanger.ActiveVehicleController;
                 Redraw();
@@ -122,7 +123,7 @@ namespace NWH.VehiclePhysics
 
             foreach (Setting setting in settingList)
             {
-                if(setting.valueField != null)
+                if (setting.valueField != null)
                 {
                     setting.valueField.text = setting.field.GetValue(setting.obj).ToString();
                 }
@@ -131,14 +132,15 @@ namespace NWH.VehiclePhysics
 
         private void AddSettings(object obj)
         {
-            foreach (FieldInfo field in obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField |
-                BindingFlags.GetProperty | BindingFlags.Instance))
+            foreach (FieldInfo field in obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic |
+                                                                BindingFlags.GetField |
+                                                                BindingFlags.GetProperty | BindingFlags.Instance))
             {
                 if (!field.IsDefined(typeof(ShowInSettings), false)) continue;
 
                 AddSetting(field, obj);
 
-                if(yOffset < yLimit)
+                if (yOffset < yLimit)
                 {
                     NewColumn();
                 }
@@ -159,16 +161,16 @@ namespace NWH.VehiclePhysics
             titleText.font = Resources.Load<Font>("Fonts/DroidSansMono");
             titleText.text = text;
             titleText.fontSize = 12;
-            if(!subtitle) titleText.fontStyle = FontStyle.Bold;
+            if (!subtitle) titleText.fontStyle = FontStyle.Bold;
             title.transform.SetParent(this.gameObject.transform, false);
             RectTransform titleRT = title.GetComponent<RectTransform>();
             titleRT.sizeDelta = new Vector2(200, 15);
             titleRT.anchorMin = new Vector2(0, 1);
             titleRT.anchorMax = new Vector2(0, 1);
-            if(!subtitle) yOffset -= 6f;
+            if (!subtitle) yOffset -= 6f;
             titleRT.anchoredPosition = new Vector2(xOffset - 30, yOffset);
             yOffset += yStep;
-            settingList.Add(new Setting() { settingObject = title });
+            settingList.Add(new Setting() {settingObject = title});
         }
 
         public void AddSetting(FieldInfo field, object obj)
@@ -192,9 +194,10 @@ namespace NWH.VehiclePhysics
 
             if (field.FieldType == typeof(float))
             {
-                setting.valueField.text = ((float)field.GetValue(obj)).ToString("0.00");
+                setting.valueField.text = ((float) field.GetValue(obj)).ToString("0.00");
 
-                var attribute = field.GetCustomAttributes(typeof(ShowInSettings), false).Cast<ShowInSettings>().FirstOrDefault();
+                var attribute = field.GetCustomAttributes(typeof(ShowInSettings), false).Cast<ShowInSettings>()
+                    .FirstOrDefault();
                 setting.min = attribute.min;
                 setting.max = attribute.max;
                 setting.step = attribute.step;
@@ -215,21 +218,21 @@ namespace NWH.VehiclePhysics
 
         public void ToggleBool(Setting setting)
         {
-            bool currentValue = (bool)setting.field.GetValue(setting.obj);
+            bool currentValue = (bool) setting.field.GetValue(setting.obj);
             currentValue = !currentValue;
             setting.field.SetValue(setting.obj, currentValue);
         }
 
         public void Increment(Setting setting)
         {
-            float currentValue = (float)setting.field.GetValue(setting.obj);
+            float currentValue = (float) setting.field.GetValue(setting.obj);
             currentValue = Mathf.Clamp(currentValue += setting.step, setting.min, setting.max);
             setting.field.SetValue(setting.obj, currentValue);
         }
 
         public void Decrement(Setting setting)
         {
-            float currentValue = (float)setting.field.GetValue(setting.obj);
+            float currentValue = (float) setting.field.GetValue(setting.obj);
             currentValue = Mathf.Clamp(currentValue -= setting.step, setting.min, setting.max);
             setting.field.SetValue(setting.obj, currentValue);
         }
@@ -258,7 +261,8 @@ namespace NWH.VehiclePhysics
             this.step = step;
         }
 
-        public ShowInSettings() {}
+        public ShowInSettings()
+        {
+        }
     }
 }
-

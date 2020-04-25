@@ -25,7 +25,7 @@ public class TapGesture : DiscreteGesture
 /// Tap Gesture Recognizer
 ///   A press and release sequence at the same location
 /// </summary>
-[AddComponentMenu( "FingerGestures/Gestures/Tap Recognizer" )]
+[AddComponentMenu("FingerGestures/Gestures/Tap Recognizer")]
 public class TapRecognizer : DiscreteGestureRecognizer<TapGesture>
 {
     /// <summary>
@@ -56,26 +56,26 @@ public class TapRecognizer : DiscreteGestureRecognizer<TapGesture>
         get { return RequiredTaps > 1; }
     }
 
-    bool HasTimedOut( TapGesture gesture )
+    bool HasTimedOut(TapGesture gesture)
     {
         // check elapsed time since beginning of gesture
-        if( MaxDuration > 0 && ( gesture.ElapsedTime > MaxDuration ) )
+        if (MaxDuration > 0 && (gesture.ElapsedTime > MaxDuration))
             return true;
 
         // check elapsed time since last tap
-        if( IsMultiTap && MaxDelayBetweenTaps > 0 && ( Time.time - gesture.LastTapTime > MaxDelayBetweenTaps ) )
+        if (IsMultiTap && MaxDelayBetweenTaps > 0 && (Time.time - gesture.LastTapTime > MaxDelayBetweenTaps))
             return true;
 
         return false;
     }
 
-    protected override void Reset( TapGesture gesture )
+    protected override void Reset(TapGesture gesture)
     {
         //Debug.Log( "Resetting XTapRecognizer" );
         gesture.Taps = 0;
         gesture.Down = false;
         gesture.WasDown = false;
-        base.Reset( gesture );
+        base.Reset(gesture);
     }
 
     public override bool SupportFingerClustering
@@ -83,58 +83,58 @@ public class TapRecognizer : DiscreteGestureRecognizer<TapGesture>
         get
         {
             // don't support multi-finger multi-tap
-            if( IsMultiTap )
+            if (IsMultiTap)
                 return false;
 
             return base.SupportFingerClustering;
         }
     }
 
-    GestureRecognitionState RecognizeSingleTap( TapGesture gesture, FingerGestures.IFingerList touches )
+    GestureRecognitionState RecognizeSingleTap(TapGesture gesture, FingerGestures.IFingerList touches)
     {
-        if( touches.Count != RequiredFingerCount )
+        if (touches.Count != RequiredFingerCount)
         {
             // all fingers lifted - fire the tap event
-            if( touches.Count == 0 )
+            if (touches.Count == 0)
                 return GestureRecognitionState.Recognized;
 
             // either lifted off some fingers or added some new ones
             return GestureRecognitionState.Failed;
         }
 
-        if( HasTimedOut( gesture ) )
+        if (HasTimedOut(gesture))
             return GestureRecognitionState.Failed;
 
         // check if finger moved too far from start position
-        float sqrDist = Vector3.SqrMagnitude( touches.GetAveragePosition() - gesture.StartPosition );
-        
-        if( sqrDist >= ToSqrPixels( MoveTolerance ) )
+        float sqrDist = Vector3.SqrMagnitude(touches.GetAveragePosition() - gesture.StartPosition);
+
+        if (sqrDist >= ToSqrPixels(MoveTolerance))
             return GestureRecognitionState.Failed;
 
         return GestureRecognitionState.InProgress;
     }
 
-    GestureRecognitionState RecognizeMultiTap( TapGesture gesture, FingerGestures.IFingerList touches )
+    GestureRecognitionState RecognizeMultiTap(TapGesture gesture, FingerGestures.IFingerList touches)
     {
         gesture.WasDown = gesture.Down;
         gesture.Down = false;
 
-        if( touches.Count == RequiredFingerCount )
+        if (touches.Count == RequiredFingerCount)
         {
             gesture.Down = true;
             gesture.LastDownTime = Time.time;
         }
-        else if( touches.Count == 0 )
+        else if (touches.Count == 0)
         {
             gesture.Down = false;
         }
         else
         {
             // some fingers were lifted off
-            if( touches.Count < RequiredFingerCount )
+            if (touches.Count < RequiredFingerCount)
             {
                 // give a bit of buffer time to lift-off the remaining fingers
-                if( Time.time - gesture.LastDownTime > 0.25f )
+                if (Time.time - gesture.LastDownTime > 0.25f)
                 {
                     //Debug.LogWarning( "MultiTap - some fingers were lifted off" );
                     return GestureRecognitionState.Failed;
@@ -142,7 +142,7 @@ public class TapRecognizer : DiscreteGestureRecognizer<TapGesture>
             }
             else // fingers were added
             {
-                if( !Young( touches ) )
+                if (!Young(touches))
                 {
                     //Debug.LogWarning( "MultiTap - some fingers were added" );
                     return GestureRecognitionState.Failed;
@@ -150,55 +150,55 @@ public class TapRecognizer : DiscreteGestureRecognizer<TapGesture>
             }
         }
 
-        if( HasTimedOut( gesture ) )
+        if (HasTimedOut(gesture))
         {
             //Debug.LogWarning( "MultiTap timed out" );
             return GestureRecognitionState.Failed;
         }
 
-        if( gesture.Down )
+        if (gesture.Down)
         {
             // check if finger moved too far from start position
-            float sqrDist = Vector3.SqrMagnitude( touches.GetAveragePosition() - gesture.StartPosition );
+            float sqrDist = Vector3.SqrMagnitude(touches.GetAveragePosition() - gesture.StartPosition);
 
-            if( sqrDist >= ToSqrPixels( MoveTolerance ) )
+            if (sqrDist >= ToSqrPixels(MoveTolerance))
             {
                 //Debug.LogWarning( "MultiTap - moved away from original position, requesting restart" );
                 return GestureRecognitionState.FailAndRetry;
             }
         }
 
-        if( gesture.WasDown != gesture.Down )
+        if (gesture.WasDown != gesture.Down)
         {
             // fingers were just released
-            if( !gesture.Down )
+            if (!gesture.Down)
             {
                 ++gesture.Taps;
                 gesture.LastTapTime = Time.time;
 
                 // If the requested tap count has been reached, validate the gesture and stop
-                if( gesture.Taps >= RequiredTaps )
+                if (gesture.Taps >= RequiredTaps)
                     return GestureRecognitionState.Recognized;
             }
         }
 
         return GestureRecognitionState.InProgress;
     }
-    
+
     public override string GetDefaultEventMessageName()
     {
         return "OnTap";
     }
 
-    protected override void OnBegin( TapGesture gesture, FingerGestures.IFingerList touches )
+    protected override void OnBegin(TapGesture gesture, FingerGestures.IFingerList touches)
     {
         gesture.Position = touches.GetAveragePosition();
         gesture.StartPosition = gesture.Position;
         gesture.LastTapTime = Time.time;
     }
 
-    protected override GestureRecognitionState OnRecognize( TapGesture gesture, FingerGestures.IFingerList touches )
+    protected override GestureRecognitionState OnRecognize(TapGesture gesture, FingerGestures.IFingerList touches)
     {
-        return IsMultiTap ? RecognizeMultiTap( gesture, touches ) : RecognizeSingleTap( gesture, touches );
+        return IsMultiTap ? RecognizeMultiTap(gesture, touches) : RecognizeSingleTap(gesture, touches);
     }
 }

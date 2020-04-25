@@ -15,8 +15,7 @@ public class PedestrianSystem : MonoBehaviour
     public bool
         m_linkBothDir = true; // enable to link the anchor with the edit node and also the edit with the anchor node
 
-    [Range(0.0f, 5.0f)]
-    public float
+    [Range(0.0f, 5.0f)] public float
         m_globalSpeedVariation = 0.5f; // used to generate a slight variation of speed each node a object gets to
 
     [Range(0.0f, 5.0f)]

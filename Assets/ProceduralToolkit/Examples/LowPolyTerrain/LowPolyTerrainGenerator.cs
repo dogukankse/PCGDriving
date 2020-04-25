@@ -28,12 +28,12 @@ namespace ProceduralToolkit.Examples
 
             var noiseOffset = new Vector2(Random.Range(0f, 100f), Random.Range(0f, 100f));
 
-            int xSegments = Mathf.FloorToInt(config.terrainSize.x/config.cellSize);
-            int zSegments = Mathf.FloorToInt(config.terrainSize.z/config.cellSize);
+            int xSegments = Mathf.FloorToInt(config.terrainSize.x / config.cellSize);
+            int zSegments = Mathf.FloorToInt(config.terrainSize.z / config.cellSize);
 
-            float xStep = config.terrainSize.x/xSegments;
-            float zStep = config.terrainSize.z/zSegments;
-            int vertexCount = 6*xSegments*zSegments;
+            float xStep = config.terrainSize.x / xSegments;
+            float zStep = config.terrainSize.z / zSegments;
+            int vertexCount = 6 * xSegments * zSegments;
             var draft = new MeshDraft
             {
                 name = "Terrain",
@@ -55,7 +55,7 @@ namespace ProceduralToolkit.Examples
             {
                 for (int z = 0; z < zSegments; z++)
                 {
-                    int index0 = 6*(x + z*xSegments);
+                    int index0 = 6 * (x + z * xSegments);
                     int index1 = index0 + 1;
                     int index2 = index0 + 2;
                     int index3 = index0 + 3;
@@ -67,10 +67,10 @@ namespace ProceduralToolkit.Examples
                     float height10 = GetHeight(x + 1, z + 0, xSegments, zSegments, noiseOffset, config.noiseScale);
                     float height11 = GetHeight(x + 1, z + 1, xSegments, zSegments, noiseOffset, config.noiseScale);
 
-                    var vertex00 = new Vector3((x + 0)*xStep, height00*config.terrainSize.y, (z + 0)*zStep);
-                    var vertex01 = new Vector3((x + 0)*xStep, height01*config.terrainSize.y, (z + 1)*zStep);
-                    var vertex10 = new Vector3((x + 1)*xStep, height10*config.terrainSize.y, (z + 0)*zStep);
-                    var vertex11 = new Vector3((x + 1)*xStep, height11*config.terrainSize.y, (z + 1)*zStep);
+                    var vertex00 = new Vector3((x + 0) * xStep, height00 * config.terrainSize.y, (z + 0) * zStep);
+                    var vertex01 = new Vector3((x + 0) * xStep, height01 * config.terrainSize.y, (z + 1) * zStep);
+                    var vertex10 = new Vector3((x + 1) * xStep, height10 * config.terrainSize.y, (z + 0) * zStep);
+                    var vertex11 = new Vector3((x + 1) * xStep, height11 * config.terrainSize.y, (z + 1) * zStep);
 
                     draft.vertices[index0] = vertex00;
                     draft.vertices[index1] = vertex01;
@@ -108,10 +108,11 @@ namespace ProceduralToolkit.Examples
             return draft;
         }
 
-        private static float GetHeight(int x, int z, int xSegments, int zSegments, Vector2 noiseOffset, float noiseScale)
+        private static float GetHeight(int x, int z, int xSegments, int zSegments, Vector2 noiseOffset,
+            float noiseScale)
         {
-            float noiseX = noiseScale*x/xSegments + noiseOffset.x;
-            float noiseZ = noiseScale*z/zSegments + noiseOffset.y;
+            float noiseX = noiseScale * x / xSegments + noiseOffset.x;
+            float noiseZ = noiseScale * z / zSegments + noiseOffset.y;
             return Mathf.PerlinNoise(noiseX, noiseZ);
         }
     }

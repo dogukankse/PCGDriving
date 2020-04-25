@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 
-[CustomEditor( typeof( FingerGestures ) )]
+[CustomEditor(typeof(FingerGestures))]
 public class FingerGesturesInspector : Editor
 {
     public override void OnInspectorGUI()
@@ -13,13 +13,14 @@ public class FingerGesturesInspector : Editor
 
         base.OnInspectorGUI();
 
-        if( Application.isPlaying )
+        if (Application.isPlaying)
         {
-            GUILayout.Space( 10 );
+            GUILayout.Space(10);
 
-            GUILayout.Label( "Registered Gesture Recognizers: " + FingerGestures.RegisteredGestureRecognizers.Count );
-            foreach( GestureRecognizer recognizer in FingerGestures.RegisteredGestureRecognizers )
-                EditorGUILayout.ObjectField( recognizer.EventMessageName + " - " + recognizer.GetType().Name, recognizer, typeof( GestureRecognizer ), true );            
+            GUILayout.Label("Registered Gesture Recognizers: " + FingerGestures.RegisteredGestureRecognizers.Count);
+            foreach (GestureRecognizer recognizer in FingerGestures.RegisteredGestureRecognizers)
+                EditorGUILayout.ObjectField(recognizer.EventMessageName + " - " + recognizer.GetType().Name, recognizer,
+                    typeof(GestureRecognizer), true);
         }
     }
 }

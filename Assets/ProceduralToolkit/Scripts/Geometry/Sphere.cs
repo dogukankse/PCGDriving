@@ -12,7 +12,10 @@ namespace ProceduralToolkit
         public Vector3 center;
         public float radius;
 
-        public static Sphere unit { get { return new Sphere(Vector3.zero, 1); } }
+        public static Sphere unit
+        {
+            get { return new Sphere(Vector3.zero, 1); }
+        }
 
         public Sphere(float radius)
         {
@@ -47,7 +50,7 @@ namespace ProceduralToolkit
         public static Sphere Lerp(Sphere a, Sphere b, float t)
         {
             t = Mathf.Clamp01(t);
-            return new Sphere(a.center + (b.center - a.center)*t, a.radius + (b.radius - a.radius)*t);
+            return new Sphere(a.center + (b.center - a.center) * t, a.radius + (b.radius - a.radius) * t);
         }
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace ProceduralToolkit
         /// </summary>
         public static Sphere LerpUnclamped(Sphere a, Sphere b, float t)
         {
-            return new Sphere(a.center + (b.center - a.center)*t, a.radius + (b.radius - a.radius)*t);
+            return new Sphere(a.center + (b.center - a.center) * t, a.radius + (b.radius - a.radius) * t);
         }
 
         public static explicit operator Circle2(Sphere sphere)

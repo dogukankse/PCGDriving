@@ -8,28 +8,28 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class TrafficSystemAwarenessTriggerEditor : Editor
 {
-	TrafficSystemAwarenessTrigger TrafficSystemAwarenessTrigger;
-	TrafficSystem                 TrafficSystem;
+    TrafficSystemAwarenessTrigger TrafficSystemAwarenessTrigger;
+    TrafficSystem TrafficSystem;
 
-	void Awake()
-	{
-		TrafficSystemAwarenessTrigger = (TrafficSystemAwarenessTrigger)target;
-	}
+    void Awake()
+    {
+        TrafficSystemAwarenessTrigger = (TrafficSystemAwarenessTrigger) target;
+    }
 
-	public override void OnInspectorGUI () 
-	{
+    public override void OnInspectorGUI()
+    {
 //		serializedObject.Update();
-		DrawDefaultInspector();
+        DrawDefaultInspector();
 
-		if(!TrafficSystemAwarenessTrigger)
-			return;
+        if (!TrafficSystemAwarenessTrigger)
+            return;
 
-		if(!TrafficSystem)
-		{
-			GameObject obj = GameObject.Find ("Traffic System");
-			if(obj && obj.GetComponent<TrafficSystem>())
-				TrafficSystem = obj.GetComponent<TrafficSystem>();
-		}
+        if (!TrafficSystem)
+        {
+            GameObject obj = GameObject.Find("Traffic System");
+            if (obj && obj.GetComponent<TrafficSystem>())
+                TrafficSystem = obj.GetComponent<TrafficSystem>();
+        }
 
 //		RefreshEditor( false, true );
 
@@ -40,5 +40,5 @@ public class TrafficSystemAwarenessTriggerEditor : Editor
 //			RefreshEditor();
 //		}
 //		GUILayout.EndHorizontal();
-	}
+    }
 }

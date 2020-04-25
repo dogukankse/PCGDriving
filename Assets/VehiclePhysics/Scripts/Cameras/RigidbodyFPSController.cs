@@ -4,13 +4,10 @@ using System.Collections;
 /// <summary>
 /// Demo script provided by Unity Community Wiki - wiki.unity3d.com
 /// </summary>
-
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-
 public class RigidbodyFPSController : MonoBehaviour
 {
-
     public float speed = 10.0f;
     public float gravity = 10.0f;
     public float maxVelocityChange = 10.0f;

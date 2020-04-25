@@ -65,21 +65,19 @@ namespace NWH.VehiclePhysics
                     {
                         return vc.Speed;
                     }
+
                     return topSpeed.value;
                 }, false);
 
             // Average speed
             averageSpeed.Update(
-                delegate
-                {
-                    return odometer.value / Time.realtimeSinceStartup;
-                }, false);
+                delegate { return odometer.value / Time.realtimeSinceStartup; }, false);
 
             // Total drift time
             totalDriftTime.Update(
                 delegate
                 {
-                    if(vc.DetectWheelSkid())
+                    if (vc.DetectWheelSkid())
                         return Time.fixedDeltaTime;
                     return 0;
                 }, true);
@@ -133,4 +131,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

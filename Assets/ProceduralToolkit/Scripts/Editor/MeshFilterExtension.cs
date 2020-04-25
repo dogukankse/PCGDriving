@@ -21,6 +21,7 @@ namespace ProceduralToolkit.Editor
             {
                 return;
             }
+
             AssetDatabase.CreateAsset(Object.Instantiate(mesh), path);
         }
 

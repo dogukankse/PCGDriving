@@ -24,10 +24,10 @@ namespace _Scripts.BuildingGeneration
 
 
             PolygonAsset asset = ScriptableObject.CreateInstance<PolygonAsset>();
-            asset.vertices.Add(new Vector2(rect.top, rect.left));
-            asset.vertices.Add(new Vector2(rect.top, rect.right));
-            asset.vertices.Add(new Vector2(rect.bottom, rect.right));
-            asset.vertices.Add(new Vector2(rect.bottom, rect.left));
+            asset.vertices.Add(new Vector2(rect.yMin, rect.xMin));
+            asset.vertices.Add(new Vector2(rect.yMin, rect.xMax));
+            asset.vertices.Add(new Vector2(rect.yMax, rect.xMax));
+            asset.vertices.Add(new Vector2(rect.yMax, rect.xMin));
 
 
             proceduralBuilding = GetProceduralBuilding();

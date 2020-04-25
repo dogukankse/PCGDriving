@@ -11,8 +11,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Pitch range that will be added to the base pitch depending on transmission state.
         /// </summary>
-        [Tooltip("Pitch range that will be added to the base pitch depending on transmission state.")]
-        [Range(0f, 5f)]
+        [Tooltip("Pitch range that will be added to the base pitch depending on transmission state.")] [Range(0f, 5f)]
         public float pitchRange = 0.2f;
 
         private float whineVelocity;

@@ -126,7 +126,7 @@ namespace ProceduralToolkit
             float sqrMagnitudeB = directionB.sqrMagnitude;
             float dotAB = Vector3.Dot(directionA, directionB);
 
-            float denominator = sqrMagnitudeA*sqrMagnitudeB - dotAB*dotAB;
+            float denominator = sqrMagnitudeA * sqrMagnitudeB - dotAB * dotAB;
             Vector3 originBToA = originA - originB;
             float a = Vector3.Dot(directionA, originBToA);
             float b = Vector3.Dot(directionB, originBToA);
@@ -136,19 +136,19 @@ namespace ProceduralToolkit
             if (Mathf.Abs(denominator) < Geometry.Epsilon)
             {
                 // Parallel
-                float distanceB = dotAB > sqrMagnitudeB ? a/dotAB : b/sqrMagnitudeB;
+                float distanceB = dotAB > sqrMagnitudeB ? a / dotAB : b / sqrMagnitudeB;
 
                 closestPointA = originA;
-                closestPointB = originB + directionB*distanceB;
+                closestPointB = originB + directionB * distanceB;
             }
             else
             {
                 // Not parallel
-                float distanceA = (sqrMagnitudeA*b - dotAB*a)/denominator;
-                float distanceB = (dotAB*b - sqrMagnitudeB*a)/denominator;
+                float distanceA = (sqrMagnitudeA * b - dotAB * a) / denominator;
+                float distanceB = (dotAB * b - sqrMagnitudeB * a) / denominator;
 
-                closestPointA = originA + directionA*distanceA;
-                closestPointB = originB + directionB*distanceB;
+                closestPointA = originA + directionA * distanceA;
+                closestPointB = originB + directionB * distanceB;
             }
 
             if ((closestPointB - closestPointA).sqrMagnitude < Geometry.Epsilon)
@@ -156,6 +156,7 @@ namespace ProceduralToolkit
                 intersection = closestPointA;
                 return true;
             }
+
             intersection = Vector3.zero;
             return false;
         }
@@ -184,7 +185,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Computes an intersection of the line and the sphere
         /// </summary>
-        public static bool LineSphere(Vector3 lineOrigin, Vector3 lineDirection, Vector3 sphereCenter, float sphereRadius)
+        public static bool LineSphere(Vector3 lineOrigin, Vector3 lineDirection, Vector3 sphereCenter,
+            float sphereRadius)
         {
             IntersectionLineSphere intersection;
             return LineSphere(lineOrigin, lineDirection, sphereCenter, sphereRadius, out intersection);
@@ -193,22 +195,24 @@ namespace ProceduralToolkit
         /// <summary>
         /// Computes an intersection of the line and the sphere
         /// </summary>
-        public static bool LineSphere(Vector3 lineOrigin, Vector3 lineDirection, Vector3 sphereCenter, float sphereRadius,
+        public static bool LineSphere(Vector3 lineOrigin, Vector3 lineDirection, Vector3 sphereCenter,
+            float sphereRadius,
             out IntersectionLineSphere intersection)
         {
             Vector3 originToCenter = sphereCenter - lineOrigin;
             float centerProjection = Vector3.Dot(lineDirection, originToCenter);
-            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection*centerProjection;
+            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection * centerProjection;
 
-            float sqrDistanceToIntersection = sphereRadius*sphereRadius - sqrDistanceToLine;
+            float sqrDistanceToIntersection = sphereRadius * sphereRadius - sqrDistanceToLine;
             if (sqrDistanceToIntersection < -Geometry.Epsilon)
             {
                 intersection = IntersectionLineSphere.None();
                 return false;
             }
+
             if (sqrDistanceToIntersection < Geometry.Epsilon)
             {
-                intersection = IntersectionLineSphere.Point(lineOrigin + lineDirection*centerProjection);
+                intersection = IntersectionLineSphere.Point(lineOrigin + lineDirection * centerProjection);
                 return true;
             }
 
@@ -216,8 +220,8 @@ namespace ProceduralToolkit
             float distanceA = centerProjection - distanceToIntersection;
             float distanceB = centerProjection + distanceToIntersection;
 
-            Vector3 pointA = lineOrigin + lineDirection*distanceA;
-            Vector3 pointB = lineOrigin + lineDirection*distanceB;
+            Vector3 pointA = lineOrigin + lineDirection * distanceA;
+            Vector3 pointB = lineOrigin + lineDirection * distanceB;
             intersection = IntersectionLineSphere.TwoPoints(pointA, pointB);
             return true;
         }
@@ -266,13 +270,14 @@ namespace ProceduralToolkit
                 return false;
             }
 
-            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection*centerProjection;
-            float sqrDistanceToIntersection = sphereRadius*sphereRadius - sqrDistanceToLine;
+            float sqrDistanceToLine = originToCenter.sqrMagnitude - centerProjection * centerProjection;
+            float sqrDistanceToIntersection = sphereRadius * sphereRadius - sqrDistanceToLine;
             if (sqrDistanceToIntersection < -Geometry.Epsilon)
             {
                 intersection = IntersectionRaySphere.None();
                 return false;
             }
+
             if (sqrDistanceToIntersection < Geometry.Epsilon)
             {
                 if (centerProjection < -Geometry.Epsilon)
@@ -280,7 +285,8 @@ namespace ProceduralToolkit
                     intersection = IntersectionRaySphere.None();
                     return false;
                 }
-                intersection = IntersectionRaySphere.Point(rayOrigin + rayDirection*centerProjection);
+
+                intersection = IntersectionRaySphere.Point(rayOrigin + rayDirection * centerProjection);
                 return true;
             }
 
@@ -296,12 +302,13 @@ namespace ProceduralToolkit
                     intersection = IntersectionRaySphere.None();
                     return false;
                 }
-                intersection = IntersectionRaySphere.Point(rayOrigin + rayDirection*distanceB);
+
+                intersection = IntersectionRaySphere.Point(rayOrigin + rayDirection * distanceB);
                 return true;
             }
 
-            Vector3 pointA = rayOrigin + rayDirection*distanceA;
-            Vector3 pointB = rayOrigin + rayDirection*distanceB;
+            Vector3 pointA = rayOrigin + rayDirection * distanceA;
+            Vector3 pointB = rayOrigin + rayDirection * distanceB;
             intersection = IntersectionRaySphere.TwoPoints(pointA, pointB);
             return true;
         }
@@ -355,9 +362,11 @@ namespace ProceduralToolkit
                         intersection = IntersectionSegmentSphere.Point(segmentA);
                         return true;
                     }
+
                     intersection = IntersectionSegmentSphere.None();
                     return true;
                 }
+
                 intersection = IntersectionSegmentSphere.None();
                 return false;
             }
@@ -371,8 +380,8 @@ namespace ProceduralToolkit
                 return false;
             }
 
-            float sqrDistanceToLine = segmentAToCenter.sqrMagnitude - centerProjection*centerProjection;
-            float sqrDistanceToIntersection = sphereRadius*sphereRadius - sqrDistanceToLine;
+            float sqrDistanceToLine = segmentAToCenter.sqrMagnitude - centerProjection * centerProjection;
+            float sqrDistanceToIntersection = sphereRadius * sphereRadius - sqrDistanceToLine;
             if (sqrDistanceToIntersection < -Geometry.Epsilon)
             {
                 intersection = IntersectionSegmentSphere.None();
@@ -387,7 +396,8 @@ namespace ProceduralToolkit
                     intersection = IntersectionSegmentSphere.None();
                     return false;
                 }
-                intersection = IntersectionSegmentSphere.Point(segmentA + segmentDirection*centerProjection);
+
+                intersection = IntersectionSegmentSphere.Point(segmentA + segmentDirection * centerProjection);
                 return true;
             }
 
@@ -401,11 +411,12 @@ namespace ProceduralToolkit
 
             if (pointAIsAfterSegmentA && pointBIsBeforeSegmentB)
             {
-                Vector3 pointA = segmentA + segmentDirection*distanceA;
-                Vector3 pointB = segmentA + segmentDirection*distanceB;
+                Vector3 pointA = segmentA + segmentDirection * distanceA;
+                Vector3 pointB = segmentA + segmentDirection * distanceB;
                 intersection = IntersectionSegmentSphere.TwoPoints(pointA, pointB);
                 return true;
             }
+
             if (!pointAIsAfterSegmentA && !pointBIsBeforeSegmentB)
             {
                 // The segment is inside, but no intersection
@@ -417,14 +428,15 @@ namespace ProceduralToolkit
             if (pointAIsAfterSegmentA && pointAIsBeforeSegmentB)
             {
                 // Point A intersection
-                intersection = IntersectionSegmentSphere.Point(segmentA + segmentDirection*distanceA);
+                intersection = IntersectionSegmentSphere.Point(segmentA + segmentDirection * distanceA);
                 return true;
             }
+
             bool pointBIsAfterSegmentA = distanceB > -Geometry.Epsilon;
             if (pointBIsAfterSegmentA && pointBIsBeforeSegmentB)
             {
                 // Point B intersection
-                intersection = IntersectionSegmentSphere.Point(segmentA + segmentDirection*distanceB);
+                intersection = IntersectionSegmentSphere.Point(segmentA + segmentDirection * distanceB);
                 return true;
             }
 
@@ -482,6 +494,7 @@ namespace ProceduralToolkit
                     intersection = IntersectionSphereSphere.Sphere(centerA, radiusA);
                     return true;
                 }
+
                 // One sphere is inside the other
                 intersection = IntersectionSphereSphere.None();
                 return true;
@@ -494,9 +507,10 @@ namespace ProceduralToolkit
             if (Mathf.Abs(distanceFromBtoA - sumOfRadii) < Geometry.Epsilon)
             {
                 // One intersection outside
-                intersection = IntersectionSphereSphere.Point(centerB + fromBtoA*(radiusB/sumOfRadii));
+                intersection = IntersectionSphereSphere.Point(centerB + fromBtoA * (radiusB / sumOfRadii));
                 return true;
             }
+
             if (distanceFromBtoA > sumOfRadii)
             {
                 // No intersections, spheres are separate
@@ -509,9 +523,10 @@ namespace ProceduralToolkit
             if (Mathf.Abs(distanceFromBtoA - differenceOfRadiiAbs) < Geometry.Epsilon)
             {
                 // One intersection inside
-                intersection = IntersectionSphereSphere.Point(centerB - fromBtoA*(radiusB/differenceOfRadii));
+                intersection = IntersectionSphereSphere.Point(centerB - fromBtoA * (radiusB / differenceOfRadii));
                 return true;
             }
+
             if (distanceFromBtoA < differenceOfRadiiAbs)
             {
                 // One sphere is contained within the other
@@ -520,12 +535,12 @@ namespace ProceduralToolkit
             }
 
             // Circle intersection
-            float radiusASqr = radiusA*radiusA;
-            float distanceToMiddle = 0.5f*(radiusASqr - radiusB*radiusB)/distanceFromBtoASqr + 0.5f;
-            Vector3 middle = centerA - fromBtoA*distanceToMiddle;
+            float radiusASqr = radiusA * radiusA;
+            float distanceToMiddle = 0.5f * (radiusASqr - radiusB * radiusB) / distanceFromBtoASqr + 0.5f;
+            Vector3 middle = centerA - fromBtoA * distanceToMiddle;
 
-            float discriminant = radiusASqr/distanceFromBtoASqr - distanceToMiddle*distanceToMiddle;
-            float radius = distanceFromBtoA*Mathf.Sqrt(discriminant);
+            float discriminant = radiusASqr / distanceFromBtoASqr - distanceToMiddle * distanceToMiddle;
+            float radius = distanceFromBtoA * Mathf.Sqrt(discriminant);
 
             intersection = IntersectionSphereSphere.Circle(middle, -fromBtoA.normalized, radius);
             return true;

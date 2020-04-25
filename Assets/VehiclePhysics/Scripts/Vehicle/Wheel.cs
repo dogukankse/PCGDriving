@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NWH.WheelController3D;
 
-namespace NWH.VehiclePhysics 
+namespace NWH.VehiclePhysics
 {
     /// <summary>
     /// Contains everything related to wheels. To access WC3D's properties directly use WheelController getter.
@@ -12,9 +12,11 @@ namespace NWH.VehiclePhysics
     /// Wheel class is not equal to WheelController class. To access WC3D (WheelController) use WheelController getter/setter.
     /// </summary>
     [System.Serializable]
-	public class Wheel
-	{
-        public Wheel() { }
+    public class Wheel
+    {
+        public Wheel()
+        {
+        }
 
         public Wheel(WheelController wc, VehicleController vc)
         {
@@ -25,18 +27,16 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Amount of brake torque wheel will receive as a percentage from max brake torque.
         /// </summary>
-        [HideInInspector]
-        public float brakeCoefficient = 1f;
+        [HideInInspector] public float brakeCoefficient = 1f;
 
         [Tooltip("Object containing WheelController component. Using Unity's WheelCollider is not supported.")]
         [SerializeField]
-		public WheelController wheelController;
+        public WheelController wheelController;
 
         private VehicleController vc;
         private float smoothRPM;
         private float prevSmoothRPM;
-        [ShowInTelemetry]
-        private float bias;
+        [ShowInTelemetry] private float bias;
         private float damage;
         private float damageSteerDirection;
         private bool singleRayByDefault;
@@ -51,7 +51,7 @@ namespace NWH.VehiclePhysics
             prevSmoothRPM = smoothRPM;
             float a = (smoothRPM - prevSmoothRPM) / Time.fixedDeltaTime;
             smoothRPM = Mathf.Lerp(smoothRPM, wheelController.rpm, Time.fixedDeltaTime * 20f)
-                                + (smoothRPM - prevSmoothRPM) * 50 + a * Time.fixedDeltaTime * Time.fixedDeltaTime;
+                        + (smoothRPM - prevSmoothRPM) * 50 + a * Time.fixedDeltaTime * Time.fixedDeltaTime;
 
             // Calculate smooth forward slip
             smoothForwardSlip = Mathf.Lerp(smoothForwardSlip, ForwardSlip, Time.fixedDeltaTime * 5f);
@@ -66,14 +66,8 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float Bias
         {
-            get
-            {
-                return bias;
-            }
-            set
-            {
-                bias = Mathf.Clamp01(value);
-            }
+            get { return bias; }
+            set { bias = Mathf.Clamp01(value); }
         }
 
         /// <summary>
@@ -81,34 +75,25 @@ namespace NWH.VehiclePhysics
         /// </summary>
         [ShowInTelemetry]
         public float ForwardSlip
-		{
-			get
-			{
-                return Mathf.Clamp01(Mathf.Abs(wheelController.forwardFriction.slip));
-			}
-		}
+        {
+            get { return Mathf.Clamp01(Mathf.Abs(wheelController.forwardFriction.slip)); }
+        }
 
         /// <summary>
         /// Lateral slip of the wheel.
         /// </summary>
         [ShowInTelemetry]
         public float SideSlip
-		{
-			get
-			{
-				return Mathf.Clamp01(Mathf.Abs(wheelController.sideFriction.slip));
-			}
-		}
+        {
+            get { return Mathf.Clamp01(Mathf.Abs(wheelController.sideFriction.slip)); }
+        }
 
         /// <summary>
         /// Smoothed longitudinal slip of the wheel for use in effects.
         /// </summary>
         public float SmoothForwardSlip
         {
-            get
-            {
-                return smoothForwardSlip;
-            }
+            get { return smoothForwardSlip; }
         }
 
         /// <summary>
@@ -116,10 +101,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float SmoothSideSlip
         {
-            get
-            {
-                return smoothSideSlip;
-            }
+            get { return smoothSideSlip; }
         }
 
         /// <summary>
@@ -127,10 +109,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float ForwardSlipPercent
         {
-            get
-            {
-                return Mathf.Clamp01(ForwardSlip / vc.forwardSlipThreshold);
-            }
+            get { return Mathf.Clamp01(ForwardSlip / vc.forwardSlipThreshold); }
         }
 
         /// <summary>
@@ -138,10 +117,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float SideSlipPercent
         {
-            get
-            {
-                return Mathf.Clamp01(SideSlip / vc.sideSlipThreshold);
-            }
+            get { return Mathf.Clamp01(SideSlip / vc.sideSlipThreshold); }
         }
 
         /// <summary>
@@ -155,7 +131,7 @@ namespace NWH.VehiclePhysics
                     return true;
                 else
                     return false;
-            }         
+            }
         }
 
         /// <summary>
@@ -163,10 +139,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public GroundDetection.GroundEntity CurrentGroundEntity
         {
-            get
-            {
-                return vc.groundDetection.GetCurrentGroundEntity(this.wheelController);
-            }
+            get { return vc.groundDetection.GetCurrentGroundEntity(this.wheelController); }
         }
 
         /// <summary>
@@ -175,10 +148,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public string CurrentGroundEntityName
         {
-            get
-            {
-                return vc.groundDetection.GetCurrentGroundEntity(this.wheelController).name;
-            }
+            get { return vc.groundDetection.GetCurrentGroundEntity(this.wheelController).name; }
         }
 
         /// <summary>
@@ -209,22 +179,16 @@ namespace NWH.VehiclePhysics
         /// </summary>
         [ShowInTelemetry]
         public float RPM
-		{
-			get
-			{
-			    return wheelController.rpm;
-			}
-		}
+        {
+            get { return wheelController.rpm; }
+        }
 
         /// <summary>
         /// Transform to which WheelController component is attached.
         /// </summary>
         public Transform ControllerTransform
         {
-            get
-            {
-                return wheelController.transform;
-            }
+            get { return wheelController.transform; }
         }
 
         /// <summary>
@@ -233,10 +197,7 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public bool IsGrounded
         {
-            get
-            {
-                return wheelController.isGrounded;
-            }
+            get { return wheelController.isGrounded; }
         }
 
         /// <summary>
@@ -244,10 +205,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float SpringTravel
         {
-            get
-            {
-                return wheelController.springCompression * wheelController.springLength;
-            }
+            get { return wheelController.springCompression * wheelController.springLength; }
         }
 
         /// <summary>
@@ -256,14 +214,8 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float MotorTorque
         {
-            get
-            {
-                return wheelController.motorTorque;
-            }
-            set
-            {
-                wheelController.motorTorque = value;
-            }
+            get { return wheelController.motorTorque; }
+            set { wheelController.motorTorque = value; }
         }
 
         /// <summary>
@@ -272,14 +224,8 @@ namespace NWH.VehiclePhysics
         [ShowInTelemetry]
         public float BrakeTorque
         {
-            get
-            {
-                return wheelController.brakeTorque;
-            }
-            set
-            {
-                wheelController.brakeTorque = value;
-            }
+            get { return wheelController.brakeTorque; }
+            set { wheelController.brakeTorque = value; }
         }
 
         /// <summary>
@@ -287,10 +233,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public Transform VisualTransform
         {
-            get
-            {
-                return wheelController.Visual.transform;
-            }
+            get { return wheelController.Visual.transform; }
         }
 
         /// <summary>
@@ -298,10 +241,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float Radius
         {
-            get
-            {
-                return wheelController.tireRadius;
-            }
+            get { return wheelController.tireRadius; }
         }
 
         /// <summary>
@@ -309,10 +249,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float Width
         {
-            get
-            {
-                return wheelController.tireWidth;
-            }
+            get { return wheelController.tireWidth; }
         }
 
         /// <summary>
@@ -320,10 +257,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public GameObject ControllerGO
         {
-            get
-            {
-                return wheelController.gameObject;
-            }
+            get { return wheelController.gameObject; }
         }
 
         /// <summary>
@@ -331,14 +265,8 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float SteerAngle
         {
-            get
-            {
-                return wheelController.steerAngle;
-            }
-            set
-            {
-                wheelController.steerAngle = value;
-            }
+            get { return wheelController.steerAngle; }
+            set { wheelController.steerAngle = value; }
         }
 
         /// <summary>
@@ -346,10 +274,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float SmoothRPM
         {
-            get 
-            {
-                return smoothRPM;
-            }
+            get { return smoothRPM; }
         }
 
         /// <summary>
@@ -357,10 +282,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float NoSlipRPM
         {
-            get
-            {
-                return wheelController.forwardFriction.speed / (6.28f * Radius);
-            }
+            get { return wheelController.forwardFriction.speed / (6.28f * Radius); }
         }
 
         /// <summary>
@@ -368,10 +290,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public WheelController WheelController
         {
-            get
-            {
-                return wheelController;
-            }
+            get { return wheelController; }
         }
 
         /// <summary>
@@ -381,10 +300,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float DamageSteerDirection
         {
-            get
-            {
-                return damageSteerDirection;
-            }
+            get { return damageSteerDirection; }
         }
 
         /// <summary>
@@ -397,7 +313,7 @@ namespace NWH.VehiclePhysics
             if (torque < 0)
                 wheelController.brakeTorque += 0f;
             else
-				wheelController.brakeTorque += torque;
+                wheelController.brakeTorque += torque;
 
             if (wheelController.brakeTorque > vc.brakes.maxTorque)
                 wheelController.brakeTorque = vc.brakes.maxTorque;
@@ -416,20 +332,20 @@ namespace NWH.VehiclePhysics
             wheelController.brakeTorque = 1000000f;
         }
 
-		public void Initialize(VehicleController vc)
-		{
-			this.vc = vc;
+        public void Initialize(VehicleController vc)
+        {
+            this.vc = vc;
             damageSteerDirection = Random.Range(-1f, 1f);
             singleRayByDefault = WheelController.singleRay;
-		}
+        }
 
         /// <summary>
         /// Adds brake torque as a percentage in range from 0 to 1.
         /// </summary>
-		public void SetBrakeIntensity(float percent)
-		{
+        public void SetBrakeIntensity(float percent)
+        {
             AddBrakeTorque(Mathf.Abs(vc.brakes.maxTorque * Mathf.Clamp01(Mathf.Abs(percent))));
-		}
+        }
 
         /// <summary>
         /// Sets brake torque to the provided value. Use 0 to remove any braking.
@@ -445,7 +361,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void Activate()
         {
-            if(!singleRayByDefault && vc.switchToSingleRayWhenInactive)
+            if (!singleRayByDefault && vc.switchToSingleRayWhenInactive)
                 wheelController.singleRay = false;
         }
 
@@ -459,6 +375,5 @@ namespace NWH.VehiclePhysics
                 wheelController.singleRay = true;
             }
         }
-	}
+    }
 }
-

@@ -18,6 +18,7 @@ namespace ProceduralToolkit.Editor
         private const string survivalRuleName = "survivalRule";
 
         private readonly GUIStyle dropdownStyle = (GUIStyle) "StaticDropdown";
+
         private readonly GUIContent[] options = new GUIContent[]
         {
             new GUIContent("Life"),
@@ -49,6 +50,7 @@ namespace ProceduralToolkit.Editor
             new GUIContent("Coagulations"),
             new GUIContent("Assimilation"),
         };
+
         private readonly CellularAutomaton.Ruleset[] rulesets = new CellularAutomaton.Ruleset[]
         {
             CellularAutomaton.Ruleset.life,
@@ -90,7 +92,7 @@ namespace ProceduralToolkit.Editor
 
             position = EditorGUI.PrefixLabel(position, label);
 
-            float ruleWidth = (position.width - dropdownWidth)/2;
+            float ruleWidth = (position.width - dropdownWidth) / 2;
             Rect ruleRect = new Rect(position.x - labelSpacing, position.y, ruleWidth, position.height);
             DrawRule(birthRule, ruleRect, "B");
 
@@ -100,7 +102,8 @@ namespace ProceduralToolkit.Editor
             int oldIndentLevel = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
             {
-                Rect dropdownRect = new Rect(ruleRect.xMax + dropdownSpacing, position.y, dropdownWidth, position.height);
+                Rect dropdownRect = new Rect(ruleRect.xMax + dropdownSpacing, position.y, dropdownWidth,
+                    position.height);
                 int selected = EditorGUI.Popup(dropdownRect, -1, options, dropdownStyle);
                 if (selected >= 0)
                 {

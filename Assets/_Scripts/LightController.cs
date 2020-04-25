@@ -16,7 +16,7 @@ public class LightController : MonoBehaviour
     public void SetType(TrafficSystemVehiclePlayer.LightType type)
     {
         this.type = type;
-        Debug.Log("Light type changed "+type);
+        Debug.Log("Light type changed " + type);
         refresh();
     }
 
@@ -33,7 +33,8 @@ public class LightController : MonoBehaviour
             {
                 light.GetComponent<Light>().enabled = false;
             }
-        }else if (type == TrafficSystemVehiclePlayer.LightType.Low)
+        }
+        else if (type == TrafficSystemVehiclePlayer.LightType.Low)
         {
             foreach (var rearLight in rearLights)
             {
@@ -44,7 +45,8 @@ public class LightController : MonoBehaviour
             {
                 light.GetComponent<Light>().enabled = false;
             }
-        }else if (type == TrafficSystemVehiclePlayer.LightType.Long)
+        }
+        else if (type == TrafficSystemVehiclePlayer.LightType.Long)
         {
             foreach (var rearLight in rearLights)
             {

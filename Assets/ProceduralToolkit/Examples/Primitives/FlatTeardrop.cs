@@ -12,7 +12,8 @@ namespace ProceduralToolkit.Examples.Primitives
 
         private void Start()
         {
-            GetComponent<MeshFilter>().mesh = MeshDraft.FlatTeardrop(radius, height, horizontalSegments, verticalSegments).ToMesh();
+            GetComponent<MeshFilter>().mesh =
+                MeshDraft.FlatTeardrop(radius, height, horizontalSegments, verticalSegments).ToMesh();
         }
     }
 }

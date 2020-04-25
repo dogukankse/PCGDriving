@@ -6,10 +6,7 @@ namespace NWH.VehiclePhysics
     {
         public float Value
         {
-            get
-            {
-                return _value;
-            }
+            get { return _value; }
         }
 
         public HysteresisSmoothedValue(float initial, float riseTime, float fallTime)
@@ -24,7 +21,7 @@ namespace NWH.VehiclePhysics
             float speed = target < _value ? _fallTime : _riseTime;
             _value = Mathf.SmoothDamp(_value, target, ref _velocity, speed);
         }
-        
+
         private float _value;
         private float _riseTime = 1;
         private float _fallTime = 1;

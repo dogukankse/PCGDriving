@@ -10,7 +10,7 @@ public class LongPressGesture : DiscreteGesture
 /// <summary>
 /// Long-Press gesture: detects when the finger is held down without moving, for a specific duration
 /// </summary>
-[AddComponentMenu( "FingerGestures/Gestures/Long Press Recognizer" )]
+[AddComponentMenu("FingerGestures/Gestures/Long Press Recognizer")]
 public class LongPressRecognizer : DiscreteGestureRecognizer<LongPressGesture>
 {
     /// <summary>
@@ -28,23 +28,23 @@ public class LongPressRecognizer : DiscreteGestureRecognizer<LongPressGesture>
     {
         return "OnLongPress";
     }
-    
-    protected override void OnBegin( LongPressGesture gesture, FingerGestures.IFingerList touches )
+
+    protected override void OnBegin(LongPressGesture gesture, FingerGestures.IFingerList touches)
     {
         gesture.Position = touches.GetAveragePosition();
         gesture.StartPosition = gesture.Position;
     }
 
-    protected override GestureRecognitionState OnRecognize( LongPressGesture gesture, FingerGestures.IFingerList touches )
+    protected override GestureRecognitionState OnRecognize(LongPressGesture gesture, FingerGestures.IFingerList touches)
     {
-        if( touches.Count != RequiredFingerCount )
+        if (touches.Count != RequiredFingerCount)
             return GestureRecognitionState.Failed;
 
-        if( gesture.ElapsedTime >= Duration )
+        if (gesture.ElapsedTime >= Duration)
             return GestureRecognitionState.Recognized;
 
         // check if we moved too far from initial position
-        if( touches.GetAverageDistanceFromStart() > ToPixels( MoveTolerance ) )
+        if (touches.GetAverageDistanceFromStart() > ToPixels(MoveTolerance))
             return GestureRecognitionState.Failed;
 
         return GestureRecognitionState.InProgress;

@@ -16,7 +16,8 @@ namespace NWH.VehiclePhysics
             {
                 foreach (Wheel wheel in vc.Wheels)
                 {
-                    float maxTorque = wheel.WheelController.MaxPutDownForce * wheel.Radius * (1f + (0.5f - intensity * 0.5f));
+                    float maxTorque = wheel.WheelController.MaxPutDownForce * wheel.Radius *
+                                      (1f + (0.5f - intensity * 0.5f));
 
                     if (wheel.BrakeTorque > maxTorque)
                     {

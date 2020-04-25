@@ -37,7 +37,7 @@ namespace NWH.VehiclePhysics
                     Source.clip = RandomClip;
                     SetVolume(volume + volume * Random.Range(-0.1f, 0.1f));
                     Source.pitch = pitch + pitch * Random.Range(-0.1f, 0.1f);
-                    if(Source.enabled) Source.Play();
+                    if (Source.enabled) Source.Play();
                 }
 
                 previousGear = vc.transmission.Gear;

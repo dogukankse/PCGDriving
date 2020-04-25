@@ -27,6 +27,7 @@ namespace ProceduralToolkit.Examples
                 }, "Generate terrain");
                 generator.Generate(randomizeConfig: false);
             }
+
             if (GUILayout.Button("Randomize config and generate mesh"))
             {
                 Undo.RecordObjects(new Object[]

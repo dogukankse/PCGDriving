@@ -12,25 +12,25 @@ public class FingerUpEvent : FingerEvent
     }
 }
 
-[AddComponentMenu( "FingerGestures/Finger Events/Finger Up Detector" )]
+[AddComponentMenu("FingerGestures/Finger Events/Finger Up Detector")]
 public class FingerUpDetector : FingerEventDetector<FingerUpEvent>
 {
     public event FingerEventHandler OnFingerUp;
     public string MessageName = "OnFingerUp";
-    
-    protected override void ProcessFinger( FingerGestures.Finger finger )
+
+    protected override void ProcessFinger(FingerGestures.Finger finger)
     {
-        if( !finger.IsDown && finger.WasDown )
+        if (!finger.IsDown && finger.WasDown)
         {
-            FingerUpEvent e = GetEvent( finger );
+            FingerUpEvent e = GetEvent(finger);
             e.Name = MessageName;
-            e.TimeHeldDown = Mathf.Max( 0, Time.time - finger.StarTime );
-            UpdateSelection( e );
+            e.TimeHeldDown = Mathf.Max(0, Time.time - finger.StarTime);
+            UpdateSelection(e);
 
-            if( OnFingerUp != null )
-                OnFingerUp( e );
+            if (OnFingerUp != null)
+                OnFingerUp(e);
 
-            TrySendMessage( e );
+            TrySendMessage(e);
         }
     }
 }

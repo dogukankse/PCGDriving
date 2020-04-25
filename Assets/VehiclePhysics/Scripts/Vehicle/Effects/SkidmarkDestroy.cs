@@ -22,11 +22,11 @@ namespace NWH.VehiclePhysics
             {
                 Destroy(this.gameObject);
             }
-            else if (Vector3.Distance(this.transform.position, parentVehicleController.transform.position) > distanceThreshold)
+            else if (Vector3.Distance(this.transform.position, parentVehicleController.transform.position) >
+                     distanceThreshold)
             {
                 Destroy(this.gameObject);
             }
         }
     }
 }
-

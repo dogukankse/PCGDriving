@@ -13,23 +13,43 @@ namespace ProceduralToolkit
         /// <summary>
         /// If true, will remove empty (zero area) polygons.
         /// </summary>
-        public bool removeEmptyPolygons { get { return tess.NoEmptyPolygons; } set { tess.NoEmptyPolygons = value; } }
+        public bool removeEmptyPolygons
+        {
+            get { return tess.NoEmptyPolygons; }
+            set { tess.NoEmptyPolygons = value; }
+        }
+
         /// <summary>
         /// Vertices of the tessellated mesh.
         /// </summary>
-        public ContourVertex[] vertices { get { return tess.Vertices; } }
+        public ContourVertex[] vertices
+        {
+            get { return tess.Vertices; }
+        }
+
         /// <summary>
         /// Number of vertices in the tessellated mesh.
         /// </summary>
-        public int vertexCount { get { return tess.VertexCount; } }
+        public int vertexCount
+        {
+            get { return tess.VertexCount; }
+        }
+
         /// <summary>
         /// Indices of the tessellated mesh. See <see cref="ElementType"/> for details on data layout.
         /// </summary>
-        public int[] indices { get { return tess.Elements; } }
+        public int[] indices
+        {
+            get { return tess.Elements; }
+        }
+
         /// <summary>
         /// Number of elements in the tessellated mesh.
         /// </summary>
-        public int indexCount { get { return tess.ElementCount; } }
+        public int indexCount
+        {
+            get { return tess.ElementCount; }
+        }
 
         private readonly Tess tess = new Tess {NoEmptyPolygons = true};
 
@@ -43,7 +63,8 @@ namespace ProceduralToolkit
         /// <see cref="ContourOrientation.Clockwise"/> and <see cref="ContourOrientation.CounterClockwise"/> 
         /// force the vertices to have a specified orientation.
         /// </param>
-        public void AddContour(IList<Vector2> vertices, ContourOrientation forceOrientation = ContourOrientation.Original)
+        public void AddContour(IList<Vector2> vertices,
+            ContourOrientation forceOrientation = ContourOrientation.Original)
         {
             var contour = new ContourVertex[vertices.Count];
             for (int i = 0; i < vertices.Count; i++)
@@ -51,6 +72,7 @@ namespace ProceduralToolkit
                 Vector2 vertex = vertices[i];
                 contour[i].Position = new Vec3(vertex.x, vertex.y, 0);
             }
+
             tess.AddContour(contour, forceOrientation);
         }
 
@@ -64,7 +86,8 @@ namespace ProceduralToolkit
         /// <see cref="ContourOrientation.Clockwise"/> and <see cref="ContourOrientation.CounterClockwise"/> 
         /// force the vertices to have a specified orientation.
         /// </param>
-        public void AddContour(IList<Vector3> vertices, ContourOrientation forceOrientation = ContourOrientation.Original)
+        public void AddContour(IList<Vector3> vertices,
+            ContourOrientation forceOrientation = ContourOrientation.Original)
         {
             var contour = new ContourVertex[vertices.Count];
             for (int i = 0; i < vertices.Count; i++)
@@ -72,6 +95,7 @@ namespace ProceduralToolkit
                 Vector3 vertex = vertices[i];
                 contour[i].Position = new Vec3(vertex.x, vertex.y, vertex.z);
             }
+
             tess.AddContour(contour, forceOrientation);
         }
 
@@ -85,7 +109,8 @@ namespace ProceduralToolkit
         /// <see cref="ContourOrientation.Clockwise"/> and <see cref="ContourOrientation.CounterClockwise"/> 
         /// force the vertices to have a specified orientation.
         /// </param>
-        public void AddContour(IList<ContourVertex> vertices, ContourOrientation forceOrientation = ContourOrientation.Original)
+        public void AddContour(IList<ContourVertex> vertices,
+            ContourOrientation forceOrientation = ContourOrientation.Original)
         {
             tess.AddContour(vertices, forceOrientation);
         }
@@ -98,10 +123,12 @@ namespace ProceduralToolkit
         /// <param name="polySize"> Number of vertices per polygon if output is polygons. </param>
         /// <param name="combineCallback"> Interpolator used to determine the data payload of generated vertices. </param>
         /// <param name="normal"> Normal of the input contours. If set to zero, the normal will be calculated during tessellation. </param>
-        public void Tessellate(WindingRule windingRule = WindingRule.EvenOdd, ElementType elementType = ElementType.Polygons, int polySize = 3,
+        public void Tessellate(WindingRule windingRule = WindingRule.EvenOdd,
+            ElementType elementType = ElementType.Polygons, int polySize = 3,
             CombineCallback combineCallback = null, Vector3 normal = new Vector3())
         {
-            tess.Tessellate(windingRule, elementType, polySize, combineCallback, new Vec3(normal.x, normal.y, normal.z));
+            tess.Tessellate(windingRule, elementType, polySize, combineCallback,
+                new Vec3(normal.x, normal.y, normal.z));
         }
 
         /// <summary>
@@ -115,6 +142,7 @@ namespace ProceduralToolkit
                 Vec3 vertex = vertices[i].Position;
                 draft.vertices.Add(new Vector3(vertex.X, vertex.Y, vertex.Z));
             }
+
             draft.triangles.AddRange(indices);
             return draft;
         }
@@ -131,6 +159,7 @@ namespace ProceduralToolkit
                 Vec3 vertex = vertices[i].Position;
                 draft.vertices.Add(new Vector3(vertex.X, vertex.Y, vertex.Z));
             }
+
             draft.triangles.AddRange(indices);
         }
 

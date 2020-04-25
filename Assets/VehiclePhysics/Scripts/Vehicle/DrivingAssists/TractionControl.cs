@@ -12,11 +12,9 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Engine power reduction when wheels start slipping.
         /// </summary>
-        [HideInInspector]
-        public float powerReduction;
+        [HideInInspector] public float powerReduction;
 
-        [HideInInspector]
-        public float prevPowerReduction;
+        [HideInInspector] public float prevPowerReduction;
 
         public void Update(VehicleController vc)
         {
@@ -28,7 +26,8 @@ namespace NWH.VehiclePhysics
             {
                 foreach (Wheel wheel in vc.Wheels)
                 {
-                    float maxTorque = wheel.WheelController.MaxPutDownForce * wheel.Radius * (1f + (0.5f - intensity * 0.5f));
+                    float maxTorque = wheel.WheelController.MaxPutDownForce * wheel.Radius *
+                                      (1f + (0.5f - intensity * 0.5f));
 
                     if (wheel.MotorTorque > maxTorque)
                     {

@@ -32,14 +32,17 @@ public class FingerEvent
     public virtual Vector2 Position
     {
         get { return finger.Position; }
-        internal set { throw new System.NotSupportedException( "Setting position is not supported on " + this.GetType() ); }
+        internal set
+        {
+            throw new System.NotSupportedException("Setting position is not supported on " + this.GetType());
+        }
     }
-    
+
     #region Object Picking / Raycasting
 
-    GameObject selection;       // object picked at current Position
+    GameObject selection; // object picked at current Position
     ScreenRaycastData raycast = new ScreenRaycastData();
-    
+
     /// <summary>
     /// GameObject currently located at this gesture position
     /// </summary>
@@ -57,7 +60,7 @@ public class FingerEvent
         get { return raycast; }
         internal set { raycast = value; }
     }
-    
+
     #endregion
 }
 
@@ -65,7 +68,7 @@ public abstract class FingerEventDetector<T> : FingerEventDetector where T : Fin
 {
     List<T> fingerEventsList;
 
-    public delegate void FingerEventHandler( T eventData );
+    public delegate void FingerEventHandler(T eventData);
 
     protected virtual T CreateFingerEvent()
     {
@@ -74,7 +77,7 @@ public abstract class FingerEventDetector<T> : FingerEventDetector where T : Fin
 
     public override System.Type GetEventType()
     {
-        return typeof( T );
+        return typeof(T);
     }
 
     protected override void Start()
@@ -96,28 +99,28 @@ public abstract class FingerEventDetector<T> : FingerEventDetector where T : Fin
 
     protected virtual void Init()
     {
-        Init( FingerGestures.Instance.MaxFingers );
+        Init(FingerGestures.Instance.MaxFingers);
     }
 
-    protected virtual void Init( int fingersCount )
+    protected virtual void Init(int fingersCount)
     {
-        fingerEventsList = new List<T>( fingersCount );
+        fingerEventsList = new List<T>(fingersCount);
 
-        for( int i = 0; i < fingersCount; ++i )
+        for (int i = 0; i < fingersCount; ++i)
         {
             T e = CreateFingerEvent();
             e.Detector = this;
-            e.Finger = FingerGestures.GetFinger( i );
-            fingerEventsList.Add( e );
+            e.Finger = FingerGestures.GetFinger(i);
+            fingerEventsList.Add(e);
         }
     }
 
-    protected T GetEvent( FingerGestures.Finger finger )
+    protected T GetEvent(FingerGestures.Finger finger)
     {
-        return GetEvent( finger.Index );
+        return GetEvent(finger.Index);
     }
 
-    protected virtual T GetEvent( int fingerIndex )
+    protected virtual T GetEvent(int fingerIndex)
     {
         return fingerEventsList[fingerIndex];
     }
@@ -125,8 +128,8 @@ public abstract class FingerEventDetector<T> : FingerEventDetector where T : Fin
 
 public abstract class FingerEventDetector : MonoBehaviour
 {
-    public int FingerIndexFilter = -1;    // -1 means any finger
-    public ScreenRaycaster Raycaster; 
+    public int FingerIndexFilter = -1; // -1 means any finger
+    public ScreenRaycaster Raycaster;
     public bool UseSendMessage = true;
     public bool SendMessageToSelection = true;
     public GameObject MessageTarget = null;
@@ -134,27 +137,26 @@ public abstract class FingerEventDetector : MonoBehaviour
     FingerGestures.Finger activeFinger;
     ScreenRaycastData lastRaycast = new ScreenRaycastData();
 
-    protected abstract void ProcessFinger( FingerGestures.Finger finger );
+    protected abstract void ProcessFinger(FingerGestures.Finger finger);
 
     /// <summary>
     /// Return type description of the internal finger event class used by this detector (editor uses this)
     /// </summary>
     public abstract System.Type GetEventType();
-    
+
     protected virtual void Awake()
     {
-        if( !Raycaster )
+        if (!Raycaster)
             Raycaster = GetComponent<ScreenRaycaster>();
 
-        if( !MessageTarget )
+        if (!MessageTarget)
             MessageTarget = this.gameObject;
     }
 
     protected virtual void Start()
     {
-
     }
-        
+
     protected virtual void Update()
     {
         ProcessFingers();
@@ -162,30 +164,30 @@ public abstract class FingerEventDetector : MonoBehaviour
 
     protected virtual void ProcessFingers()
     {
-        if( FingerIndexFilter >= 0 && FingerIndexFilter < FingerGestures.Instance.MaxFingers )
+        if (FingerIndexFilter >= 0 && FingerIndexFilter < FingerGestures.Instance.MaxFingers)
         {
-            ProcessFinger( FingerGestures.GetFinger( FingerIndexFilter ) );
+            ProcessFinger(FingerGestures.GetFinger(FingerIndexFilter));
         }
         else
         {
-            for( int i = 0; i < FingerGestures.Instance.MaxFingers; ++i )
-                ProcessFinger( FingerGestures.GetFinger( i ) );
+            for (int i = 0; i < FingerGestures.Instance.MaxFingers; ++i)
+                ProcessFinger(FingerGestures.GetFinger(i));
         }
     }
 
     /// <summary>
     /// Method used by derived classes to broadcast event message via Unity's SendMessage() API to valid recipients
     /// </summary>
-    protected void TrySendMessage( FingerEvent eventData )
+    protected void TrySendMessage(FingerEvent eventData)
     {
-        FingerGestures.FireEvent( eventData );
+        FingerGestures.FireEvent(eventData);
 
-        if( UseSendMessage )
+        if (UseSendMessage)
         {
-            MessageTarget.SendMessage( eventData.Name, eventData, SendMessageOptions.DontRequireReceiver );
+            MessageTarget.SendMessage(eventData.Name, eventData, SendMessageOptions.DontRequireReceiver);
 
-            if( SendMessageToSelection && eventData.Selection && eventData.Selection != MessageTarget )
-                eventData.Selection.SendMessage( eventData.Name, eventData, SendMessageOptions.DontRequireReceiver );
+            if (SendMessageToSelection && eventData.Selection && eventData.Selection != MessageTarget)
+                eventData.Selection.SendMessage(eventData.Name, eventData, SendMessageOptions.DontRequireReceiver);
         }
     }
 
@@ -194,20 +196,20 @@ public abstract class FingerEventDetector : MonoBehaviour
         get { return lastRaycast; }
     }
 
-    public GameObject PickObject( Vector2 screenPos )
+    public GameObject PickObject(Vector2 screenPos)
     {
-        if( !Raycaster || !Raycaster.enabled )
+        if (!Raycaster || !Raycaster.enabled)
             return null;
 
-        if( !Raycaster.Raycast( screenPos, out lastRaycast ) )
+        if (!Raycaster.Raycast(screenPos, out lastRaycast))
             return null;
 
         return lastRaycast.GameObject;
     }
 
-    protected void UpdateSelection( FingerEvent e )
+    protected void UpdateSelection(FingerEvent e)
     {
-        e.Selection = PickObject( e.Position );
+        e.Selection = PickObject(e.Position);
         e.Raycast = Raycast;
     }
 }

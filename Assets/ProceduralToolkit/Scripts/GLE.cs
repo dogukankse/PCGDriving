@@ -152,7 +152,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void DrawWireArcXY(Vector3 position, Quaternion rotation, float radius, float fromAngle, float toAngle)
+        public static void DrawWireArcXY(Vector3 position, Quaternion rotation, float radius, float fromAngle,
+            float toAngle)
         {
             Draw.WireArcXY(drawLine, position, rotation, radius, fromAngle, toAngle);
         }
@@ -168,7 +169,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void DrawWireArcXZ(Vector3 position, Quaternion rotation, float radius, float fromAngle, float toAngle)
+        public static void DrawWireArcXZ(Vector3 position, Quaternion rotation, float radius, float fromAngle,
+            float toAngle)
         {
             Draw.WireArcXZ(drawLine, position, rotation, radius, fromAngle, toAngle);
         }
@@ -184,7 +186,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe circular arc with position, rotation and radius
         /// </summary>
-        public static void DrawWireArcYZ(Vector3 position, Quaternion rotation, float radius, float fromAngle, float toAngle)
+        public static void DrawWireArcYZ(Vector3 position, Quaternion rotation, float radius, float fromAngle,
+            float toAngle)
         {
             Draw.WireArcYZ(drawLine, position, rotation, radius, fromAngle, toAngle);
         }
@@ -210,7 +213,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Draws a wireframe cone with position and rotation
         /// </summary>
-        public static void DrawWireCone(Vector3 position, Quaternion rotation, float apexRadius, float angle, float length)
+        public static void DrawWireCone(Vector3 position, Quaternion rotation, float apexRadius, float angle,
+            float length)
         {
             Draw.WireCone(drawLine, position, rotation, apexRadius, angle, length);
         }

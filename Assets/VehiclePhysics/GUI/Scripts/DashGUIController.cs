@@ -41,7 +41,8 @@ namespace NWH.VehiclePhysics
                 if (analogRpmGauge != null) analogRpmGauge.Value = vehicleController.engine.RPM;
                 if (analogSpeedGauge != null) analogSpeedGauge.Value = vehicleController.Speed * 3.6f;
                 if (digitalSpeedGauge != null) digitalSpeedGauge.numericalValue = vehicleController.Speed * 3.6f;
-                if (digitalGearGauge != null) digitalGearGauge.stringValue = vehicleController.transmission.Gear.ToString();
+                if (digitalGearGauge != null)
+                    digitalGearGauge.stringValue = vehicleController.transmission.Gear.ToString();
 
                 if (leftBlinker != null) leftBlinker.Active = vehicleController.effects.lights.leftBlinkers.On;
                 if (rightBlinker != null) rightBlinker.Active = vehicleController.effects.lights.rightBlinkers.On;
@@ -83,6 +84,5 @@ namespace NWH.VehiclePhysics
                 if (checkEngine != null) checkEngine.Active = false;
             }
         }
-
     }
 }

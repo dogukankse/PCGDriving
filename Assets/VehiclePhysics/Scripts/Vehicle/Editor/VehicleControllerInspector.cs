@@ -132,7 +132,8 @@ namespace NWH.VehiclePhysics
                     "Freeze When Inactive", "Freezes the rigidbody when vehicle is inactive to prevent" +
                                             " gradual creep."));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("switchToSingleRayWhenInactive"),
-                    new GUIContent("Switch To Single Ray When Inactive", "Switches ground detection to single ray when inactive to improve performance."));
+                    new GUIContent("Switch To Single Ray When Inactive",
+                        "Switches ground detection to single ray when inactive to improve performance."));
                 EditorGUI.indentLevel--;
             }
 

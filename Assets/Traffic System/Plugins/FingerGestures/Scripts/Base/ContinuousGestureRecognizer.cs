@@ -16,7 +16,7 @@ public abstract class ContinuousGesture : Gesture
     {
         get
         {
-            switch( State )
+            switch (State)
             {
                 case GestureRecognitionState.Started:
                     return ContinuousGesturePhase.Started;
@@ -41,34 +41,32 @@ public abstract class ContinuousGesture : Gesture
 /// </summary>
 public abstract class ContinuousGestureRecognizer<T> : GestureRecognizerTS<T> where T : ContinuousGesture, new()
 {
-    protected override void Reset( T gesture )
+    protected override void Reset(T gesture)
     {
-        base.Reset( gesture );
+        base.Reset(gesture);
     }
 
-    protected override void OnStateChanged( Gesture sender )
+    protected override void OnStateChanged(Gesture sender)
     {
-        base.OnStateChanged( sender );
+        base.OnStateChanged(sender);
 
-        T gesture = (T)sender;
+        T gesture = (T) sender;
 
-        switch( gesture.State )
+        switch (gesture.State)
         {
             case GestureRecognitionState.Started:
-                RaiseEvent( gesture );
+                RaiseEvent(gesture);
                 break;
 
             case GestureRecognitionState.Ended:
-                RaiseEvent( gesture );
+                RaiseEvent(gesture);
                 break;
 
             case GestureRecognitionState.Failed:
                 // dont raise event if we failed directly from Ready state
-                if( gesture.PreviousState != GestureRecognitionState.Ready )
-                    RaiseEvent( gesture );
+                if (gesture.PreviousState != GestureRecognitionState.Ready)
+                    RaiseEvent(gesture);
                 break;
         }
     }
 }
-
-

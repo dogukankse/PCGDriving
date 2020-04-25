@@ -17,41 +17,31 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Distance from target at which camera will be positioned. Might vary depending on smoothing.
         /// </summary>
-        [Range(0, 100f)]
-        public float distance;
+        [Range(0, 100f)] public float distance;
 
         /// <summary>
         /// Minimum distance that will be reached when zooming in.
         /// </summary>
-        [Range(0, 100f)]
-        public float minDistance = 5.0f;
+        [Range(0, 100f)] public float minDistance = 5.0f;
 
         /// <summary>
         /// Maximum distance that will be reached when zooming out.
         /// </summary>
-        [Range(0, 100f)]
-        public float maxDistance = 13.0f;
+        [Range(0, 100f)] public float maxDistance = 13.0f;
 
-        [Range(0, 15)]
-        public float horizontalMouseSensitivity = 5.0f;
+        [Range(0, 15)] public float horizontalMouseSensitivity = 5.0f;
 
-        [Range(0, 15)]
-        public float verticalMouseSensitivity = 5.0f;
+        [Range(0, 15)] public float verticalMouseSensitivity = 5.0f;
 
-        [Range(0, 15)]
-        public float mouseWheelSensitivity = 5.0f;
+        [Range(0, 15)] public float mouseWheelSensitivity = 5.0f;
 
-        [Range(-90, 90)]
-        public float verticalMinAngle = -40.0f;
+        [Range(-90, 90)] public float verticalMinAngle = -40.0f;
 
-        [Range(-90, 90)]
-        public float verticalMaxAngle = 80.0f;
+        [Range(-90, 90)] public float verticalMaxAngle = 80.0f;
 
-        [Range(0, 1)]
-        public float smoothing = 0.05f;
+        [Range(0, 1)] public float smoothing = 0.05f;
 
-        [Range(0, 1)]
-        public float distanceSmoothing = 0.05f;
+        [Range(0, 1)] public float distanceSmoothing = 0.05f;
 
         public bool followTargetsRotation = false;
 
@@ -99,7 +89,7 @@ namespace NWH.VehiclePhysics
             if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > deadZone)
             {
                 desiredDistance = Mathf.Clamp(distance - (Input.GetAxis("Mouse ScrollWheel") * mouseWheelSensitivity),
-                                                                                 minDistance, maxDistance);
+                    minDistance, maxDistance);
             }
 
             // Calculate position
@@ -109,7 +99,7 @@ namespace NWH.VehiclePhysics
             Vector3 direction = new Vector3(0, 0, -distance);
             rotation = Quaternion.Euler(mouseY, mouseX, 0);
 
-            if(followTargetsRotation)
+            if (followTargetsRotation)
             {
                 desiredPosition = target.position + (target.transform.rotation * rotation * direction);
             }
@@ -119,7 +109,7 @@ namespace NWH.VehiclePhysics
             }
 
 
-            if(!firstFrame)
+            if (!firstFrame)
             {
                 position = Vector3.SmoothDamp(position, desiredPosition, ref velocity, smoothing);
             }

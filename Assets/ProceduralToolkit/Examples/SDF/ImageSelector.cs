@@ -33,6 +33,7 @@ namespace ProceduralToolkit.Examples
             {
                 image.material = new Material(image.material);
             }
+
             SetDebug(true);
         }
 

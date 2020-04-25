@@ -9,8 +9,7 @@ namespace ProceduralToolkit.Examples
     public class BreakoutConfigurator : ConfiguratorBase
     {
         public RectTransform leftPanel;
-        [Space]
-        public Breakout.Config config = new Breakout.Config();
+        [Space] public Breakout.Config config = new Breakout.Config();
 
         private Breakout breakout;
 

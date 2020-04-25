@@ -25,7 +25,9 @@ namespace NWH.VehiclePhysics
             }
         }
 
-        public override void Update() { }
+        public override void Update()
+        {
+        }
 
         public void Play(VehicleController vc)
         {
@@ -60,4 +62,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

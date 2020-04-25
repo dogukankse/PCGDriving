@@ -34,21 +34,22 @@ namespace NWH.VehiclePhysics
                 prevBlinkersActive = blinkersActive;
                 blinkersActive = false;
 
-                if(vc.effects != null && vc.effects.lights != null && vc.effects.lights.leftBlinkers != null && vc.effects.lights.rightBlinkers != null)
-                if(vc.effects.lights.leftBlinkers.On || vc.effects.lights.rightBlinkers.On)
-                {
-                    blinkersActive = true;
-                }
+                if (vc.effects != null && vc.effects.lights != null && vc.effects.lights.leftBlinkers != null &&
+                    vc.effects.lights.rightBlinkers != null)
+                    if (vc.effects.lights.leftBlinkers.On || vc.effects.lights.rightBlinkers.On)
+                    {
+                        blinkersActive = true;
+                    }
 
-                if(!prevBlinkersActive && blinkersActive)
+                if (!prevBlinkersActive && blinkersActive)
                 {
                     Source.clip = Clips[0];
                     Source.Play();
                 }
-                else if(prevBlinkersActive && !blinkersActive)
+                else if (prevBlinkersActive && !blinkersActive)
                 {
                     // Play off clip if available or play the same on clip if not.
-                    if(Clips.Count == 2)
+                    if (Clips.Count == 2)
                     {
                         Source.clip = Clips[1];
                     }

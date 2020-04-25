@@ -13,8 +13,7 @@ namespace ProceduralToolkit.Examples
         public RectTransform leftPanel;
         public ToggleGroup algorithmsGroup;
         public RawImage mazeImage;
-        [Space]
-        public MazeGenerator.Config config = new MazeGenerator.Config();
+        [Space] public MazeGenerator.Config config = new MazeGenerator.Config();
         public bool useGradient = true;
 
         private const int roomSize = 2;
@@ -99,8 +98,8 @@ namespace ProceduralToolkit.Examples
             Color color;
             if (useGradient)
             {
-                float gradient01 = Mathf.Repeat(edge.origin.depth/gradientLength, 1);
-                float gradient010 = Mathf.Abs((gradient01 - 0.5f)*2);
+                float gradient01 = Mathf.Repeat(edge.origin.depth / gradientLength, 1);
+                float gradient010 = Mathf.Abs((gradient01 - 0.5f) * 2);
 
                 color = GetColor(gradient010);
             }
@@ -108,13 +107,14 @@ namespace ProceduralToolkit.Examples
             {
                 color = GetColor(0.75f);
             }
+
             texture.DrawRect(position.x, position.y, width, height, color);
         }
 
         private Color GetColor(float gradientPosition)
         {
-            float saturation = gradientPosition*gradientSaturation + gradientSaturationOffset;
-            float value = gradientPosition*gradientValue + gradientValueOffset;
+            float saturation = gradientPosition * gradientSaturation + gradientSaturationOffset;
+            float value = gradientPosition * gradientValue + gradientValueOffset;
             return mainColor.WithSV(saturation, value).ToColor();
         }
 

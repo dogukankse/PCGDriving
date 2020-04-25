@@ -18,16 +18,13 @@ namespace NWH.VehiclePhysics
             /// <summary>
             /// Determines if driving aid should be used.
             /// </summary>
-            [Tooltip("Determines if driving aid should be used.")]
-            [ShowInTelemetry, ShowInSettings]
+            [Tooltip("Determines if driving aid should be used.")] [ShowInTelemetry, ShowInSettings]
             public bool enabled = false;
 
             /// <summary>
             /// Is driving aid currently active?
             /// </summary>
-            [ShowInTelemetry]
-            [HideInInspector]
-            public bool active;
+            [ShowInTelemetry] [HideInInspector] public bool active;
 
             /// <summary>
             /// Higher intensity will result in driving aid affecting the vehicle behavior stronger.
@@ -42,7 +39,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Cruise control.
         /// </summary>
-        [Tooltip("Tries to achieve set target speed in [m/s]. Works in both forward and reverse (enter negative speed).")]
+        [Tooltip(
+            "Tries to achieve set target speed in [m/s]. Works in both forward and reverse (enter negative speed).")]
         [SerializeField]
         public CruiseControl cruiseControl = new CruiseControl();
 
@@ -50,15 +48,13 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Anti brake lock system.
         /// </summary>
-        [Tooltip("Anti brake lock system.")]
-        [SerializeField]
+        [Tooltip("Anti brake lock system.")] [SerializeField]
         public ABS abs = new ABS();
 
         /// <summary>
         /// Traction control.
         /// </summary>
-        [Tooltip("Traction control system.")]
-        [SerializeField]
+        [Tooltip("Traction control system.")] [SerializeField]
         public TractionControl tcs = new TractionControl();
 
         /// <summary>
@@ -66,15 +62,15 @@ namespace NWH.VehiclePhysics
         /// to achieve more arcade-like behavior when needed. Force is applied that is not dependent on slip so vehicle will be able to 
         /// steer even when skidding.
         /// </summary>
-        [Tooltip("Stability assist system.")]
-        [SerializeField]
+        [Tooltip("Stability assist system.")] [SerializeField]
         public Stability stability = new Stability();
 
         /// <summary>
         /// Setting other than 0 will add forces that act as to prevent vehicle from spinning out when drifting.
         /// Effect does not work at low speeds to allow for doughnuts.
         /// </summary>
-        [Tooltip("Setting other than 0 will add forces that act as to prevent vehicle from spinning out when drifting." +
+        [Tooltip(
+            "Setting other than 0 will add forces that act as to prevent vehicle from spinning out when drifting." +
             "Effect does not work at low speeds to allow for doughnuts.")]
         [SerializeField]
         public DriftAssist driftAssist = new DriftAssist();
@@ -96,4 +92,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

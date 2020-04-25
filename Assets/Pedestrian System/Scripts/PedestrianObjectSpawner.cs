@@ -2,128 +2,128 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PedestrianObjectSpawner : MonoBehaviour 
+public class PedestrianObjectSpawner : MonoBehaviour
 {
-	public  List<PedestrianObject> m_objectPrefabs      = new List<PedestrianObject>();
-	
-	[Range(0.0f, 1.0f)]
-	public  float               m_nodeObjectSpawnChance     = 0.0f;
+    public List<PedestrianObject> m_objectPrefabs = new List<PedestrianObject>();
 
-	public  float               m_onStartDelay               = 2.0f;
-	public  int                 m_totalToSpawn               = 10;
-	private int                 m_totalSpawned               = 0;
-	public  float               m_spawnCheckDist             = 0.0f;
-	public  float               m_spawnCheckRadius           = 5.0f;
-	public  float               m_spawnDelayBetweenTries     = 5.0f;
-	public  PedestrianNode      m_startNode                  = null;
-	public  bool                m_respawnobjectOnObjectDestroy = true;
-	private List<PedestrianObject> m_objectPool              = new List<PedestrianObject>();     
+    [Range(0.0f, 1.0f)] public float m_nodeObjectSpawnChance = 0.0f;
 
-	public PedestrianObject SpawnRandomObject( bool a_ignoreChangeOfSpawning = false )
-	{
-		if(m_objectPrefabs.Count <= 0)
-			return null;
+    public float m_onStartDelay = 2.0f;
+    public int m_totalToSpawn = 10;
+    private int m_totalSpawned = 0;
+    public float m_spawnCheckDist = 0.0f;
+    public float m_spawnCheckRadius = 5.0f;
+    public float m_spawnDelayBetweenTries = 5.0f;
+    public PedestrianNode m_startNode = null;
+    public bool m_respawnobjectOnObjectDestroy = true;
+    private List<PedestrianObject> m_objectPool = new List<PedestrianObject>();
 
-		if(PedestrianSystem.Instance && !PedestrianSystem.Instance.CanSpawn())
-			return null;
+    public PedestrianObject SpawnRandomObject(bool a_ignoreChangeOfSpawning = false)
+    {
+        if (m_objectPrefabs.Count <= 0)
+            return null;
 
-		float chanceOfSpawn = Random.Range(0.0f, 1.0f);
-		
-		if(!a_ignoreChangeOfSpawning && chanceOfSpawn > m_nodeObjectSpawnChance)
-			return null;
-		
-		int randIndex = Random.Range(0, m_objectPrefabs.Count);
-		
-		PedestrianObject obj = Instantiate( m_objectPrefabs[randIndex], transform.position, transform.rotation ) as PedestrianObject;
-		obj.Spawn ( transform.position, m_startNode );
-		return obj;
-	}
+        if (PedestrianSystem.Instance && !PedestrianSystem.Instance.CanSpawn())
+            return null;
 
-	void Awake()
-	{
-		if(GetComponent<Renderer>())
-			GetComponent<Renderer>().enabled = false;
-	}
+        float chanceOfSpawn = Random.Range(0.0f, 1.0f);
 
-	IEnumerator Start () 
-	{
-		if(PedestrianSystem.Instance)
-			PedestrianSystem.Instance.RegisterObjectSpawner( this );
+        if (!a_ignoreChangeOfSpawning && chanceOfSpawn > m_nodeObjectSpawnChance)
+            return null;
 
-		if(m_totalToSpawn <= 0)
-			yield break;
+        int randIndex = Random.Range(0, m_objectPrefabs.Count);
 
-		for(int sIndex = 0; sIndex < m_totalToSpawn; sIndex++)
-		{
-			PedestrianObject obj = SpawnRandomObject(true);
-			obj.gameObject.SetActive(false);
-			m_objectPool.Add(obj);
-		}
+        PedestrianObject obj =
+            Instantiate(m_objectPrefabs[randIndex], transform.position, transform.rotation) as PedestrianObject;
+        obj.Spawn(transform.position, m_startNode);
+        return obj;
+    }
 
-		yield return new WaitForSeconds(m_onStartDelay);
+    void Awake()
+    {
+        if (GetComponent<Renderer>())
+            GetComponent<Renderer>().enabled = false;
+    }
+
+    IEnumerator Start()
+    {
+        if (PedestrianSystem.Instance)
+            PedestrianSystem.Instance.RegisterObjectSpawner(this);
+
+        if (m_totalToSpawn <= 0)
+            yield break;
+
+        for (int sIndex = 0; sIndex < m_totalToSpawn; sIndex++)
+        {
+            PedestrianObject obj = SpawnRandomObject(true);
+            obj.gameObject.SetActive(false);
+            m_objectPool.Add(obj);
+        }
+
+        yield return new WaitForSeconds(m_onStartDelay);
 
 
-		while(m_totalSpawned < m_totalToSpawn)
-		{
-			Collider[] colliderHit = Physics.OverlapSphere( transform.position, m_spawnCheckRadius );
+        while (m_totalSpawned < m_totalToSpawn)
+        {
+            Collider[] colliderHit = Physics.OverlapSphere(transform.position, m_spawnCheckRadius);
 
-			bool hitObj = false; 
-			for(int hIndex = 0; hIndex < colliderHit.Length; hIndex++)
-			{
-				if(colliderHit[hIndex].transform.GetComponent<PedestrianObject>())
-					hitObj = true;
-			}
+            bool hitObj = false;
+            for (int hIndex = 0; hIndex < colliderHit.Length; hIndex++)
+            {
+                if (colliderHit[hIndex].transform.GetComponent<PedestrianObject>())
+                    hitObj = true;
+            }
 
-			if(!hitObj)
-			{
-				if(m_totalSpawned < m_objectPool.Count)
-				{
-					PedestrianObject obj =  m_objectPool[m_totalSpawned];
-					obj.gameObject.SetActive(true);
-				}
+            if (!hitObj)
+            {
+                if (m_totalSpawned < m_objectPool.Count)
+                {
+                    PedestrianObject obj = m_objectPool[m_totalSpawned];
+                    obj.gameObject.SetActive(true);
+                }
 
-				m_totalSpawned++;
-			}
+                m_totalSpawned++;
+            }
 
-			yield return new WaitForSeconds(m_spawnDelayBetweenTries);
-		}
-	}
+            yield return new WaitForSeconds(m_spawnDelayBetweenTries);
+        }
+    }
 
-	public void RespawnObject()
-	{
-		StartCoroutine( ProcessSpawnOnDeath() );
-	}
+    public void RespawnObject()
+    {
+        StartCoroutine(ProcessSpawnOnDeath());
+    }
 
-	IEnumerator ProcessSpawnOnDeath()
-	{
-		bool hasSpawned = false;
-		while(!hasSpawned)
-		{
-			Collider[] colliderHit = Physics.OverlapSphere( transform.position, m_spawnCheckRadius );
-			
-			bool hitObj = false; 
-			for(int hIndex = 0; hIndex < colliderHit.Length; hIndex++)
-			{
-				if(colliderHit[hIndex].transform.GetComponent<PedestrianObject>())
-					hitObj = true;
-			}
-			
-			if(!hitObj)
-			{
-				SpawnRandomObject();
-				hasSpawned = true;
-			}
+    IEnumerator ProcessSpawnOnDeath()
+    {
+        bool hasSpawned = false;
+        while (!hasSpawned)
+        {
+            Collider[] colliderHit = Physics.OverlapSphere(transform.position, m_spawnCheckRadius);
 
-			if(!hasSpawned)
-				yield return new WaitForSeconds(m_spawnDelayBetweenTries);
-		}
+            bool hitObj = false;
+            for (int hIndex = 0; hIndex < colliderHit.Length; hIndex++)
+            {
+                if (colliderHit[hIndex].transform.GetComponent<PedestrianObject>())
+                    hitObj = true;
+            }
 
-		yield return null;
-	}
+            if (!hitObj)
+            {
+                SpawnRandomObject();
+                hasSpawned = true;
+            }
 
-	void OnDrawGizmos()
-	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position + ( transform.forward * m_spawnCheckDist ), m_spawnCheckRadius);
-	}
+            if (!hasSpawned)
+                yield return new WaitForSeconds(m_spawnDelayBetweenTries);
+        }
+
+        yield return null;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * m_spawnCheckDist), m_spawnCheckRadius);
+    }
 }

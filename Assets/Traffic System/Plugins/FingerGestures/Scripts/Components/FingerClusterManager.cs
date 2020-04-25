@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[AddComponentMenu( "FingerGestures/Components/Finger Cluster Manager" )]
-public class FingerClusterManager : MonoBehaviour 
+[AddComponentMenu("FingerGestures/Components/Finger Cluster Manager")]
+public class FingerClusterManager : MonoBehaviour
 {
     [System.Serializable]
     public class Cluster
@@ -19,7 +19,7 @@ public class FingerClusterManager : MonoBehaviour
 
     public DistanceUnit DistanceUnit = DistanceUnit.Pixels;
     public float ClusterRadius = 250.0f; // spatial grouping
-    public float TimeTolerance = 0.5f;  // temporal grouping
+    public float TimeTolerance = 0.5f; // temporal grouping
 
     int lastUpdateFrame = -1;
     int nextClusterId = 1;
@@ -32,7 +32,7 @@ public class FingerClusterManager : MonoBehaviour
     {
         get { return fingersAdded; }
     }
-    
+
     public FingerGestures.IFingerList FingersRemoved
     {
         get { return fingersRemoved; }
@@ -43,8 +43,11 @@ public class FingerClusterManager : MonoBehaviour
         get { return clusters; }
     }
 
-    public List<Cluster> GetClustersPool() { return clusterPool; }
-    
+    public List<Cluster> GetClustersPool()
+    {
+        return clusterPool;
+    }
+
     void Awake()
     {
         clusters = new List<Cluster>();
@@ -53,10 +56,10 @@ public class FingerClusterManager : MonoBehaviour
         fingersRemoved = new FingerGestures.FingerList();
     }
 
-	public void Update()
+    public void Update()
     {
         // already updated this frame, skip
-        if( lastUpdateFrame == Time.frameCount )
+        if (lastUpdateFrame == Time.frameCount)
             return;
 
         lastUpdateFrame = Time.frameCount;
@@ -64,67 +67,67 @@ public class FingerClusterManager : MonoBehaviour
         fingersAdded.Clear();
         fingersRemoved.Clear();
 
-        for( int i = 0; i < FingerGestures.Instance.MaxFingers; ++i )
+        for (int i = 0; i < FingerGestures.Instance.MaxFingers; ++i)
         {
-            FingerGestures.Finger finger = FingerGestures.GetFinger( i );
+            FingerGestures.Finger finger = FingerGestures.GetFinger(i);
 
-            if( finger.IsDown )
+            if (finger.IsDown)
             {
                 // new touch?
-                if( !finger.WasDown )
+                if (!finger.WasDown)
                 {
                     //Debug.Log( "ADDED " + finger );
-                    fingersAdded.Add( finger );
+                    fingersAdded.Add(finger);
                 }
             }
             else
             {
                 // lifted off finger
-                if( finger.WasDown )
+                if (finger.WasDown)
                 {
                     //Debug.Log( "REMOVED " + finger );
-                    fingersRemoved.Add( finger );
+                    fingersRemoved.Add(finger);
                 }
             }
         }
 
         // remove fingers from clusters
-        for( int i = 0; i < fingersRemoved.Count; ++i )
+        for (int i = 0; i < fingersRemoved.Count; ++i)
         {
             FingerGestures.Finger finger = fingersRemoved[i];
 
             // update active clusters
-            for( int clusterIndex = clusters.Count - 1; clusterIndex >= 0; --clusterIndex )
+            for (int clusterIndex = clusters.Count - 1; clusterIndex >= 0; --clusterIndex)
             {
                 Cluster cluster = clusters[clusterIndex];
 
-                if( cluster.Fingers.Remove( finger ) )
+                if (cluster.Fingers.Remove(finger))
                 {
                     // retire clusters that no longer have any fingers left
-                    if( cluster.Fingers.Count == 0 )
+                    if (cluster.Fingers.Count == 0)
                     {
                         //Debug.Log( "Recycling cluster " + cluster.Id );
 
                         // remove from active clusters list
-                        clusters.RemoveAt( clusterIndex );
+                        clusters.RemoveAt(clusterIndex);
 
                         // move back to pool
-                        clusterPool.Add( cluster );
+                        clusterPool.Add(cluster);
                     }
                 }
             }
         }
 
         // add new fingers
-        for( int i = 0; i < fingersAdded.Count; ++i )
+        for (int i = 0; i < fingersAdded.Count; ++i)
         {
             FingerGestures.Finger finger = fingersAdded[i];
 
             // try to add finger to existing cluster
-            Cluster cluster = FindExistingCluster( finger );
+            Cluster cluster = FindExistingCluster(finger);
 
             // no valid active cluster found for that finger, create a new cluster
-            if( cluster == null )
+            if (cluster == null)
             {
                 cluster = NewCluster();
                 cluster.StartTime = finger.StarTime;
@@ -136,20 +139,20 @@ public class FingerClusterManager : MonoBehaviour
             }
 
             // add finger to selected cluster
-            cluster.Fingers.Add( finger );
+            cluster.Fingers.Add(finger);
         }
     }
 
-    public Cluster FindClusterById( int clusterId )
+    public Cluster FindClusterById(int clusterId)
     {
-        return clusters.Find( c => c.Id == clusterId );
+        return clusters.Find(c => c.Id == clusterId);
     }
 
     Cluster NewCluster()
     {
         Cluster cluster = null;
 
-        if( clusterPool.Count == 0 )
+        if (clusterPool.Count == 0)
         {
             cluster = new Cluster();
         }
@@ -158,40 +161,41 @@ public class FingerClusterManager : MonoBehaviour
             int lastIdx = clusterPool.Count - 1;
             cluster = clusterPool[lastIdx];
             cluster.Reset();
-            clusterPool.RemoveAt( lastIdx );
+            clusterPool.RemoveAt(lastIdx);
         }
 
         // assign a new ID
         cluster.Id = nextClusterId++;
 
         // add to active clusters
-        clusters.Add( cluster );    // add cluster to active clusters list
+        clusters.Add(cluster); // add cluster to active clusters list
 
         //Debug.Log( "Created new finger cluster #" + cluster.Id );
         return cluster;
     }
 
     // Find closest cluster within radius
-    Cluster FindExistingCluster( FingerGestures.Finger finger )
+    Cluster FindExistingCluster(FingerGestures.Finger finger)
     {
         Cluster best = null;
         float bestSqrDist = float.MaxValue;
 
-        float sqrClusterRadiusInPixels = FingerGestures.Convert( ClusterRadius * ClusterRadius, DistanceUnit, DistanceUnit.Pixels );
+        float sqrClusterRadiusInPixels =
+            FingerGestures.Convert(ClusterRadius * ClusterRadius, DistanceUnit, DistanceUnit.Pixels);
 
-        for( int i = 0; i < clusters.Count; ++i )
+        for (int i = 0; i < clusters.Count; ++i)
         {
             Cluster cluster = clusters[i];
             float elapsedTime = finger.StarTime - cluster.StartTime;
 
             // temporal grouping criteria
-            if( elapsedTime > TimeTolerance )
+            if (elapsedTime > TimeTolerance)
                 continue;
 
             Vector2 centroid = cluster.Fingers.GetAveragePosition();
-            float sqrDist = Vector2.SqrMagnitude( finger.Position - centroid );
+            float sqrDist = Vector2.SqrMagnitude(finger.Position - centroid);
 
-            if( sqrDist < bestSqrDist && sqrDist < sqrClusterRadiusInPixels )
+            if (sqrDist < bestSqrDist && sqrDist < sqrClusterRadiusInPixels)
             {
                 best = cluster;
                 bestSqrDist = sqrDist;

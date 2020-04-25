@@ -21,7 +21,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Time after detecting flip over after which vehicle will be flipped back.
         /// </summary>
-        [Tooltip("Time after detecting flip over after which vehicle will be flipped back or the manual button can be used.")]
+        [Tooltip(
+            "Time after detecting flip over after which vehicle will be flipped back or the manual button can be used.")]
         public float timeout = 3f;
 
         /// <summary>
@@ -45,8 +46,7 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Is the vehicle flipped over?
         /// </summary>
-        [HideInInspector]
-        public bool flippedOver = false;
+        [HideInInspector] public bool flippedOver = false;
 
         private bool wasFlippedOver = false;
         private float timeSinceFlip = 0f;
@@ -80,15 +80,18 @@ namespace NWH.VehiclePhysics
             {
                 if (direction == 0)
                 {
-                    direction = Mathf.Sign(Vector3.SignedAngle(vc.transform.up, -Physics.gravity.normalized, vc.transform.forward) - 180f);
+                    direction = Mathf.Sign(Vector3.SignedAngle(vc.transform.up, -Physics.gravity.normalized,
+                        vc.transform.forward) - 180f);
                 }
 
-                vc.vehicleRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                Quaternion yRotation = Quaternion.AngleAxis(rotationSpeed * Time.fixedDeltaTime, vc.transform.InverseTransformDirection(vc.transform.forward));
+                vc.vehicleRigidbody.constraints =
+                    RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                Quaternion yRotation = Quaternion.AngleAxis(rotationSpeed * Time.fixedDeltaTime,
+                    vc.transform.InverseTransformDirection(vc.transform.forward));
                 vc.vehicleRigidbody.MoveRotation(vc.transform.rotation * yRotation);
                 vc.ResetInactivityTimer();
             }
-            else if(wasFlippedOver && !flippedOver)
+            else if (wasFlippedOver && !flippedOver)
             {
                 vc.vehicleRigidbody.constraints = RigidbodyConstraints.None;
                 manualFlipoverInProgress = false;
@@ -100,19 +103,19 @@ namespace NWH.VehiclePhysics
         void DetectFlipOver()
         {
             int wheelsOnGround = 0;
-            foreach(Wheel wheel in vc.Wheels)
+            foreach (Wheel wheel in vc.Wheels)
             {
-                if(wheel.IsGrounded)
+                if (wheel.IsGrounded)
                 {
                     wheelsOnGround++;
                 }
             }
 
-            if(vc.Speed < maxDetectionSpeed && VehicleAngle() > allowedAngle && wheelsOnGround <= vc.Wheels.Count / 2f)
+            if (vc.Speed < maxDetectionSpeed && VehicleAngle() > allowedAngle && wheelsOnGround <= vc.Wheels.Count / 2f)
             {
                 timeSinceFlip += Time.fixedDeltaTime;
 
-                if(timeSinceFlip > timeout)
+                if (timeSinceFlip > timeout)
                 {
                     flippedOver = true;
                 }
@@ -121,7 +124,7 @@ namespace NWH.VehiclePhysics
             {
                 timeAfterRecovery += Time.fixedDeltaTime;
 
-                if(timeAfterRecovery > 1f || VehicleAngle() < 45f)
+                if (timeAfterRecovery > 1f || VehicleAngle() < 45f)
                 {
                     flippedOver = false;
                     timeSinceFlip = 0f;
@@ -137,4 +140,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

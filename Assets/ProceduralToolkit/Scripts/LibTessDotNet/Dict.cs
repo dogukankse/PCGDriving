@@ -44,9 +44,20 @@ namespace ProceduralToolkit.LibTessDotNet
             internal TValue _key;
             internal Node _prev, _next;
 
-            public TValue Key { get { return _key; } }
-            public Node Prev { get { return _prev; } }
-            public Node Next { get { return _next; } }
+            public TValue Key
+            {
+                get { return _key; }
+            }
+
+            public Node Prev
+            {
+                get { return _prev; }
+            }
+
+            public Node Next
+            {
+                get { return _next; }
+            }
         }
 
         public delegate bool LessOrEqual(TValue lhs, TValue rhs);
@@ -58,7 +69,7 @@ namespace ProceduralToolkit.LibTessDotNet
         {
             _leq = leq;
 
-            _head = new Node { _key = null };
+            _head = new Node {_key = null};
             _head._prev = _head;
             _head._next = _head;
         }
@@ -70,11 +81,12 @@ namespace ProceduralToolkit.LibTessDotNet
 
         public Node InsertBefore(Node node, TValue key)
         {
-            do {
+            do
+            {
                 node = node._prev;
             } while (node._key != null && !_leq(node._key, key));
 
-            var newNode = new Node { _key = key };
+            var newNode = new Node {_key = key};
             newNode._next = node._next;
             node._next._prev = newNode;
             newNode._prev = node;
@@ -86,9 +98,11 @@ namespace ProceduralToolkit.LibTessDotNet
         public Node Find(TValue key)
         {
             var node = _head;
-            do {
+            do
+            {
                 node = node._next;
             } while (node._key != null && !_leq(key, node._key));
+
             return node;
         }
 

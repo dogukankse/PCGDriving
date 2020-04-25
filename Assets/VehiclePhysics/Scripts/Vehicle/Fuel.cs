@@ -9,14 +9,12 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Should fuel be used? If set to false HasFuel will always return true.
         /// </summary>
-        [Tooltip("Should fuel be used?")]
-        public bool useFuel = false;
+        [Tooltip("Should fuel be used?")] public bool useFuel = false;
 
         /// <summary>
         /// Fuel capacity in liters.
         /// </summary>
-        [Tooltip("Fuel capacity in liters.")]
-        public float capacity = 50f;
+        [Tooltip("Fuel capacity in liters.")] public float capacity = 50f;
 
         /// <summary>
         /// Maximum amount in liters that the fuel tank can hold.
@@ -27,9 +25,10 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Engine efficiency (in percent). 1 would mean that all the energy contained in fuel would go into output power.
         /// </summary>
-        [Tooltip("Engine efficiency (in percent). 1 would mean that all the energy contained in fuel would go into output power.")]
+        [Tooltip(
+            "Engine efficiency (in percent). 1 would mean that all the energy contained in fuel would go into output power.")]
         public float efficiency = 0.45f;
-        
+
         private float unitConsumption;
         private float consumptionPerHour;
         private float maxConsumptionPerHour = 20f;
@@ -51,11 +50,12 @@ namespace NWH.VehiclePhysics
                 }
                 else
                 {
-                    if(amount > 0)
+                    if (amount > 0)
                     {
                         return true;
                     }
                 }
+
                 return false;
             }
         }
@@ -65,10 +65,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float FuelPercentage
         {
-            get
-            {
-                return Mathf.Clamp01(amount / capacity);
-            }
+            get { return Mathf.Clamp01(amount / capacity); }
         }
 
         /// <summary>
@@ -76,10 +73,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float ConsumptionLitersPerSecond
         {
-            get
-            {
-                return consumptionPerHour / 3600f;
-            }
+            get { return consumptionPerHour / 3600f; }
         }
 
         /// <summary>
@@ -87,10 +81,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float ConsumptionMPG
         {
-            get
-            {
-                return UnitConverter.L100kmToMpg(unitConsumption);
-            }
+            get { return UnitConverter.L100kmToMpg(unitConsumption); }
         }
 
         /// <summary>
@@ -98,10 +89,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float ConsumptionLitersPer100Kilometers
         {
-            get
-            {
-                return unitConsumption;
-            }
+            get { return unitConsumption; }
         }
 
         /// <summary>
@@ -109,10 +97,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public float ConsumptionKilometersPerLiter
         {
-            get
-            {
-                return UnitConverter.L100kmToKml(unitConsumption);
-            }
+            get { return UnitConverter.L100kmToKml(unitConsumption); }
         }
 
         public void Initialize(VehicleController vc)
@@ -122,7 +107,7 @@ namespace NWH.VehiclePhysics
 
         public void Update()
         {
-            if(useFuel && vc.engine.IsRunning)
+            if (useFuel && vc.engine.IsRunning)
             {
                 // Assuming fuel has 36 MJ/L. 1KWh = 3.6MJ. 1L = 36MJ = 10kWH.
                 maxConsumptionPerHour = (vc.engine.maxPower / 10f) * (1f - efficiency);
@@ -134,7 +119,7 @@ namespace NWH.VehiclePhysics
                 amount -= (consumptionPerHour / 3600) * Time.fixedDeltaTime;
                 amount = Mathf.Clamp(amount, 0f, capacity);
 
-                if(amount == 0 && vc.engine.IsRunning)
+                if (amount == 0 && vc.engine.IsRunning)
                 {
                     vc.engine.Stop();
                 }
@@ -146,7 +131,9 @@ namespace NWH.VehiclePhysics
                 float perHour = 3600f / Time.fixedDeltaTime;
                 float measuredConsPerHour = measuredConsumption * perHour;
                 float measuredDistPerHour = (distanceTraveled * perHour) / 100000f;
-                unitConsumption = measuredDistPerHour == 0 ? 0 : Mathf.Clamp(measuredConsPerHour / measuredDistPerHour, 0f, 99.9f);
+                unitConsumption = measuredDistPerHour == 0
+                    ? 0
+                    : Mathf.Clamp(measuredConsPerHour / measuredDistPerHour, 0f, 99.9f);
             }
             else
             {
@@ -156,4 +143,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

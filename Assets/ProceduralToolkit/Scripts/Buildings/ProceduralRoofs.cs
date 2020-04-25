@@ -29,16 +29,19 @@ namespace ProceduralToolkit.Buildings
             {
                 roofDraft.Add(ConstructBorder(roofPolygon2, roofPolygon3, roofConfig));
             }
+
             if (roofConfig.overhang > 0)
             {
                 roofDraft.Add(ConstructOverhang(foundationPolygon, roofPolygon3));
             }
+
             return roofDraft;
         }
 
-        protected static MeshDraft ConstructBorder(List<Vector2> roofPolygon2, List<Vector3> roofPolygon3, RoofConfig roofConfig)
+        protected static MeshDraft ConstructBorder(List<Vector2> roofPolygon2, List<Vector3> roofPolygon3,
+            RoofConfig roofConfig)
         {
-            List<Vector3> upperRing = roofPolygon2.ConvertAll(v => v.ToVector3XZ() + Vector3.up*roofConfig.thickness);
+            List<Vector3> upperRing = roofPolygon2.ConvertAll(v => v.ToVector3XZ() + Vector3.up * roofConfig.thickness);
             return new MeshDraft().AddFlatQuadBand(roofPolygon3, upperRing, false);
         }
 
@@ -69,6 +72,7 @@ namespace ProceduralToolkit.Buildings
                 contourDraft.vertices[i] = new Vector3(vertex.x, height, vertex.y);
                 contourDraft.normals.Add(roofNormal);
             }
+
             return contourDraft;
         }
 
@@ -91,15 +95,16 @@ namespace ProceduralToolkit.Buildings
                 .AddTriangle(edgeB3, peak3, gableTop3, true);
         }
 
-        protected static float CalculateVertexHeight(Vector2 vertex, Vector2 edgeA, Vector2 edgeDirection, float roofPitch)
+        protected static float CalculateVertexHeight(Vector2 vertex, Vector2 edgeA, Vector2 edgeDirection,
+            float roofPitch)
         {
             float distance = Distance.PointLine(vertex, edgeA, edgeDirection);
-            return Mathf.Tan(roofPitch*Mathf.Deg2Rad)*distance;
+            return Mathf.Tan(roofPitch * Mathf.Deg2Rad) * distance;
         }
 
         protected static Vector3 CalculateRoofNormal(Vector2 edgeDirection2, float roofPitch)
         {
-            return Quaternion.AngleAxis(roofPitch, edgeDirection2.ToVector3XZ())*Vector3.up;
+            return Quaternion.AngleAxis(roofPitch, edgeDirection2.ToVector3XZ()) * Vector3.up;
         }
     }
 
@@ -120,11 +125,12 @@ namespace ProceduralToolkit.Buildings
             tessellator.AddContour(roofPolygon3);
             tessellator.Tessellate(normal: Vector3.up);
             var roofTop = tessellator.ToMeshDraft()
-                .Move(Vector3.up*roofConfig.thickness);
+                .Move(Vector3.up * roofConfig.thickness);
             for (var i = 0; i < roofTop.vertexCount; i++)
             {
                 roofTop.normals.Add(Vector3.up);
             }
+
             return roofDraft.Add(roofTop)
                 .Paint(roofColor);
         }
@@ -153,7 +159,8 @@ namespace ProceduralToolkit.Buildings
             {
                 roofTop.Add(ConstructContourDraft(skeletonPolygon2, RoofPitch));
             }
-            roofTop.Move(Vector3.up*roofConfig.thickness);
+
+            roofTop.Move(Vector3.up * roofConfig.thickness);
 
             roofDraft.Add(roofTop)
                 .Paint(roofColor);
@@ -191,7 +198,8 @@ namespace ProceduralToolkit.Buildings
                     roofTop.Add(ConstructContourDraft(skeletonPolygon2, RoofPitch));
                 }
             }
-            roofTop.Move(Vector3.up*roofConfig.thickness);
+
+            roofTop.Move(Vector3.up * roofConfig.thickness);
 
             roofDraft.Add(roofTop)
                 .Paint(roofColor);

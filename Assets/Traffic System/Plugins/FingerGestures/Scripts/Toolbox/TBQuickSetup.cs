@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[AddComponentMenu( "FingerGestures/Toolbox/Quick Setup" )]
+[AddComponentMenu("FingerGestures/Toolbox/Quick Setup")]
 public class TBQuickSetup : MonoBehaviour
 {
-    public GameObject MessageTarget = null;     // default to this game object
+    public GameObject MessageTarget = null; // default to this game object
     public int MaxSimultaneousGestures = 2;
     ScreenRaycaster screenRaycaster;
 
@@ -27,9 +27,9 @@ public class TBQuickSetup : MonoBehaviour
     public SwipeRecognizer TwoFingerSwipe { get; set; }
     public LongPressRecognizer TwoFingerLongPress { get; set; }
 
-    GameObject CreateChildNode( string name )
+    GameObject CreateChildNode(string name)
     {
-        GameObject go = new GameObject( name );
+        GameObject go = new GameObject(name);
         Transform tf = go.transform;
         tf.parent = this.transform;
         tf.localPosition = Vector3.zero;
@@ -39,52 +39,52 @@ public class TBQuickSetup : MonoBehaviour
 
     void Start()
     {
-        if( !MessageTarget )
+        if (!MessageTarget)
             MessageTarget = this.gameObject;
 
         screenRaycaster = GetComponent<ScreenRaycaster>();
-        if( !screenRaycaster )
+        if (!screenRaycaster)
             screenRaycaster = gameObject.AddComponent<ScreenRaycaster>();
 
         // Create the FG instance if not already available
-        if( !FingerGestures.Instance )
+        if (!FingerGestures.Instance)
             gameObject.AddComponent<FingerGestures>();
 
-        GameObject fingerEventsNode = CreateChildNode( "Finger Event Detectors" );
+        GameObject fingerEventsNode = CreateChildNode("Finger Event Detectors");
         {
-            FingerDown = AddFingerEventDetector<FingerDownDetector>( fingerEventsNode );
-            FingerUp = AddFingerEventDetector<FingerUpDetector>( fingerEventsNode );
-            FingerMotion = AddFingerEventDetector<FingerMotionDetector>( fingerEventsNode );
-            FingerHover = AddFingerEventDetector<FingerHoverDetector>( fingerEventsNode );
+            FingerDown = AddFingerEventDetector<FingerDownDetector>(fingerEventsNode);
+            FingerUp = AddFingerEventDetector<FingerUpDetector>(fingerEventsNode);
+            FingerMotion = AddFingerEventDetector<FingerMotionDetector>(fingerEventsNode);
+            FingerHover = AddFingerEventDetector<FingerHoverDetector>(fingerEventsNode);
         }
 
-        GameObject singleFingerGestureNode = CreateChildNode( "Single Finger Gestures" );
+        GameObject singleFingerGestureNode = CreateChildNode("Single Finger Gestures");
         {
-            Drag = AddSingleFingerGesture<DragRecognizer>( singleFingerGestureNode );
-            Tap = AddSingleFingerGesture<TapRecognizer>( singleFingerGestureNode );
-            Swipe = AddSingleFingerGesture<SwipeRecognizer>( singleFingerGestureNode );
-            LongPress = AddSingleFingerGesture<LongPressRecognizer>( singleFingerGestureNode );
+            Drag = AddSingleFingerGesture<DragRecognizer>(singleFingerGestureNode);
+            Tap = AddSingleFingerGesture<TapRecognizer>(singleFingerGestureNode);
+            Swipe = AddSingleFingerGesture<SwipeRecognizer>(singleFingerGestureNode);
+            LongPress = AddSingleFingerGesture<LongPressRecognizer>(singleFingerGestureNode);
 
-            DoubleTap = AddSingleFingerGesture<TapRecognizer>( singleFingerGestureNode );
+            DoubleTap = AddSingleFingerGesture<TapRecognizer>(singleFingerGestureNode);
             DoubleTap.RequiredTaps = 2;
             DoubleTap.EventMessageName = "OnDoubleTap";
         }
 
-        GameObject twoFingerGestures = CreateChildNode( "Two-Finger Gestures" );
+        GameObject twoFingerGestures = CreateChildNode("Two-Finger Gestures");
         {
-            Pinch = AddTwoFingerGesture<PinchRecognizer>( twoFingerGestures );
-            Twist = AddTwoFingerGesture<TwistRecognizer>( twoFingerGestures );
-            TwoFingerDrag = AddTwoFingerGesture<DragRecognizer>( twoFingerGestures, "OnTwoFingerDrag" );
-            TwoFingerTap = AddTwoFingerGesture<TapRecognizer>( twoFingerGestures, "OnTwoFingerTap" );
-            TwoFingerSwipe = AddTwoFingerGesture<SwipeRecognizer>( twoFingerGestures, "OnTwoFingerSwipe" );
-            TwoFingerLongPress = AddTwoFingerGesture<LongPressRecognizer>( twoFingerGestures, "OnTwoFingerLongPress" );
+            Pinch = AddTwoFingerGesture<PinchRecognizer>(twoFingerGestures);
+            Twist = AddTwoFingerGesture<TwistRecognizer>(twoFingerGestures);
+            TwoFingerDrag = AddTwoFingerGesture<DragRecognizer>(twoFingerGestures, "OnTwoFingerDrag");
+            TwoFingerTap = AddTwoFingerGesture<TapRecognizer>(twoFingerGestures, "OnTwoFingerTap");
+            TwoFingerSwipe = AddTwoFingerGesture<SwipeRecognizer>(twoFingerGestures, "OnTwoFingerSwipe");
+            TwoFingerLongPress = AddTwoFingerGesture<LongPressRecognizer>(twoFingerGestures, "OnTwoFingerLongPress");
         }
 
         // we're done, remove component (but not game object)
         // Destroy( this );
     }
 
-    T AddFingerEventDetector<T>( GameObject node ) where T : FingerEventDetector
+    T AddFingerEventDetector<T>(GameObject node) where T : FingerEventDetector
     {
         T detector = node.AddComponent<T>();
         detector.Raycaster = screenRaycaster;
@@ -92,35 +92,35 @@ public class TBQuickSetup : MonoBehaviour
         return detector;
     }
 
-    T AddGesture<T>( GameObject node ) where T : GestureRecognizer
+    T AddGesture<T>(GameObject node) where T : GestureRecognizer
     {
         T gesture = node.AddComponent<T>();
         gesture.Raycaster = screenRaycaster;
         gesture.EventMessageTarget = MessageTarget;
 
-        if( gesture.SupportFingerClustering )
+        if (gesture.SupportFingerClustering)
             gesture.MaxSimultaneousGestures = MaxSimultaneousGestures;
 
         return gesture;
     }
 
-    T AddSingleFingerGesture<T>( GameObject node ) where T : GestureRecognizer
+    T AddSingleFingerGesture<T>(GameObject node) where T : GestureRecognizer
     {
-        T gesture = AddGesture<T>( node );
+        T gesture = AddGesture<T>(node);
         gesture.RequiredFingerCount = 1;
         return gesture;
     }
 
-    T AddTwoFingerGesture<T>( GameObject node ) where T : GestureRecognizer
+    T AddTwoFingerGesture<T>(GameObject node) where T : GestureRecognizer
     {
-        T gesture = AddGesture<T>( node );
+        T gesture = AddGesture<T>(node);
         gesture.RequiredFingerCount = 2;
         return gesture;
     }
 
-    T AddTwoFingerGesture<T>( GameObject node, string eventName ) where T : GestureRecognizer
+    T AddTwoFingerGesture<T>(GameObject node, string eventName) where T : GestureRecognizer
     {
-        T gesture = AddTwoFingerGesture<T>( node );
+        T gesture = AddTwoFingerGesture<T>(node);
         gesture.EventMessageName = eventName;
         return gesture;
     }

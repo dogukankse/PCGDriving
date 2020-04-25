@@ -68,7 +68,6 @@ public class MSSceneControllerFree : MonoBehaviour
 
     #endregion
 
- 
 
     public enum ControlTypeFree
     {
@@ -133,8 +132,6 @@ public class MSSceneControllerFree : MonoBehaviour
     Image penaltyAlert;
     Text penaltyAlertText;
     Speedometer speedometer;
-    
-
 
 
     #region customizeInputs
@@ -173,11 +170,10 @@ public class MSSceneControllerFree : MonoBehaviour
 
     void Awake()
     {
-        
         playerCode = vehicles[currentVehicle].GetComponent<TrafficSystemVehiclePlayer>();
         playerCode.pointUpdate = OnPointUpdate;
         vehicleCode = vehicles[currentVehicle].GetComponent<MSVehicleControllerFree>();
-        
+
         error = false;
         CheckEqualKeyCodes();
         MSSceneControllerFree[] sceneControllers =
@@ -281,7 +277,7 @@ public class MSSceneControllerFree : MonoBehaviour
                 enterAndExitButton.onClick = new Button.ButtonClickedEvent();
                 enterAndExitButton.onClick.AddListener(() => Mobile_EnterAndExitVehicle());
             }
-            
+
             EnableOrDisableButtons(vehicleCode.isInsideTheCar);
 
             Time.timeScale = 1;
@@ -336,9 +332,9 @@ public class MSSceneControllerFree : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
     public void OnPointUpdate(int currentPoint, int decreasePoint, string reason)
     {
-      
         pointText.text = currentPoint + "";
         penaltyAlertText.text = Strings.get(reason) + " Puan: " + decreasePoint + " Zaman:" + Time.time;
         penaltyAlert.GetComponent<Image>().enabled = true;
@@ -348,24 +344,23 @@ public class MSSceneControllerFree : MonoBehaviour
             penaltyAlert.GetComponent<Image>().enabled = false;
             penaltyAlertText.text = "";
         }, 1).getEnumerator());
-        
+
         if (currentPoint < 20)
         {
             StartCoroutine(new DelayExecutor((() =>
             {
-                
                 finishGame.GetComponent<Image>().enabled = true;
                 restartGame.GetComponent<Image>().enabled = true;
                 restartGame.GetComponent<Button>().enabled = true;
                 restartGame.GetComponentInChildren<Text>().enabled = true;
                 textRestart.GetComponent<Text>().enabled = true;
-            
+
                 restartGame.onClick.AddListener(restart);
-                
-            }),2).getEnumerator()); ;
+            }), 2).getEnumerator());
+            ;
         }
     }
-    
+
     void CheckEqualKeyCodes()
     {
         var type = typeof(ControlsFree);
@@ -424,7 +419,7 @@ public class MSSceneControllerFree : MonoBehaviour
             }
 
             #endregion
-            
+
             EnableOrDisableButtons(vehicleCode.isInsideTheCar);
 
             if (Input.GetKeyDown(controls.reloadScene) && controls.enable_reloadScene_Input)
@@ -623,8 +618,6 @@ public class MSSceneControllerFree : MonoBehaviour
                 }
             }
         }
-
-     
     }
 
     void EnableUI(bool enable)

@@ -16,20 +16,22 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Angle of the needle at the lowest value. You can use lock at start option to adjust this value while in play mode.
         /// </summary>
-        [Tooltip("Angle of the needle at the lowest value. You can use lock at start option to adjust this value while in play mode.")]
+        [Tooltip(
+            "Angle of the needle at the lowest value. You can use lock at start option to adjust this value while in play mode.")]
         public float startAngle = 574;
 
         /// <summary>
         /// Angle of the needle at the highest value. You can use lock at end option to adjust this value while in play mode.
         /// </summary>
-        [Tooltip("Angle of the needle at the highest value. You can use lock at end option to adjust this value while in play mode.")]
+        [Tooltip(
+            "Angle of the needle at the highest value. You can use lock at end option to adjust this value while in play mode.")]
         public float endAngle = 330;
 
         /// <summary>
         /// Smooths the travel of the needle making it more inert, as if actually had some mass and resistance.
         /// </summary>
         [Tooltip("Smooths the travel of the needle making it more inert, as if actually had some mass and resistance.")]
-        [Range(0,1)]
+        [Range(0, 1)]
         public float needleSmoothing;
 
         /// <summary>
@@ -52,14 +54,8 @@ namespace NWH.VehiclePhysics
 
         public float Value
         {
-            get
-            {
-                return currentValue;
-            }
-            set
-            {
-                currentValue = Mathf.Clamp(value, 0, maxValue);
-            }
+            get { return currentValue; }
+            set { currentValue = Mathf.Clamp(value, 0, maxValue); }
         }
 
         private void Awake()
@@ -81,8 +77,8 @@ namespace NWH.VehiclePhysics
             if (lockAtEnd) angle = endAngle;
             if (lockAtStart) angle = startAngle;
 
-            needle.transform.eulerAngles = new Vector3(needle.transform.eulerAngles.x, needle.transform.eulerAngles.y, angle);
+            needle.transform.eulerAngles =
+                new Vector3(needle.transform.eulerAngles.x, needle.transform.eulerAngles.y, angle);
         }
     }
 }
-

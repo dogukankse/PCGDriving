@@ -24,7 +24,7 @@ namespace NWH.VehiclePhysics
             {
                 // Initialize surface audio source
                 AudioSource a = wheel.ControllerGO.AddComponent<AudioSource>();
-                vc.sound.SetAudioSourceDefaults( a, true, true);
+                vc.sound.SetAudioSourceDefaults(a, true, true);
                 Sources.Add(a);
             }
 
@@ -39,7 +39,8 @@ namespace NWH.VehiclePhysics
                 {
                     Sources[i].volume = 0f;
                     Wheel wheel = vc.Wheels[i];
-                    GroundDetection.GroundEntity groundEntity = vc.groundDetection.GetCurrentGroundEntity(wheel.WheelController);
+                    GroundDetection.GroundEntity groundEntity =
+                        vc.groundDetection.GetCurrentGroundEntity(wheel.WheelController);
 
                     if (wheel.IsGrounded && groundEntity != null)
                     {
@@ -60,12 +61,16 @@ namespace NWH.VehiclePhysics
                             float surfaceModifier = 1f;
                             if (groundEntity.slipSensitiveSurfaceSound)
                             {
-                                surfaceModifier = (wheel.SmoothSideSlip / vc.sideSlipThreshold) + (wheel.SmoothForwardSlip / vc.forwardSlipThreshold);
+                                surfaceModifier = (wheel.SmoothSideSlip / vc.sideSlipThreshold) +
+                                                  (wheel.SmoothForwardSlip / vc.forwardSlipThreshold);
                             }
 
                             // Change surface volume and pitch
                             float newVolume = groundEntity.surfaceSoundComponent.volume * Mathf.Clamp01(vc.Speed / 10f)
-                                * surfaceModifier * volume * groundEntity.surfaceSoundComponent.volume;
+                                                                                        * surfaceModifier * volume *
+                                                                                        groundEntity
+                                                                                            .surfaceSoundComponent
+                                                                                            .volume;
 
                             // Recompile fix
                             if (smoothedVolume == null) smoothedVolume = new HysteresisSmoothedValue(0, 0.2f, 0.5f);
@@ -78,7 +83,7 @@ namespace NWH.VehiclePhysics
                         }
                     }
                 }
-            }        
+            }
             else
             {
                 for (int i = 0; i < vc.Wheels.Count; i++) Sources[i].volume = 0;
@@ -86,4 +91,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

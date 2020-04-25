@@ -8,36 +8,37 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class TrafficSystemIntersectionEditor : Editor
 {
-	TrafficSystemIntersection TrafficSystemIntersection;
-	TrafficSystem             TrafficSystem;
+    TrafficSystemIntersection TrafficSystemIntersection;
+    TrafficSystem TrafficSystem;
 
-	void Awake()
-	{
-		TrafficSystemIntersection = (TrafficSystemIntersection)target;
+    void Awake()
+    {
+        TrafficSystemIntersection = (TrafficSystemIntersection) target;
 
 //		Debug.Log (TrafficSystemPiece.gameObject.name + ": " + TrafficSystemPiece.m_renderer.bounds.extents);
-	}
+    }
 
-	public override void OnInspectorGUI () 
-	{
+    public override void OnInspectorGUI()
+    {
 //		serializedObject.Update();
-		DrawDefaultInspector();
+        DrawDefaultInspector();
 
-		if(!TrafficSystemIntersection)
-			return;
+        if (!TrafficSystemIntersection)
+            return;
 
-		if(!TrafficSystem)
-		{
-			GameObject obj = GameObject.Find ("Traffic System");
-			if(obj && obj.GetComponent<TrafficSystem>())
-				TrafficSystem = obj.GetComponent<TrafficSystem>();
-		}
+        if (!TrafficSystem)
+        {
+            GameObject obj = GameObject.Find("Traffic System");
+            if (obj && obj.GetComponent<TrafficSystem>())
+                TrafficSystem = obj.GetComponent<TrafficSystem>();
+        }
 
-		GUILayout.BeginHorizontal("box");
-		if(GUILayout.Button("Process Children"))
-		{
-			TrafficSystemIntersection.Refresh();
-		}
-		GUILayout.EndHorizontal();
-	}
+        GUILayout.BeginHorizontal("box");
+        if (GUILayout.Button("Process Children"))
+        {
+            TrafficSystemIntersection.Refresh();
+        }
+
+        GUILayout.EndHorizontal();
+    }
 }

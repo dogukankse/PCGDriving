@@ -6,17 +6,16 @@ namespace _Scripts
 {
     public class DelayExecutor
     {
-        
         private bool isCoroutineExecuting;
         private Action task;
         private float time;
-        
-        public DelayExecutor(Action task,float time)
+
+        public DelayExecutor(Action task, float time)
         {
             this.time = time;
             this.task = task;
         }
-        
+
         public IEnumerator getEnumerator()
         {
             if (isCoroutineExecuting)
@@ -26,19 +25,17 @@ namespace _Scripts
             task();
             isCoroutineExecuting = false;
         }
-        
     }
-    
+
     public class RepeatExecutor
     {
-        
         private bool isCoroutineExecuting;
         private Action<int> task;
         private float time;
         private bool finished;
         private int called;
-        
-        public RepeatExecutor(Action<int> task,float intervalTime)
+
+        public RepeatExecutor(Action<int> task, float intervalTime)
         {
             this.time = intervalTime;
             this.task = task;
@@ -48,7 +45,7 @@ namespace _Scripts
         {
             finished = true;
         }
-        
+
         public IEnumerator getEnumerator()
         {
             while (!finished)
@@ -58,6 +55,5 @@ namespace _Scripts
                 called++;
             }
         }
-        
     }
 }

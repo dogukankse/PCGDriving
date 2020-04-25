@@ -19,14 +19,16 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Cameras with this tag will be added to the vehicle cameras list. Cameras need to be children of this object.
         /// </summary>
-        [Tooltip("Cameras with this tag will be added to the vehicle cameras list. Cameras need to be children of this object.")]
+        [Tooltip(
+            "Cameras with this tag will be added to the vehicle cameras list. Cameras need to be children of this object.")]
         public string cameraTag = "VehicleCamera";
 
         /// <summary>
         /// List of cameras that the changer will cycle through. Leave empty if you want cameras to be automatically detected.
         /// To be detected cameras need to have camera tag and be children of the object this script is attached to.
         /// </summary>
-        [Tooltip("List of cameras that the changer will cycle through. Leave empty if you want cameras to be automatically detected." +
+        [Tooltip(
+            "List of cameras that the changer will cycle through. Leave empty if you want cameras to be automatically detected." +
             " To be detected cameras need to have camera tag and be children of the object this script is attached to.")]
         public List<GameObject> vehicleCameras = new List<GameObject>();
 
@@ -41,13 +43,13 @@ namespace NWH.VehiclePhysics
 
             if (vehicleController == null)
                 Debug.Log("None of the parents of camera changer contain VehicleController component. " +
-                 "Make sure that the camera changer is amongst the children of VehicleController object.");
+                          "Make sure that the camera changer is amongst the children of VehicleController object.");
 
-            if(vehicleCameras.Count == 0)
+            if (vehicleCameras.Count == 0)
             {
-                foreach(Camera cam in GetComponentsInChildren<Camera>(true))
+                foreach (Camera cam in GetComponentsInChildren<Camera>(true))
                 {
-                    if(cam.transform.CompareTag(cameraTag))
+                    if (cam.transform.CompareTag(cameraTag))
                     {
                         vehicleCameras.Add(cam.gameObject);
                     }
@@ -56,7 +58,7 @@ namespace NWH.VehiclePhysics
 
             if (vehicleCameras.Count == 0)
                 Debug.LogWarning("No cameras could be found with 'Camera' tag. Either add cameras manually or " +
-                    "add them as children to the game object this script is attached to.");
+                                 "add them as children to the game object this script is attached to.");
 
             if (!vehicleController.Active)
             {
@@ -73,7 +75,7 @@ namespace NWH.VehiclePhysics
 
         void Update()
         {
-            if(vehicleController.Active)
+            if (vehicleController.Active)
             {
                 bool changeCamera = false;
                 try
@@ -129,7 +131,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void NextCamera()
         {
-            if(vehicleCameras.Count > 0)
+            if (vehicleCameras.Count > 0)
             {
                 currentCamera++;
                 if (currentCamera >= vehicleCameras.Count)
@@ -154,7 +156,7 @@ namespace NWH.VehiclePhysics
                 {
                     vehicleCameras[i].SetActive(true);
                     AudioListener al = vehicleCameras[i].GetComponent<AudioListener>();
-                    if(al != null)
+                    if (al != null)
                     {
                         al.enabled = true;
                     }
@@ -171,4 +173,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

@@ -36,14 +36,14 @@ public class FingerMotionEvent : FingerEvent
     /// </summary>
     public float ElapsedTime
     {
-        get { return Mathf.Max( 0, Time.time - StartTime ); }
+        get { return Mathf.Max(0, Time.time - StartTime); }
     }
 }
 
 /// <summary>
 /// Tracks the moving/stationary state of a given finger
 /// </summary>
-[AddComponentMenu( "FingerGestures/Finger Events/Finger Motion Detector" )]
+[AddComponentMenu("FingerGestures/Finger Events/Finger Motion Detector")]
 public class FingerMotionDetector : FingerEventDetector<FingerMotionEvent>
 {
     enum EventType
@@ -59,91 +59,100 @@ public class FingerMotionDetector : FingerEventDetector<FingerMotionEvent>
     public string StationaryMessageName = "OnFingerStationary";
     public bool TrackMove = true;
     public bool TrackStationary = true;
-    
-    bool FireEvent( FingerMotionEvent e, EventType eventType, FingerMotionPhase phase, Vector2 position, bool updateSelection )
+
+    bool FireEvent(FingerMotionEvent e, EventType eventType, FingerMotionPhase phase, Vector2 position,
+        bool updateSelection)
     {
-        if( ( !TrackMove && eventType == EventType.Move ) || ( !TrackStationary && eventType == EventType.Stationary ) )
+        if ((!TrackMove && eventType == EventType.Move) || (!TrackStationary && eventType == EventType.Stationary))
             return false;
 
         e.Phase = phase;
         e.Position = position;
 
-        if( e.Phase == FingerMotionPhase.Started )
+        if (e.Phase == FingerMotionPhase.Started)
             e.StartTime = Time.time;
 
-        if( updateSelection )
-            UpdateSelection( e );
+        if (updateSelection)
+            UpdateSelection(e);
 
-        if( eventType == EventType.Move )
+        if (eventType == EventType.Move)
         {
             e.Name = MoveMessageName;
 
-            if( OnFingerMove != null )
-                OnFingerMove( e );
+            if (OnFingerMove != null)
+                OnFingerMove(e);
 
-            TrySendMessage( e );
+            TrySendMessage(e);
         }
-        else if( eventType == EventType.Stationary )
+        else if (eventType == EventType.Stationary)
         {
             e.Name = StationaryMessageName;
-            
-            if( OnFingerStationary != null )
-                OnFingerStationary( e );
 
-            TrySendMessage( e );
+            if (OnFingerStationary != null)
+                OnFingerStationary(e);
+
+            TrySendMessage(e);
         }
         else
         {
-            Debug.LogWarning( "Unhandled FingerMotionDetector event type: " + eventType );
+            Debug.LogWarning("Unhandled FingerMotionDetector event type: " + eventType);
             return false;
         }
 
         return true;
     }
 
-    protected override void ProcessFinger( FingerGestures.Finger finger )
+    protected override void ProcessFinger(FingerGestures.Finger finger)
     {
-        FingerMotionEvent e = GetEvent( finger );
+        FingerMotionEvent e = GetEvent(finger);
 
         bool selectionUpdated = false;
 
         // finger phase changed
-        if( finger.Phase != finger.PreviousPhase )
+        if (finger.Phase != finger.PreviousPhase)
         {
-            switch( finger.PreviousPhase )
+            switch (finger.PreviousPhase)
             {
                 case FingerGestures.FingerPhase.Moving:
-                    selectionUpdated |= FireEvent( e, EventType.Move, FingerMotionPhase.Ended, finger.Position, !selectionUpdated );
+                    selectionUpdated |= FireEvent(e, EventType.Move, FingerMotionPhase.Ended, finger.Position,
+                        !selectionUpdated);
                     break;
 
                 case FingerGestures.FingerPhase.Stationary:
-                    selectionUpdated |= FireEvent( e, EventType.Stationary, FingerMotionPhase.Ended, finger.PreviousPosition, !selectionUpdated );
+                    selectionUpdated |= FireEvent(e, EventType.Stationary, FingerMotionPhase.Ended,
+                        finger.PreviousPosition, !selectionUpdated);
                     break;
             }
 
-            switch( finger.Phase )
+            switch (finger.Phase)
             {
                 case FingerGestures.FingerPhase.Moving:
-                    selectionUpdated |= FireEvent( e, EventType.Move, FingerMotionPhase.Started, finger.PreviousPosition, !selectionUpdated );
-                    selectionUpdated |= FireEvent( e, EventType.Move, FingerMotionPhase.Updated, finger.Position, !selectionUpdated );
+                    selectionUpdated |= FireEvent(e, EventType.Move, FingerMotionPhase.Started, finger.PreviousPosition,
+                        !selectionUpdated);
+                    selectionUpdated |= FireEvent(e, EventType.Move, FingerMotionPhase.Updated, finger.Position,
+                        !selectionUpdated);
                     break;
 
                 case FingerGestures.FingerPhase.Stationary:
-                    selectionUpdated |= FireEvent( e, EventType.Stationary, FingerMotionPhase.Started, finger.Position, !selectionUpdated );
-                    selectionUpdated |= FireEvent( e, EventType.Stationary, FingerMotionPhase.Updated, finger.Position, !selectionUpdated );
+                    selectionUpdated |= FireEvent(e, EventType.Stationary, FingerMotionPhase.Started, finger.Position,
+                        !selectionUpdated);
+                    selectionUpdated |= FireEvent(e, EventType.Stationary, FingerMotionPhase.Updated, finger.Position,
+                        !selectionUpdated);
                     break;
             }
         }
         else // finger phase still the same
         {
-            switch( finger.Phase )
+            switch (finger.Phase)
             {
                 case FingerGestures.FingerPhase.Moving:
-                    selectionUpdated |= FireEvent( e, EventType.Move, FingerMotionPhase.Updated, finger.Position, !selectionUpdated );
+                    selectionUpdated |= FireEvent(e, EventType.Move, FingerMotionPhase.Updated, finger.Position,
+                        !selectionUpdated);
                     break;
 
                 case FingerGestures.FingerPhase.Stationary:
-                    selectionUpdated |= FireEvent( e, EventType.Stationary, FingerMotionPhase.Updated, finger.Position, !selectionUpdated );
+                    selectionUpdated |= FireEvent(e, EventType.Stationary, FingerMotionPhase.Updated, finger.Position,
+                        !selectionUpdated);
                     break;
             }
         }

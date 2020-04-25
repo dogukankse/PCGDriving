@@ -10,6 +10,4 @@ public class Tile
     public List<int> left;
     public List<int> down;
     private byte[] pattern;
-
-   
 }

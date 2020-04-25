@@ -18,6 +18,7 @@ namespace ProceduralToolkit
             {
                 intPath.Add(ToIntPoint(vertex));
             }
+
             return intPath;
         }
 
@@ -52,12 +53,12 @@ namespace ProceduralToolkit
 
         public static IntPoint ToIntPoint(Vector2 vector2)
         {
-            return new IntPoint(vector2.x*ClipperScale, vector2.y*ClipperScale);
+            return new IntPoint(vector2.x * ClipperScale, vector2.y * ClipperScale);
         }
 
         public static Vector2 ToVector2(IntPoint intPoint)
         {
-            return new Vector2(intPoint.X/ClipperScale, intPoint.Y/ClipperScale);
+            return new Vector2(intPoint.X / ClipperScale, intPoint.Y / ClipperScale);
         }
     }
 }

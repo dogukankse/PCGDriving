@@ -51,7 +51,7 @@ public class IOClod : IOCcomp
     {
         try
         {
-            iocCam =  Camera.main.GetComponent<IOCcam>(); 
+            iocCam = Camera.main.GetComponent<IOCcam>();
             shadowDistance = QualitySettings.shadowDistance * 2f;
             currentLayer = gameObject.layer;
             prevDist = 0f;

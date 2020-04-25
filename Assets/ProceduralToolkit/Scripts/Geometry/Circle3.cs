@@ -13,9 +13,20 @@ namespace ProceduralToolkit
         public Vector3 normal;
         public float radius;
 
-        public static Circle3 unitXY { get { return new Circle3(Vector3.zero, Vector3.back, 1); } }
-        public static Circle3 unitXZ { get { return new Circle3(Vector3.zero, Vector3.up, 1); } }
-        public static Circle3 unitYZ { get { return new Circle3(Vector3.zero, Vector3.left, 1); } }
+        public static Circle3 unitXY
+        {
+            get { return new Circle3(Vector3.zero, Vector3.back, 1); }
+        }
+
+        public static Circle3 unitXZ
+        {
+            get { return new Circle3(Vector3.zero, Vector3.up, 1); }
+        }
+
+        public static Circle3 unitYZ
+        {
+            get { return new Circle3(Vector3.zero, Vector3.left, 1); }
+        }
 
         public Circle3(float radius) : this(Vector3.zero, Vector3.back, radius)
         {
@@ -39,9 +50,9 @@ namespace ProceduralToolkit
         {
             t = Mathf.Clamp01(t);
             return new Circle3(
-                center: a.center + (b.center - a.center)*t,
+                center: a.center + (b.center - a.center) * t,
                 normal: Vector3.LerpUnclamped(a.normal, b.normal, t),
-                radius: a.radius + (b.radius - a.radius)*t);
+                radius: a.radius + (b.radius - a.radius) * t);
         }
 
         /// <summary>
@@ -50,9 +61,9 @@ namespace ProceduralToolkit
         public static Circle3 LerpUnclamped(Circle3 a, Circle3 b, float t)
         {
             return new Circle3(
-                center: a.center + (b.center - a.center)*t,
+                center: a.center + (b.center - a.center) * t,
                 normal: Vector3.LerpUnclamped(a.normal, b.normal, t),
-                radius: a.radius + (b.radius - a.radius)*t);
+                radius: a.radius + (b.radius - a.radius) * t);
         }
 
         public static explicit operator Sphere(Circle3 circle)
@@ -114,7 +125,8 @@ namespace ProceduralToolkit
         public string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format("Circle3(center: {0}, normal: {1}, radius: {2})",
-                center.ToString(format, formatProvider), normal.ToString(format, formatProvider), radius.ToString(format, formatProvider));
+                center.ToString(format, formatProvider), normal.ToString(format, formatProvider),
+                radius.ToString(format, formatProvider));
         }
     }
 }

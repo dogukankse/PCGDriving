@@ -9,8 +9,15 @@ namespace ProceduralToolkit.Skeleton
     /// </summary>
     public class Plan : IEnumerable<Plan.Vertex>
     {
-        public int Count { get { return vertices.Count; } }
-        public Vertex First { get { return vertices[0]; } }
+        public int Count
+        {
+            get { return vertices.Count; }
+        }
+
+        public Vertex First
+        {
+            get { return vertices[0]; }
+        }
 
         private readonly List<Vertex> vertices = new List<Vertex>();
 
@@ -24,6 +31,7 @@ namespace ProceduralToolkit.Skeleton
             {
                 vertices.Add(new Vertex(vertex));
             }
+
             for (int i = 0; i < Count; i++)
             {
                 var vertex = vertices[i];
@@ -52,7 +60,7 @@ namespace ProceduralToolkit.Skeleton
         {
             foreach (var vertex in vertices)
             {
-                vertex.position -= vertex.bisector*Geometry.GetAngleOffset(offset, vertex.angle);
+                vertex.position -= vertex.bisector * Geometry.GetAngleOffset(offset, vertex.angle);
             }
         }
 
@@ -73,13 +81,16 @@ namespace ProceduralToolkit.Skeleton
                         Debug.LogError("Invalid connectivity");
                         break;
                     }
+
                     Remove(currentVertex);
                     plan.Add(currentVertex);
                     currentVertex = currentVertex.next;
                     i++;
                 } while (!currentVertex.Equals(startVertex));
+
                 plans.Add(plan);
             }
+
             return plans;
         }
 
@@ -89,6 +100,7 @@ namespace ProceduralToolkit.Skeleton
             {
                 yield break;
             }
+
             var startVertex = vertices[0];
             var currentVertex = startVertex;
             int i = 0;
@@ -100,6 +112,7 @@ namespace ProceduralToolkit.Skeleton
                     Debug.LogError("Invalid connectivity");
                     yield break;
                 }
+
                 yield return currentVertex;
                 currentVertex = currentVertex.next;
                 i++;
@@ -134,7 +147,10 @@ namespace ProceduralToolkit.Skeleton
             public int previousPolygonIndex;
             public int nextPolygonIndex;
 
-            public bool reflect { get { return angle >= 180; } }
+            public bool reflect
+            {
+                get { return angle >= 180; }
+            }
 
             public Vertex(Vector2 position)
             {

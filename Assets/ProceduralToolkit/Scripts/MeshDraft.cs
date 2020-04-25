@@ -67,6 +67,7 @@ namespace ProceduralToolkit
             {
                 triangles.Add(draft.triangles[i] + vertices.Count);
             }
+
             vertices.AddRange(draft.vertices);
             normals.AddRange(draft.normals);
             tangents.AddRange(draft.tangents);
@@ -90,6 +91,7 @@ namespace ProceduralToolkit
                 Vector3 normal = Vector3.Cross(vertex1 - vertex0, vertex2 - vertex0).normalized;
                 return AddTriangle(vertex0, vertex1, vertex2, normal, normal, normal);
             }
+
             return _AddTriangle(vertex0, vertex1, vertex2);
         }
 
@@ -104,7 +106,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Adds a triangle to the draft
         /// </summary>
-        public MeshDraft AddTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 normal0, Vector3 normal1, Vector3 normal2)
+        public MeshDraft AddTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 normal0,
+            Vector3 normal1, Vector3 normal2)
         {
             normals.Add(normal0);
             normals.Add(normal1);
@@ -139,7 +142,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Adds a triangle to the draft
         /// </summary>
-        public MeshDraft AddTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 normal0, Vector3 normal1, Vector3 normal2,
+        public MeshDraft AddTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 normal0,
+            Vector3 normal1, Vector3 normal2,
             Vector2 uv0, Vector2 uv1, Vector2 uv2)
         {
             uv.Add(uv0);
@@ -177,19 +181,22 @@ namespace ProceduralToolkit
                 Vector3 normal = Vector3.Cross(height, width).normalized;
                 return AddQuad(vertex0, vertex1, vertex2, vertex3, normal, normal, normal, normal);
             }
+
             return _AddQuad(vertex0, vertex1, vertex2, vertex3);
         }
 
         /// <summary>
         /// Adds a quad to the draft
         /// </summary>
-        public MeshDraft AddQuad(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, bool calculateNormal)
+        public MeshDraft AddQuad(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3,
+            bool calculateNormal)
         {
             if (calculateNormal)
             {
                 Vector3 normal = Vector3.Cross(vertex1 - vertex0, vertex3 - vertex0).normalized;
                 return AddQuad(vertex0, vertex1, vertex2, vertex3, normal, normal, normal, normal);
             }
+
             return _AddQuad(vertex0, vertex1, vertex2, vertex3);
         }
 
@@ -230,7 +237,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Adds a quad to the draft
         /// </summary>
-        public MeshDraft AddQuad(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, bool calculateNormal,
+        public MeshDraft AddQuad(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3,
+            bool calculateNormal,
             Vector2 uv0, Vector2 uv1, Vector2 uv2, Vector2 uv3)
         {
             uv.Add(uv0);
@@ -311,6 +319,7 @@ namespace ProceduralToolkit
             {
                 normals.Add(normal);
             }
+
             return this;
         }
 
@@ -345,7 +354,8 @@ namespace ProceduralToolkit
         /// <remarks>
         /// https://en.wikipedia.org/wiki/Triangle_fan
         /// </remarks>
-        public MeshDraft AddTriangleFan(IList<Vector3> fan, Vector3 normal, IList<Vector2> uv, bool reverseTriangles = false)
+        public MeshDraft AddTriangleFan(IList<Vector3> fan, Vector3 normal, IList<Vector2> uv,
+            bool reverseTriangles = false)
         {
             this.uv.AddRange(uv);
             return AddTriangleFan(fan, normal, reverseTriangles);
@@ -357,7 +367,8 @@ namespace ProceduralToolkit
         /// <remarks>
         /// https://en.wikipedia.org/wiki/Triangle_fan
         /// </remarks>
-        public MeshDraft AddTriangleFan(IList<Vector3> fan, IList<Vector3> normals, IList<Vector2> uv, bool reverseTriangles = false)
+        public MeshDraft AddTriangleFan(IList<Vector3> fan, IList<Vector3> normals, IList<Vector2> uv,
+            bool reverseTriangles = false)
         {
             this.uv.AddRange(uv);
             return AddTriangleFan(fan, normals, reverseTriangles);
@@ -384,6 +395,7 @@ namespace ProceduralToolkit
                     triangles.Add(i + 1 + count);
                 }
             }
+
             vertices.AddRange(fan);
         }
 
@@ -413,17 +425,19 @@ namespace ProceduralToolkit
         {
             for (int i = 0, j = 1, k = 2;
                 i < strip.Count - 2;
-                i++, j += i%2*2, k += (i + 1)%2*2)
+                i++, j += i % 2 * 2, k += (i + 1) % 2 * 2)
             {
                 triangles.Add(i + vertices.Count);
                 triangles.Add(j + vertices.Count);
                 triangles.Add(k + vertices.Count);
             }
+
             vertices.AddRange(strip);
             for (int i = 0; i < strip.Count; i++)
             {
                 normals.Add(normal);
             }
+
             return this;
         }
 
@@ -437,12 +451,13 @@ namespace ProceduralToolkit
         {
             for (int i = 0, j = 1, k = 2;
                 i < strip.Count - 2;
-                i++, j += i%2*2, k += (i + 1)%2*2)
+                i++, j += i % 2 * 2, k += (i + 1) % 2 * 2)
             {
                 triangles.Add(i + vertices.Count);
                 triangles.Add(j + vertices.Count);
                 triangles.Add(k + vertices.Count);
             }
+
             vertices.AddRange(strip);
             this.normals.AddRange(normals);
             return this;
@@ -491,7 +506,8 @@ namespace ProceduralToolkit
         /// <summary>
         /// Adds a baseless pyramid to the draft
         /// </summary>
-        public MeshDraft AddBaselessPyramid(Vector3 apex, IList<Vector3> ring, bool generateUV, bool reverseTriangles = false)
+        public MeshDraft AddBaselessPyramid(Vector3 apex, IList<Vector3> ring, bool generateUV,
+            bool reverseTriangles = false)
         {
             if (generateUV)
             {
@@ -504,6 +520,7 @@ namespace ProceduralToolkit
                     {
                         AddTriangle(ring[i - 1], apex, ring[i], true, uv00, uvApex, uv10);
                     }
+
                     AddTriangle(ring[ring.Count - 1], apex, ring[0], true, uv00, uvApex, uv10);
                 }
                 else
@@ -512,6 +529,7 @@ namespace ProceduralToolkit
                     {
                         AddTriangle(ring[i + 1], apex, ring[i], true, uv00, uvApex, uv10);
                     }
+
                     AddTriangle(ring[0], apex, ring[ring.Count - 1], true, uv00, uvApex, uv10);
                 }
             }
@@ -523,6 +541,7 @@ namespace ProceduralToolkit
                     {
                         AddTriangle(ring[i - 1], apex, ring[i], true);
                     }
+
                     AddTriangle(ring[ring.Count - 1], apex, ring[0], true);
                 }
                 else
@@ -531,9 +550,11 @@ namespace ProceduralToolkit
                     {
                         AddTriangle(ring[i + 1], apex, ring[i], true);
                     }
+
                     AddTriangle(ring[0], apex, ring[ring.Count - 1], true);
                 }
             }
+
             return this;
         }
 
@@ -550,6 +571,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentException("Array sizes must be equal");
             }
+
             if (lowerRing.Count < 3)
             {
                 throw new ArgumentException("Array sizes must be greater than 2");
@@ -595,6 +617,7 @@ namespace ProceduralToolkit
                 AddTriangle(lower1, upper0, lower0, true);
                 AddTriangle(lower1, upper1, upper0, true);
             }
+
             return this;
         }
 
@@ -611,6 +634,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentException("Array sizes must be equal");
             }
+
             if (lowerRing.Count < 3)
             {
                 throw new ArgumentException("Array sizes must be greater than 2");
@@ -650,6 +674,7 @@ namespace ProceduralToolkit
             {
                 AddQuad(lower1, upper1, upper0, lower0, true);
             }
+
             return this;
         }
 
@@ -680,6 +705,7 @@ namespace ProceduralToolkit
             {
                 vertices[i] += vector;
             }
+
             return this;
         }
 
@@ -690,9 +716,10 @@ namespace ProceduralToolkit
         {
             for (int i = 0; i < vertices.Count; i++)
             {
-                vertices[i] = rotation*vertices[i];
-                normals[i] = rotation*normals[i];
+                vertices[i] = rotation * vertices[i];
+                normals[i] = rotation * normals[i];
             }
+
             return this;
         }
 
@@ -705,6 +732,7 @@ namespace ProceduralToolkit
             {
                 vertices[i] *= scale;
             }
+
             return this;
         }
 
@@ -718,6 +746,7 @@ namespace ProceduralToolkit
                 vertices[i] = Vector3.Scale(vertices[i], scale);
                 normals[i] = Vector3.Scale(normals[i], scale).normalized;
             }
+
             return this;
         }
 
@@ -731,6 +760,7 @@ namespace ProceduralToolkit
             {
                 colors.Add(color);
             }
+
             return this;
         }
 
@@ -755,6 +785,7 @@ namespace ProceduralToolkit
                 triangles[i] = triangles[i + 1];
                 triangles[i + 1] = temp;
             }
+
             return this;
         }
 
@@ -767,6 +798,7 @@ namespace ProceduralToolkit
             {
                 normals[i] = -normals[i];
             }
+
             return this;
         }
 
@@ -793,10 +825,12 @@ namespace ProceduralToolkit
                 default:
                     throw new ArgumentOutOfRangeException("channel");
             }
+
             for (var i = 0; i < list.Count; i++)
             {
                 list[i] = new Vector2(1 - list[i].x, list[i].y);
             }
+
             return this;
         }
 
@@ -823,10 +857,12 @@ namespace ProceduralToolkit
                 default:
                     throw new ArgumentOutOfRangeException("channel");
             }
+
             for (var i = 0; i < list.Count; i++)
             {
                 list[i] = new Vector2(list[i].x, 1 - list[i].y);
             }
+
             return this;
         }
 
@@ -838,8 +874,9 @@ namespace ProceduralToolkit
             for (var i = 0; i < vertices.Count; i++)
             {
                 normals[i] = (vertices[i] - center).normalized;
-                vertices[i] = normals[i]*radius;
+                vertices[i] = normals[i] * radius;
             }
+
             return this;
         }
 
@@ -867,6 +904,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             mesh.Clear(false);
             FillMesh(ref mesh, calculateBounds, autoIndexFormat);
         }
@@ -881,7 +919,9 @@ namespace ProceduralToolkit
                 }
                 else
                 {
-                    Debug.LogError("A mesh can't have more than 65535 vertices with 16 bit index buffer. Vertex count: " + vertexCount);
+                    Debug.LogError(
+                        "A mesh can't have more than 65535 vertices with 16 bit index buffer. Vertex count: " +
+                        vertexCount);
                     mesh.indexFormat = IndexFormat.UInt16;
                 }
             }
@@ -889,6 +929,7 @@ namespace ProceduralToolkit
             {
                 mesh.indexFormat = IndexFormat.UInt16;
             }
+
             mesh.name = name;
             mesh.SetVertices(vertices);
             mesh.SetTriangles(triangles, 0, calculateBounds);

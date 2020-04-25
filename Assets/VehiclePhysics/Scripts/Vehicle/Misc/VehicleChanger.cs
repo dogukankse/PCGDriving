@@ -14,7 +14,7 @@ namespace NWH.VehiclePhysics
         /// List of all of the vehicles that can be selected and driven in the scene.
         /// </summary>
         [Tooltip("List of all of the vehicles that can be selected and driven in the scene. " +
-            "If set to 0 script will try to auto-find all the vehicles in the scene with a tag define by VehiclesTag parameter.")]
+                 "If set to 0 script will try to auto-find all the vehicles in the scene with a tag define by VehiclesTag parameter.")]
         [SerializeField]
         public List<VehicleController> vehicles = new List<VehicleController>();
 
@@ -27,7 +27,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Tag that the script will search for if vehicles list is empty. Can be left empty if vehicles have already been assigned manually.
         /// </summary>
-        [Tooltip("Tag that the script will search for if vehicles list is empty. Can be left empty if vehicles have already been assigned manually.")]
+        [Tooltip(
+            "Tag that the script will search for if vehicles list is empty. Can be left empty if vehicles have already been assigned manually.")]
         public string vehicleTag = "Vehicle";
 
         private bool deactivateAll = false;
@@ -39,21 +40,18 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public VehicleController CurrentVehicle
         {
-            get
-            {
-                return vehicles[currentIndex];
-            }
+            get { return vehicles[currentIndex]; }
         }
 
 
         void Awake()
         {
-            if(vehicles.Count == 0)
+            if (vehicles.Count == 0)
             {
                 FindVehicles();
             }
 
-            if(DeactivateAll)
+            if (DeactivateAll)
             {
                 DeactivateAllIncludingActive();
             }
@@ -113,17 +111,18 @@ namespace NWH.VehiclePhysics
             float minDist = Mathf.Infinity;
             if (vehicles.Count > 0)
             {
-                for(int i = 0; i < vehicles.Count; i++)
+                for (int i = 0; i < vehicles.Count; i++)
                 {
                     if (!vehicles[i].gameObject.activeInHierarchy) continue;
 
                     float distance = Vector3.Distance(go.transform.position, vehicles[i].transform.position);
-                    if(distance < minDist)
+                    if (distance < minDist)
                     {
                         minIndex = i;
                         minDist = distance;
                     }
                 }
+
                 nearest = vehicles[minIndex];
             }
 
@@ -143,9 +142,9 @@ namespace NWH.VehiclePhysics
         /// </summary>
         public void ChangeVehicle(VehicleController vc)
         {
-            for(int i = 0; i < vehicles.Count; i++)
+            for (int i = 0; i < vehicles.Count; i++)
             {
-                if(vehicles[i] == vc)
+                if (vehicles[i] == vc)
                 {
                     ChangeVehicle(i);
                     return;
@@ -164,6 +163,7 @@ namespace NWH.VehiclePhysics
             {
                 currentIndex = 0;
             }
+
             DeactivateAllExceptActive();
         }
 
@@ -184,29 +184,17 @@ namespace NWH.VehiclePhysics
 
         public bool DeactivateAll
         {
-            get
-            {
-                return deactivateAll;
-            }
+            get { return deactivateAll; }
 
-            set
-            {
-                deactivateAll = value;
-            }
+            set { deactivateAll = value; }
         }
 
 
         public bool CharacterBased
         {
-            get
-            {
-                return characterBased;
-            }
+            get { return characterBased; }
 
-            set
-            {
-                characterBased = value;
-            }
+            set { characterBased = value; }
         }
 
         void DeactivateAllExceptActive()
@@ -239,12 +227,10 @@ namespace NWH.VehiclePhysics
         void SetCameras(VehicleController vc, bool state)
         {
             var cameras = vc.gameObject.GetComponentsInChildren<Camera>(true);
-            foreach(Camera camera in cameras)
+            foreach (Camera camera in cameras)
             {
                 camera.gameObject.SetActive(state);
             }
         }
-
     }
-
 }

@@ -34,12 +34,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
 #if DOUBLE
 using Real = System.Double;
 namespace ProceduralToolkit.LibTessDotNet.Double
 #else
 using Real = System.Single;
+
 namespace ProceduralToolkit.LibTessDotNet
 #endif
 {
@@ -97,7 +97,7 @@ namespace ProceduralToolkit.LibTessDotNet
         {
             var len = v.X * v.X + v.Y * v.Y + v.Z * v.Z;
             Debug.Assert(len >= 0.0f);
-            len = 1.0f / (Real)Math.Sqrt(len);
+            len = 1.0f / (Real) Math.Sqrt(len);
             v.X *= len;
             v.Y *= len;
             v.Z *= len;
@@ -123,7 +123,7 @@ namespace ProceduralToolkit.LibTessDotNet
         void Return(object obj);
     }
 
-    public class DefaultTypePool<T> : ITypePool where T: class, Pooled<T>, new()
+    public class DefaultTypePool<T> : ITypePool where T : class, Pooled<T>, new()
     {
         private Queue<T> _pool = new Queue<T>();
 
@@ -136,6 +136,7 @@ namespace ProceduralToolkit.LibTessDotNet
                     return _pool.Dequeue();
                 }
             }
+
             return new T();
         }
 
@@ -166,6 +167,7 @@ namespace ProceduralToolkit.LibTessDotNet
             Register<MeshUtils.Edge>(new DefaultTypePool<MeshUtils.Edge>());
             Register<Tess.ActiveRegion>(new DefaultTypePool<Tess.ActiveRegion>());
         }
+
         public abstract void Register<T>(ITypePool typePool) where T : class, Pooled<T>, new();
         public abstract T Get<T>() where T : class, Pooled<T>, new();
         public abstract void Return<T>(T obj) where T : class, Pooled<T>, new();
@@ -200,6 +202,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 // can support multiple readers as long as it's not modified
                 _register = new Dictionary<Type, ITypePool>();
             }
+
             _register[typeof(T)] = typePool;
         }
 
@@ -211,10 +214,12 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 obj = typePool.Get() as T;
             }
+
             if (obj == null)
             {
                 obj = new T();
             }
+
             obj.Init(this);
             return obj;
         }
@@ -225,6 +230,7 @@ namespace ProceduralToolkit.LibTessDotNet
             {
                 return;
             }
+
             obj.Reset(this);
             ITypePool typePool;
             if (_register.TryGetValue(typeof(T), out typePool))
@@ -285,10 +291,12 @@ namespace ProceduralToolkit.LibTessDotNet
                 {
                     int n = 0;
                     var eCur = _anEdge;
-                    do {
+                    do
+                    {
                         n++;
                         eCur = eCur._Lnext;
                     } while (eCur != _anEdge);
+
                     return n;
                 }
             }
@@ -338,15 +346,53 @@ namespace ProceduralToolkit.LibTessDotNet
             internal Tess.ActiveRegion _activeRegion;
             internal int _winding;
 
-            internal Face _Rface { get { return _Sym._Lface; } set { _Sym._Lface = value; } }
-            internal Vertex _Dst { get { return _Sym._Org; }  set { _Sym._Org = value; } }
+            internal Face _Rface
+            {
+                get { return _Sym._Lface; }
+                set { _Sym._Lface = value; }
+            }
 
-            internal Edge _Oprev { get { return _Sym._Lnext; } set { _Sym._Lnext = value; } }
-            internal Edge _Lprev { get { return _Onext._Sym; } set { _Onext._Sym = value; } }
-            internal Edge _Dprev { get { return _Lnext._Sym; } set { _Lnext._Sym = value; } }
-            internal Edge _Rprev { get { return _Sym._Onext; } set { _Sym._Onext = value; } }
-            internal Edge _Dnext { get { return _Rprev._Sym; } set { _Rprev._Sym = value; } }
-            internal Edge _Rnext { get { return _Oprev._Sym; } set { _Oprev._Sym = value; } }
+            internal Vertex _Dst
+            {
+                get { return _Sym._Org; }
+                set { _Sym._Org = value; }
+            }
+
+            internal Edge _Oprev
+            {
+                get { return _Sym._Lnext; }
+                set { _Sym._Lnext = value; }
+            }
+
+            internal Edge _Lprev
+            {
+                get { return _Onext._Sym; }
+                set { _Onext._Sym = value; }
+            }
+
+            internal Edge _Dprev
+            {
+                get { return _Lnext._Sym; }
+                set { _Lnext._Sym = value; }
+            }
+
+            internal Edge _Rprev
+            {
+                get { return _Sym._Onext; }
+                set { _Sym._Onext = value; }
+            }
+
+            internal Edge _Dnext
+            {
+                get { return _Rprev._Sym; }
+                set { _Rprev._Sym = value; }
+            }
+
+            internal Edge _Rnext
+            {
+                get { return _Oprev._Sym; }
+                set { _Oprev._Sym = value; }
+            }
 
             internal static void EnsureFirst(ref Edge e)
             {
@@ -412,7 +458,8 @@ namespace ProceduralToolkit.LibTessDotNet
 
             // fix other edges on this vertex loop
             var e = eOrig;
-            do {
+            do
+            {
                 e._Org = vNew;
                 e = e._Onext;
             } while (e != eOrig);
@@ -446,7 +493,8 @@ namespace ProceduralToolkit.LibTessDotNet
 
             // fix other edges on this face loop
             var e = eOrig;
-            do {
+            do
+            {
                 e._Lface = fNew;
                 e = e._Lnext;
             } while (e != eOrig);
@@ -524,7 +572,8 @@ namespace ProceduralToolkit.LibTessDotNet
 
             // change the origin of all affected edges
             var e = eStart;
-            do {
+            do
+            {
                 e._Org = newOrg;
                 e = e._Onext;
             } while (e != eStart);
@@ -548,7 +597,8 @@ namespace ProceduralToolkit.LibTessDotNet
 
             // change the left face of all affected edges
             var e = eStart;
-            do {
+            do
+            {
                 e._Lface = newLFace;
                 e = e._Lnext;
             } while (e != eStart);
@@ -574,6 +624,7 @@ namespace ProceduralToolkit.LibTessDotNet
                 area += (e._Org._s - e._Dst._s) * (e._Org._t + e._Dst._t);
                 e = e._Lnext;
             } while (e != f._anEdge);
+
             return area;
         }
     }

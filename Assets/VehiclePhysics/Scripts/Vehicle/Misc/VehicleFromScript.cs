@@ -74,7 +74,8 @@ namespace NWH.VehiclePhysics
                         wheelControllers.Add(wc);
 
                         // Adjust container y position
-                        wheelControllerGO.transform.position = child.transform.position + transform.up * wc.springLength * 0.7f;
+                        wheelControllerGO.transform.position =
+                            child.transform.position + transform.up * wc.springLength * 0.7f;
                     }
                 }
             }
@@ -98,4 +99,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

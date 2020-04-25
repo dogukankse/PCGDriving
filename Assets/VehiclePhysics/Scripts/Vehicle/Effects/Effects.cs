@@ -54,7 +54,5 @@ namespace NWH.VehiclePhysics
             exhaustFlash.Update();
             lights.Update();
         }
-
     }
 }
-

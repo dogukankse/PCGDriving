@@ -22,6 +22,7 @@ namespace ProceduralToolkit
                 {
                     count += meshDrafts[i].vertexCount;
                 }
+
                 return count;
             }
         }
@@ -71,6 +72,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].Move(vector);
             }
+
             return this;
         }
 
@@ -83,6 +85,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].Rotate(rotation);
             }
+
             return this;
         }
 
@@ -95,6 +98,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].Scale(scale);
             }
+
             return this;
         }
 
@@ -107,6 +111,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].Scale(scale);
             }
+
             return this;
         }
 
@@ -119,6 +124,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].Paint(color);
             }
+
             return this;
         }
 
@@ -131,6 +137,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].FlipFaces();
             }
+
             return this;
         }
 
@@ -143,6 +150,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].FlipTriangles();
             }
+
             return this;
         }
 
@@ -155,6 +163,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].FlipNormals();
             }
+
             return this;
         }
 
@@ -167,6 +176,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].FlipUVHorizontally(channel);
             }
+
             return this;
         }
 
@@ -179,6 +189,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].FlipUVVertically(channel);
             }
+
             return this;
         }
 
@@ -191,6 +202,7 @@ namespace ProceduralToolkit
             {
                 meshDrafts[i].Spherify(radius, center);
             }
+
             return this;
         }
 
@@ -216,6 +228,7 @@ namespace ProceduralToolkit
                     i--;
                 }
             }
+
             return merged;
         }
 
@@ -231,6 +244,7 @@ namespace ProceduralToolkit
             {
                 finalDraft.Add(meshDrafts[i]);
             }
+
             return finalDraft;
         }
 
@@ -258,6 +272,7 @@ namespace ProceduralToolkit
             {
                 throw new ArgumentNullException("mesh");
             }
+
             mesh.Clear(false);
             FillMesh(ref mesh, calculateBounds, autoIndexFormat);
         }
@@ -273,7 +288,8 @@ namespace ProceduralToolkit
                 }
                 else
                 {
-                    Debug.LogError("A mesh can't have more than 65535 vertices with 16 bit index buffer. Vertex count: " + vCount);
+                    Debug.LogError(
+                        "A mesh can't have more than 65535 vertices with 16 bit index buffer. Vertex count: " + vCount);
                     mesh.indexFormat = IndexFormat.UInt16;
                 }
             }
@@ -300,6 +316,7 @@ namespace ProceduralToolkit
                 mesh.SetTriangles(draft.triangles, i, false, baseVertex);
                 baseVertex += draft.vertexCount;
             }
+
             if (calculateBounds)
             {
                 mesh.RecalculateBounds();

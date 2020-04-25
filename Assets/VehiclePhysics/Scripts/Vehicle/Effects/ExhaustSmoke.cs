@@ -20,15 +20,13 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Exhaust smoke intensity when vehicle is idle.
         /// </summary>
-        [Tooltip("Exhaust smoke intensity when vehicle is idle.")]
-        [Range(0, 30)]
+        [Tooltip("Exhaust smoke intensity when vehicle is idle.")] [Range(0, 30)]
         public float baseIntensity = 12f;
 
         /// <summary>
         /// Intensity range which will be added to the base intensity depending on engine state.
         /// </summary>
-        [Tooltip("Intensity range which will be added to the base intensity depending on engine state.")]
-        [Range(0, 30)]
+        [Tooltip("Intensity range which will be added to the base intensity depending on engine state.")] [Range(0, 30)]
         public float intensityRange = 20f;
 
         /// <summary>
@@ -41,22 +39,19 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Size of each particle at start.
         /// </summary>
-        [Tooltip("Size of each particle at start.")]
-        [Range(0, 1)]
+        [Tooltip("Size of each particle at start.")] [Range(0, 1)]
         public float startSize = 0.3f;
 
         /// <summary>
         /// How far behind the vehicle will exhaust particles extend?
         /// </summary>
-        [Tooltip("How far behind the vehicle will exhaust particles extend?")]
-        [Range(0, 10)]
+        [Tooltip("How far behind the vehicle will exhaust particles extend?")] [Range(0, 10)]
         public float lifeDistance = 2.5f;
 
         /// <summary>
         /// Color of exhaust at idle.
         /// </summary>
-        [Tooltip("Color of exhaust at idle.")]
-        public Color vaporColor = new Color(0.7f, 0.7f, 0.7f, 0.35f);
+        [Tooltip("Color of exhaust at idle.")] public Color vaporColor = new Color(0.7f, 0.7f, 0.7f, 0.35f);
 
         /// <summary>
         ///  Color of exhaust at heavy load.
@@ -75,6 +70,7 @@ namespace NWH.VehiclePhysics
         /// </summary>
         [Tooltip("List of particle systems representing exhausts.")]
         public List<ParticleSystem> particleSystems = new List<ParticleSystem>();
+
         private VehicleController vc;
 
         private Color idleColor;
@@ -92,23 +88,25 @@ namespace NWH.VehiclePhysics
                 foreach (ParticleSystem ps in particleSystems)
                 {
                     var emission = ps.emission;
-                    if(!emission.enabled) emission.enabled = true;
+                    if (!emission.enabled) emission.enabled = true;
                     var main = ps.main;
                     main.startSpeed = 0.3f + vc.engine.RPMPercent * 1f + vc.Load;
                     main.startSize = startSize;
 
                     // Always emit for particle to only reach 1 meter
                     float lifetime = vc.Speed == 0 ? 0 : lifeDistance / vc.Speed;
-                    main.startLifetime = lifeDistance == 0 ? 0 
+                    main.startLifetime = lifeDistance == 0
+                        ? 0
                         : Mathf.Lerp(lifeDistance, lifetime, Mathf.Clamp01(vc.Speed / lifeDistance));
 
                     idleColor = cleanColor;
                     if (vc.transmission.Gear == 0)
-                        idleColor = Color.Lerp(vaporColor, cleanColor, Mathf.Clamp01((vc.engine.RPM - vc.engine.minRPM) / 400f));
+                        idleColor = Color.Lerp(vaporColor, cleanColor,
+                            Mathf.Clamp01((vc.engine.RPM - vc.engine.minRPM) / 400f));
 
                     sootIntensity = Mathf.Clamp01(vc.Load) * soot * 5f;
 
-                    if(vc.damage.enabled)
+                    if (vc.damage.enabled)
                     {
                         sootIntensity += vc.damage.DamagePercent;
                     }
@@ -132,4 +130,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-

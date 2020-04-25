@@ -15,7 +15,8 @@ namespace NWH.VehiclePhysics
         /// <summary>
         /// Center of mass offset in relation to the original COM. Needs to be readjusted when new colliders are added.
         /// </summary>
-        [Tooltip("Center of mass offset in relation to the original COM. Needs to be readjusted when new colliders are added.")]
+        [Tooltip(
+            "Center of mass offset in relation to the original COM. Needs to be readjusted when new colliders are added.")]
         public Vector3 centerOfMassOffset = Vector3.zero;
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace NWH.VehiclePhysics
             {
                 rb.centerOfMass = centerOfMass + centerOfMassOffset;
             }
+
             prevOffset = centerOfMassOffset;
         }
 
@@ -52,7 +54,9 @@ namespace NWH.VehiclePhysics
                 {
                     radius = GetComponent<MeshFilter>().sharedMesh.bounds.size.z / 30f;
                 }
-                catch { }
+                catch
+                {
+                }
 
                 Gizmos.color = Color.green;
                 Gizmos.DrawSphere(rb.transform.TransformPoint(rb.centerOfMass), radius);
@@ -60,4 +64,3 @@ namespace NWH.VehiclePhysics
         }
     }
 }
-
