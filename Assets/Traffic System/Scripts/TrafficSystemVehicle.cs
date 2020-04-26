@@ -1523,7 +1523,8 @@ public class TrafficSystemVehicle : MonoBehaviour
 
     public bool IsTurningIntoIncomingTraffic()
     {
-        return IsTurningLeft() && !TrafficLight.m_turnLeftAnytime;
+    
+        return IsTurningLeft() &&  TrafficLight && !TrafficLight.m_turnLeftAnytime;
     }
 
     public bool IsTurningLeft()
