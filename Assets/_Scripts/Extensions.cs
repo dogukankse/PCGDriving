@@ -21,13 +21,13 @@ namespace _Scripts
             return arr[r];
         }
 
-        public static T GetRandomExcept<T>(this List<T> list, T except)
+        public static int GetRandomExcept<T>(this List<T> list, int except)
         {
-            int exceptIndex = list.IndexOf(except);
+            
             int index = 0;
-            while (index == exceptIndex)
+            while (index == except)
                 index = Random.Range(0, list.Count);
-            return list[index];
+            return index;
         }
     }
 }
