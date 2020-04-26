@@ -1,36 +1,38 @@
-﻿using System;
-using System.Linq;
-using _Scripts;
+﻿using System.Linq;
 using UnityEngine;
 
-public class AIManager : MonoBehaviour
+namespace _Scripts.AISystem
 {
-    public int objCount;
-    
-    public AIObj[] prefabs;
-    public AIPoint[] aiPoints;
-
-    public bool isCreationFinish = false;
-    
-
-    private void Update()
+    public class AIManager : MonoBehaviour
     {
-        if (!isCreationFinish) return;
-        if (transform.childCount < objCount)
+        public int objCount;
+    
+        public AIObj[] prefabs;
+        public AIPoint[] aiPoints;
+
+        public bool isCreationFinish = false;
+    
+
+        private void Update()
         {
-            AIPoint startPoint = PickStartPoint();
-            AIObj obj =  Instantiate(prefabs.ToArray().GetRandomFrom(), startPoint.transform.position, Quaternion.identity, transform);
-            obj.startPoint = startPoint;
+            if (!isCreationFinish) return;
+            if (transform.childCount < objCount)
+            {
+                AIPoint startPoint = PickStartPoint();
+                AIObj obj =  Instantiate(prefabs.ToArray().GetRandomFrom(), startPoint.transform.position, Quaternion.identity, transform);
+                obj.startPoint = startPoint;
+                obj.name += $"_{Time.deltaTime}";
+            }
         }
-    }
 
-    public void FindAIPoints()
-    {
-        aiPoints = FindObjectsOfType<AIPoint>();
-    }
+        public void FindAIPoints()
+        {
+            aiPoints = FindObjectsOfType<AIPoint>();
+        }
 
-    private AIPoint PickStartPoint()
-    {
-        return aiPoints.GetRandomFrom();
+        private AIPoint PickStartPoint()
+        {
+            return aiPoints.GetRandomFrom();
+        }
     }
 }
