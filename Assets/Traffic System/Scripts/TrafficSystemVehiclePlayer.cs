@@ -40,6 +40,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public static string RED_LIGHT_PENALTY = "red_light_penalty";
     public static string LANE_SWITCH_PENALTY = "lane_switch_penalty";
     public static string SPEED_PENALTY = "speed_penalty";
+    public static string CAR_DISTANCE_PENALTY = "car_distance_penalty";
 
     public delegate void HasEnteredTrafficLightTrigger(TrafficSystemTrafficLight a_trafficLight);
 
@@ -103,6 +104,7 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
     public override void Update()
     {
         CheckSideWalkPenalty();
+        CheckCarDistance();
         CheckLaneColliders();
         UpdateSignal();
         UpdateLight();
@@ -217,6 +219,23 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
             if (hit.collider.CompareTag("LaneSwitch"))
             {
                 ChangeLane(TrafficSystem.DriveSide.RIGHT);
+            }
+        }
+    }
+
+
+    private void CheckCarDistance()
+    {
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(
+            ((transform.position + m_vehicleCheckOffset) + (-transform.right * m_vehicleCheckDistLeftRayOffset)),
+            transform.forward, out hitInfo, m_vehicleCheckDistRay))
+        {
+            TrafficSystemVehicle vehicle = hitInfo.transform.GetComponent<TrafficSystemVehicle>();
+            if (vehicle&&vehicle != this && vehicle.m_velocity > 0)
+            {
+                DecreasePoint(CAR_DISTANCE_PENALTY);
             }
         }
     }

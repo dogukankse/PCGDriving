@@ -2168,20 +2168,20 @@ MonoBehaviour:
   m_wheelRotMultiplier: 1
   m_vehicleCheckDist: 1.6
   m_vehicleCheckRadius: 0.72
-  m_vehicleCheckDistRay: 14
+  m_vehicleCheckDistRay: 4.2
   m_vehicleCheckDistLeftRayOffset: 1
-  m_vehicleCheckDistRightRayOffset: 1
-  m_vehicleCheckDistRayMimicSpeedThreshold: 0.4
+  m_vehicleCheckDistRightRayOffset: 0.9
+  m_vehicleCheckDistRayMimicSpeedThreshold: 0.379
   m_vehicleCheckOvertakeOnHighway: 1
   m_vehicleCheckDistOvertakeHighwayOnly: 3.2
   m_vehicleCheckRadiusOvertakeHighwayOnly: 0.72
   m_enableVehicleCheckMid: 0
   m_vehicleCheckDistMid: 1.2
   m_vehicleCheckRadiusMid: 1.58
-  m_intersectionCheckDistRay: 14
+  m_intersectionCheckDistRay: 4.22
   m_vehicleCheckRadiusAtLightsCapsule: 1.15
   m_vehicleCheckDistAtLightsCapsule: 6
-  m_vehicleCheckOffset: {x: 0, y: 0, z: 0}
+  m_vehicleCheckOffset: {x: 0.28, y: 0, z: 0}
   m_waitTimeMin: 0.05
   m_waitTimeMax: 0.25
   m_strictCrashCheck: 0
