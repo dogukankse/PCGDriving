@@ -982,9 +982,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sun: {fileID: 436033195}
-  secondsInDay: 120
+  secondsInDay: 200
   currentTime: 0
-  realtime: 0
+  realtime: 1
 --- !u!1001 &453592413
 PrefabInstance:
   m_ObjectHideFlags: 0

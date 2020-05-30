@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,8 @@ namespace _Scripts.Menu
         [Header("PlayMenu")] [SerializeField] private GameObject _playMenu;
         [SerializeField] private TMP_InputField _name;
         [SerializeField] private TMP_InputField _seed;
+        [SerializeField] private TMP_InputField _size;
+        
         [SerializeField] private Button _playButton;
 
 
@@ -52,6 +55,9 @@ namespace _Scripts.Menu
 
         private void OnPlayButtonClick()
         {
+            GameData.Name = _name.text;
+            GameData.Seed = int.Parse(_seed.text);
+            GameData.Size = int.Parse(_size.text);
             SceneManager.LoadScene(1);
         }
 

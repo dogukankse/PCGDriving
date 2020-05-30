@@ -11,7 +11,7 @@ namespace _Scripts
         private float secondsInDay = 120f;
 
         [Tooltip("midnight => 0\nsunrise => 0.25\nnoon => 0.5\nsunset => 0.75")] [Range(0f, 1f)] [SerializeField]
-        private float currentTime;
+        public float currentTime;
 
         private float timeMultiplier = 1f;
 

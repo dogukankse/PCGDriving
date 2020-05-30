@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 namespace _Scripts.AISystem
 {
@@ -57,7 +55,6 @@ namespace _Scripts.AISystem
                     Debug.DrawRay(objTransform.position + (objTransform.up / 2),
                         transform.TransformDirection(Vector3.forward), Color.blue);
 
-
                     if (hit.transform.TryGetComponent<TrafficSystemTrafficLight>(out var trafficLight))
                     {
                         a += $" {trafficLight.m_status}";
@@ -88,6 +85,11 @@ namespace _Scripts.AISystem
                     else
                         _currState = AIState.MOVE;
 
+
+                    if (hit.collider.TryGetComponent<AIObj>(out var obj))
+                    {
+                        _currState = AIState.MOVE;
+                    }
 
                     Debug.DrawRay(transform.position + (objTransform.up / 2),
                         transform.TransformDirection(Vector3.forward), Color.red);

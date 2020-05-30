@@ -29,8 +29,8 @@ namespace _Scripts
 
         private void Awake()
         {
-            Random.InitState(seed);
-            _mapGenerator = new MapGenerator(seed, size);
+            Random.InitState(GameData.Seed);
+            _mapGenerator = new MapGenerator(GameData.Seed, GameData.Size);
             _sunController = FindObjectOfType<SunController>();
         }
 
@@ -64,6 +64,7 @@ namespace _Scripts
 
             _sunController.enabled = true;
             InitPedestrian();
+            _sunController.currentTime = Random.Range(0f, 1f);
 
 
             Destroy(_videoCam.gameObject);
@@ -79,7 +80,6 @@ namespace _Scripts
         private void InitTraffic(List<TrafficSystemNode> nodes)
         {
             List<TrafficSystemNode> positions = new List<TrafficSystemNode>();
-
             for (int i = 0; i < trafficCount; i++)
             {
                 int random = Random.Range(0, nodes.Count);
