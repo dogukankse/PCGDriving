@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ConcreteMat
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: ParkingLot
+  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -36,11 +36,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 2800000, guid: 08b6cd8d10ce6024ca6d22a40c7d98a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Illum:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b23ba130c7e1f6e42beca4937a219b90, type: 3}
+        m_Texture: {fileID: 2800000, guid: 08b6cd8d10ce6024ca6d22a40c7d98a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -60,10 +64,11 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.34
+    - _Emission: 2.01
+    - _GlossMapScale: 0.07
+    - _Glossiness: 0.42
     - _GlossyReflections: 1
-    - _Metallic: 0.3
+    - _Metallic: 0.5
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -73,5 +78,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
+    - _EmissionColor: {r: 0.125, g: 0.125, b: 0.125, a: 1}
