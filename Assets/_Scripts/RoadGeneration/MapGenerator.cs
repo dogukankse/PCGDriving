@@ -31,6 +31,14 @@ namespace _Scripts
         List<TrafficSystemNode> connectors;
         List<PedestrianNode> pedestrianNodes;
 
+        public Map Map => _map;
+
+        public GridLayoutGroup Grid
+        {
+            get => grid;
+            set => grid = value;
+        }
+
         public MapGenerator(int seed, int size)
         {
             _size = size;
@@ -46,7 +54,7 @@ namespace _Scripts
             JSONToTiles();
             _map.Generate(tiles);
             // PrintMap(_map.map);
-            // DrawMap(_map.map);
+            //DrawMap(_map.map);
         }
 
         private void JSONToTiles()
@@ -71,7 +79,7 @@ namespace _Scripts
             File.WriteAllText("./roads.json", fileText);
         }
 
-        private void DrawMap(MapTile[,] map)
+        public void DrawMap(MapTile[,] map)
         {
             grid.cellSize = new Vector2(grid.GetComponent<RectTransform>().sizeDelta.x / _size,
                 grid.GetComponent<RectTransform>().sizeDelta.y / _size);

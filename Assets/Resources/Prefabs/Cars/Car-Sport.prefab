@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2697596785813806075}
   - component: {fileID: 7976000221424055119}
   - component: {fileID: 941754149031624498}
-  - component: {fileID: 8186516707894825573}
   m_Layer: 0
   m_Name: Car-Sport
   m_TagString: Untagged
@@ -152,24 +151,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8186516707894825573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000989852007098829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4a718f140294633884839cce272667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Static: 0
-  Occludee: 0
-  Lod1: 0
-  Lod2: 0
-  LodMargin: 0
-  LodOnly: 0
 --- !u!1 &1000989853924367544
 GameObject:
   m_ObjectHideFlags: 0

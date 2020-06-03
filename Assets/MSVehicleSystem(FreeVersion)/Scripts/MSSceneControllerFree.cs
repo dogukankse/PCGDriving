@@ -347,7 +347,7 @@ public class MSSceneControllerFree : MonoBehaviour
 
         if (currentPoint < 20)
         {
-            StartCoroutine(new DelayExecutor((() =>
+            StartCoroutine(new DelayExecutor(() =>
             {
                 finishGame.GetComponent<Image>().enabled = true;
                 restartGame.GetComponent<Image>().enabled = true;
@@ -356,8 +356,9 @@ public class MSSceneControllerFree : MonoBehaviour
                 textRestart.GetComponent<Text>().enabled = true;
 
                 restartGame.onClick.AddListener(restart);
-            }), 2).getEnumerator());
-            ;
+            }, 2).getEnumerator());
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 

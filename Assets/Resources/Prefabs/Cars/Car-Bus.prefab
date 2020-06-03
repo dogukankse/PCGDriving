@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2903685252497519525}
   - component: {fileID: 1968285747587449676}
   - component: {fileID: 8531168019159540719}
-  - component: {fileID: 8984116219277190630}
   m_Layer: 0
   m_Name: Car-Bus
   m_TagString: Untagged
@@ -152,24 +151,6 @@ MonoBehaviour:
   m_audioClipHorn: {fileID: 8300000, guid: 69f3e7252edaeef4aba3be39ce9f87f8, type: 3}
   m_playHornOnCrash: 1
   m_flashFrontLightsOnCrash: 1
---- !u!114 &8984116219277190630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675505492133446391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4a718f140294633884839cce272667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Static: 0
-  Occludee: 0
-  Lod1: 0
-  Lod2: 0
-  LodMargin: 0
-  LodOnly: 0
 --- !u!1 &1795618307475919204
 GameObject:
   m_ObjectHideFlags: 0

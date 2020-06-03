@@ -72,12 +72,12 @@ namespace _Scripts.AISystem
                         }
                     }
 
-                    print(a);
+                    //print(a);
                 }
                 //if is collider
                 else
                 {
-                    print($"{name} collider: {hit.collider.name}");
+                    //print($"{name} collider: {hit.collider.name}");
                     if (_currState != AIState.ROTATE)
                     {
                         IdleAnim(true);

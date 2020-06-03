@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Scripts.AISystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -11,40 +12,52 @@ namespace _Scripts
     public class GameManager : MonoBehaviour
     {
         private MapGenerator _mapGenerator;
-        private SunController _sunController;
+        [SerializeField] private SunController _sunController;
 
         [SerializeField] private AIManager _aiManager;
 
         [Header("Video")] [SerializeField] private Camera _videoCam;
         [SerializeField] private Text _videoText;
 
-        [SerializeField] private int seed;
-        [SerializeField] private int size;
+        [SerializeField] private GridLayoutGroup _grid;
 
         public GameObject[] trafficCars;
         public int trafficCount;
 
         private GameObject _car;
-        [SerializeField] private GameObject _player;
+        [Header("Player")] [SerializeField] private GameObject _player;
+
+        [SerializeField] private Camera _playerCam;
 
         private void Awake()
         {
             Random.InitState(GameData.Seed);
             _mapGenerator = new MapGenerator(GameData.Seed, GameData.Size);
-            _sunController = FindObjectOfType<SunController>();
+            
+            // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Start()
         {
-            _player.GetComponentInChildren<Camera>().targetDisplay = 1;
-            _player.GetComponentInChildren<AudioListener>().enabled = false;
-
-            _videoCam.targetDisplay = 0;
-            _sunController.enabled = false;
+            _sunController.gameObject.SetActive(true);
             _mapGenerator.AdjustRoadLamps = _sunController.FindRoadLamps;
             _mapGenerator.AfterCreation = AfterCreation;
-
             StartCoroutine(_mapGenerator.CreateRoads(_videoText));
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                GameObject o;
+                (o = _videoCam.gameObject).SetActive(!_videoCam.gameObject.activeSelf);
+                _playerCam.gameObject.SetActive(!o.activeSelf);
+            }
+            
+            if(Input.GetKeyDown(KeyCode.Escape))
+                SceneManager.LoadScene(0);
+
         }
 
 
@@ -58,16 +71,12 @@ namespace _Scripts
                 Math.Abs((int) p.transform.rotation.eulerAngles.x) != 90
             ).ToList());
 
-            _player.GetComponentInChildren<IOCcam>().layerMsk = ~0;
-            _player.GetComponentInChildren<Camera>().targetDisplay = 0;
-            _player.GetComponentInChildren<AudioListener>().enabled = true;
+            _playerCam.GetComponent<AudioListener>().enabled = true;
 
             _sunController.enabled = true;
-            InitPedestrian();
             _sunController.currentTime = Random.Range(0f, 1f);
-
-
-            Destroy(_videoCam.gameObject);
+            
+            InitPedestrian();
             Destroy(_videoText.gameObject);
         }
 

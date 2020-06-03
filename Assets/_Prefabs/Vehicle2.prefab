@@ -2166,19 +2166,19 @@ MonoBehaviour:
   - {fileID: 910951659917720590}
   m_wheelAxis: 0
   m_wheelRotMultiplier: 1
-  m_vehicleCheckDist: 1.6
-  m_vehicleCheckRadius: 0.72
-  m_vehicleCheckDistRay: 4.2
+  m_vehicleCheckDist: 1.93
+  m_vehicleCheckRadius: 0.7
+  m_vehicleCheckDistRay: 6
   m_vehicleCheckDistLeftRayOffset: 1
   m_vehicleCheckDistRightRayOffset: 0.9
   m_vehicleCheckDistRayMimicSpeedThreshold: 0.379
   m_vehicleCheckOvertakeOnHighway: 1
-  m_vehicleCheckDistOvertakeHighwayOnly: 3.2
-  m_vehicleCheckRadiusOvertakeHighwayOnly: 0.72
+  m_vehicleCheckDistOvertakeHighwayOnly: 4.3
+  m_vehicleCheckRadiusOvertakeHighwayOnly: 0.7
   m_enableVehicleCheckMid: 0
   m_vehicleCheckDistMid: 1.2
   m_vehicleCheckRadiusMid: 1.58
-  m_intersectionCheckDistRay: 4.22
+  m_intersectionCheckDistRay: 6
   m_vehicleCheckRadiusAtLightsCapsule: 1.15
   m_vehicleCheckDistAtLightsCapsule: 6
   m_vehicleCheckOffset: {x: 0.28, y: 0, z: 0}
@@ -2235,14 +2235,13 @@ GameObject:
   - component: {fileID: 927851017727604296}
   - component: {fileID: 942023464999034732}
   - component: {fileID: 976089829591144742}
-  - component: {fileID: 914059263742253953}
   m_Layer: 2
   m_Name: Camera3
   m_TagString: CarCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &910997488938311662
 Transform:
   m_ObjectHideFlags: 0
@@ -2297,7 +2296,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!124 &942023464999034732
@@ -2316,33 +2315,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914059263742253954}
   m_Enabled: 1
---- !u!114 &914059263742253953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914059263742253954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43c623a05fc5442fcba27a128ec2559a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags: 
-  layerMsk:
-    serializedVersion: 2
-    m_Bits: 7735
-  occludeeLayer: 0
-  samples: 500
-  raysFov: 100
-  preCullCheck: 1
-  viewDistance: 300
-  hideDelay: 200
-  realtimeShadows: 0
-  lod1Distance: 0
-  lod2Distance: 0
-  lightProbes: 0
-  probeRadius: 0
 --- !u!1 &914061472557575576
 GameObject:
   m_ObjectHideFlags: 0

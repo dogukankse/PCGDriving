@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,20 +15,12 @@ namespace _Scripts
 
         private const float _timeMultiplier = 1f;
 
-        [SerializeField] private float _sunInitialIntensity;
+        [SerializeField] private float _sunInitialIntensity = 1f;
         [SerializeField] private bool _realtime;
 
         private List<Light> _roadLamps;
 
-        private void Awake()
-        {
-            _sun = GetComponent<Light>();
-        }
-
-        private void Start()
-        {
-            _sunInitialIntensity = 1f;
-        }
+        public bool isRoadsCreated;
 
         public void FindRoadLamps()
         {
@@ -45,6 +36,15 @@ namespace _Scripts
             UpdateSun();
             if (!_realtime) return;
             currentTime += (Time.deltaTime / _secondsInDay) / _timeMultiplier;
+
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                currentTime += .1f;
+            }
+            else if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                currentTime -= .1f;
+            }
 
             if (currentTime >= 1) currentTime = 0;
         }

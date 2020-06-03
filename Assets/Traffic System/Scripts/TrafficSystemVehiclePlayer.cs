@@ -11,11 +11,10 @@
 /// </summary>
 
 using System;
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using _Scripts;
 using NWH.VehiclePhysics;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
@@ -121,6 +120,8 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         {
             DecreasePoint(SPEED_PENALTY);
         }
+        
+        
     }
 
     private void UpdateLight()
@@ -229,11 +230,11 @@ public class TrafficSystemVehiclePlayer : TrafficSystemVehicle
         RaycastHit hitInfo;
 
         if (Physics.Raycast(
-            ((transform.position + m_vehicleCheckOffset) + (-transform.right * m_vehicleCheckDistLeftRayOffset)),
+            transform.position + m_vehicleCheckOffset + -transform.right * m_vehicleCheckDistLeftRayOffset,
             transform.forward, out hitInfo, m_vehicleCheckDistRay))
         {
-            TrafficSystemVehicle vehicle = hitInfo.transform.GetComponent<TrafficSystemVehicle>();
-            if (vehicle&&vehicle != this && vehicle.m_velocity > 0)
+            TrafficSystemVehicle hitVehicle = hitInfo.transform.GetComponent<TrafficSystemVehicle>();
+            if (hitVehicle && hitVehicle != this && hitVehicle.m_velocity > 0)
             {
                 DecreasePoint(CAR_DISTANCE_PENALTY);
             }
